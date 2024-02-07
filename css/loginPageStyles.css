@@ -11730,7 +11730,7 @@ body:after {
   bottom: 0;
   content: '';
   background: #000;
-  opacity: .3;
+  opacity: .62;
   z-index: -1;
 }
 
