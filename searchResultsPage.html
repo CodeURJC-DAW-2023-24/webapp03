@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<!-- Books search result page -->
+<html lang="en">
+
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gabarito&display=swap" rel="stylesheet">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Resultados</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <!-- Bootstrap icons-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="css/searchResultsStyles.css" rel="stylesheet" />
+    <!-- Navbar and branding css -->
+    <link href="css/navbarAndBranding.css" rel="stylesheet" />
+</head>
+
+<body>
+
+    <!-- NAVBAR STARTS HERE (this is the navbar)-->
+    <nav class="bm-navbar bm-navbar-expand-lg bm-navbar-light bm-bg-white">
+        <div class="bm-container bm-navbar-px-4 bm-navbar-px-lg-5">
+            <!-- Navbar brand (is an image) and has alternative text for when the image does not load-->
+            <a class="bm-navbar-brand" href="#!">
+                <img src="assets/isotipo.svg" alt="Bookmarks" />
+            </a>
+            <button class="bm-navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation"><span class="bm-navbar-toggler-icon"></span></button>
+            <div class="bm-collapse bm-navbar-collapse bm-navbar-menu" id="navbarSupportedContent">
+                <!-- Has to be centered -->
+                <ul class="bm-navbar-nav bm-me-auto bm-mb-lg-0 bm-ms-auto">
+                    <!-- Main page option (has little house icon on the left)-->
+                    <li class="bm-nav-item"><a class="bm-nav-link" href="#!">
+                            <i class="bi-house-door-fill"></i>
+                            Inicio
+                        </a>
+                    </li>
+
+                    <!-- Forum option-->
+                    <li class="bm-nav-item"><a class="bm-nav-link" href="forumPage.html">
+                            <i class="bi-chat-left-text-fill"></i>
+                            Foro
+                        </a>
+                    </li>
+
+                    <!-- Administrator menu option -->
+                    <li class="bm-nav-item"> <a class="bm-nav-link" href="#!">
+                            <i class="bi-gear-fill"></i>
+                            Administrador
+                        </a>
+                    </li>
+
+                </ul>
+                <form class="bm-d-flex">
+                    <ul class="bm-navbar-nav bm-me-auto bm-mb-lg-0 bm-ms-lg-4">
+                        <!-- Profile dropdown -->
+                        <li class="bm-nav-item dropdown">
+                            <a class="bm-nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <img class="bm-navbar-profile-picture bm-rounded-circle"
+                                    src="assets/defaultProfilePicture.png" alt="Perfil" />
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="#!">Mi perfil</a></li>
+                                <li>
+                                    <hr class="dropdown-divider" />
+                                </li>
+                                <li><a class="dropdown-item" href="#!">Cerrar sesión</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </form>
+            </div>
+        </div>
+    </nav>
+    <!-- Navbar ENDS HERE -->
+
+    <!-- Header-->
+    <header class="bg-branding-white py-1">
+        <div class="container px-4 px-lg-5 my-5">
+            <div class="text-start text-dark">
+                <h1 class="display-4 fw-bolder">Los juegos del hambre</h1>
+                <p class="lead fw-normal text-black-50 mb-0">Resultados de búsqueda</p>
+            </div>
+        </div>
+    </header>
+    <!-- Section-->
+    <section class="py-5">
+        <div class="container px-4 px-lg-5 mt-5">
+            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                <!-- Book card-->
+                <div class="col mb-5">
+                    <div class="card h-100">
+                        <!-- Read badge-->
+                        <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Leído
+                        </div>
+                        <!-- Book cover image-->
+                        <img class="card-img-top" src="assets/presets/71e4kjCsuAL._AC_UF894,1000_QL80_.jpg" alt="..." />
+                        <!-- Product details-->
+                        <div class="card-body p-4">
+                            <div class="text-center">
+                                <!-- Book name-->
+                                <h5 class="fw-bolder">Los juegos del hambre</h5>
+                                <!-- Book Author-->
+                                <h6 class="fw-normal">Suzanne Collins</h6>
+                                <!-- Product reviews-->
+                                <div class="d-flex justify-content-center small text-warning mb-2">
+                                    <div class="bi-star-fill"></div>
+                                    <div class="bi-star-fill"></div>
+                                    <div class="bi-star-fill"></div>
+                                    <div class="bi-star-fill"></div>
+                                    <div class="bi-star"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Product actions-->
+                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Ver libro</a>
+                            </div>
+                        </div>
+                    </div>
+                </div> <!-- End of book card-->
+                <!-- Book card-->
+                <div class="col mb-5">
+                    <div class="card h-100">
+                        <!-- Read badge-->
+                        <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Leído
+                        </div>
+                        <!-- Book cover image-->
+                        <img class="card-img-top" src="assets/presets/9788427202139-es.jpg" alt="..." />
+                        <!-- Product details-->
+                        <div class="card-body p-4">
+                            <div class="text-center">
+                                <!-- Book name-->
+                                <h5 class="fw-bolder">Los juegos del hambre: En llamas</h5>
+                                <!-- Book Author-->
+                                <h6 class="fw-normal">Suzanne Collins</h6>
+                                <!-- Product reviews-->
+                                <div class="d-flex justify-content-center small text-warning mb-2">
+                                    <div class="bi-star-fill"></div>
+                                    <div class="bi-star-fill"></div>
+                                    <div class="bi-star-fill"></div>
+                                    <div class="bi-star-half"></div>
+                                    <div class="bi-star"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Product actions-->
+                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Ver libro</a>
+                            </div>
+                        </div>
+                    </div>
+                </div> <!-- End of book card-->
+                <!-- Book card-->
+                <div class="col mb-5">
+                    <div class="card h-100">
+                        <!-- Book cover image-->
+                        <img class="card-img-top" src="assets/presets/71wRWeSwtrL._AC_UF894,1000_QL80_.jpg" alt="..." />
+                        <!-- Product details-->
+                        <div class="card-body p-4">
+                            <div class="text-center">
+                                <!-- Book name-->
+                                <h5 class="fw-bolder">Los juegos del hambre: Sinsajo</h5>
+                                <!-- Book Author-->
+                                <h6 class="fw-normal">Suzanne Collins</h6>
+                                <!-- Product reviews-->
+                                <div class="d-flex justify-content-center small text-warning mb-2">
+                                    <div class="bi-star-fill"></div>
+                                    <div class="bi-star-fill"></div>
+                                    <div class="bi-star-fill"></div>
+                                    <div class="bi-star-fill"></div>
+                                    <div class="bi-star"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Product actions-->
+                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Ver libro</a>
+                            </div>
+                        </div>
+                    </div>
+                </div> <!-- End of book card-->
+                <!-- Book card-->
+                <div class="col mb-5">
+                    <div class="card h-100">
+                        <!-- Book cover image-->
+                        <img class="card-img-top" src="assets/presets/9788427220287-es.jpg" alt="..." />
+                        <!-- Product details-->
+                        <div class="card-body p-4">
+                            <div class="text-center">
+                                <!-- Book name-->
+                                <h5 class="fw-bolder">Los juegos del hambre: Balada de pájaros cantores y serpientes
+                                </h5>
+                                <!-- Book Author-->
+                                <h6 class="fw-normal">Suzanne Collins</h6>
+                                <!-- Product reviews-->
+                                <div class="d-flex justify-content-center small text-warning mb-2">
+                                    <div class="bi-star-fill"></div>
+                                    <div class="bi-star-fill"></div>
+                                    <div class="bi-star-fill"></div>
+                                    <div class="bi-star"></div>
+                                    <div class="bi-star"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Product actions-->
+                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Ver libro</a>
+                            </div>
+                        </div>
+                    </div>
+                </div> <!-- End of book card-->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer-->
+    <footer class="bm-py-5 bm-bg-footer">
+        <div class="bm-container bm-footer-container">
+            <!-- Bookmarks logo at the start of the footer, Copyright text at the end of the footer-->
+            <a class="bm-d-flex bm-align-items-start" href="#!">
+                <img class="bm-footer-logo" src="assets/logoDark.svg" alt="Bookmarks" />
+            </a>
+
+            <p class="bm-text-footer">Copyright &copy; Bookmarks 2024</p>
+        </div>
+    </footer>
+    <!-- Footer ENDS HERE -->
+
+    <!-- CORE BOOTSTRAP JS (HAS NAVBAR DROPDOWN TOGGLE FUNCTIONALITY)-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- ----------------------------------------------------------------- -->
+
+    <!-- Core theme JS-->
+    <script src="js/scripts.js"></script>
+</body>
+
+</html>
