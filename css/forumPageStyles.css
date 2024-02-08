@@ -1,3 +1,17 @@
+:root {
+    /* BOOKMARKS BRANDING COLORS */
+    --branding-grey: #808F85;
+    --branding-brown: #583E23;
+    --branding-orange: #F9A03F;
+    --branding-peach: #F8DDA4;
+    --branding-green: #519E8A;
+    --branding-light-green: #9be6d2;
+    --branding-white: #FFFFFC;
+    --branding-light-grey: #efefef;
+    --branding-sepia: #F8F4E8;
+    /* -------- */
+}
+
 body {
     margin-top: 20px;
     color: #1a202c;
@@ -100,14 +114,14 @@ body {
 .nav-link.nav-link-faded:active,
 .nav-pills .nav-link.nav-link-faded.active,
 .navbar-nav .show>.nav-link.nav-link-faded {
-    color: #3367b5;
-    background-color: #c9d8f0;
+    color: var(--branding-brown);
+    background-color: var(--branding-peach);
 }
 
 .nav-pills .nav-link.active,
 .nav-pills .show>.nav-link {
     color: #fff;
-    background-color: #467bcb;
+    background-color: var(--branding-green);
 }
 
 .nav-link.has-icon {
@@ -116,7 +130,7 @@ body {
 }
 
 .nav-link.active {
-    color: #467bcb;
+    color: var(--branding-green);
 }
 
 .nav-pills .nav-link {
@@ -147,4 +161,29 @@ body {
     flex: 1 1 auto;
     min-height: 1px;
     padding: 1rem;
+}
+
+.forum-container {
+    margin-top: 3rem !important;
+    margin-bottom: 3rem !important;
+}
+
+.new-content-button {
+    background-color: var(--branding-green) !important;
+    color: var(--branding-white) !important;
+    border: none !important;
+    border-radius: 7px !important;
+
+}
+
+.nav-link:hover {
+    color: var(--branding-orange);
+}
+
+a {
+    color: var(--branding-green);
+}
+
+.bm-nav-link:hover {
+    text-decoration: none;
 }
