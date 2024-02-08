@@ -12001,12 +12001,6 @@ textarea.form-control {
   color: #fff;
 }
 
-.bm-bg-footer {
-  /* has to stick to the bottom */
-  position: relative !important;
-  bottom: 0 !important;
-  width: 100% !important;
-}
 
 .login-greeting-text {
   font-family: 'Gabarito', sans-serif !important;

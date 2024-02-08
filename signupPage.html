@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-	<title>Signup 10</title>
+	<title>Bookmarks - Registrarse</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -11,6 +11,8 @@
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
 	<link rel="stylesheet" href="css/signupPageStyles.css">
+	<!-- Favicon-->
+	<link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
 
 	<!-- NEEDED FOR THE NAVBAR AND FOOTER BRANDING -->
 	<link href="css/navbarAndBranding.css" rel="stylesheet" />
@@ -36,8 +38,9 @@
 					<div class="login-wrap p-0">
 						<h3 class="mb-4 text-center login-greeting-text">Crea una cuenta</h3>
 						<form action="#" class="signin-form">
-                            <div class="form-group">
-								<input type="text" class="form-control" placeholder="Dirección de correo electrónico" required>
+							<div class="form-group">
+								<input type="text" class="form-control" placeholder="Dirección de correo electrónico"
+									required>
 							</div>
 							<div class="form-group">
 								<input type="text" class="form-control" placeholder="Nombre de usuario" required>
@@ -48,9 +51,9 @@
 								<span toggle="#password-field"
 									class="fa fa-fw fa-eye field-icon toggle-password"></span>
 							</div>
-                            <div class="form-group">
-								<input id="password-field" type="password" class="form-control" placeholder="Confirmar contraseña"
-									required>
+							<div class="form-group">
+								<input id="password-field" type="password" class="form-control"
+									placeholder="Confirmar contraseña" required>
 								<span toggle="#password-field"
 									class="fa fa-fw fa-eye field-icon toggle-password"></span>
 							</div>
@@ -71,27 +74,16 @@
 							</div> -->
 						</form>
 						<div class="form-group">
-							<button type="button"
-								class="form-control btn btn-secondary submit px-3 pill-button">Volver</button>
+							<a href="loginPage.html">
+								<button type="button"
+									class="form-control btn btn-secondary submit px-3 pill-button">Volver</button>
+							</a>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</section>
-
-	<!-- Footer STARTS HERE (the footer goes right before the end of the BODY, before the scripts are declared, if there are any)-->
-	<footer class="bm-py-5 bm-bg-footer">
-		<div class="bm-container bm-footer-container">
-			<!-- Bookmarks logo at the start of the footer, Copyright text at the end of the footer-->
-			<a class="bm-d-flex bm-align-items-start" href="#!">
-				<img class="bm-footer-logo" src="assets/logoDark.svg" alt="Bookmarks" />
-			</a>
-
-			<p class="bm-text-footer">Copyright &copy; Bookmarks 2024</p>
-		</div>
-	</footer>
-	<!-- Footer ENDS HERE -->
 
 	<script src="js/jquery.min.js"></script>
 	<script src="js/main.js"></script>

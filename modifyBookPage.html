@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Bookmarks - Modificar libro</title>
+
+    <!-- NEEDED FOR THE NAVBAR AND FOOTER BRANDING -->
+    <link href="css/navbarAndBranding.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gabarito&display=swap" rel="stylesheet">
+    <!-- ----------------------------------------------------------------- -->
+
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <!-- Bootstrap icons-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="css/modifyBookPageStyles.css" rel="stylesheet" />
+    <link href="css/editProfilePageStyles.css" rel="stylesheet" />
+
+</head>
+
+<body>
+    <!-- Navigation (this is the navbar)-->
+    <nav class="bm-navbar bm-navbar-expand-lg bm-navbar-light bm-bg-white">
+        <div class="bm-container bm-navbar-px-4 bm-navbar-px-lg-5">
+            <!-- Navbar brand (is an image) and has alternative text for when the image does not load-->
+            <a class="bm-navbar-brand" href="#!">
+                <img src="assets/isotipo.svg" alt="Bookmarks" />
+            </a>
+            <button class="bm-navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation"><span class="bm-navbar-toggler-icon"></span></button>
+            <div class="bm-collapse bm-navbar-collapse bm-navbar-menu" id="navbarSupportedContent">
+                <!-- Has to be centered -->
+                <ul class="bm-navbar-nav bm-me-auto bm-mb-lg-0 bm-ms-auto">
+                    <!-- Main page option (has little house icon on the left)-->
+                    <li class="bm-nav-item"><a class="bm-nav-link" href="#!">
+                            <i class="bi-house-door-fill"></i>
+                            Inicio
+                        </a>
+                    </li>
+
+                    <!-- Forum option-->
+                    <li class="bm-nav-item"><a class="bm-nav-link" href="forumPage.html">
+                            <i class="bi-chat-left-text-fill"></i>
+                            Foro
+                        </a>
+                    </li>
+
+                    <!-- Administrator menu option -->
+                    <li class="bm-nav-item"> <a class="bm-nav-link" href="administratorMainPage.html">
+                            <i class="bi-gear-fill"></i>
+                            Administrador
+                        </a>
+                    </li>
+
+                </ul>
+                <form class="bm-d-flex">
+                    <ul class="bm-navbar-nav bm-me-auto bm-mb-lg-0 bm-ms-lg-4">
+                        <!-- Profile dropdown -->
+                        <li class="bm-nav-item dropdown">
+                            <a class="bm-nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <img class="bm-navbar-profile-picture bm-rounded-circle"
+                                    src="assets/defaultProfilePicture.png" alt="Perfil" />
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="#!">Mi perfil</a></li>
+                                <li>
+                                    <hr class="dropdown-divider" />
+                                </li>
+                                <li><a class="dropdown-item" href="loginPage.html">Cerrar sesión</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </form>
+            </div>
+        </div>
+    </nav>
+    <!-- Navbar ENDS HERE -->
+
+    <!-- Product section-->
+    <header class="bg-branding-white py-1">
+        <div class="container px-4 px-lg-5 my-5">
+            <div class="text-start text-dark">
+                <h1 class="display-4 fw-bolder">Los juegos del hambre</h1>
+                <p class="lead fw-normal text-black-50 mb-0">Modificar libro</p>
+
+            </div>
+        </div>
+    </header>
+    <section class="py-5">
+        <div class="container px-4 px-lg-5 my-5">
+            <div class="row gx-4 gx-lg-5 align-items-center">
+                <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0"
+                        src="assets/presets/71e4kjCsuAL._AC_UF894,1000_QL80_.jpg" alt="..." /></div>
+                <div class="col-md-6">
+                    <form>
+
+                        <div class="mb-3">
+
+                            <label class="small mb-1" for="inputBookName">Título del libro</label>
+                            <input class="form-control" id="inputBookName" type="text"
+                                placeholder="Escribe el título del libro">
+
+                        </div>
+
+                        <div class="mb-3">
+
+                            <label class="small mb-1" for="inputBookAuthorName">Nombre completo del autor/a del
+                                libro</label>
+                            <input class="form-control" id="inputBookAuthorName" type="text"
+                                placeholder="Nombre completo del autor/a de este libro">
+
+                        </div>
+
+                        <div class="row gx-3 mb-3">
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputBookISBN">ISBN</label>
+                                <input class="form-control" id="inputBookISBN" type="number"
+                                    placeholder="ISBN de este libro">
+                            </div>
+
+
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputBookPages">Número de páginas</label>
+                                <input class="form-control" id="inputBookPages" type="number"
+                                    placeholder="Páginas totales del libro">
+                            </div>
+
+                        </div>
+
+                        <div class="row gx-3 mb-3">
+
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputBookGenre">Género</label>
+                                <input class="form-control" id="inputBookGenre" type="text"
+                                    placeholder="Género al que pertenece el libro">
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputBookISBN">Fecha de publicación</label>
+                                <input class="form-control" id="inputBookISBN" type="date"
+                                    placeholder="Fecha en la que se publicó">
+                            </div>
+                        </div>
+
+                        <div class="row gx-3 mb-3">
+
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputBookPublisher">Editorial</label>
+                                <input class="form-control" id="inputBookPublisher" type="text"
+                                    placeholder="Nombre de la editorial del libro">
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputBookSeries">Saga</label>
+                                <input class="form-control" id="inputBookSeries" type="text"
+                                    placeholder="Saga a la que pertenece el libro">
+                            </div>
+                        </div>
+
+                        <div class="mb-3 description-form">
+                            <label class="small mb-1" for="inputBookDescription">Descripción del libro</label>
+                            <textarea class="form-control description-text-area" id="inputBookDescription" rows="4"
+                                cols="50" placeholder="Escribe una descripción para este libro"></textarea>
+                        </div>
+                        <button class="btn btn-secondary-light" type="button">Subir imagen de portada</button>
+                        <button class="btn btn-primary-light save-button" type="button">Guardar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Footer STARTS HERE (the footer goes right before the end of the BODY, before the scripts are declared, if there are any)-->
+    <footer class="bm-py-5 bm-bg-footer">
+        <div class="bm-container bm-footer-container">
+            <!-- Bookmarks logo at the start of the footer, Copyright text at the end of the footer-->
+            <a class="bm-d-flex bm-align-items-start" href="#!">
+                <img class="bm-footer-logo" src="assets/logoDark.svg" alt="Bookmarks" />
+            </a>
+
+            <p class="bm-text-footer">Copyright &copy; Bookmarks 2024</p>
+        </div>
+    </footer>
+    <!-- Footer ENDS HERE -->
+
+    <!-- CORE BOOTSTRAP JS (THIS GOES RIGHT AFTER THE FOOTER, IT HAS THE NAVBAR DROPDOWN TOGGLE FUNCTIONALITY)-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- ----------------------------------------------------------------- -->
+
+    <!-- Core theme JS-->
+    <script src="js/scripts.js"></script>
+</body>
+
+</html>
