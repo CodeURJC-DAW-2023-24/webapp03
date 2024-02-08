@@ -2,6 +2,13 @@
 <html lang="en">
 
 <head>
+    <meta charset="utf-8">
+    <title>Bookmarks - Editar perfil</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/editProfilePageStyles.css" rel="stylesheet">
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
     <!-- NEEDED FOR THE NAVBAR AND FOOTER BRANDING -->
     <link href="css/navbarAndBranding.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
@@ -10,18 +17,11 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Gabarito&display=swap" rel="stylesheet">
     <!-- ----------------------------------------------------------------- -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-</head>
-
-<head>
 
 </head>
 
 <body>
+
     <!-- Navigation (this is the navbar)-->
     <nav class="bm-navbar bm-navbar-expand-lg bm-navbar-light bm-bg-white">
         <div class="bm-container bm-navbar-px-4 bm-navbar-px-lg-5">
@@ -71,7 +71,7 @@
                                 <li>
                                     <hr class="dropdown-divider" />
                                 </li>
-                                <li><a class="dropdown-item" href="#!">Cerrar sesión</a></li>
+                                <li><a class="dropdown-item" href="loginPage.html">Cerrar sesión</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -81,119 +81,86 @@
     </nav>
     <!-- Navbar ENDS HERE -->
 
-    <div class="container bootstrap snippet">
-        <div class="row">
-            <div class="col-sm-10">
-                <h1>Nick</h1>
+    <header class="bg-branding-white py-1">
+        <div class="container px-4 px-lg-5 my-5">
+            <div class="text-start text-dark">
+                <h1 class="display-4 fw-bolder">Usuario</h1>
+                <p class="lead fw-normal text-black-50 mb-0">Ajustes del perfil</p>
+
             </div>
         </div>
+    </header>
+
+    <div class="container-xl px-4 mt-5 mb-5 main-container">
         <div class="row">
-            <div class="col-sm-3"><!--left col-->
+            <div class="col-xl-4">
 
+                <div class="card mb-4 mb-xl-0">
+                    <div class="card-header">Foto de perfil</div>
+                    <div class="card-body text-center">
+                        <!-- Profile picture -->
+                        <img class="img-account-profile rounded-circle mb-2"
+                            src="http://bootdey.com/img/Content/avatar/avatar1.png" alt>
 
-                <div class="text-center">
-                    <img src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" class="avatar img-circle img-thumbnail"
-                        alt="avatar">
-                    <input type="file" class="text-center center-block file-upload">
+                        <div class="small font-italic text-muted mb-4">JPG o PNG de no más de 5 MB</div>
+
+                        <button class="btn btn-primary" type="button">Subir imagen</button>
+                    </div>
                 </div>
-                </hr><br>
+            </div>
+            <div class="col-xl-8">
 
+                <div class="card mb-4">
+                    <div class="card-header">Detalles de tu cuenta</div>
+                    <div class="card-body">
+                        <form>
 
-                <div class="panel panel-default">
-                    <div class="panel-heading">Descripción<i class="fa fa-1x"></i></div>
-                    <div class="panel-body">Esto es una descripción</div>
-                </div>
+                            <div class="row gx-3 mb-3">
 
+                                <div class="col-md-6">
+                                    <label class="small mb-1" for="inputUsername">Nombre de usuario</label>
+                                    <input class="form-control" id="inputUsername" type="text"
+                                        placeholder="Escribe tu nombre de usuario" value="Usuario">
+                                </div>
 
-                <ul class="list-group">
-                    <li class="list-group-item text-muted">Actividad<i class="fa fa-dashboard fa-1x"></i></li>
-                    <li class="list-group-item text-right"><span class="pull-left"><strong>Leídos</strong></span>
-                        125
-                    </li>
-                    <li class="list-group-item text-right"><span class="pull-left"><strong>Me gusta</strong></span> 13
-                    </li>
-                    <li class="list-group-item text-right"><span class="pull-left"><strong>Publicaciones</strong></span>
-                        37</li>
-                    <li class="list-group-item text-right"><span class="pull-left"><strong>Seguidores</strong></span> 78
-                    </li>
-                </ul>
-
-            </div><!--/col-3-->
-            <div class="col-sm-9">
-
-
-
-                <div class="tab-content">
-                    <div class="tab-pane active" id="home">
-                        <form class="form" action="##" method="post" id="registrationForm">
-                            <div class="form-group">
-
-                                <div class="col-xs-6">
-                                    <label for="first_name">
-                                        <h4>Nombre de usuario</h4>
-                                    </label>
-                                    <input type="text" class="form-control" name="first_name" id="first_name"
-                                        placeholder="Nombre de usuario" title="enter your first name if any.">
+                                <div class="col-md-6">
+                                    <label class="small mb-1" for="inputEmailAddress">Correo electrónico</label>
+                                    <input class="form-control" id="inputEmailAddress" type="email"
+                                        placeholder="Escribe tu dirección de correo electrónico"
+                                        value="ejemplo@bookmarks.com">
                                 </div>
                             </div>
 
-                            <div class="form-group">
-
-                                <div class="col-xs-6">
-                                    <label for="email">
-                                        <h4>Dirección de correo electrónico</h4>
-                                    </label>
-                                    <input type="email" class="form-control" name="email" id="email"
-                                        placeholder="ejemplo@correo.com" title="enter your email.">
-                                </div>
+                            <div class="mb-3 description-form">
+                                <label class="small mb-1" for="inputProfileDescription">Descripción</label>
+                                <textarea class="form-control description-text-area" id="inputProfileDescription"
+                                    rows="4" cols="50" placeholder="Escribe una descripción para tu perfil"></textarea>
                             </div>
 
-                            <div class="form-group">
+                            <div class="row gx-3 mb-3">
 
-                                <div class="col-xs-6">
-                                    <label for="password">
-                                        <h4>Contraseña</h4>
-                                    </label>
-                                    <input type="password" class="form-control" name="password" id="password"
-                                        placeholder="Contraseña" title="enter your password.">
+                                <div style="display: flex; justify-content: space-between;" class="new-password-flex">
+                                    <div style="flex: 1; margin-right: 10px;"  class="col-md-6">
+                                        <label class="small mb-1" for="inputPassword">Nueva contraseña</label>
+                                        <input class="form-control" id="inputPassword" type="password"
+                                        placeholder="Escribe tu contraseña nueva" value="············">
+                                    </div>
+                                    <div style="flex: 1; margin-right: 10px;"  class="col-md-6">
+                                        <label class="small mb-1" for="inputConfirmPassword">Confirma tu
+                                            contraseña</label>
+                                        <input class="form-control" id="inputConfirmPassword" type="password"
+                                            placeholder="Escribe tu contraseña nueva otra vez" value="············">
+                                    </div>
+                                    <button class="btn btn-primary change-password-button" type="button">Cambiar contraseña</button>
                                 </div>
-                            </div>
-                            <div class="form-group">
 
-                                <div class="col-xs-6">
-                                    <label for="password2">
-                                        <h4>Confirmar contraseña</h4>
-                                    </label>
-                                    <input type="password" class="form-control" name="password2" id="password2"
-                                        placeholder="Contraseña" title="enter your password2.">
-                                </div>
                             </div>
 
-                            <div class="form-group">
-
-                                <div class="col-xs-6">
-                                    <label for="Description">
-                                        <h4>Descripción</h4>
-                                    </label>
-                                    <input type="description" class="form-control" name="description" id="description"
-                                        placeholder="Descripción" title="Description">
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <div class="col-xs-12">
-                                    <br>
-                                    <button class="btn btn-lg btn-success" type="submit"><i
-                                            class="glyphicon glyphicon-ok-sign"></i> Save</button>
-                                    <button class="btn btn-lg" type="reset"><i class="glyphicon glyphicon-repeat"></i>
-                                        Reset</button>
-                                </div>
-                            </div>
+                            <button class="btn btn-primary" type="button">Save changes</button>
                         </form>
-                    </div><!--/tab-content-->
-
-                </div><!--/col-9-->
-            </div><!--/row-->
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -214,6 +181,10 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- ----------------------------------------------------------------- -->
 
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript">
+
+    </script>
 </body>
 
 </html>

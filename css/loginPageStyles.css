@@ -12017,3 +12017,13 @@ textarea.form-control {
   border: 1px solid #F8DDA4 !important;
   color: #f6f4e8 !important;
 }
+
+.pill-button{ /* text has to be centered in the middle of the button */
+  align-content: center;
+  border-radius: 40px;
+  font-size: 15px;
+  text-transform: uppercase;
+  background-color: #F8DDA4 !important;
+  border: 1px solid #F8DDA4 !important;
+  color: #000 !important;
+}
