@@ -2,6 +2,17 @@ body{margin-top:20px;
     background:#eee;
     }
 
+.button-2 {
+    border-radius: 25px;
+    background: var(--branding-peach) !important;
+    color: black;
+    padding: 10px;
+    display: flex;
+    width: 100px;
+    border-style: solid;
+    justify-content: left;
+    text-align: center;
+  }
     .communityInfo {
       background: #ffffff;
       border-radius: 25px;
