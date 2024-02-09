@@ -274,7 +274,7 @@ body {
 }
 
 .bm-navbar-brand {
-    width: 2.5rem;
+    width: 10rem;
     padding-top: var(--bs-navbar-brand-padding-y);
     padding-bottom: var(--bs-navbar-brand-padding-y);
     margin-right: var(--bs-navbar-brand-margin-end);
@@ -1250,4 +1250,33 @@ body {
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
+}
+
+.search-bar { /*bg color should be brownish black but with an alpha value*/
+    margin-left: 3rem;
+    outline: 2px solid var(--branding-brown);
+    width: 100%;
+    padding-left:30px;
+    padding-right:30px;
+    border-radius: 12px;
+    background-color: rgba(0, 0, 0, 0.2);
+    color: var(--branding-brown) !important;
+    transition: none !important;
+}
+
+.search-bar::placeholder {
+    color: var(--branding-brown) !important;
+}
+
+.search-bar:focus { /*border must not change when on focus compared to when not on focus and searchbar must not change size */
+    background-color: rgba(0, 0, 0, 0.2);
+    box-shadow: none !important;
+    border: 2px solid var(--branding-brown) !important;
+    border-color: var(--branding-brown) !important;
+    color: var(--branding-brown) !important;
+
+}
+
+#magnifier-icon-link{
+    color: var(--branding-brown) !important;
 }

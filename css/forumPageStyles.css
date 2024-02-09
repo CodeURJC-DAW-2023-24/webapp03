@@ -44,7 +44,7 @@ body {
     left: 0;
     width: 235px;
     border-right: 1px solid #cbd5e0;
-    background-color: #fff;
+    background-color: var(--branding-white) !important;
     z-index: 1;
 }
 
@@ -80,7 +80,8 @@ body {
 
 .inner-main-footer,
 .inner-main-header {
-    background-color: #fff;
+    background-color: var(--branding-white) !important;
+    border-radius: 0px 12px 0 0;
 }
 
 .inner-main-footer,
@@ -166,6 +167,7 @@ body {
 .forum-container {
     margin-top: 3rem !important;
     margin-bottom: 3rem !important;
+    border-radius: 12px !important;
 }
 
 .new-content-button {
@@ -186,4 +188,45 @@ a {
 
 .bm-nav-link:hover {
     text-decoration: none;
+}
+
+.bg-branding-white {
+    background-color: var(--branding-white);
+}
+
+.nav-link {
+    color: var(--branding-dark-grey) !important;
+}
+
+.main-body {
+    background-color: var(--branding-light-grey);
+}
+
+.inner-sidebar{
+    background-color: var(--branding-white);
+    border-radius: 12px 0 0 12px !important;
+}
+
+.inner-sidebar-header {
+    background-color: var(--branding-white);
+    border-radius: 12px 0 0 0 !important;
+}
+
+.inner-wrapper{
+    background-color: var(--branding-light-grey);
+    border-radius: 0 12px 12px 12px !important;
+}
+
+.inner-main-body{
+    background-color: var(--branding-light-grey);
+    border-radius: 0 0 12px 12px !important;
+}
+
+.forum-content {
+    background-color: var(--branding-light-grey);
+    border-radius: 0 12px 12px 0 !important;
+}
+
+.community-avatar {
+    border-radius: 8px !important;
 }

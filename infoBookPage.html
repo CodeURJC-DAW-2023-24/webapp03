@@ -18,6 +18,7 @@
     <!-- ----------------------------------------------------------------- -->
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <script src="https://kit.fontawesome.com/8f3c0a721b.js" crossorigin="anonymous"></script>
 
     <!-- Favicon-->
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico"/>
@@ -34,7 +35,7 @@
     <div class="bm-container bm-navbar-px-4 bm-navbar-px-lg-5">
         <!-- Navbar brand (is an image) and has alternative text for when the image does not load-->
         <a class="bm-navbar-brand" href="#!">
-            <img src="assets/isotipo.svg" alt="Bookmarks"/>
+            <img src="assets/imagotipo.svg" alt="Bookmarks"/>
         </a>
         <button class="bm-navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -43,7 +44,7 @@
             <!-- Has to be centered -->
             <ul class="bm-navbar-nav bm-me-auto bm-mb-lg-0 bm-ms-auto">
                 <!-- Main page option (has little house icon on the left)-->
-                <li class="bm-nav-item"><a class="bm-nav-link" href="#!">
+                <li class="bm-nav-item"><a class="bm-nav-link" href="landingPage.html">
                     <i class="bi-house-door-fill"></i>
                     Inicio
                 </a>
@@ -126,8 +127,23 @@
                 </div>
                 <div></div>
                 <div class="d-flex action-buttons-flex">
-                    <a href="modifyBookPage.html" class="btn btn-outline-dark flex-shrink-0" class="boton">
-                        <i class="bi bi-pencil"></i>
+                    <a href="" id="toReadButton" class="btn btn-outline-dark flex-shrink-0 action-button" class="boton">
+                        <i class="fa-solid fa-bookmark"></i>
+                        Por leer
+                    </a>
+
+                    <a href="" id="readingButton" class="btn btn-outline-dark flex-shrink-0 action-button" class="boton">
+                        <i class="fa-solid fa-clock"></i>
+                        Leyendo
+                    </a>
+
+                    <a href="" id="readButton" class="btn btn-primary-light flex-shrink-0 action-button" class="boton">
+                        <i class="fa-solid fa-check"></i>
+                        Leído
+                    </a>
+
+                    <a href="modifyBookPage.html" class="btn btn-secondary-light flex-shrink-0 action-button" class="boton">
+                        <i class="fa-solid fa-pencil"></i>
                         Modificar
                     </a>
                 </div>

@@ -12729,3 +12729,7 @@ fieldset:disabled .btn {
 .review-text-area{
     resize: none !important;
 }
+
+.action-button{
+    margin-right: 1rem !important;
+}
