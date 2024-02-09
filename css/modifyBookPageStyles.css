@@ -18,6 +18,7 @@
   --branding-orange: #F9A03F;
   --branding-peach: #F8DDA4;
   --branding-green: #519E8A;
+  --branding-dark-green: #3a6d5e;
   --branding-light-green: #9be6d2;
   --branding-white: #FFFFFC;
   --branding-light-grey: #efefef;
@@ -4907,8 +4908,8 @@ fieldset:disabled .btn {
 
 .card-img,
 .card-img-top {
-  border-top-left-radius: var(--bs-card-inner-border-radius);
-  border-top-right-radius: var(--bs-card-inner-border-radius);
+  border-radius: 12px;
+  object-fit: cover;
 }
 
 .card-img,
