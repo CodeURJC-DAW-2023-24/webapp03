@@ -2,12 +2,12 @@
 <html lang="en">
 
 <head>
-    <title>Bookmarks - Información sobre el libro</title>
+    <title>Bookmarks - Comunidad: Reader Legends</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <!-- NEEDED FOR THE NAVBAR AND FOOTER BRANDING -->
-    <link href="css/navbarAndBranding.css" rel="stylesheet" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+    <link href="css/navbarAndBranding.css" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet"/>
     <link href="css/editProfilePageStyles.css" rel="stylesheet">
 
 
@@ -19,383 +19,487 @@
     <link href="css/communityMembersPageStyles.css" rel="stylesheet">
     <link href="css/modifyBookPageStyles.css" rel="stylesheet">
     <!-- Favicon-->
-    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico"/>
     <!-- Bootstrap icons-->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
     <script src="https://kit.fontawesome.com/8f3c0a721b.js" crossorigin="anonymous"></script>
 
 </head>
 
 <body>
-    <!-- Navigation (this is the navbar)-->
-    <nav class="bm-navbar bm-navbar-expand-lg bm-navbar-light bm-bg-white">
-        <div class="bm-container bm-navbar-px-4 bm-navbar-px-lg-5">
-            <!-- Navbar brand (is an image) and has alternative text for when the image does not load-->
-            <a class="bm-navbar-brand" href="#!">
-                <img src="assets/imagotipo.svg" alt="Bookmarks"/>
-            </a>
-            <button class="bm-navbar-toggler" type="button" data-bs-toggle="collapse"
+<!-- Navigation (this is the navbar)-->
+<nav class="bm-navbar bm-navbar-expand-lg bm-navbar-light bm-bg-white">
+    <div class="bm-container bm-navbar-px-4 bm-navbar-px-lg-5">
+        <!-- Navbar brand (is an image) and has alternative text for when the image does not load-->
+        <a class="bm-navbar-brand" href="#!">
+            <img src="assets/imagotipo.svg" alt="Bookmarks"/>
+        </a>
+        <button class="bm-navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation"><span class="bm-navbar-toggler-icon"></span></button>
-            <div class="bm-collapse bm-navbar-collapse bm-navbar-menu" id="navbarSupportedContent">
-                <!-- Has to be centered -->
-                <ul class="bm-navbar-nav bm-me-auto bm-mb-lg-0 bm-ms-auto">
-                    <!-- Main page option (has little house icon on the left)-->
-                    <li class="bm-nav-item"><a class="bm-nav-link" href="landingPage.html">
-                            <i class="bi-house-door-fill"></i>
-                            Inicio
-                        </a>
-                    </li>
+        <div class="bm-collapse bm-navbar-collapse bm-navbar-menu" id="navbarSupportedContent">
+            <!-- Has to be centered -->
+            <ul class="bm-navbar-nav bm-me-auto bm-mb-lg-0 bm-ms-auto">
+                <!-- Main page option (has little house icon on the left)-->
+                <li class="bm-nav-item"><a class="bm-nav-link" href="landingPage.html">
+                    <i class="bi-house-door-fill"></i>
+                    Inicio
+                </a>
+                </li>
 
-                    <!-- Forum option-->
-                    <li class="bm-nav-item"><a class="bm-nav-link" href="forumPage.html">
-                            <i class="bi-chat-left-text-fill"></i>
-                            Foro
-                        </a>
-                    </li>
+                <!-- Forum option-->
+                <li class="bm-nav-item"><a class="bm-nav-link" href="forumPage.html">
+                    <i class="bi-chat-left-text-fill"></i>
+                    Foro
+                </a>
+                </li>
 
-                    <!-- Administrator menu option -->
-                    <li class="bm-nav-item"><a class="bm-nav-link" href="administratorMainPage.html">
-                            <i class="bi-gear-fill"></i>
-                            Administrador
-                        </a>
-                    </li>
+                <!-- Administrator menu option -->
+                <li class="bm-nav-item"><a class="bm-nav-link" href="administratorMainPage.html">
+                    <i class="bi-gear-fill"></i>
+                    Administrador
+                </a>
+                </li>
 
+            </ul>
+            <form class="bm-d-flex">
+                <ul class="bm-navbar-nav bm-me-auto bm-mb-lg-0 bm-ms-lg-4">
+                    <!-- Profile dropdown -->
+                    <li class="bm-nav-item dropdown">
+                        <a class="bm-nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
+                           data-bs-toggle="dropdown" aria-expanded="false">
+                            <img class="bm-navbar-profile-picture bm-rounded-circle"
+                                 src="assets/defaultProfilePicture.png" alt="Perfil"/>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="profilePage.html">Mi perfil</a></li>
+                            <li>
+                                <hr class="dropdown-divider"/>
+                            </li>
+                            <li><a class="dropdown-item" href="loginPage.html">Cerrar sesión</a></li>
+                        </ul>
+                    </li>
                 </ul>
-                <form class="bm-d-flex">
-                    <ul class="bm-navbar-nav bm-me-auto bm-mb-lg-0 bm-ms-lg-4">
-                        <!-- Profile dropdown -->
-                        <li class="bm-nav-item dropdown">
-                            <a class="bm-nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
-                                data-bs-toggle="dropdown" aria-expanded="false">
-                                <img class="bm-navbar-profile-picture bm-rounded-circle"
-                                    src="assets/defaultProfilePicture.png" alt="Perfil" />
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="#!">Mi perfil</a></li>
-                                <li>
-                                    <hr class="dropdown-divider" />
-                                </li>
-                                <li><a class="dropdown-item" href="#!">Cerrar sesión</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </form>
-            </div>
-        </div>
-    </nav>
-    <!-- Navbar ENDS HERE -->
-
-    <!-- ------------------------------- -->
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
-
-    <header class="bg-branding-white py-1 interactive-header">
-        <div class="container px-4 px-lg-5 my-5">
-            <div class="community-header">
-                <div class="community-icon-main">
-                    <img src="assets/img/communityIconExample2.jpg" class="community-avatar" alt="avatar">
-                </div>
-                <div class="text-start text-dark">
-                    <h1 class="display-4 fw-bolder">
-                        Reader Legends
-                    </h1>
-                    <div class="community-info">
-                        <div class="mg-top-10">
-                            <a href="communityMembersPage.html" class="btn btn-outline-success btn-community-action btn-pill"
-                                title="Ver miembros">
-                                <i class="fa-solid fa-users people-icon"></i>
-                                5 miembros
-                            </a>
-                            <a href="#" class="btn btn-outline-success btn-community-action"
-                                title="Unirse a la comunidad">
-                                <i class="fa-regular fa-heart"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Brief community description -->
-            <p class="lead fw-normal text-black-50 mb-0 community-description">Comunidad de lectores apasionados</p>
-        </div>
-    </header>
-
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-15 col-sm-offset-2">
-                <div class="row main-posts-area">
-                    <div class="col-sm-12">
-                        <div class="panel panel-white post publish-post-box">
-                            <div class="post-footer post-heading publish-post-contents">
-                                <div class="input-group">
-                                    <input class="form-control" placeholder="Publicar" type="text">
-                                </div>
-                            </div>
-                            <!-- Buttons for posting and attaching images -->
-                            <div class="mg-top-10">
-                                <button type="button" class="btn branding-btn-primary">Publicar</button>
-                                <button type="button" class="btn branding-btn-secondary">Adjuntar imagen</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-12">
-                        <div class="panel panel-white post">
-                            <div class="post-heading">
-                                <div class="pull-left image">
-                                    <img src="https://bootdey.com/img/Content/avatar/avatar1.png"
-                                        class="img-circle avatar" alt="user profile image">
-                                </div>
-                                <div class="pull-left meta">
-                                    <div class="title h5">
-                                        <a href="#"><b>John Doe</b></a>
-                                        ha subido una foto
-                                    </div>
-                                    <h6 class="text-muted time">Hace 5 segundos</h6>
-                                </div>
-                            </div>
-                            <div class="post-image">
-                                <img src=""><img src="assets/bookshoot.png" class="image" alt="image post">
-                            </div>
-                            <div class="post-description">
-                                <h4>Fotos de libro</h4>
-                                <p>Aquí tenéis una foto que hemos sacado de nuestro libro.</p>
-                                <div class="stats">
-                                    <a href="javascript:void(0);" class="btn btn-default stat-item">
-                                        <i class="fa fa-thumbs-up icon"></i>228
-                                    </a>
-                                    <a href="javascript:void(0);" class="btn btn-default stat-item">
-                                        <i class="fa fa-share icon"></i>128
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="post-footer">
-                                <div class="input-group">
-                                    <input class="form-control in-post-comment-form" placeholder="Pon un comentario"
-                                        type="text">
-                                    <span class="input-group-addon">
-                                        <a href="javascript:void(0);" title="Publicar comentario">
-                                            <a href="javascript:void(0);" title="Publicar comentario"
-                                                class="btn branding-btn-primary btn-no-left-corners"> <i
-                                                    class="fa-solid fa-arrow-up"></i>
-                                            </a>
-                                        </a>
-                                    </span>
-                                </div>
-                                <ul class="comments-list">
-                                    <li class="comment">
-                                        <a class="pull-left" href="javascript:void(0);">
-                                            <img class="avatar" src="https://bootdey.com/img/Content/avatar/avatar1.png"
-                                                alt="avatar">
-                                        </a>
-                                        <div class="comment-body">
-                                            <div class="comment-heading">
-                                                <h4 class="user">John Doe</h4>
-                                                <h5 class="time">Hace 7 minutos</h5>
-                                            </div>
-                                            <p>Me encanta esta foto.</p>
-                                        </div>
-                                    </li>
-                                    <li class="comment">
-                                        <a class="pull-left" href="javascript:void(0);">
-                                            <img class="avatar" src="https://bootdey.com/img/Content/avatar/avatar2.png"
-                                                alt="avatar">
-                                        </a>
-                                        <div class="comment-body">
-                                            <div class="comment-heading">
-                                                <h4 class="user">John Doe</h4>
-                                                <h5 class="time">Hace 3 minutos</h5>
-                                            </div>
-                                            <p>¡Esto es genial!</p>
-                                        </div>
-                                    </li>
-                                    <li class="comment">
-                                        <a class="pull-left" href="javascript:void(0);">
-                                            <img class="avatar" src="https://bootdey.com/img/Content/avatar/avatar4.png"
-                                                alt="avatar">
-                                        </a>
-                                        <div class="comment-body">
-                                            <div class="comment-heading">
-                                                <h4 class="user">John Doe</h4>
-                                                <h5 class="time">Hace 10 segundos</h5>
-                                            </div>
-                                            <p>¡Buah! ¡Esto es maravilloso!</p>
-                                        </div>
-                                    </li>
-                                </ul>
-                                <div>
-                                    <a href="#" class="btn branding-btn-secondary">Ver más</a>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-12">
-                        <div class="panel panel-white post">
-                            <div class="post-heading">
-                                <div class="pull-left image">
-                                    <img src="https://bootdey.com/img/Content/avatar/avatar1.png"
-                                        class="img-circle avatar" alt="user profile image">
-                                </div>
-                                <div class="pull-left meta">
-                                    <div class="title h5">
-                                        <a href="#"><b>John Doe</b></a>
-                                        publicó
-                                    </div>
-                                    <h6 class="text-muted time">Hace 1 minuto</h6>
-                                </div>
-                            </div>
-                            <div class="post-description">
-                                <p>¿Alguien ha leído algún buen libro últimamente?</p>
-                                <div class="stats">
-                                    <a href="javascript:void(0);" class="btn btn-default stat-item">
-                                        <i class="fa fa-thumbs-up icon"></i>2
-                                    </a>
-                                    <a href="javascript:void(0);" class="btn btn-default stat-item">
-                                        <i class="fa fa-share icon"></i>12
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="post-footer">
-                                <div class="input-group">
-                                    <input class="form-control in-post-comment-form" placeholder="Pon un comentario"
-                                        type="text">
-                                    <span class="input-group-addon">
-                                        <a href="javascript:void(0);" title="Publicar comentario">
-                                            <a href="javascript:void(0);" title="Publicar comentario"
-                                                class="btn branding-btn-primary btn-no-left-corners"> <i
-                                                    class="fa-solid fa-arrow-up"></i>
-                                            </a>
-                                        </a>
-                                    </span>
-                                </div>
-                                <ul class="comments-list">
-                                    <li class="comment">
-                                        <a class="pull-left" href="javascript:void(0);">
-                                            <img class="avatar" src="https://bootdey.com/img/Content/avatar/avatar3.png"
-                                                alt="avatar">
-                                        </a>
-                                        <div class="comment-body">
-                                            <div class="comment-heading">
-                                                <h4 class="user">Gavino Free</h4>
-                                                <h5 class="time">Hace 5 minutos</h5>
-                                            </div>
-                                            <p>No me he estado preocupando mucho por leer últimamente</p>
-                                        </div>
-                                        <ul class="comments-list">
-                                            <li class="comment">
-                                                <a class="pull-left" href="javascript:void(0);">
-                                                    <img class="avatar"
-                                                        src="https://bootdey.com/img/Content/avatar/avatar4.png"
-                                                        alt="avatar">
-                                                </a>
-                                                <div class="comment-body">
-                                                    <div class="comment-heading">
-                                                        <h4 class="user">John Doe</h4>
-                                                        <h5 class="time">Hace 3 minutos</h5>
-                                                    </div>
-                                                    <p>Os tenéis que leer El Señor de los Anillos</p>
-                                                </div>
-                                            </li>
-                                            <li class="comment">
-                                                <a class="pull-left" href="javascript:void(0);">
-                                                    <img class="avatar"
-                                                        src="https://bootdey.com/img/Content/avatar/avatar5.png"
-                                                        alt="avatar">
-                                                </a>
-                                                <div class="comment-body">
-                                                    <div class="comment-heading">
-                                                        <h4 class="user">John Doe</h4>
-                                                        <h5 class="time">Hace 3 minutos</h5>
-                                                    </div>
-                                                    <p>¡Nunca paréis de leer!</p>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                                <div>
-                                    <a href="#" class="btn branding-btn-secondary">Ver más</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-12">
-                        <div class="panel panel-white post">
-                            <div class="post-heading">
-                                <div class="pull-left image">
-                                    <img src="https://bootdey.com/img/Content/avatar/avatar5.png"
-                                        class="img-circle avatar" alt="user profile image">
-                                </div>
-                                <div class="pull-left meta">
-                                    <div class="title h5">
-                                        <a href="#"><b>Yanique Robinson</b></a>
-                                        publicó un vídeo
-                                    </div>
-                                    <h6 class="text-muted time">Hace 1 minuto</h6>
-                                </div>
-                            </div>
-                            <div class="post-video">
-                                <div class="fluid-width-video-wrapper" style="padding-top: 56.2%;">
-                                    <iframe src="https://player.vimeo.com/video/98417189" id="fitvid369523"></iframe>
-                                </div>
-                            </div>
-                            <div class="post-description">
-                                <div class="stats">
-                                    <a href="javascript:void(0);" class="btn btn-default stat-item">
-                                        <i class="fa fa-thumbs-up icon"></i>2
-                                    </a>
-                                    <a href="javascript:void(0);" class="btn btn-default stat-item">
-                                        <i class="fa fa-share icon"></i>12
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="post-footer">
-                                <div class="input-group">
-                                    <input class="form-control in-post-comment-form" placeholder="Pon un comentario"
-                                        type="text">
-                                    <span class="input-group-addon">
-                                        <a href="javascript:void(0);" title="Publicar comentario">
-                                            <a href="javascript:void(0);" title="Publicar comentario"
-                                                class="btn branding-btn-primary btn-no-left-corners"> <i
-                                                    class="fa-solid fa-arrow-up"></i>
-                                            </a>
-                                        </a>
-                                    </span>
-                                </div>
-                                <div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
-            </div>
-
+            </form>
         </div>
     </div>
-    <!-- ------------------------------- -->
+</nav>
+<!-- Navbar ENDS HERE -->
 
+<!-- ------------------------------- -->
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 
-    <!-- Footer STARTS HERE (the footer goes right before the end of the BODY, before the scripts are declared, if there are any)-->
-    <footer class="bm-py-5 bm-bg-footer">
-        <div class="bm-container bm-footer-container">
-            <!-- Bookmarks logo at the start of the footer, Copyright text at the end of the footer-->
-            <a class="bm-d-flex bm-align-items-start" href="#!">
-                <img class="bm-footer-logo" src="assets/logoDark.svg" alt="Bookmarks" />
-            </a>
-
-            <p class="bm-text-footer">Copyright &copy; Bookmarks 2024</p>
+<header class="bg-branding-white py-1 interactive-header">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="community-header">
+            <div class="community-icon-main">
+                <img src="assets/img/communityIconExample2.jpg" class="community-avatar" alt="avatar">
+            </div>
+            <div class="text-start text-dark">
+                <h1 class="display-4 fw-bolder">
+                    Reader Legends
+                </h1>
+                <div class="community-info">
+                    <div class="mg-top-10">
+                        <a href="communityMembersPage.html"
+                           class="btn btn-outline-success btn-community-action btn-pill"
+                           title="Ver miembros">
+                            <i class="fa-solid fa-users people-icon"></i>
+                            5 miembros
+                        </a>
+                        <a href="#" class="btn btn-outline-success btn-community-action"
+                           title="Unirse a la comunidad">
+                            <i class="fa-regular fa-heart"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
-    </footer>
-    <!-- Footer ENDS HERE -->
+        <!-- Brief community description -->
+        <p class="lead fw-normal text-black-50 mb-0 community-description">Comunidad de lectores apasionados</p>
+    </div>
+</header>
 
-    <!-- CORE BOOTSTRAP JS (THIS GOES RIGHT AFTER THE FOOTER, IT HAS THE NAVBAR DROPDOWN TOGGLE FUNCTIONALITY)-->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- ----------------------------------------------------------------- -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-15 col-sm-offset-2">
+            <div class="row main-posts-area mb-5 mt-4">
+                <div class="col-sm-12">
+                    <div class="panel panel-white post publish-post-box">
+                        <div class="post-footer post-heading publish-post-contents">
+                            <div class="input-group">
+                                <input class="form-control" placeholder="Publicar" type="text">
+                            </div>
+                        </div>
+                        <!-- Buttons for posting and attaching images -->
+                        <div class="mg-top-10">
+                            <button type="button" class="btn branding-btn-primary">Publicar</button>
+                            <button type="button" class="btn branding-btn-secondary">Adjuntar imagen</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row-sm-12">
+                    <div class="col-sm-15 col-sm-offset-2">
+                        <div class="main-posts-area">
+                            <!-- Post 1 -->
+
+                            <div class="panel panel-white post">
+                                <div class="post-heading">
+                                    <div class="pull-left image">
+                                        <img src="https://bootdey.com/img/Content/avatar/avatar1.png"
+                                             class="img-circle avatar" alt="user profile image">
+                                    </div>
+                                    <div class="pull-left meta">
+                                        <div class="title h5">
+                                            <a href="profilePage.html"><b>John Doe</b></a>
+                                            ha subido una foto
+                                        </div>
+                                        <h6 class="text-muted time">Hace 5 segundos</h6>
+                                    </div>
+                                </div>
+                                <div class="post-image">
+                                    <img src=""><img src="assets/bookshoot.png" class="image" alt="image post">
+                                </div>
+                                <div class="post-description">
+                                    <h4>Fotos de libro</h4>
+                                    <p>Aquí tenéis una foto que hemos sacado de nuestro libro.</p>
+                                    <div class="stats">
+                                        <a href="javascript:void(0);" class="btn btn-default stat-item">
+                                            <i class="fa fa-thumbs-up icon"></i>228
+                                        </a>
+                                        <a href="javascript:void(0);" class="btn btn-default stat-item">
+                                            <i class="fa fa-share icon"></i>128
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="post-footer">
+                                    <div class="input-group">
+                                        <input class="form-control in-post-comment-form"
+                                               placeholder="Pon un comentario"
+                                               type="text">
+                                        <span class="input-group-addon">
+                                        <a href="javascript:void(0);" title="Publicar comentario">
+                                            <a href="javascript:void(0);" title="Publicar comentario"
+                                               class="btn branding-btn-primary btn-no-left-corners"> <i
+                                                    class="fa-solid fa-arrow-up"></i>
+                                            </a>
+                                        </a>
+                                    </span>
+                                    </div>
+                                    <ul class="comments-list">
+                                        <li class="comment">
+                                            <a class="pull-left" href="javascript:void(0);">
+                                                <img class="avatar"
+                                                     src="https://bootdey.com/img/Content/avatar/avatar1.png"
+                                                     alt="avatar">
+                                            </a>
+                                            <div class="comment-body">
+                                                <div class="comment-heading">
+                                                    <h4 class="user">John Doe</h4>
+                                                    <h5 class="time">Hace 7 minutos</h5>
+                                                </div>
+                                                <p>Me encanta esta foto.</p>
+                                            </div>
+                                        </li>
+                                        <li class="comment">
+                                            <a class="pull-left" href="javascript:void(0);">
+                                                <img class="avatar"
+                                                     src="https://bootdey.com/img/Content/avatar/avatar2.png"
+                                                     alt="avatar">
+                                            </a>
+                                            <div class="comment-body">
+                                                <div class="comment-heading">
+                                                    <h4 class="user">John Doe</h4>
+                                                    <h5 class="time">Hace 3 minutos</h5>
+                                                </div>
+                                                <p>¡Esto es genial!</p>
+                                            </div>
+                                        </li>
+                                        <li class="comment">
+                                            <a class="pull-left" href="javascript:void(0);">
+                                                <img class="avatar"
+                                                     src="https://bootdey.com/img/Content/avatar/avatar4.png"
+                                                     alt="avatar">
+                                            </a>
+                                            <div class="comment-body">
+                                                <div class="comment-heading">
+                                                    <h4 class="user">John Doe</h4>
+                                                    <h5 class="time">Hace 10 segundos</h5>
+                                                </div>
+                                                <p>¡Buah! ¡Esto es maravilloso!</p>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                    <div>
+                                        <a href="postPage.html" class="btn branding-btn-secondary">Ver más</a>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <!-- Post 2 -->
+                            <div class="panel panel-white post">
+                                <div class="post-heading">
+                                    <div class="pull-left image">
+                                        <img src="https://bootdey.com/img/Content/avatar/avatar1.png"
+                                             class="img-circle avatar" alt="user profile image">
+                                    </div>
+                                    <div class="pull-left meta">
+                                        <div class="title h5">
+                                            <a href="profilePage.html"><b>John Doe</b></a>
+                                            publicó
+                                        </div>
+                                        <h6 class="text-muted time">Hace 1 minuto</h6>
+                                    </div>
+                                </div>
+                                <div class="post-description">
+                                    <p>¿Alguien ha leído algún buen libro últimamente?</p>
+                                    <div class="stats">
+                                        <a href="javascript:void(0);" class="btn btn-default stat-item">
+                                            <i class="fa fa-thumbs-up icon"></i>2
+                                        </a>
+                                        <a href="javascript:void(0);" class="btn btn-default stat-item">
+                                            <i class="fa fa-share icon"></i>12
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="post-footer">
+                                    <div class="input-group">
+                                        <input class="form-control in-post-comment-form"
+                                               placeholder="Pon un comentario"
+                                               type="text">
+                                        <span class="input-group-addon">
+                                        <a href="javascript:void(0);" title="Publicar comentario">
+                                            <a href="javascript:void(0);" title="Publicar comentario"
+                                               class="btn branding-btn-primary btn-no-left-corners"> <i
+                                                    class="fa-solid fa-arrow-up"></i>
+                                            </a>
+                                        </a>
+                                    </span>
+                                    </div>
+                                    <ul class="comments-list">
+                                        <li class="comment">
+                                            <a class="pull-left" href="javascript:void(0);">
+                                                <img class="avatar"
+                                                     src="https://bootdey.com/img/Content/avatar/avatar3.png"
+                                                     alt="avatar">
+                                            </a>
+                                            <div class="comment-body">
+                                                <div class="comment-heading">
+                                                    <h4 class="user">Gavino Free</h4>
+                                                    <h5 class="time">Hace 5 minutos</h5>
+                                                </div>
+                                                <p>No me he estado preocupando mucho por leer últimamente</p>
+                                            </div>
+                                            <ul class="comments-list">
+                                                <li class="comment">
+                                                    <a class="pull-left" href="javascript:void(0);">
+                                                        <img class="avatar"
+                                                             src="https://bootdey.com/img/Content/avatar/avatar4.png"
+                                                             alt="avatar">
+                                                    </a>
+                                                    <div class="comment-body">
+                                                        <div class="comment-heading">
+                                                            <h4 class="user">John Doe</h4>
+                                                            <h5 class="time">Hace 3 minutos</h5>
+                                                        </div>
+                                                        <p>Os tenéis que leer El Señor de los Anillos</p>
+                                                    </div>
+                                                </li>
+                                                <li class="comment">
+                                                    <a class="pull-left" href="javascript:void(0);">
+                                                        <img class="avatar"
+                                                             src="https://bootdey.com/img/Content/avatar/avatar5.png"
+                                                             alt="avatar">
+                                                    </a>
+                                                    <div class="comment-body">
+                                                        <div class="comment-heading">
+                                                            <h4 class="user">John Doe</h4>
+                                                            <h5 class="time">Hace 3 minutos</h5>
+                                                        </div>
+                                                        <p>¡Nunca paréis de leer!</p>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                    <div>
+                                        <a href="postPage.html" class="btn branding-btn-secondary">Ver más</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="panel panel-white post">
+                                <div class="post-heading">
+                                    <div class="pull-left image">
+                                        <img src="https://bootdey.com/img/Content/avatar/avatar5.png"
+                                             class="img-circle avatar" alt="user profile image">
+                                    </div>
+                                    <div class="pull-left meta">
+                                        <div class="title h5">
+                                            <a href="#"><b>Yanique Robinson</b></a>
+                                            publicó un vídeo
+                                        </div>
+                                        <h6 class="text-muted time">Hace 1 minuto</h6>
+                                    </div>
+                                </div>
+                                <div class="post-video">
+                                    <div class="fluid-width-video-wrapper" style="padding-top: 56.2%;">
+                                        <iframe src="https://player.vimeo.com/video/98417189"
+                                                id="fitvid369523"></iframe>
+                                    </div>
+                                </div>
+                                <div class="post-description">
+                                    <div class="stats">
+                                        <a href="javascript:void(0);" class="btn btn-default stat-item">
+                                            <i class="fa fa-thumbs-up icon"></i>2
+                                        </a>
+                                        <a href="javascript:void(0);" class="btn btn-default stat-item">
+                                            <i class="fa fa-share icon"></i>12
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="post-footer">
+                                    <div class="input-group">
+                                        <input class="form-control in-post-comment-form"
+                                               placeholder="Pon un comentario"
+                                               type="text">
+                                        <span class="input-group-addon">
+                                        <a href="javascript:void(0);" title="Publicar comentario">
+                                            <a href="javascript:void(0);" title="Publicar comentario"
+                                               class="btn branding-btn-primary btn-no-left-corners"> <i
+                                                    class="fa-solid fa-arrow-up"></i>
+                                            </a>
+                                        </a>
+                                    </span>
+                                    </div>
+                                    <div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="panel panel-white post">
+                                <div class="post-heading">
+                                    <div class="pull-left image">
+                                        <img src="https://bootdey.com/img/Content/avatar/avatar1.png"
+                                             class="img-circle avatar" alt="user profile image">
+                                    </div>
+                                    <div class="pull-left meta">
+                                        <div class="title h5">
+                                            <a href="profilePage.html"><b>John Doe</b></a>
+                                            publicó
+                                        </div>
+                                        <h6 class="text-muted time">Hace 1 minuto</h6>
+                                    </div>
+                                </div>
+                                <div class="post-description">
+                                    <p>¿Alguien ha leído algún buen libro últimamente?</p>
+                                    <div class="stats">
+                                        <a href="javascript:void(0);" class="btn btn-default stat-item">
+                                            <i class="fa fa-thumbs-up icon"></i>2
+                                        </a>
+                                        <a href="javascript:void(0);" class="btn btn-default stat-item">
+                                            <i class="fa fa-share icon"></i>12
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="post-footer">
+                                    <div class="input-group">
+                                        <input class="form-control in-post-comment-form"
+                                               placeholder="Pon un comentario"
+                                               type="text">
+                                        <span class="input-group-addon">
+                                        <a href="javascript:void(0);" title="Publicar comentario">
+                                            <a href="javascript:void(0);" title="Publicar comentario"
+                                               class="btn branding-btn-primary btn-no-left-corners"> <i
+                                                    class="fa-solid fa-arrow-up"></i>
+                                            </a>
+                                        </a>
+                                    </span>
+                                    </div>
+                                    <ul class="comments-list">
+                                        <li class="comment">
+                                            <a class="pull-left" href="javascript:void(0);">
+                                                <img class="avatar"
+                                                     src="https://bootdey.com/img/Content/avatar/avatar3.png"
+                                                     alt="avatar">
+                                            </a>
+                                            <div class="comment-body">
+                                                <div class="comment-heading">
+                                                    <h4 class="user">Gavino Free</h4>
+                                                    <h5 class="time">Hace 5 minutos</h5>
+                                                </div>
+                                                <p>No me he estado preocupando mucho por leer últimamente</p>
+                                            </div>
+                                            <ul class="comments-list">
+                                                <li class="comment">
+                                                    <a class="pull-left" href="javascript:void(0);">
+                                                        <img class="avatar"
+                                                             src="https://bootdey.com/img/Content/avatar/avatar4.png"
+                                                             alt="avatar">
+                                                    </a>
+                                                    <div class="comment-body">
+                                                        <div class="comment-heading">
+                                                            <h4 class="user">John Doe</h4>
+                                                            <h5 class="time">Hace 3 minutos</h5>
+                                                        </div>
+                                                        <p>Os tenéis que leer El Señor de los Anillos</p>
+                                                    </div>
+                                                </li>
+                                                <li class="comment">
+                                                    <a class="pull-left" href="javascript:void(0);">
+                                                        <img class="avatar"
+                                                             src="https://bootdey.com/img/Content/avatar/avatar5.png"
+                                                             alt="avatar">
+                                                    </a>
+                                                    <div class="comment-body">
+                                                        <div class="comment-heading">
+                                                            <h4 class="user">John Doe</h4>
+                                                            <h5 class="time">Hace 3 minutos</h5>
+                                                        </div>
+                                                        <p>¡Nunca paréis de leer!</p>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                    <div>
+                                        <a href="postPage.html" class="btn branding-btn-secondary">Ver más</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+<!-- ------------------------------- -->
+
+
+<!-- Footer STARTS HERE (the footer goes right before the end of the BODY, before the scripts are declared, if there are any)-->
+<footer class="bm-py-5 bm-bg-footer">
+    <div class="bm-container bm-footer-container">
+        <!-- Bookmarks logo at the start of the footer, Copyright text at the end of the footer-->
+        <a class="bm-d-flex bm-align-items-start" href="#!">
+            <img class="bm-footer-logo" src="assets/logoDark.svg" alt="Bookmarks"/>
+        </a>
+
+        <p class="bm-text-footer">Copyright &copy; Bookmarks 2024</p>
+    </div>
+</footer>
+<!-- Footer ENDS HERE -->
+
+<!-- CORE BOOTSTRAP JS (THIS GOES RIGHT AFTER THE FOOTER, IT HAS THE NAVBAR DROPDOWN TOGGLE FUNCTIONALITY)-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- ----------------------------------------------------------------- -->
 </body>
 
 </html>

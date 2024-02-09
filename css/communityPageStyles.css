@@ -637,3 +637,19 @@ body {
 .people-icon {
     margin-right: 10px;
 }
+
+.post .post-image .image {
+    object-fit: cover; /* This will make sure the image keeps its aspect ratio */
+}
+
+.main-posts-area {
+    column-count: 2;
+    column-gap: 1em;
+}
+
+.panel {
+    display: inline-block;
+    width: 100%;
+    margin-bottom: 1em;
+    break-inside: avoid;
+}
