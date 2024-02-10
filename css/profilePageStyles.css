@@ -1,8 +1,26 @@
 @charset "UTF-8";
 
+:root {
+    /* BOOKMARKS BRANDING COLORS */
+    --branding-grey: #808F85;
+    --branding-brown: #583E23;
+    --branding-orange: #F9A03F;
+    --branding-peach: #F8DDA4;
+    --branding-green: #519E8A;
+    --branding-dark-green: #3a6d5e;
+    --branding-light-green: #9be6d2;
+    --branding-white: #FFFFFC;
+    --branding-light-grey: #efefef;
+    --branding-sepia: #F8F4E8;
+    --branding-darkish-grey: #494a50;
+    --branding-dark-grey: #2a2b2e;
+    /* -------- */
+}
+
 body {
     color: #6F8BA4;
     margin-top: 20px;
+    background-color: var(--branding-sepia) !important;
 }
 
 .section {
@@ -11,7 +29,7 @@ body {
 }
 
 .gray-bg {
-    background-color: #f5f5f5;
+    background-color: var(--branding-sepia);
 }
 
 img {
@@ -67,29 +85,11 @@ img {
 }
 
 .about-list label {
-    color: #20247b;
+    color: var(--branding-green);
     font-weight: 600;
     width: 88px;
     margin: 0;
     position: relative;
-}
-
-.about-list label:after {
-    content: "";
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    right: 11px;
-    width: 1px;
-    height: 12px;
-    background: #20247b;
-    -moz-transform: rotate(15deg);
-    -o-transform: rotate(15deg);
-    -ms-transform: rotate(15deg);
-    -webkit-transform: rotate(15deg);
-    transform: rotate(15deg);
-    margin: auto;
-    opacity: 0.5;
 }
 
 .about-list p {
@@ -117,7 +117,7 @@ img {
 
 .about-section .counter .count {
     font-weight: 700;
-    color: #20247b;
+    color: var(--branding-orange);
     margin: 0 0 5px;
 }
 
@@ -137,14 +137,14 @@ mark {
 }
 
 .theme-color {
-    color: #fc5356;
+    color: var(--branding-orange);
 }
 
 .dark-color {
-    color: #20247b;
+    color: var(--branding-dark-grey);
 }
 
-.buttons-container{
+.buttons-container {
     margin-top: 10px;
     margin-left: 10px;
     display: flex;
@@ -177,8 +177,6 @@ mark {
 .single_advisor_profile {
     position: relative;
     margin-bottom: 50px;
-    -webkit-transition-duration: 500ms;
-    transition-duration: 500ms;
     z-index: 1;
     border-radius: 15px;
     -webkit-box-shadow: 0 0.25rem 1rem 0 rgba(47, 91, 234, 0.125);
@@ -196,8 +194,6 @@ mark {
 }
 
 .single_advisor_profile .advisor_thumb::after {
-    -webkit-transition-duration: 500ms;
-    transition-duration: 500ms;
     position: absolute;
     width: 150%;
     height: 80px;
@@ -245,29 +241,22 @@ mark {
     z-index: 1;
     padding: 30px;
     text-align: right;
-    -webkit-transition-duration: 500ms;
-    transition-duration: 500ms;
-    border-radius: 0 0 15px 15px;
-    background-color: #ffffff;
+    border-radius: 0 12px 12px 0;
 }
 
 .single_advisor_profile .single_advisor_details_info::after {
-    -webkit-transition-duration: 500ms;
-    transition-duration: 500ms;
     position: absolute;
     z-index: 1;
     width: 50px;
     height: 3px;
-    background-color: #3f43fd;
+    background-color: var(--branding-green);
     content: "";
     top: 12px;
-    right: 30px;
+    right: 10px;
 }
 
 .single_advisor_profile .single_advisor_details_info h6 {
     margin-bottom: 0.25rem;
-    -webkit-transition-duration: 500ms;
-    transition-duration: 500ms;
 }
 
 @media only screen and (min-width: 768px) and (max-width: 991px) {
@@ -277,8 +266,6 @@ mark {
 }
 
 .single_advisor_profile .single_advisor_details_info p {
-    -webkit-transition-duration: 500ms;
-    transition-duration: 500ms;
     margin-bottom: 0;
     font-size: 14px;
 }
@@ -289,61 +276,178 @@ mark {
     }
 }
 
-.single_advisor_profile:hover .advisor_thumb::after,
-.single_advisor_profile:focus .advisor_thumb::after {
-    background-color: #070a57;
+.booklist-container {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
 }
 
-.single_advisor_profile:hover .advisor_thumb .social-info a,
-.single_advisor_profile:focus .advisor_thumb .social-info a {
-    color: #ffffff;
+.col-12 {
+    display: flex;
+    gap: 10px;
+    border: solid;
 }
 
-.single_advisor_profile:hover .advisor_thumb .social-info a:hover,
-.single_advisor_profile:hover .advisor_thumb .social-info a:focus,
-.single_advisor_profile:focus .advisor_thumb .social-info a:hover,
-.single_advisor_profile:focus .advisor_thumb .social-info a:focus {
-    color: #ffffff;
+.list-title {
+    text-align: center;
 }
 
-.single_advisor_profile:hover .single_advisor_details_info,
-.single_advisor_profile:focus .single_advisor_details_info {
-    background-color: #070a57;
+.col-book {
+    display: flex;
+    gap: 10px;
+    margin: 10px;
 }
 
-.single_advisor_profile:hover .single_advisor_details_info::after,
-.single_advisor_profile:focus .single_advisor_details_info::after {
-    background-color: #ffffff;
+.bg-branding-white {
+    background-color: var(--branding-white);
 }
 
-.single_advisor_profile:hover .single_advisor_details_info h6,
-.single_advisor_profile:focus .single_advisor_details_info h6 {
-    color: #ffffff;
+.branding-btn-primary {
+    background-color: var(--branding-green) !important;
+    border-color: var(--branding-green) !important;
+    color: var(--branding-white) !important;
 }
 
-.single_advisor_profile:hover .single_advisor_details_info p,
-.single_advisor_profile:focus .single_advisor_details_info p {
-    color: #ffffff;
+.branding-btn-primary:hover {
+    background-color: var(--branding-dark-green) !important;
+    border-color: var(--branding-dark-green) !important;
+    color: var(--branding-white) !important;
+}
+
+/* halo effect when clicked */
+
+.branding-btn-primary:focus {
+    box-shadow: 0 0 0 0.2rem rgba(81, 158, 138, 0.5) !important;
+}
+
+.branding-btn-secondary:focus {
+    box-shadow: 0 0 0 0.2rem rgba(128, 143, 133, 0.5) !important;
+}
+
+.profile-info-box {
+    padding: 2rem;
+    border-radius: 12px !important;
+    box-shadow: 0 0 30px rgba(31, 45, 61, 0.125);
+    background-color: var(--branding-white) !important;
+}
+
+.no-gutters {
+    margin-right: 0 !important;
+    margin-left: 0 !important;
+}
+
+.avatar-image {
+    width: 315px; /* adjust as needed */
+    height: 315px; /* adjust as needed */
+    border-radius: 12px; /* this will make the image round */
+    object-fit: cover; /* this will prevent the image from being distorted */
+}
+
+.single_advisor_profile {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 20px; /* adjust as needed */
+    background-color: var(--branding-white);
+}
+
+.single_advisor_profile .advisor_thumb {
+    width: 30%; /* adjust as needed */
+    margin-right: 20px; /* adjust as needed */
+}
+
+.single_advisor_profile .single_advisor_details_info {
+    width: 70%; /* adjust as needed */
+}
+
+@media only screen and (max-width: 575px) {
+    .single_advisor_profile {
+        flex-direction: column;
+    }
+
+    .single_advisor_profile .advisor_thumb,
+    .single_advisor_profile .single_advisor_details_info {
+        width: 100%;
+    }
+}
+
+.in-card-book-cover-image {
+    height: 150px; /* adjust as needed */
+    overflow: hidden; /* hide the parts of the image that don't fit in the container */
+    border-radius: 12px 0 0 12px; /* this will make the image round */
+}
+
+.in-card-book-cover-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* maintain aspect ratio while filling container */
+}
+
+.counter {
+    background-color: var(--branding-white) !important;
+}
+
+.single_advisor_profile{ /* has small border */
+    background-color: #fff !important;
+    border-radius: 12px;
+    box-shadow: 0 0 30px rgba(61, 53, 31, 0.12) !important;
+    max-width: none !important;
+    width: 100% !important;
+}
+
+/* background turns green when hovered */
+
+.single_advisor_profile:hover {
+    background-color: var(--branding-green) !important;
+    color: var(--branding-white) !important;
+}
+
+/* single_advisor_details_info::after turns white when hovered */
+
+.single_advisor_profile:hover .single_advisor_details_info::after {
+    background-color: var(--branding-white) !important;
 }
 
 .booklist-container{
     margin-top: 20px;
     display: flex;
     justify-content: center;
+    gap: 1rem !important;
 }
 
-.col-12{
-    display: flex;
-    gap: 10px;
-    border: solid;
+.book-list-card{
+    border-radius: 12px !important;
+    box-shadow: 0 0 30px rgba(31, 45, 61, 0.125) !important;
+    background-color: var(--branding-white) !important;
+    flex: 1 !important;
+
 }
 
-.list-title{
-    text-align: center;
+.single_advisor_details_info{
+    padding: 30px !important;
+    text-align: right !important;
+    border-radius: 0 12px 12px 0 !important;
+    padding-right: 10px !important;
 }
 
-.col-book{
-    display: flex;
-    gap: 10px;
-    margin: 10px;
+.book-link-disabled-decorations{
+    color: var(--branding-dark-grey) !important;
+    text-decoration: none !important;
+}
+
+.card-body{
+    background-color: var(--branding-white) !important;
+    border-radius: 0 0 12px 12px !important;
+    padding: 1rem !important;
+    padding-top: 2rem !important;
+}
+
+.card-header{
+    margin-bottom: 0 !important;
+    background-color: rgba(107, 83, 38, 0.048) !important;
+    border-bottom: 1px solid rgba(33, 40, 50, 0.125) !important;
+    display:flex !important;
+    justify-content: center !important;
+    align-content: center;
+    border-radius: 12px 12px 0 0 !important;
 }

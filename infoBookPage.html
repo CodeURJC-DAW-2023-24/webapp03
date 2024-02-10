@@ -34,7 +34,7 @@
 <nav class="bm-navbar bm-navbar-expand-lg bm-navbar-light bm-bg-white">
     <div class="bm-container bm-navbar-px-4 bm-navbar-px-lg-5">
         <!-- Navbar brand (is an image) and has alternative text for when the image does not load-->
-        <a class="bm-navbar-brand" href="#!">
+        <a class="bm-navbar-brand" href="landingPage.html">
             <img src="assets/imagotipo.svg" alt="Bookmarks"/>
         </a>
         <button class="bm-navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -62,6 +62,18 @@
                     <i class="bi-gear-fill"></i>
                     Administrador
                 </a>
+                </li>
+
+                <!-- Search widget-->
+                <li class="bm-nav-item">
+                    <form class="bm-d-flex position-relative">
+                        <input id="search-bar" class="form-control search-bar" type="search" placeholder="Buscar"
+                               aria-label="Search">
+                        <a id="magnifier-icon-link" href="searchResultsPage.html">
+                            <i id="magnifier-icon"
+                               class="fa-solid fa-magnifying-glass position-absolute top-50 end-0 translate-middle-y me-2"></i>
+                        </a>
+                    </form>
                 </li>
 
             </ul>
@@ -132,7 +144,8 @@
                         Por leer
                     </a>
 
-                    <a href="" id="readingButton" class="btn btn-outline-dark flex-shrink-0 action-button" class="boton">
+                    <a href="" id="readingButton" class="btn btn-outline-dark flex-shrink-0 action-button"
+                       class="boton">
                         <i class="fa-solid fa-clock"></i>
                         Leyendo
                     </a>
@@ -142,7 +155,8 @@
                         Leído
                     </a>
 
-                    <a href="modifyBookPage.html" class="btn btn-secondary-light flex-shrink-0 action-button" class="boton">
+                    <a href="modifyBookPage.html" class="btn btn-secondary-light flex-shrink-0 action-button"
+                       class="boton">
                         <i class="fa-solid fa-pencil"></i>
                         Modificar
                     </a>
@@ -246,7 +260,7 @@
 <footer class="bm-py-5 bm-bg-footer">
     <div class="bm-container bm-footer-container">
         <!-- Bookmarks logo at the start of the footer, Copyright text at the end of the footer-->
-        <a class="bm-d-flex bm-align-items-start" href="#!">
+        <a class="bm-d-flex bm-align-items-start" href="landingPage.html">
             <img class="bm-footer-logo" src="assets/logoDark.svg" alt="Bookmarks"/>
         </a>
 

@@ -2,256 +2,270 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
     <title>Bookmarks - Panel de administración</title>
 
     <!-- Favicon-->
-    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico"/>
 
     <!-- NEEDED FOR THE NAVBAR AND FOOTER BRANDING -->
-    <link href="css/navbarAndBranding.css" rel="stylesheet" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+    <link href="css/navbarAndBranding.css" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet"/>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Gabarito&display=swap" rel="stylesheet">
     <!-- ----------------------------------------------------------------- -->
 
-    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
-    <link href="css/administratorPageStyles.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet"/>
+    <link href="css/administratorPageStyles.css" rel="stylesheet"/>
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     <script src="https://kit.fontawesome.com/8f3c0a721b.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
-    <!-- Navigation (this is the navbar)-->
-    <nav class="bm-navbar bm-navbar-expand-lg bm-navbar-light bm-bg-white">
-        <div class="bm-container bm-navbar-px-4 bm-navbar-px-lg-5">
-            <!-- Navbar brand (is an image) and has alternative text for when the image does not load-->
-            <a class="bm-navbar-brand" href="#!">
-                <img src="assets/imagotipo.svg" alt="Bookmarks"/>
-            </a>
-            <button class="bm-navbar-toggler" type="button" data-bs-toggle="collapse"
+<!-- Navigation (this is the navbar)-->
+<nav class="bm-navbar bm-navbar-expand-lg bm-navbar-light bm-bg-white">
+    <div class="bm-container bm-navbar-px-4 bm-navbar-px-lg-5">
+        <!-- Navbar brand (is an image) and has alternative text for when the image does not load-->
+        <a class="bm-navbar-brand" href="landingPage.html">
+            <img src="assets/imagotipo.svg" alt="Bookmarks"/>
+        </a>
+        <button class="bm-navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation"><span class="bm-navbar-toggler-icon"></span></button>
-            <div class="bm-collapse bm-navbar-collapse bm-navbar-menu" id="navbarSupportedContent">
-                <!-- Has to be centered -->
-                <ul class="bm-navbar-nav bm-me-auto bm-mb-lg-0 bm-ms-auto">
-                    <!-- Main page option (has little house icon on the left)-->
-                    <li class="bm-nav-item"><a class="bm-nav-link" href="landingPage.html">
-                            <i class="bi-house-door-fill"></i>
-                            Inicio
-                        </a>
-                    </li>
+        <div class="bm-collapse bm-navbar-collapse bm-navbar-menu" id="navbarSupportedContent">
+            <!-- Has to be centered -->
+            <ul class="bm-navbar-nav bm-me-auto bm-mb-lg-0 bm-ms-auto">
+                <!-- Main page option (has little house icon on the left)-->
+                <li class="bm-nav-item"><a class="bm-nav-link" href="landingPage.html">
+                    <i class="bi-house-door-fill"></i>
+                    Inicio
+                </a>
+                </li>
 
-                    <!-- Forum option-->
-                    <li class="bm-nav-item"><a class="bm-nav-link" href="forumPage.html">
-                            <i class="bi-chat-left-text-fill"></i>
-                            Foro
-                        </a>
-                    </li>
+                <!-- Forum option-->
+                <li class="bm-nav-item"><a class="bm-nav-link" href="forumPage.html">
+                    <i class="bi-chat-left-text-fill"></i>
+                    Foro
+                </a>
+                </li>
 
-                    <!-- Administrator menu option -->
-                    <li class="bm-nav-item"> <a class="bm-nav-link" href="administratorMainPage.html">
-                            <i class="bi-gear-fill"></i>
-                            Administrador
+                <!-- Administrator menu option -->
+                <li class="bm-nav-item"><a class="bm-nav-link" href="administratorMainPage.html">
+                    <i class="bi-gear-fill"></i>
+                    Administrador
+                </a>
+                </li>
+                <!-- Search widget-->
+                <li class="bm-nav-item">
+                    <form class="bm-d-flex position-relative">
+                        <input id="search-bar" class="form-control search-bar" type="search" placeholder="Buscar"
+                               aria-label="Search">
+                        <a id="magnifier-icon-link" href="searchResultsPage.html">
+                            <i id="magnifier-icon"
+                               class="fa-solid fa-magnifying-glass position-absolute top-50 end-0 translate-middle-y me-2"></i>
                         </a>
+                    </form>
+                </li>
+            </ul>
+            <form class="bm-d-flex">
+                <ul class="bm-navbar-nav bm-me-auto bm-mb-lg-0 bm-ms-lg-4">
+                    <!-- Profile dropdown -->
+                    <li class="bm-nav-item dropdown">
+                        <a class="bm-nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
+                           data-bs-toggle="dropdown" aria-expanded="false">
+                            <img class="bm-navbar-profile-picture bm-rounded-circle"
+                                 src="assets/defaultProfilePicture.png" alt="Perfil"/>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="profilePage.html">Mi perfil</a></li>
+                            <li>
+                                <hr class="dropdown-divider"/>
+                            </li>
+                            <li><a class="dropdown-item" href="loginPage.html">Cerrar sesión</a></li>
+                        </ul>
                     </li>
-
                 </ul>
-                <form class="bm-d-flex">
-                    <ul class="bm-navbar-nav bm-me-auto bm-mb-lg-0 bm-ms-lg-4">
-                        <!-- Profile dropdown -->
-                        <li class="bm-nav-item dropdown">
-                            <a class="bm-nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
-                                data-bs-toggle="dropdown" aria-expanded="false">
-                                <img class="bm-navbar-profile-picture bm-rounded-circle"
-                                    src="assets/defaultProfilePicture.png" alt="Perfil" />
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="profilePage.html">Mi perfil</a></li>
-                                <li>
-                                    <hr class="dropdown-divider" />
-                                </li>
-                                <li><a class="dropdown-item" href="loginPage.html">Cerrar sesión</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </form>
-            </div>
-        </div>
-    </nav>
-    <!-- Navbar ENDS HERE -->
-
-    <div id="layoutSidenav">
-        <div id="layoutSidenav_nav">
-            <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
-                <div class="sb-sidenav-menu">
-                    <div class="nav">
-                        <div class="sb-sidenav-menu-heading">General</div>
-                        <a class="nav-link" href="administratorMainPage.html">
-                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                            Pantalla principal
-                        </a>
-                        <div class="sb-sidenav-menu-heading">Herramientas</div>
-
-                        <a class="nav-link" href="#">
-                            <div class="sb-nav-link-icon"><i class="fa-solid fa-envelope"></i></div>
-                            Enviar notificación
-                        </a>
-
-                        <a class="nav-link" href="modifyBookPage.html">
-                            <div class="sb-nav-link-icon"><i class="fa-solid fa-plus"></i></div>
-                            Añadir libro
-                        </a>
-                    </div>
-                </div>
-            </nav>
-        </div>
-        <div id="layoutSidenav_content">
-
-            <!-- HERE STARTS THE MAIN CONTENTS OF THE ADMIN DASHBOARD  -->
-            <main class="main-admin-frame">
-                <header class="bg-branding-white py-1">
-                    <div class="container px-4 px-lg-5 my-5">
-                        <div class="text-start text-dark">
-                            <h1 class="display-4 fw-bolder">Administrador</h1>
-                            <p class="lead fw-normal text-black-50 mb-0">Panel de administración</p>
-
-                        </div>
-                    </div>
-                </header>
-                <div class="container-fluid px-4 main-admin-container py-5">
-                    <div class="row">
-                        <div class="col-xl-6">
-                            <div class="card mb-4">
-                                <div class="card-header">
-                                    <i class="fas fa-chart-area me-1"></i>
-                                    Visitas durante el mes
-                                </div>
-                                <div class="card-body"><canvas id="myAreaChart" width="100%" height="40"></canvas></div>
-                            </div>
-                        </div>
-                        <div class="col-xl-6">
-                            <div class="card mb-4">
-                                <div class="card-header">
-                                    <i class="fas fa-chart-bar me-1"></i>
-                                    Libros leídos por mes
-                                </div>
-                                <div class="card-body"><canvas id="myBarChart" width="100%" height="40"></canvas></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card mb-4">
-                        <div class="card-header">
-                            <i class="fas fa-table me-1"></i>
-                            Tabla de usuarios
-                        </div>
-                        <div class="card-body">
-                            <table id="datatablesSimple">
-                                <thead>
-                                    <tr>
-                                        <th>Usuario</th>
-                                        <th>Seguidores</th>
-                                        <th>Autor</th>
-                                        <th>Libros publicados</th>
-                                        <th>Libros leídos</th>
-                                        <th>Libros leyendo</th>
-                                        <th>Libros por leer</th>
-                                    </tr>
-                                </thead>
-                                <tfoot>
-                                    <tr>
-                                        <th>Usuario</th>
-                                        <th>Seguidores</th>
-                                        <th>Autor</th>
-                                        <th>Libros publicados</th>
-                                        <th>Libros leídos</th>
-                                        <th>Libros leyendo</th>
-                                        <th>Libros por leer</th>
-                                    </tr>
-                                </tfoot>
-                                <tbody>
-                                    <tr>
-                                        <td>Neru24</td>
-                                        <td>32</td>
-                                        <td>No</td>
-                                        <td>0</td>
-                                        <td>56</td>
-                                        <td>3</td>
-                                        <td>12</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Jorge96</td>
-                                        <td>12</td>
-                                        <td>Si</td>
-                                        <td>3</td>
-                                        <td>23</td>
-                                        <td>5</td>
-                                        <td>7</td>
-                                    </tr>
-                                    <tr>
-                                        <td>SonGoku</td>
-                                        <td>100</td>
-                                        <td>No</td>
-                                        <td>0</td>
-                                        <td>10</td>
-                                        <td>1</td>
-                                        <td>18</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Vegeta</td>
-                                        <td>99</td>
-                                        <td>No</td>
-                                        <td>0</td>
-                                        <td>9</td>
-                                        <td>2</td>
-                                        <td>19</td>
-                                    </tr>
-                                    <tr>
-                                        <td>PepeLoco</td>
-                                        <td>50</td>
-                                        <td>No</td>
-                                        <td>0</td>
-                                        <td>5</td>
-                                        <td>0</td>
-                                        <td>25</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </main>
+            </form>
         </div>
     </div>
+</nav>
+<!-- Navbar ENDS HERE -->
 
-    <!-- Footer STARTS HERE (the footer goes right before the end of the BODY, before the scripts are declared, if there are any)-->
-    <footer class="bm-py-5 bm-bg-footer">
-        <div class="bm-container bm-footer-container">
-            <!-- Bookmarks logo at the start of the footer, Copyright text at the end of the footer-->
-            <a class="bm-d-flex bm-align-items-start" href="#!">
-                <img class="bm-footer-logo" src="assets/logoDark.svg" alt="Bookmarks" />
-            </a>
+<div id="layoutSidenav">
+    <div id="layoutSidenav_nav">
+        <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+            <div class="sb-sidenav-menu">
+                <div class="nav">
+                    <div class="sb-sidenav-menu-heading">General</div>
+                    <a class="nav-link" href="administratorMainPage.html">
+                        <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                        Pantalla principal
+                    </a>
+                    <div class="sb-sidenav-menu-heading">Herramientas</div>
 
-            <p class="bm-text-footer">Copyright &copy; Bookmarks 2024</p>
-        </div>
-    </footer>
-    <!-- Footer ENDS HERE -->
+                    <a class="nav-link" href="#">
+                        <div class="sb-nav-link-icon"><i class="fa-solid fa-envelope"></i></div>
+                        Enviar notificación
+                    </a>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+                    <a class="nav-link" href="modifyBookPage.html">
+                        <div class="sb-nav-link-icon"><i class="fa-solid fa-plus"></i></div>
+                        Añadir libro
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <div id="layoutSidenav_content">
+
+        <!-- HERE STARTS THE MAIN CONTENTS OF THE ADMIN DASHBOARD  -->
+        <main class="main-admin-frame">
+            <header class="bg-branding-white py-1">
+                <div class="container px-4 px-lg-5 my-5">
+                    <div class="text-start text-dark">
+                        <h1 class="display-4 fw-bolder">Administrador</h1>
+                        <p class="lead fw-normal text-black-50 mb-0">Panel de administración</p>
+
+                    </div>
+                </div>
+            </header>
+            <div class="container-fluid px-4 main-admin-container py-5">
+                <div class="row">
+                    <div class="col-xl-6">
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <i class="fas fa-chart-area me-1"></i>
+                                Visitas durante el mes
+                            </div>
+                            <div class="card-body">
+                                <canvas id="myAreaChart" width="100%" height="40"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-6">
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <i class="fas fa-chart-bar me-1"></i>
+                                Libros leídos por mes
+                            </div>
+                            <div class="card-body">
+                                <canvas id="myBarChart" width="100%" height="40"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <i class="fas fa-table me-1"></i>
+                        Tabla de usuarios
+                    </div>
+                    <div class="card-body">
+                        <table id="datatablesSimple">
+                            <thead>
+                            <tr>
+                                <th>Usuario</th>
+                                <th>Seguidores</th>
+                                <th>Autor</th>
+                                <th>Libros publicados</th>
+                                <th>Libros leídos</th>
+                                <th>Libros leyendo</th>
+                                <th>Libros por leer</th>
+                            </tr>
+                            </thead>
+                            <tfoot>
+                            <tr>
+                                <th>Usuario</th>
+                                <th>Seguidores</th>
+                                <th>Autor</th>
+                                <th>Libros publicados</th>
+                                <th>Libros leídos</th>
+                                <th>Libros leyendo</th>
+                                <th>Libros por leer</th>
+                            </tr>
+                            </tfoot>
+                            <tbody>
+                            <tr>
+                                <td>Neru24</td>
+                                <td>32</td>
+                                <td>No</td>
+                                <td>0</td>
+                                <td>56</td>
+                                <td>3</td>
+                                <td>12</td>
+                            </tr>
+                            <tr>
+                                <td>Jorge96</td>
+                                <td>12</td>
+                                <td>Si</td>
+                                <td>3</td>
+                                <td>23</td>
+                                <td>5</td>
+                                <td>7</td>
+                            </tr>
+                            <tr>
+                                <td>SonGoku</td>
+                                <td>100</td>
+                                <td>No</td>
+                                <td>0</td>
+                                <td>10</td>
+                                <td>1</td>
+                                <td>18</td>
+                            </tr>
+                            <tr>
+                                <td>Vegeta</td>
+                                <td>99</td>
+                                <td>No</td>
+                                <td>0</td>
+                                <td>9</td>
+                                <td>2</td>
+                                <td>19</td>
+                            </tr>
+                            <tr>
+                                <td>PepeLoco</td>
+                                <td>50</td>
+                                <td>No</td>
+                                <td>0</td>
+                                <td>5</td>
+                                <td>0</td>
+                                <td>25</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+
+<!-- Footer STARTS HERE (the footer goes right before the end of the BODY, before the scripts are declared, if there are any)-->
+<footer class="bm-py-5 bm-bg-footer">
+    <div class="bm-container bm-footer-container">
+        <!-- Bookmarks logo at the start of the footer, Copyright text at the end of the footer-->
+        <a class="bm-d-flex bm-align-items-start" href="landingPage.html">
+            <img class="bm-footer-logo" src="assets/logoDark.svg" alt="Bookmarks"/>
+        </a>
+
+        <p class="bm-text-footer">Copyright &copy; Bookmarks 2024</p>
+    </div>
+</footer>
+<!-- Footer ENDS HERE -->
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
         crossorigin="anonymous"></script>
-    <script src="js/scripts.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-    <script src="assets/demo/chart-area-demo.js"></script>
-    <script src="assets/demo/chart-bar-demo.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"
+<script src="js/scripts.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+<script src="assets/demo/chart-area-demo.js"></script>
+<script src="assets/demo/chart-bar-demo.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"
         crossorigin="anonymous"></script>
-    <script src="js/datatables-simple-demo.js"></script>
+<script src="js/datatables-simple-demo.js"></script>
 </body>
 
 </html>

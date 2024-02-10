@@ -1253,23 +1253,25 @@ body {
 }
 
 .search-bar { /*bg color should be brownish black but with an alpha value*/
-    margin-left: 3rem;
-    outline: 2px solid var(--branding-brown);
-    width: 100%;
-    padding-left:30px;
-    padding-right:30px;
-    border-radius: 12px;
-    background-color: rgba(0, 0, 0, 0.2);
+    margin-left: 3rem !important;
+    outline: 2px solid var(--branding-brown) !important;
+    width: 100% !important;
+    padding-left:30px !important;
+    padding-right:30px !important;
+    border-radius: 12px !important;
+    background-color: rgba(0, 0, 0, 0.2) !important;
     color: var(--branding-brown) !important;
     transition: none !important;
+    height: 2.5rem !important;
 }
 
 .search-bar::placeholder {
     color: var(--branding-brown) !important;
+    font-size: 1rem !important;
 }
 
 .search-bar:focus { /*border must not change when on focus compared to when not on focus and searchbar must not change size */
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: rgba(0, 0, 0, 0.2) !important;
     box-shadow: none !important;
     border: 2px solid var(--branding-brown) !important;
     border-color: var(--branding-brown) !important;
