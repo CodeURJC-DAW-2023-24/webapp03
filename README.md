@@ -81,7 +81,7 @@ Se implementará un algoritmo de recomendaciones de libros en la página princip
 
 - Administrador:
 
-<img height="100%" src="assets\documentation\Administrator.png" width="50%"/>
+<img height="100%" src="assets\documentation\administrator.png" width="50%"/>
 <p style="text-align: left; font-size: 9px">Panel de control de un administrador</p>
 
 - Crear/modificar libro:
@@ -126,7 +126,7 @@ Se implementará un algoritmo de recomendaciones de libros en la página princip
 
 ## Mapa de navegación
 
-![](assets\documentation\map.png)
+<img src="assets\documentation\map.png"/>
 
 
 
