@@ -8,10 +8,10 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="css/editProfilePageStyles.css" rel="stylesheet">
     <!-- Favicon-->
-    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico"/>
     <!-- NEEDED FOR THE NAVBAR AND FOOTER BRANDING -->
-    <link href="css/navbarAndBranding.css" rel="stylesheet" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+    <link href="css/navbarAndBranding.css" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet"/>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -23,168 +23,182 @@
 
 <body>
 
-    <!-- Navigation (this is the navbar)-->
-    <nav class="bm-navbar bm-navbar-expand-lg bm-navbar-light bm-bg-white">
-        <div class="bm-container bm-navbar-px-4 bm-navbar-px-lg-5">
-            <!-- Navbar brand (is an image) and has alternative text for when the image does not load-->
-            <a class="bm-navbar-brand" href="landingPage.html">
-                <img src="assets/imagotipo.svg" alt="Bookmarks"/>
-            </a>
-            <button class="bm-navbar-toggler" type="button" data-bs-toggle="collapse"
+<!-- Navigation (this is the navbar)-->
+<nav class="bm-navbar bm-navbar-expand-lg bm-navbar-light bm-bg-white">
+    <div class="bm-container bm-navbar-px-4 bm-navbar-px-lg-5">
+        <!-- Navbar brand (is an image) and has alternative text for when the image does not load-->
+        <a class="bm-navbar-brand" href="landingPage.html">
+            <img src="assets/imagotipo.svg" alt="Bookmarks"/>
+        </a>
+        <button class="bm-navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation"><span class="bm-navbar-toggler-icon"></span></button>
-            <div class="bm-collapse bm-navbar-collapse bm-navbar-menu" id="navbarSupportedContent">
-                <!-- Has to be centered -->
-                <ul class="bm-navbar-nav bm-me-auto bm-mb-lg-0 bm-ms-auto">
-                    <!-- Main page option (has little house icon on the left)-->
-                    <li class="bm-nav-item"><a class="bm-nav-link" href="landingPage.html">
-                            <i class="bi-house-door-fill"></i>
-                            Inicio
-                        </a>
-                    </li>
+        <div class="bm-collapse bm-navbar-collapse bm-navbar-menu" id="navbarSupportedContent">
+            <!-- Has to be centered -->
+            <ul class="bm-navbar-nav bm-me-auto bm-mb-lg-0 bm-ms-auto">
+                <!-- Main page option (has little house icon on the left)-->
+                <li class="bm-nav-item"><a class="bm-nav-link" href="landingPage.html">
+                    <i class="bi-house-door-fill"></i>
+                    Inicio
+                </a>
+                </li>
 
-                    <!-- Forum option-->
-                    <li class="bm-nav-item"><a class="bm-nav-link" href="forumPage.html">
-                            <i class="bi-chat-left-text-fill"></i>
-                            Foro
-                        </a>
-                    </li>
+                <!-- Forum option-->
+                <li class="bm-nav-item"><a class="bm-nav-link" href="forumPage.html">
+                    <i class="bi-chat-left-text-fill"></i>
+                    Foro
+                </a>
+                </li>
 
-                    <!-- Administrator menu option -->
-                    <li class="bm-nav-item"> <a class="bm-nav-link" href="administratorMainPage.html">
-                            <i class="bi-gear-fill"></i>
-                            Administrador
+                <!-- Administrator menu option -->
+                <li class="bm-nav-item"><a class="bm-nav-link" href="administratorMainPage.html">
+                    <i class="bi-gear-fill"></i>
+                    Administrador
+                </a>
+                </li>
+                <!-- Search widget-->
+                <li class="bm-nav-item">
+                    <form class="bm-d-flex position-relative">
+                        <input id="search-bar" class="form-control search-bar" type="search" placeholder="Buscar"
+                               aria-label="Search">
+                        <a id="magnifier-icon-link" href="searchResultsPage.html">
+                            <i id="magnifier-icon"
+                               class="fa-solid fa-magnifying-glass position-absolute top-50 end-0 translate-middle-y me-2"></i>
                         </a>
-                    </li>
+                    </form>
+                </li>
 
+            </ul>
+            <form class="bm-d-flex">
+                <ul class="bm-navbar-nav bm-me-auto bm-mb-lg-0 bm-ms-lg-4">
+                    <!-- Profile dropdown -->
+                    <li class="bm-nav-item dropdown">
+                        <a class="bm-nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
+                           data-bs-toggle="dropdown" aria-expanded="false">
+                            <img class="bm-navbar-profile-picture bm-rounded-circle"
+                                 src="assets/defaultProfilePicture.png" alt="Perfil"/>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="profilePage.html">Mi perfil</a></li>
+                            <li>
+                                <hr class="dropdown-divider"/>
+                            </li>
+                            <li><a class="dropdown-item" href="loginPage.html">Cerrar sesión</a></li>
+                        </ul>
+                    </li>
                 </ul>
-                <form class="bm-d-flex">
-                    <ul class="bm-navbar-nav bm-me-auto bm-mb-lg-0 bm-ms-lg-4">
-                        <!-- Profile dropdown -->
-                        <li class="bm-nav-item dropdown">
-                            <a class="bm-nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
-                                data-bs-toggle="dropdown" aria-expanded="false">
-                                <img class="bm-navbar-profile-picture bm-rounded-circle"
-                                    src="assets/defaultProfilePicture.png" alt="Perfil" />
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="profilePage.html">Mi perfil</a></li>
-                                <li>
-                                    <hr class="dropdown-divider" />
-                                </li>
-                                <li><a class="dropdown-item" href="loginPage.html">Cerrar sesión</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </form>
-            </div>
+            </form>
         </div>
-    </nav>
-    <!-- Navbar ENDS HERE -->
+    </div>
+</nav>
+<!-- Navbar ENDS HERE -->
 
-    <header class="bg-branding-white py-1">
-        <div class="container px-4 px-lg-5 my-5">
-            <div class="text-start text-dark">
-                <h1 class="display-4 fw-bolder">Usuario</h1>
-                <p class="lead fw-normal text-black-50 mb-0">Ajustes del perfil</p>
+<header class="bg-branding-white py-1">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="text-start text-dark">
+            <h1 class="display-4 fw-bolder">Usuario</h1>
+            <p class="lead fw-normal text-black-50 mb-0">Ajustes del perfil</p>
 
-            </div>
         </div>
-    </header>
+    </div>
+</header>
 
-    <div class="container-xl px-4 mt-5 mb-5 main-container">
-        <div class="row">
-            <div class="col-xl-4">
+<div class="container-xl px-4 mt-5 mb-5 main-container">
+    <div class="row">
+        <div class="col-xl-4">
 
-                <div class="card mb-4 mb-xl-0">
-                    <div class="card-header">Foto de perfil</div>
-                    <div class="card-body text-center">
-                        <!-- Profile picture -->
-                        <img class="img-account-profile rounded-circle mb-2"
-                            src="http://bootdey.com/img/Content/avatar/avatar1.png" alt>
+            <div class="card mb-4 mb-xl-0">
+                <div class="card-header">Foto de perfil</div>
+                <div class="card-body text-center">
+                    <!-- Profile picture -->
+                    <img class="img-account-profile rounded-circle mb-2"
+                         src="http://bootdey.com/img/Content/avatar/avatar1.png" alt>
 
-                        <div class="small font-italic text-muted mb-4">JPG o PNG de no más de 5 MB</div>
+                    <div class="small font-italic text-muted mb-4">JPG o PNG de no más de 5 MB</div>
 
-                        <button class="btn btn-primary" type="button">Subir imagen</button>
-                    </div>
+                    <button class="btn btn-primary" type="button">Subir imagen</button>
                 </div>
             </div>
-            <div class="col-xl-8">
+        </div>
+        <div class="col-xl-8">
 
-                <div class="card mb-4">
-                    <div class="card-header">Detalles de tu cuenta</div>
-                    <div class="card-body">
-                        <form>
+            <div class="card mb-4">
+                <div class="card-header">Detalles de tu cuenta</div>
+                <div class="card-body">
+                    <form>
 
-                            <div class="row gx-3 mb-3">
+                        <div class="row gx-3 mb-3">
 
-                                <div class="col-md-6">
-                                    <label class="small mb-1" for="inputUsername">Nombre de usuario</label>
-                                    <input class="form-control" id="inputUsername" type="text"
-                                        placeholder="Escribe tu nombre de usuario" value="Usuario">
-                                </div>
-
-                                <div class="col-md-6">
-                                    <label class="small mb-1" for="inputEmailAddress">Correo electrónico</label>
-                                    <input class="form-control" id="inputEmailAddress" type="email"
-                                        placeholder="Escribe tu dirección de correo electrónico"
-                                        value="ejemplo@bookmarks.com">
-                                </div>
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputUsername">Nombre de usuario</label>
+                                <input class="form-control" id="inputUsername" type="text"
+                                       placeholder="Escribe tu nombre de usuario" value="Usuario">
                             </div>
 
-                            <div class="mb-3 description-form">
-                                <label class="small mb-1" for="inputProfileDescription">Descripción</label>
-                                <textarea class="form-control description-text-area" id="inputProfileDescription"
-                                    rows="4" cols="50" placeholder="Escribe una descripción para tu perfil"></textarea>
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputEmailAddress">Correo electrónico</label>
+                                <input class="form-control" id="inputEmailAddress" type="email"
+                                       placeholder="Escribe tu dirección de correo electrónico"
+                                       value="ejemplo@bookmarks.com">
                             </div>
+                        </div>
 
-                            <div class="row gx-3 mb-3">
+                        <div class="mb-3 description-form">
+                            <label class="small mb-1" for="inputProfileDescription">Descripción</label>
+                            <textarea class="form-control description-text-area" id="inputProfileDescription"
+                                      rows="4" cols="50"
+                                      placeholder="Escribe una descripción para tu perfil"></textarea>
+                        </div>
 
-                                <div style="display: flex; justify-content: space-between;" class="new-password-flex">
-                                    <div style="flex: 1; margin-right: 10px;"  class="col-md-6">
-                                        <label class="small mb-1" for="inputPassword">Nueva contraseña</label>
-                                        <input class="form-control" id="inputPassword" type="password"
-                                        placeholder="Escribe tu contraseña nueva" value="············">
-                                    </div>
-                                    <div style="flex: 1; margin-right: 10px;"  class="col-md-6">
-                                        <label class="small mb-1" for="inputConfirmPassword">Confirma tu
-                                            contraseña</label>
-                                        <input class="form-control" id="inputConfirmPassword" type="password"
-                                            placeholder="Escribe tu contraseña nueva otra vez" value="············">
-                                    </div>
-                                    <button class="btn btn-primary change-password-button" type="button">Cambiar contraseña</button>
+                        <div class="row gx-3 mb-3">
+
+                            <div style="display: flex; justify-content: space-between;" class="new-password-flex">
+                                <div style="flex: 1; margin-right: 10px;" class="col-md-6">
+                                    <label class="small mb-1" for="inputPassword">Nueva contraseña</label>
+                                    <input class="form-control" id="inputPassword" type="password"
+                                           placeholder="Escribe tu contraseña nueva" value="············">
                                 </div>
+                                <div style="flex: 1; margin-right: 10px;" class="col-md-6">
+                                    <label class="small mb-1" for="inputConfirmPassword">Confirma tu
+                                        contraseña</label>
+                                    <input class="form-control" id="inputConfirmPassword" type="password"
+                                           placeholder="Escribe tu contraseña nueva otra vez" value="············">
+                                </div>
+                                <button class="btn btn-primary change-password-button" type="button">Cambiar
+                                    contraseña
+                                </button>
                             </div>
+                        </div>
 
-                            <button class="btn btn-primary" type="button">Guardar</button>
-                        </form>
-                    </div>
+                        <button class="btn btn-primary" type="button">Guardar</button>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
-    <!-- Footer STARTS HERE (the footer goes right before the end of the BODY, before the scripts are declared, if there are any)-->
-    <footer class="bm-py-5 bm-bg-footer">
-        <div class="bm-container bm-footer-container">
-            <!-- Bookmarks logo at the start of the footer, Copyright text at the end of the footer-->
-            <a class="bm-d-flex bm-align-items-start" href="landingPage.html">
-                <img class="bm-footer-logo" src="assets/logoDark.svg" alt="Bookmarks" />
-            </a>
+<!-- Footer STARTS HERE (the footer goes right before the end of the BODY, before the scripts are declared, if there are any)-->
+<footer class="bm-py-5 bm-bg-footer">
+    <div class="bm-container bm-footer-container">
+        <!-- Bookmarks logo at the start of the footer, Copyright text at the end of the footer-->
+        <a class="bm-d-flex bm-align-items-start" href="landingPage.html">
+            <img class="bm-footer-logo" src="assets/logoDark.svg" alt="Bookmarks"/>
+        </a>
 
-            <p class="bm-text-footer">Copyright &copy; Bookmarks 2024</p>
-        </div>
-    </footer>
-    <!-- Footer ENDS HERE -->
+        <p class="bm-text-footer">Copyright &copy; Bookmarks 2024</p>
+    </div>
+</footer>
+<!-- Footer ENDS HERE -->
 
-    <!-- CORE BOOTSTRAP JS (THIS GOES RIGHT AFTER THE FOOTER, IT HAS THE NAVBAR DROPDOWN TOGGLE FUNCTIONALITY)-->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- ----------------------------------------------------------------- -->
+<!-- CORE BOOTSTRAP JS (THIS GOES RIGHT AFTER THE FOOTER, IT HAS THE NAVBAR DROPDOWN TOGGLE FUNCTIONALITY)-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- ----------------------------------------------------------------- -->
 
-    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
-    <script type="text/javascript">
+<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+<script type="text/javascript">
 
-    </script>
+</script>
 </body>
 
 </html>
