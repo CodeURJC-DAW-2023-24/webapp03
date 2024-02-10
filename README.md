@@ -57,3 +57,76 @@ Para complementar la pagina, se incluirían las siguientes tecnologías:
 
 ## Algoritmos o consulta avanzada
 Se implementará un algoritmo de recomendaciones de libros en la página principal en función de la cantidad de libros que un usuario haya marcado como leídos según los atributos de los libros.
+
+## Pantallas
+- Inicio de sesión:
+
+<img height="100%" src="C:\Users\blase\WebstormProjects\webapp03\assets\documentation\login.png" width="50%"/>
+<p style="text-align: left; font-size: 9px">Pantalla de acceso para usuarios registrados y administradores</p>
+
+- Registro:
+
+<img height="100%" src="C:\Users\blase\WebstormProjects\webapp03\assets\documentation\signup.png" width="50%"/>
+<p style="text-align: left; font-size: 9px">Aquí es donde un usuario se da de alta</p>
+
+- Búsqueda de libros:
+
+<img height="100%" src="C:\Users\blase\WebstormProjects\webapp03\assets\documentation\searchResults.png" width="50%"/>
+<p style="text-align: left; font-size: 9px">Pantalla que muestra coincidencias en la búsqueda de un libro</p>
+
+- Inicio:
+
+<img height="100%" src="C:\Users\blase\WebstormProjects\webapp03\assets\documentation\landingPage.png" width="50%"/>
+<p style="text-align: left; font-size: 9px">Pantalla principal que da acceso a todas las demás</p>
+
+- Administrador:
+
+<img height="100%" src="C:\Users\blase\WebstormProjects\webapp03\assets\documentation\Administrator.png" width="50%"/>
+<p style="text-align: left; font-size: 9px">Panel de control de un administrador</p>
+
+- Crear/modificar libro:
+
+<img height="100%" src="C:\Users\blase\WebstormProjects\webapp03\assets\documentation\bookEdit.png" width="50%"/>
+<p style="text-align: left; font-size: 9px">Esta pantalla sirve tanto para crear como para modificar un libro y su información</p>
+
+- Consultar libro:
+
+<img height="100%" src="C:\Users\blase\WebstormProjects\webapp03\assets\documentation\bookInfo.png" width="50%"/>
+<p style="text-align: left; font-size: 9px">Aquí se puede consultar individualmente la información de un libro almacenado en una Base de Datos</p>
+
+- Foro:
+
+<img height="100%" src="C:\Users\blase\WebstormProjects\webapp03\assets\documentation\forum.png" width="50%"/>
+<p style="text-align: left; font-size: 9px">Menú del foro donde se muestran las comunidades y posts de las mismas a los que el usuario pertenece</p>
+
+- Perfil:
+
+<img height="100%" src="C:\Users\blase\WebstormProjects\webapp03\assets\documentation\profile.png" width="50%"/>
+<p style="text-align: left; font-size: 9px">Pantalla de visualización de perfil con varias opciones como habilitar la edición</p>
+
+- Comunidad:
+
+<img height="100%" src="C:\Users\blase\WebstormProjects\webapp03\assets\documentation\community.png" width="50%"/>
+<p style="text-align: left; font-size: 9px">Pantalla de acceso para usuarios registrados y administradores</p>
+
+- Modificar perfil:
+
+<img height="100%" src="C:\Users\blase\WebstormProjects\webapp03\assets\documentation\editProfile.png" width="50%"/>
+<p style="text-align: left; font-size: 9px">Menú de edición de la información al completo del usuario, como por ejemplo la contraseña</p>
+
+- Publicación:
+
+<img height="100%" src="C:\Users\blase\WebstormProjects\webapp03\assets\documentation\post.png" width="50%"/>
+<p style="text-align: left; font-size: 9px">Pantalla de visualización de una publicación individual de una comunidad de la que se forme parte</p>
+
+- Lista de miembros de comunidad:
+
+<img height="100%" src="C:\Users\blase\WebstormProjects\webapp03\assets\documentation\memberList.png" width="50%"/>
+<p style="text-align: left; font-size: 9px">Lista de miembros de una comunidad del usuario junto a información general de los mismos</p>
+
+## Mapa de navegación
+
+![](C:\Users\blase\WebstormProjects\webapp03\assets\documentation\map.png)
+
+
+
