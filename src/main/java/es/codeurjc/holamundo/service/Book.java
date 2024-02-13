@@ -5,21 +5,23 @@ import java.util.Map;
 
 public class Book {
     //Data structure that will store example books (ID, Book title, Author, Description, Image, Date of publication, ISBN, Genre, Series, Page count, Publisher)
+    private int ID;
     private String title;
     private String author;
     private String description;
     private String image;
-    private Date release;
-    private int ISBN;
+    private String release;
+    private String ISBN;
     private String genre;
     private String series;
     private int pageCount;
     private String publisher;
     private Map<Integer, Review> reviews;
 
-    public Book (String title, String author, String description, String image, Date release, int ISBN, String genre, String series, int pageCount, String publisher) {
+    public Book (int ID, String title, String author, String description, String image, String release, String ISBN, String genre, String series, int pageCount, String publisher) {
         this.reviews = new HashMap<>();
 
+        this.ID = ID;
         this.title = title;
         this.author = author;
         this.description = description;
@@ -34,27 +36,22 @@ public class Book {
         this.loadReviews(reviews);
     }
 
-    private void loadReviews(HashMap<Integer, String[]> reviewMap) {
-        // Example reviews to test the functionality of the webpage
-        Review placeholder = new Review("title", "author", rating, "content");
-        reviewMap.put(0, placeholder);
-        reviewMap.put(1, placeholder);
-        reviewMap.put(2, placeholder);
-        reviewMap.put(3, placeholder);
+    private void loadReviews(Map<Integer, Review> reviewMap) {
+        // Example reviews to test the functionality of the webpage  
 
-        /* General method to load all storaged reviews
-        for(int i=0; i<1000; i++){
-            this.setReview(new Review("title", "author", rating, "content"));
+        /* General method to load all storaged reviews*/
+        for(int i=0; i<4; i++){
+            this.setReview(i, new Review(i, "title"+i, "author"+i, i, "content"+i));
         }
-        */
+        
     }
 
     public Map<Integer, Review> getReviews() {
-        return reviews;
+        return this.reviews;
     }
 
-    public void setReview(Review review){
-        this.reviews.put(review)
+    public void setReview(int ID, Review review){
+        this.reviews.put(ID, review);
     }
 
     // Getters for 'title'
@@ -78,12 +75,12 @@ public class Book {
     }
 
     // Getter for 'release'
-    public Date getRelease() {
+    public String getRelease() {
         return this.release;
     }
 
     // Getter for 'ISBN'
-    public int getISBN() {
+    public String getISBN() {
         return this.ISBN;
     }
 
@@ -105,5 +102,10 @@ public class Book {
     // Getter for 'publisher'
     public String getPublisher() {
         return this.publisher;
+    }
+
+    // Getter for 'ID'
+    public int getID() {
+        return this.ID;
     }
 }

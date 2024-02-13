@@ -6,12 +6,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Review {
+    private int ID;
     private String title;
     private String author;
     private int rating;
     private String content;
 
-    public Review(String title, String author, int rating, String content){
+    public Review(int ID, String title, String author, int rating, String content){
+        this.ID = ID;
         this.title = title;
         this.author = author;
         this.rating = rating;

@@ -24,10 +24,10 @@ public class LandingPageController {
     @GetMapping("/")
     public String loadLandingPage(Model model) {
         int ID = 2;
-        String bookID = books.getBook(ID)[0];
-        String bookTitle = books.getBook(ID)[1];
-        String bookDescription = books.getBook(ID)[3];
-        String bookImage = books.getBook(ID)[4];
+        int bookID = books.getBook(ID).getID();
+        String bookTitle = books.getBook(ID).getTitle();
+        String bookDescription = books.getBook(ID).getDescription();
+        String bookImage = books.getBook(ID).getImage();
 
         model.addAttribute("bookTitle", bookTitle);
         model.addAttribute("bookDescription", bookDescription);
