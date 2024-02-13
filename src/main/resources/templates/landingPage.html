@@ -1,21 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-    <link href="css/modifyBookPageStyles.css" rel="stylesheet">
+    <link href="/css/modifyBookPageStyles.css" rel="stylesheet">
 
 
     <title>Bookmarks - Inicio</title>
 
     <!--Favicon-->
-    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
 
     <!-- Core theme CSS (includes Bootstrap)-->
-    <link href="css\landingPageStyles.css" rel="stylesheet"/>
+    <link href="/css\landingPageStyles.css" rel="stylesheet"/>
 
     <!-- NEEDED FOR THE NAVBAR AND FOOTER BRANDING -->
-    <link href="css/navbarAndBranding.css" rel="stylesheet"/>
+    <link href="/css/navbarAndBranding.css" rel="stylesheet"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet"/>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -65,7 +65,7 @@
                     <form class="bm-d-flex position-relative">
                         <input id="search-bar" class="form-control search-bar" type="search" placeholder="Buscar"
                                aria-label="Search">
-                        <a id="magnifier-icon-link" href="searchResultsPage.html">
+                        <a id="magnifier-icon-link" href="/search?query">
                             <i id="magnifier-icon"
                                class="fa-solid fa-magnifying-glass position-absolute top-50 end-0 translate-middle-y me-2"></i>
                         </a>
@@ -119,7 +119,8 @@
                          alt="Libro"/>
                 </div>
                 <div class="card-body">
-                    <div class="small text-muted">1 de Febrero, 2024</div> <!-- Post date goes here, not book release date -->
+                    <div class="small text-muted">1 de Febrero, 2024</div>
+                    <!-- Post date goes here, not book release date -->
                     <h2 class="card-title">{{bookTitle}}</h2>
                     <p class="card-text">{{bookDescription}}</p>
                     <a class="btn btn-primary" href="book/{{bookID}}">Leer más</a>
@@ -131,79 +132,83 @@
                 <div class="col-lg-6">
 
                     <!-- Blog post-->
+                    {{#post}}
                     <div class="card mb-4 blog-post">
                         <div class="img-container">
                             <!-- Image goes here -->
                             <a href="#!"><img class="card-img-top"
-                                              src="assets/presets/71wRWeSwtrL._AC_UF894,1000_QL80_.jpg"
+                                              src="{{post.image}}"
                                               alt="..."/></a>
                         </div>
                         <div class="card-body">
                             <!-- Text and buttons go here -->
-                            <div class="small text-muted">1 de Febrero, 2024</div>
-                            <h2 class="card-title h4">Los más leídos este año</h2>
-                            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis
-                                aliquid atque, nulla.</p>
-                            <a class="btn btn-primary" href="infoBookPage.html">Leer más →</a>
+                            <div class="small text-muted">{{post.postDate}}</div>
+                            <h2 class="card-title h4">{{post.title}}</h2>
+                            <p class="card-text">{{post.description}}</p>
+                            <a class="btn btn-primary" href="infoBookPage.html">Leer más</a>
                         </div>
                     </div>
+                    {{/post}}
 
                     <!-- Blog post-->
+                    {{#post}}
                     <div class="card mb-4 blog-post">
                         <div class="img-container">
                             <!-- Image goes here -->
                             <a href="#!"><img class="card-img-top"
-                                              src="assets/presets/9788427220287-es.jpg"
+                                              src="{{post.image}}"
                                               alt="..."/></a>
                         </div>
                         <div class="card-body">
                             <!-- Text and buttons go here -->
-                            <div class="small text-muted">1 de Febrero, 2024</div>
-                            <h2 class="card-title h4">Booktubers, sus recomendaciones</h2>
-                            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis
-                                aliquid atque, nulla.</p>
-                            <a class="btn btn-primary" href="infoBookPage.html">Leer más →</a>
+                            <div class="small text-muted">{{post.postDate}}</div>
+                            <h2 class="card-title h4">{{post.title}}</h2>
+                            <p class="card-text">{{post.description}}</p>
+                            <a class="btn btn-primary" href="infoBookPage.html">Leer más</a>
                         </div>
                     </div>
+                    {{/post}}
 
                 </div>
 
                 <div class="col-lg-6">
                     <!-- Blog post-->
+                    {{#post}}
                     <div class="card mb-4 blog-post">
                         <div class="img-container">
                             <!-- Image goes here -->
                             <a href="#!"><img class="card-img-top"
-                                              src="assets/presets/71e2MeS4jFL._AC_UF894,1000_QL80_.jpg"
+                                              src="{{post.image}}"
                                               alt="..."/></a>
                         </div>
                         <div class="card-body">
                             <!-- Text and buttons go here -->
-                            <div class="small text-muted">1 de Febrero, 2024</div>
-                            <h2 class="card-title h4">Descubre nuevos mundos</h2>
-                            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis
-                                aliquid atque, nulla.</p>
-                            <a class="btn btn-primary" href="infoBookPage.html">Leer más →</a>
+                            <div class="small text-muted">{{post.postDate}}</div>
+                            <h2 class="card-title h4">{{post.title}}</h2>
+                            <p class="card-text">{{post.description}}</p>
+                            <a class="btn btn-primary" href="infoBookPage.html">Leer más</a>
                         </div>
                     </div>
+                    {{/post}}
 
                     <!-- Blog post-->
+                    {{#post}}
                     <div class="card mb-4 blog-post">
                         <div class="img-container">
                             <!-- Image goes here -->
                             <a href="#!"><img class="card-img-top"
-                                              src="assets/presets/estrechosendero.jpg   "
+                                              src="{{post.image}}"
                                               alt="..."/></a>
                         </div>
                         <div class="card-body">
                             <!-- Text and buttons go here -->
-                            <div class="small text-muted">1 de Febrero, 2024</div>
-                            <h2 class="card-title h4">Lo último de Patrick Rothfuss</h2>
-                            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis
-                                aliquid atque, nulla.</p>
-                            <a class="btn btn-primary" href="infoBookPage.html">Leer más →</a>
+                            <div class="small text-muted">{{post.postDate}}</div>
+                            <h2 class="card-title h4">{{post.title}}</h2>
+                            <p class="card-text">{{post.description}}</p>
+                            <a class="btn btn-primary" href="infoBookPage.html">Leer más</a>
                         </div>
                     </div>
+                    {{/post}}
 
                 </div>
             </div>
@@ -322,6 +327,7 @@
 
 <!-- CORE BOOTSTRAP JS (THIS GOES RIGHT AFTER THE FOOTER, IT HAS THE NAVBAR DROPDOWN TOGGLE FUNCTIONALITY)-->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/js/landingPage.js"></script>
 <!-- ----------------------------------------------------------------- -->
 </body>
 </html>
