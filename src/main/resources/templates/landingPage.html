@@ -23,6 +23,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Gabarito&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/8f3c0a721b.js" crossorigin="anonymous"></script>
 
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
     <!-- ----------------------------------------------------------------- -->
 </head>
 <body>
@@ -40,7 +43,7 @@
             <!-- Has to be centered -->
             <ul class="bm-navbar-nav bm-me-auto bm-mb-lg-0 bm-ms-auto">
                 <!-- Main page option (has little house icon on the left)-->
-                <li class="bm-nav-item"><a class="bm-nav-link" href="landingPage.html">
+                <li class="bm-nav-item"><a class="bm-nav-link" href="/">
                     <i class="bi-house-door-fill"></i>
                     Inicio
                 </a>
@@ -62,10 +65,10 @@
 
                 <!-- Search widget-->
                 <li class="bm-nav-item">
-                    <form class="bm-d-flex position-relative">
+                    <form class="bm-d-flex position-relative" onSubmit="return false;">
                         <input id="search-bar" class="form-control search-bar" type="search" placeholder="Buscar"
                                aria-label="Search">
-                        <a id="magnifier-icon-link" href="/search?query">
+                        <a id="magnifier-icon-link">
                             <i id="magnifier-icon"
                                class="fa-solid fa-magnifying-glass position-absolute top-50 end-0 translate-middle-y me-2"></i>
                         </a>
@@ -130,86 +133,45 @@
             <!-- Nested row for non-featured blog posts. THESE POSTS MUST BE DYNAMICALLY LOADED (AJAX + SPRINGBOOT ,using templates) -->
             <div class="row">
                 <div class="col-lg-6">
-
                     <!-- Blog post-->
-                    {{#post}}
+                    {{#postL}}
                     <div class="card mb-4 blog-post">
                         <div class="img-container">
                             <!-- Image goes here -->
                             <a href="#!"><img class="card-img-top"
-                                              src="{{post.image}}"
+                                              src="{{image}}"
                                               alt="..."/></a>
                         </div>
                         <div class="card-body">
                             <!-- Text and buttons go here -->
-                            <div class="small text-muted">{{post.postDate}}</div>
-                            <h2 class="card-title h4">{{post.title}}</h2>
-                            <p class="card-text">{{post.description}}</p>
+                            <div class="small text-muted">{{postDate}}</div>
+                            <h2 class="card-title h4">{{title}}</h2>
+                            <p class="card-text">{{description}}</p>
                             <a class="btn btn-primary" href="infoBookPage.html">Leer más</a>
                         </div>
                     </div>
-                    {{/post}}
-
-                    <!-- Blog post-->
-                    {{#post}}
-                    <div class="card mb-4 blog-post">
-                        <div class="img-container">
-                            <!-- Image goes here -->
-                            <a href="#!"><img class="card-img-top"
-                                              src="{{post.image}}"
-                                              alt="..."/></a>
-                        </div>
-                        <div class="card-body">
-                            <!-- Text and buttons go here -->
-                            <div class="small text-muted">{{post.postDate}}</div>
-                            <h2 class="card-title h4">{{post.title}}</h2>
-                            <p class="card-text">{{post.description}}</p>
-                            <a class="btn btn-primary" href="infoBookPage.html">Leer más</a>
-                        </div>
-                    </div>
-                    {{/post}}
-
+                    {{/postL}}
                 </div>
 
                 <div class="col-lg-6">
                     <!-- Blog post-->
-                    {{#post}}
+                    {{#postR}}
                     <div class="card mb-4 blog-post">
                         <div class="img-container">
                             <!-- Image goes here -->
                             <a href="#!"><img class="card-img-top"
-                                              src="{{post.image}}"
+                                              src="{{image}}"
                                               alt="..."/></a>
                         </div>
                         <div class="card-body">
                             <!-- Text and buttons go here -->
-                            <div class="small text-muted">{{post.postDate}}</div>
-                            <h2 class="card-title h4">{{post.title}}</h2>
-                            <p class="card-text">{{post.description}}</p>
+                            <div class="small text-muted">{{postDate}}</div>
+                            <h2 class="card-title h4">{{title}}</h2>
+                            <p class="card-text">{{description}}</p>
                             <a class="btn btn-primary" href="infoBookPage.html">Leer más</a>
                         </div>
                     </div>
-                    {{/post}}
-
-                    <!-- Blog post-->
-                    {{#post}}
-                    <div class="card mb-4 blog-post">
-                        <div class="img-container">
-                            <!-- Image goes here -->
-                            <a href="#!"><img class="card-img-top"
-                                              src="{{post.image}}"
-                                              alt="..."/></a>
-                        </div>
-                        <div class="card-body">
-                            <!-- Text and buttons go here -->
-                            <div class="small text-muted">{{post.postDate}}</div>
-                            <h2 class="card-title h4">{{post.title}}</h2>
-                            <p class="card-text">{{post.description}}</p>
-                            <a class="btn btn-primary" href="infoBookPage.html">Leer más</a>
-                        </div>
-                    </div>
-                    {{/post}}
-
+                    {{/postR}}
                 </div>
             </div>
 
@@ -240,10 +202,10 @@
                     <p>Encuentra nuevos libros, guarda los tuyos, descubre qué opinan tus booktubers favoritos...</p>
                     <div class="input-group">
                         <a href="loginPage.html">
-                            <button class="btn btn-primary" id="button-search" type="button">Iniciar sesión</button>
+                            <button class="btn btn-primary" class="button-search" type="button">Iniciar sesión</button>
                         </a>
                         <a href="signupPage.html">
-                            <button class="btn btn-primary" id="button-search" type="button">Crear cuenta</button>
+                            <button class="btn btn-primary" class="button-search" type="button">Crear cuenta</button>
                         </a>
                     </div>
                 </div>
@@ -325,9 +287,9 @@
 </footer>
 <!-- Footer ENDS HERE -->
 
+<script src="/js/searchBar.js"></script>
 <!-- CORE BOOTSTRAP JS (THIS GOES RIGHT AFTER THE FOOTER, IT HAS THE NAVBAR DROPDOWN TOGGLE FUNCTIONALITY)-->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="/js/landingPage.js"></script>
 <!-- ----------------------------------------------------------------- -->
 </body>
 </html>

@@ -56,4 +56,21 @@ public class BookList {
     public int getSize() {
         return books.size();
     }
+
+    public ArrayList<Book> getMatchingResults(String searchQuery) {
+        ArrayList<Book> matchingBooks = new ArrayList<>();
+        for (int i = 1; i <= books.size(); i++) {
+            if (
+                    (books.get(i).getTitle().toLowerCase().contains(searchQuery.toLowerCase())) ||
+                    (books.get(i).getAuthor().toLowerCase().contains(searchQuery.toLowerCase())) ||
+                    (String.valueOf(books.get(i).getID()).toLowerCase().contains(searchQuery.toLowerCase())) ||
+                    (books.get(i).getISBN().toLowerCase().contains(searchQuery.toLowerCase())) ||
+                    (books.get(i).getSeries().toLowerCase().contains(searchQuery.toLowerCase()))
+                )
+            {
+                matchingBooks.add(books.get(i));
+            }
+        }
+        return matchingBooks;
+    }
 }
