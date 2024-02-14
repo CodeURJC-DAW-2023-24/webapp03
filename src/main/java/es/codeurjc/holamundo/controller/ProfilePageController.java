@@ -17,8 +17,8 @@ public class ProfilePageController {
     @GetMapping("/profile/{username}")
     public String loadProfilePage(Model model, @PathVariable String username) {
 
-        String alias = users.getUserInfo(username)[1];
-        String role = users.getUserInfo(username)[2];
+        String role = users.getUserInfo(username)[1];
+        String alias = users.getUserInfo(username)[2];
         String description = users.getUserInfo(username)[3];
         String profileImage = users.getUserInfo(username)[4];
         String email = users.getUserInfo(username)[5];
