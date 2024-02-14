@@ -9,7 +9,7 @@
     <title>Bookmarks - Modificar libro</title>
 
     <!-- NEEDED FOR THE NAVBAR AND FOOTER BRANDING -->
-    <link href="css/navbarAndBranding.css" rel="stylesheet"/>
+    <link href="/css/navbarAndBranding.css" rel="stylesheet"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet"/>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,12 +19,12 @@
     <!-- ----------------------------------------------------------------- -->
 
     <!-- Favicon-->
-    <link rel="icon" type="image/x-icon" href="assets/favicon.ico"/>
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico"/>
     <!-- Bootstrap icons-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet"/>
     <!-- Core theme CSS (includes Bootstrap)-->
-    <link href="css/modifyBookPageStyles.css" rel="stylesheet"/>
-    <link href="css/editProfilePageStyles.css" rel="stylesheet"/>
+    <link href="/css/modifyBookPageStyles.css" rel="stylesheet"/>
+    <link href="/css/editProfilePageStyles.css" rel="stylesheet"/>
 
 </head>
 
@@ -34,7 +34,7 @@
     <div class="bm-container bm-navbar-px-4 bm-navbar-px-lg-5">
         <!-- Navbar brand (is an image) and has alternative text for when the image does not load-->
         <a class="bm-navbar-brand" href="landingPage.html">
-            <img src="assets/imagotipo.svg" alt="Bookmarks"/>
+            <img src="/assets/imagotipo.svg" alt="Bookmarks"/>
         </a>
         <button class="bm-navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -112,15 +112,15 @@
     <div class="container px-4 px-lg-5 my-5">
         <div class="row gx-4 gx-lg-5 align-items-center">
             <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0"
-                                       src="assets/presets/71e4kjCsuAL._AC_UF894,1000_QL80_.jpg" alt="..."/></div>
+                                       src="{{Image}}" alt="..."/></div>
             <div class="col-md-6">
-                <form>
+                <form action="/modifyDone/{{id}}" method="post">
 
                     <div class="mb-3">
 
                         <label class="small mb-1" for="inputBookName">Título del libro</label>
-                        <input class="form-control" id="inputBookName" type="text"
-                               placeholder="Escribe el título del libro">
+                        <input class="form-control" name="inputBookName" type="text"
+                               value="{{Title}}">
 
                     </div>
 
@@ -128,23 +128,23 @@
 
                         <label class="small mb-1" for="inputBookAuthorName">Nombre completo del autor/a del
                             libro</label>
-                        <input class="form-control" id="inputBookAuthorName" type="text"
-                               placeholder="Nombre completo del autor/a de este libro">
+                        <input class="form-control" name="inputBookAuthorName" type="text"
+                               value="{{Author}}">
 
                     </div>
 
                     <div class="row gx-3 mb-3">
                         <div class="col-md-6">
                             <label class="small mb-1" for="inputBookISBN">ISBN</label>
-                            <input class="form-control" id="inputBookISBN" type="number"
-                                   placeholder="ISBN de este libro">
+                            <input class="form-control" name="inputBookISBN" type="text"
+                                   value="{{ISBN}}">
                         </div>
 
 
                         <div class="col-md-6">
                             <label class="small mb-1" for="inputBookPages">Número de páginas</label>
-                            <input class="form-control" id="inputBookPages" type="number"
-                                   placeholder="Páginas totales del libro">
+                            <input class="form-control" name="inputBookPages" type="number"
+                                   value="{{PageCount}}">
                         </div>
 
                     </div>
@@ -153,14 +153,14 @@
 
                         <div class="col-md-6">
                             <label class="small mb-1" for="inputBookGenre">Género</label>
-                            <input class="form-control" id="inputBookGenre" type="text"
-                                   placeholder="Género al que pertenece el libro">
+                            <input class="form-control" name="inputBookGenre" type="text"
+                                   value="{{Genre}}">
                         </div>
 
                         <div class="col-md-6">
                             <label class="small mb-1" for="inputBookDate">Fecha de publicación</label>
-                            <input class="form-control" id="inputBookDate" type="date"
-                                   placeholder="Fecha en la que se publicó">
+                            <input class="form-control" name="inputBookDate" type="date"
+                                   value="{{Date}}">
                         </div>
                     </div>
 
@@ -168,24 +168,25 @@
 
                         <div class="col-md-6">
                             <label class="small mb-1" for="inputBookPublisher">Editorial</label>
-                            <input class="form-control" id="inputBookPublisher" type="text"
-                                   placeholder="Nombre de la editorial del libro">
+                            <input class="form-control" name="inputBookPublisher" type="text"
+                                   value="{{Publisher}}">
                         </div>
 
                         <div class="col-md-6">
                             <label class="small mb-1" for="inputBookSeries">Saga</label>
-                            <input class="form-control" id="inputBookSeries" type="text"
-                                   placeholder="Saga a la que pertenece el libro">
+                            <input class="form-control" name="inputBookSeries" type="text"
+                                   value="{{Serie}}">
                         </div>
                     </div>
 
                     <div class="mb-3 description-form">
                         <label class="small mb-1" for="inputBookDescription">Descripción del libro</label>
-                        <textarea class="form-control description-text-area" id="inputBookDescription" rows="4"
-                                  cols="50" placeholder="Escribe una descripción para este libro"></textarea>
+                        <textarea class="form-control description-text-area" name="inputBookDescription" rows="4"
+                                  cols="50"> {{Description}}</textarea>
                     </div>
                     <button class="btn btn-secondary-light" type="button">Subir imagen de portada</button>
-                    <button class="btn btn-primary-light save-button" type="button">Guardar</button>
+                    
+                    <input type='submit' value='Guardar' class="btn btn-primary-light save-button">
                 </form>
             </div>
         </div>
@@ -198,7 +199,7 @@
     <div class="bm-container bm-footer-container">
         <!-- Bookmarks logo at the start of the footer, Copyright text at the end of the footer-->
         <a class="bm-d-flex bm-align-items-start" href="landingPage.html">
-            <img class="bm-footer-logo" src="assets/logoDark.svg" alt="Bookmarks"/>
+            <img class="bm-footer-logo" src="/assets/logoDark.svg" alt="Bookmarks"/>
         </a>
 
         <p class="bm-text-footer">Copyright &copy; Bookmarks 2024</p>
