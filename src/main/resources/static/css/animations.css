@@ -1,0 +1,41 @@
+:root {
+    /* BOOKMARKS BRANDING COLORS */
+    --branding-grey: #808F85;
+    --branding-brown: #583E23;
+    --branding-orange: #F9A03F;
+    --branding-peach: #F8DDA4;
+    --branding-green: #519E8A;
+    --branding-light-green: #9be6d2;
+    --branding-white: #FFFFFC;
+    --branding-light-grey: #efefef;
+    --branding-sepia: #F8F4E8;
+    --branding-dark-grey: #2a2b2e;
+    /* -------- */
+}
+
+.loader {
+    border: 16px solid #f3f3f3; /* Light grey */
+    border-top: 16px solid var(--branding-orange); /* Blue */
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    animation: spin 2s linear infinite;
+}
+
+.loader-in-btn {
+    border: 8px solid rgba(243, 243, 243, 0.4); /* Light grey */
+    border-top: 8px solid var(--branding-white); /* Blue */
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
