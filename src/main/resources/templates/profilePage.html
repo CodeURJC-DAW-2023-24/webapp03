@@ -102,7 +102,7 @@
 <header class="bg-branding-white py-1">
     <div class="container px-4 px-lg-5 my-5">
         <div class="text-start text-dark">
-            <h1 class="display-4 fw-bolder">{{username}}</h1>
+            <h1 class="display-4 fw-bolder" id="userName-header">{{username}}</h1>
             <p class="lead fw-normal text-black-50 mb-0">Este es tu perfil</p>
 
         </div>
@@ -178,7 +178,7 @@
             <div class="list-col card book-list-card">
                 <div class="card-header"><h5>Libros leídos</h5></div>
                 <div class="card-body">
-                    <div id="readed" class="row-book"> 
+                    <div id="readed" class="row-book">
                         {{#ReadedBooks}}
                         <a href="/book/{{ID}}" class="book-link-disabled-decorations">
                             <div class="single_advisor_profile wow fadeInUp" data-wow-delay="0.3s"
@@ -202,11 +202,11 @@
                             </div>
                         </a>
                         {{/ReadedBooks}}
-                        <a id="loadMoreBut-1" class="btn btn-secondary-light flex-shrink-0 action-button">
-                            <i class="fa-solid fa-arrows-rotate" aria-hidden="true"></i>
-                            Cargar más
-                        </a>
                     </div>
+                    <a id="load-more-btn-read" class="btn btn-secondary-light flex-shrink-0 action-button">
+                        <i class="fa-solid fa-arrows-rotate" aria-hidden="true"></i>
+                        Cargar más
+                    </a>
                 </div>
             </div>
 
@@ -238,11 +238,11 @@
                             </div>
                         </a>
                         {{/ReadingBooks}}
-                        <a id="loadMoreBut-2" class="btn btn-secondary-light flex-shrink-0 action-button">
-                            <i class="fa-solid fa-arrows-rotate" aria-hidden="true"></i>
-                            Cargar más
-                        </a>
                     </div>
+                    <a id="load-more-btn-reading" class="btn btn-secondary-light flex-shrink-0 action-button">
+                        <i class="fa-solid fa-arrows-rotate" aria-hidden="true"></i>
+                        Cargar más
+                    </a>
                 </div>
             </div>
 
@@ -273,11 +273,11 @@
                             </div>
                         </a>
                         {{/WantedBooks}}
-                        <a id="loadMoreBut-3" class="btn btn-secondary-light flex-shrink-0 action-button">
-                            <i class="fa-solid fa-arrows-rotate" aria-hidden="true"></i>
-                            Cargar más
-                         </a>
                     </div>
+                    <a id="load-more-btn-wanted" class="btn btn-secondary-light flex-shrink-0 action-button">
+                        <i class="fa-solid fa-arrows-rotate" aria-hidden="true"></i>
+                        Cargar más
+                    </a>
                 </div>
             </div>
         </div>

@@ -11,10 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 
 @Controller
@@ -32,7 +29,7 @@ public class ProfilePageController {
         this.bookList = new BookList();
     }
 
-    @GetMapping("/profile/{username}")
+    @GetMapping("/profile/{username}/**")
     public String loadProfilePage(Model model, @PathVariable String username) {
 
         //UserList
@@ -60,13 +57,13 @@ public class ProfilePageController {
         this.readingBooks = new ArrayList<>();
         this.wantedBooks = new ArrayList<>();
 
-        for(int idBook:userBList.getReadedList(username)){
+        for (int idBook : userBList.getReadedList(username)) {
             readedBooks.add(bookList.getBook(idBook));
         }
-        for(int idBook:userBList.getReadingList(username)){
+        for (int idBook : userBList.getReadingList(username)) {
             readingBooks.add(bookList.getBook(idBook));
         }
-        for(int idBook:userBList.getWantedList(username)){
+        for (int idBook : userBList.getWantedList(username)) {
             wantedBooks.add(bookList.getBook(idBook));
         }
 
@@ -76,12 +73,38 @@ public class ProfilePageController {
         model.addAttribute("ReadedBooks", readedBooks);
         model.addAttribute("ReadingBooks", readingBooks);
         model.addAttribute("WantedBooks", wantedBooks);
-        
+
         return "profilePage";
     }
 
-    @PostMapping("/profile/{username}")
-    public ResponseEntity<ArrayList<Book>> loadReadedBooks() {
-        return new ResponseEntity<>(new ArrayList<Book>(readedBooks.subList(2, 5)), HttpStatus.OK);
+    @PostMapping("/profile/{username}/loadMore")
+    public ResponseEntity<ArrayList<Book>> loadReadedBooks(@PathVariable String username, @RequestParam(defaultValue = "default") String listType) {
+        if (listType.equals("readed")) {
+            ArrayList<Integer> readedBooks = userBList.getRangeList(0, 4, "readed", username);
+            ArrayList<Book> readedBooksToReturn = new ArrayList<>();
+            for (int idBook : readedBooks) {
+                readedBooksToReturn.add(bookList.getBook(idBook));
+            }
+            return new ResponseEntity<>(readedBooksToReturn, HttpStatus.OK);
+
+        } else if (listType.equals("reading")) {
+            ArrayList<Integer> readingBooks = userBList.getRangeList(0, 4, "reading", username);
+            ArrayList<Book> readingBooksToReturn = new ArrayList<>();
+            for (int idBook : readingBooks) {
+                readingBooksToReturn.add(bookList.getBook(idBook));
+            }
+            return new ResponseEntity<>(readingBooksToReturn, HttpStatus.OK);
+
+        } else if (listType.equals("wanted")) {
+            ArrayList<Integer> wantedBooks = userBList.getRangeList(0, 4, "wanted", username);
+            ArrayList<Book> wantedBooksToReturn = new ArrayList<>();
+            for (int idBook : wantedBooks) {
+                wantedBooksToReturn.add(bookList.getBook(idBook));
+            }
+            return new ResponseEntity<>(wantedBooksToReturn, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
     }
 }
