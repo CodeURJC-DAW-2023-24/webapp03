@@ -34,7 +34,7 @@
 <nav class="bm-navbar bm-navbar-expand-lg bm-navbar-light bm-bg-white">
     <div class="bm-container bm-navbar-px-4 bm-navbar-px-lg-5">
         <!-- Navbar brand (is an image) and has alternative text for when the image does not load-->
-        <a class="bm-navbar-brand" href="landingPage.html">
+        <a class="bm-navbar-brand" href="/">
             <img src="/assets/imagotipo.svg" alt="Bookmarks"/>
         </a>
         <button class="bm-navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -44,7 +44,7 @@
             <!-- Has to be centered -->
             <ul class="bm-navbar-nav bm-me-auto bm-mb-lg-0 bm-ms-auto">
                 <!-- Main page option (has little house icon on the left)-->
-                <li class="bm-nav-item"><a class="bm-nav-link" href="landingPage.html">
+                <li class="bm-nav-item"><a class="bm-nav-link" href="/">
                     <i class="bi-house-door-fill"></i>
                     Inicio
                 </a>
@@ -85,7 +85,7 @@
                                  src="/assets/defaultProfilePicture.png" alt="Perfil"/>
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="profile">Mi perfil</a></li>
+                            <li><a class="dropdown-item" href="/profile/{{username}}">Mi perfil</a></li>
                             <li>
                                 <hr class="dropdown-divider"/>
                             </li>
@@ -178,17 +178,17 @@
             <div class="list-col card book-list-card">
                 <div class="card-header"><h5>Libros leídos</h5></div>
                 <div class="card-body">
-                    <div class="row-book">
-
-                        <a href="infoBookPage.html" class="book-link-disabled-decorations">
+                    <div id="readed" class="row-book"> 
+                        {{#ReadedBooks}}
+                        <a href="/book/{{ID}}" class="book-link-disabled-decorations">
                             <div class="single_advisor_profile wow fadeInUp" data-wow-delay="0.3s"
                                  style="visibility: visible; animation-delay: 0.3s; animation-name: fadeInUp;">
                                 <div class="in-card-book-cover-image"><img
-                                        src="/assets\presets\71e4kjCsuAL._AC_UF894,1000_QL80_.jpg" alt>
+                                        src="{{image}}" alt>
                                 </div>
                                 <div class="single_advisor_details_info">
-                                    <h6>Los juegos del hambre</h6>
-                                    <p class="designation">Suzanne Collins</p>
+                                    <h6>{{title}}</h6>
+                                    <p class="designation">{{author}}</p>
                                     <div class="rating">
                                         <div class="d-flex justify-content-end small text-warning mb-2">
                                             <div class="bi-star-fill"></div>
@@ -201,49 +201,10 @@
                                 </div>
                             </div>
                         </a>
-
-                        <a href="infoBookPage.html" class="book-link-disabled-decorations">
-                            <div class="single_advisor_profile wow fadeInUp" data-wow-delay="0.3s"
-                                 style="visibility: visible; animation-delay: 0.3s; animation-name: fadeInUp;">
-                                <div class="in-card-book-cover-image"><img
-                                        src="/assets\presets\71e4kjCsuAL._AC_UF894,1000_QL80_.jpg" alt>
-                                </div>
-                                <div class="single_advisor_details_info">
-                                    <h6>Los juegos del hambre</h6>
-                                    <p class="designation">Suzanne Collins</p>
-                                    <div class="rating">
-                                        <div class="d-flex justify-content-end small text-warning mb-2">
-                                            <div class="bi-star-fill"></div>
-                                            <div class="bi-star-fill"></div>
-                                            <div class="bi-star-fill"></div>
-                                            <div class="bi-star-half"></div>
-                                            <div class="bi-star"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-
-                        <a href="infoBookPage.html" class="book-link-disabled-decorations">
-                            <div class="single_advisor_profile wow fadeInUp" data-wow-delay="0.3s"
-                                 style="visibility: visible; animation-delay: 0.3s; animation-name: fadeInUp;">
-                                <div class="in-card-book-cover-image"><img
-                                        src="/assets\presets\71e4kjCsuAL._AC_UF894,1000_QL80_.jpg" alt>
-                                </div>
-                                <div class="single_advisor_details_info">
-                                    <h6>Los juegos del hambre</h6>
-                                    <p class="designation">Suzanne Collins</p>
-                                    <div class="rating">
-                                        <div class="d-flex justify-content-end small text-warning mb-2">
-                                            <div class="bi-star-fill"></div>
-                                            <div class="bi-star-fill"></div>
-                                            <div class="bi-star-fill"></div>
-                                            <div class="bi-star-half"></div>
-                                            <div class="bi-star"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                        {{/ReadedBooks}}
+                        <a id="loadMoreBut-1" class="btn btn-secondary-light flex-shrink-0 action-button">
+                            <i class="fa-solid fa-arrows-rotate" aria-hidden="true"></i>
+                            Cargar más
                         </a>
                     </div>
                 </div>
@@ -253,17 +214,17 @@
             <div class="list-col card book-list-card">
                 <div class="card-header"><h5>Libros leyendo</h5></div>
                 <div class="card-body">
-                    <div class="row-book">
-
-                        <a href="infoBookPage.html" class="book-link-disabled-decorations">
+                    <div id="reading" class="row-book">
+                        {{#ReadingBooks}}
+                        <a href="/book/{{ID}}" class="book-link-disabled-decorations">
                             <div class="single_advisor_profile wow fadeInUp" data-wow-delay="0.3s"
                                  style="visibility: visible; animation-delay: 0.3s; animation-name: fadeInUp;">
                                 <div class="in-card-book-cover-image"><img
-                                        src="/assets\presets\9788427220287-es.jpg" alt>
+                                        src="{{image}}" alt>
                                 </div>
                                 <div class="single_advisor_details_info">
-                                    <h6>Los juegos del hambre</h6>
-                                    <p class="designation">Suzanne Collins</p>
+                                    <h6>{{title}}</h6>
+                                    <p class="designation">{{author}}</p>
                                     <div class="rating">
                                         <div class="d-flex justify-content-end small text-warning mb-2">
                                             <div class="bi-star-fill"></div>
@@ -276,29 +237,11 @@
                                 </div>
                             </div>
                         </a>
-
-                        <a href="infoBookPage.html" class="book-link-disabled-decorations">
-                            <div class="single_advisor_profile wow fadeInUp" data-wow-delay="0.3s"
-                                 style="visibility: visible; animation-delay: 0.3s; animation-name: fadeInUp;">
-                                <div class="in-card-book-cover-image"><img
-                                        src="/assets\presets\9788427220287-es.jpg" alt>
-                                </div>
-                                <div class="single_advisor_details_info">
-                                    <h6>Los juegos del hambre</h6>
-                                    <p class="designation">Suzanne Collins</p>
-                                    <div class="rating">
-                                        <div class="d-flex justify-content-end small text-warning mb-2">
-                                            <div class="bi-star-fill"></div>
-                                            <div class="bi-star-fill"></div>
-                                            <div class="bi-star-fill"></div>
-                                            <div class="bi-star-half"></div>
-                                            <div class="bi-star"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                        {{/ReadingBooks}}
+                        <a id="loadMoreBut-2" class="btn btn-secondary-light flex-shrink-0 action-button">
+                            <i class="fa-solid fa-arrows-rotate" aria-hidden="true"></i>
+                            Cargar más
                         </a>
-
                     </div>
                 </div>
             </div>
@@ -306,17 +249,17 @@
             <div class="list-col card book-list-card">
                 <div class="card-header"><h5>Libros que quiero leer</h5></div>
                 <div class="card-body">
-                    <div class="row-book">
-
-                        <a href="infoBookPage.html" class="book-link-disabled-decorations">
+                    <div id="wanted" class="row-book">
+                        {{#WantedBooks}}
+                        <a href="/book/{{ID}}" class="book-link-disabled-decorations">
                             <div class="single_advisor_profile wow fadeInUp" data-wow-delay="0.3s"
                                  style="visibility: visible; animation-delay: 0.3s; animation-name: fadeInUp;">
                                 <div class="in-card-book-cover-image"><img
-                                        src="/assets\presets\71wRWeSwtrL._AC_UF894,1000_QL80_.jpg" alt>
+                                        src="{{image}}" alt>
                                 </div>
                                 <div class="single_advisor_details_info">
-                                    <h6>Los juegos del hambre: Sinsajo</h6>
-                                    <p class="designation">Suzanne Collins</p>
+                                    <h6>{{title}}</h6>
+                                    <p class="designation">{{author}}</p>
                                     <div class="rating">
                                         <div class="d-flex justify-content-end small text-warning mb-2">
                                             <div class="bi-star-fill"></div>
@@ -329,51 +272,11 @@
                                 </div>
                             </div>
                         </a>
-
-                        <a href="infoBookPage.html" class="book-link-disabled-decorations">
-                            <div class="single_advisor_profile wow fadeInUp" data-wow-delay="0.3s"
-                                 style="visibility: visible; animation-delay: 0.3s; animation-name: fadeInUp;">
-                                <div class="in-card-book-cover-image"><img
-                                        src="/assets\presets\71wRWeSwtrL._AC_UF894,1000_QL80_.jpg" alt>
-                                </div>
-                                <div class="single_advisor_details_info">
-                                    <h6>Los juegos del hambre: Sinsajo</h6>
-                                    <p class="designation">Suzanne Collins</p>
-                                    <div class="rating">
-                                        <div class="d-flex justify-content-end small text-warning mb-2">
-                                            <div class="bi-star-fill"></div>
-                                            <div class="bi-star-fill"></div>
-                                            <div class="bi-star-fill"></div>
-                                            <div class="bi-star-half"></div>
-                                            <div class="bi-star"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-
-                        <a href="infoBookPage.html" class="book-link-disabled-decorations">
-                            <div class="single_advisor_profile wow fadeInUp" data-wow-delay="0.3s"
-                                 style="visibility: visible; animation-delay: 0.3s; animation-name: fadeInUp;">
-                                <div class="in-card-book-cover-image"><img
-                                        src="/assets\presets\71wRWeSwtrL._AC_UF894,1000_QL80_.jpg" alt>
-                                </div>
-                                <div class="single_advisor_details_info">
-                                    <h6>Los juegos del hambre: Sinsajo</h6>
-                                    <p class="designation">Suzanne Collins</p>
-                                    <div class="rating">
-                                        <div class="d-flex justify-content-end small text-warning mb-2">
-                                            <div class="bi-star-fill"></div>
-                                            <div class="bi-star-fill"></div>
-                                            <div class="bi-star-fill"></div>
-                                            <div class="bi-star-half"></div>
-                                            <div class="bi-star"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-
+                        {{/WantedBooks}}
+                        <a id="loadMoreBut-3" class="btn btn-secondary-light flex-shrink-0 action-button">
+                            <i class="fa-solid fa-arrows-rotate" aria-hidden="true"></i>
+                            Cargar más
+                         </a>
                     </div>
                 </div>
             </div>
@@ -403,7 +306,9 @@
 <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.bundle.min.js"></script>
 <script type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/3.1.0/mustache.min.js"></script>
 <script src="/js/editProfilePage.js"></script>
+<script src="/js/profilePage.js"></script>
 </body>
 
 </html>

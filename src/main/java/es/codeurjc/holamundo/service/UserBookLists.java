@@ -11,7 +11,7 @@ public class UserBookLists {
 
     //Constructor
     public UserBookLists(){
-        readed.put("BookReader_14", new Integer[]{1, 2});
+        readed.put("BookReader_14", new Integer[]{1, 2, 4, 5, 6, 7});
         reading.put("BookReader_14", new Integer[]{3});
         wanted.put("BookReader_14", new Integer[]{4, 5, 6, 7});
 
