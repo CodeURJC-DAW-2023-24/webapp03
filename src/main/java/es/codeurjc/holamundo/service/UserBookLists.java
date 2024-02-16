@@ -6,27 +6,27 @@ import java.util.Map;
 
 public class UserBookLists {
     //Data structure will store book list form user
-    private Map<String, Integer[]> readed = new HashMap<>(); //Map<UserName, String[]> Books readed
+    private Map<String, Integer[]> read = new HashMap<>(); //Map<UserName, String[]> Books read
     private Map<String, Integer[]> reading = new HashMap<>(); //Map<UserName, String[]> Books reading
     private Map<String, Integer[]> wanted = new HashMap<>(); //Map<UserName, String[]> Books wanted to read
 
     //Constructor
     public UserBookLists() {
-        readed.put("BookReader_14", new Integer[]{1, 2, 4, 5, 6, 7});
+        read.put("BookReader_14", new Integer[]{1, 2, 4, 5, 6, 7});
         reading.put("BookReader_14", new Integer[]{3});
         wanted.put("BookReader_14", new Integer[]{4, 5, 6, 7});
 
-        readed.put("FanBook_785", new Integer[]{1});
+        read.put("FanBook_785", new Integer[]{1});
         reading.put("FanBook_785", new Integer[]{});
         wanted.put("FanBook_785", new Integer[]{4, 2});
 
-        readed.put("YourReader", new Integer[]{1, 2, 4, 7});
+        read.put("YourReader", new Integer[]{1, 2, 4, 7});
         reading.put("YourReader", new Integer[]{3, 5});
         wanted.put("YourReader", new Integer[]{});
     }
 
-    public Integer[] getReadedList(String userName) {
-        return readed.get(userName);
+    public Integer[] getReadList(String userName) {
+        return read.get(userName);
     }
 
     public Integer[] getReadingList(String userName) {
@@ -41,8 +41,8 @@ public class UserBookLists {
         Integer[] list = new Integer[0];
         ArrayList<Integer> listToReturn = new ArrayList<>();
         switch (listType) {
-            case "readed":
-                list = getReadedList(userName);
+            case "read":
+                list = getReadList(userName);
                 break;
             case "reading":
                 list = getReadingList(userName);

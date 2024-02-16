@@ -19,7 +19,7 @@ public class ProfilePageController {
     private UserList users;
     private UserBookLists userBList;
     private BookList bookList;
-    private ArrayList<Book> readedBooks;
+    private ArrayList<Book> readBooks;
     private ArrayList<Book> readingBooks;
     private ArrayList<Book> wantedBooks;
 
@@ -49,16 +49,16 @@ public class ProfilePageController {
         model.addAttribute("password", password);
 
         //UserBookLists
-        int nReadedBooks = userBList.getReadedList(username).length;
+        int nReadBooks = userBList.getReadList(username).length;
         int nReadingBooks = userBList.getReadingList(username).length;
         int nWantedBooks = userBList.getWantedList(username).length;
 
-        this.readedBooks = new ArrayList<>();
+        this.readBooks = new ArrayList<>();
         this.readingBooks = new ArrayList<>();
         this.wantedBooks = new ArrayList<>();
 
-        for (int idBook : userBList.getReadedList(username)) {
-            readedBooks.add(bookList.getBook(idBook));
+        for (int idBook : userBList.getReadList(username)) {
+            readBooks.add(bookList.getBook(idBook));
         }
         for (int idBook : userBList.getReadingList(username)) {
             readingBooks.add(bookList.getBook(idBook));
@@ -67,10 +67,10 @@ public class ProfilePageController {
             wantedBooks.add(bookList.getBook(idBook));
         }
 
-        model.addAttribute("nReadedBooks", nReadedBooks);
+        model.addAttribute("nReadBooks", nReadBooks);
         model.addAttribute("nReadingBooks", nReadingBooks);
         model.addAttribute("nWantedBooks", nWantedBooks);
-        model.addAttribute("ReadedBooks", readedBooks);
+        model.addAttribute("ReadBooks", readBooks);
         model.addAttribute("ReadingBooks", readingBooks);
         model.addAttribute("WantedBooks", wantedBooks);
 
@@ -78,14 +78,14 @@ public class ProfilePageController {
     }
 
     @PostMapping("/profile/{username}/loadMore")
-    public ResponseEntity<ArrayList<Book>> loadReadedBooks(@PathVariable String username, @RequestParam(defaultValue = "default") String listType) {
-        if (listType.equals("readed")) {
-            ArrayList<Integer> readedBooks = userBList.getRangeList(0, 4, "readed", username);
-            ArrayList<Book> readedBooksToReturn = new ArrayList<>();
-            for (int idBook : readedBooks) {
-                readedBooksToReturn.add(bookList.getBook(idBook));
+    public ResponseEntity<ArrayList<Book>> loadReadBooks(@PathVariable String username, @RequestParam(defaultValue = "default") String listType) {
+        if (listType.equals("read")) {
+            ArrayList<Integer> readBooks = userBList.getRangeList(0, 4, "read", username);
+            ArrayList<Book> readBooksToReturn = new ArrayList<>();
+            for (int idBook : readBooks) {
+                readBooksToReturn.add(bookList.getBook(idBook));
             }
-            return new ResponseEntity<>(readedBooksToReturn, HttpStatus.OK);
+            return new ResponseEntity<>(readBooksToReturn, HttpStatus.OK);
 
         } else if (listType.equals("reading")) {
             ArrayList<Integer> readingBooks = userBList.getRangeList(0, 4, "reading", username);

@@ -3,7 +3,7 @@ $(() => {
     let username = $("#userName-header").text() // WE WILL HAVE TO CHANGE THIS WHEN WE HAVE THE SESSION CONTROL AND DDBB
 
     let bookListTemplate = `
-        <a href="/book/{{ID}}" class="book-link-disabled-decorations">
+        <a href="/book/{{id}}" class="book-link-disabled-decorations">
         <div class="single_advisor_profile wow fadeInUp" data-wow-delay="0.3s"
             style="visibility: visible; animation-delay: 0.3s; animation-name: fadeInUp;">
             <div class="in-card-book-cover-image"><img
@@ -25,21 +25,21 @@ $(() => {
         </div>
     </a>
     `
-    let bookContReaded = 1
+    let bookContRead = 1
     $("#load-more-btn-read").on("click", () => {
         $.ajax({
             type: "POST",
-            url: "/profile/" + username + "/loadMore?listType=readed",
+            url: "/profile/" + username + "/loadMore?listType=read",
             contentType: "application/json",
             data: JSON.stringify({
-                page: bookContReaded,
+                page: bookContRead,
                 size: 3
             })
             , success: function (data) {
-                bookContReaded += 3
+                bookContRead += 3
                 data.forEach(book => {
                     let moreBooks = Mustache.render(bookListTemplate, book);
-                    $("#readed").append(moreBooks)
+                    $("#read").append(moreBooks)
                 });
             }
         })
@@ -56,7 +56,7 @@ $(() => {
                 size: 3
             })
             , success: function (data) {
-                bookContReaded += 3
+                bookContRead += 3
                 data.forEach(book => {
                     let moreBooks = Mustache.render(bookListTemplate, book);
                     $("#reading").append(moreBooks)
@@ -76,7 +76,7 @@ $(() => {
                 size: 3
             })
             , success: function (data) {
-                bookContReaded += 3
+                bookContRead += 3
                 data.forEach(book => {
                     let moreBooks = Mustache.render(bookListTemplate, book);
                     $("#wanted").append(moreBooks)

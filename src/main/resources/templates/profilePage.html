@@ -148,7 +148,7 @@
             <div class="row">
                 <div class="col-6 col-lg-3">
                     <div class="count-data text-center">
-                        <h6 class="count h2" data-to="" data-speed="">{{nReadedBooks}}</h6>
+                        <h6 class="count h2" data-to="" data-speed="">{{nReadBooks}}</h6>
                         <p class="m-0px font-w-600">Libros leídos</p>
                     </div>
                 </div>
@@ -178,8 +178,8 @@
             <div class="list-col card book-list-card">
                 <div class="card-header"><h5>Libros leídos</h5></div>
                 <div class="card-body">
-                    <div id="readed" class="row-book">
-                        {{#ReadedBooks}}
+                    <div id="read" class="row-book">
+                        {{#ReadBooks}}
                         <a href="/book/{{ID}}" class="book-link-disabled-decorations">
                             <div class="single_advisor_profile wow fadeInUp" data-wow-delay="0.3s"
                                  style="visibility: visible; animation-delay: 0.3s; animation-name: fadeInUp;">
@@ -201,7 +201,7 @@
                                 </div>
                             </div>
                         </a>
-                        {{/ReadedBooks}}
+                        {{/ReadBooks}}
                     </div>
                     <a id="load-more-btn-read" class="btn btn-secondary-light flex-shrink-0 action-button">
                         <i class="fa-solid fa-arrows-rotate" aria-hidden="true"></i>
