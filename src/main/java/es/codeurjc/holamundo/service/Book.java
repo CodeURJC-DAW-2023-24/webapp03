@@ -1,7 +1,8 @@
 package es.codeurjc.holamundo.service;
 
-import java.util.HashMap;
-import java.util.Map;
+import es.codeurjc.holamundo.component.Review;
+
+import java.util.*;
 
 public class Book {
     //Data structure that will store example books (ID, Book title, Author, Description, Image, Date of publication, ISBN, Genre, Series, Page count, Publisher)
@@ -18,6 +19,8 @@ public class Book {
     private String publisher;
     private Map<Integer, Review> reviews;
 
+    private ReviewList reviewList;
+
     public Book (int ID, String title, String author, String description, String image, String release, String ISBN, String genre, String series, int pageCount, String publisher) {
         this.reviews = new HashMap<>();
 
@@ -33,21 +36,20 @@ public class Book {
         this.pageCount = pageCount;
         this.publisher = publisher;
 
+        this.reviewList = new ReviewList();
         this.loadReviews(reviews);
     }
 
     private void loadReviews(Map<Integer, Review> reviewMap) {
         // Example reviews to test the functionality of the webpage  
 
-        /* General method to load all storaged reviews*/
-        for(int i=0; i<4; i++){
-            this.setReview(i, new Review(i, "title"+i, "author"+i, i, "content"+i));
-        }
-        
+        /* General method to load all stored reviews for a specific book*/
+        this.reviews = reviewList.getBookReviews(this.ID);
     }
 
-    public Map<Integer, Review> getReviews() {
-        return this.reviews;
+    public List<Review> getReviews() {
+        return new ArrayList<>(this.reviews.values());
+
     }
 
     public void setReview(int ID, Review review){

@@ -1,8 +1,7 @@
 package es.codeurjc.holamundo.controller;
 
-import es.codeurjc.holamundo.service.Book;
 import es.codeurjc.holamundo.service.BookList;
-import es.codeurjc.holamundo.service.Review;
+import es.codeurjc.holamundo.component.Review;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,7 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -52,19 +51,14 @@ public class BookPageController {
         model.addAttribute("bookPageCount", bookPageCount);
         model.addAttribute("bookPublisher", bookPublisher);
 
-        Map<Integer, Review> reviews = books.getBook(selectedBookID).getReviews();
-
-        for (int j = 0; j < reviews.size(); j++) {
-            String reviewTitle = reviews.get(j).getTitle();
-            int reviewRating = reviews.get(j).getRating();
-            String reviewAuthor = reviews.get(j).getAuthor();
-            String reviewContent = reviews.get(j).getContent();    
-            
-            model.addAttribute("reviewTitle"+j, reviewTitle);
-            model.addAttribute("reviewRating"+j, reviewRating);
-            model.addAttribute("reviewAuthor"+j, reviewAuthor);
-            model.addAttribute("reviewContent"+j, reviewContent);
+        List<Review> bookReviews = books.getBook(bookID).getReviews();
+        System.out.println(bookReviews.size() + " reviews found for book " + bookID);
+        for (Review review : bookReviews) {
+            System.out.println("Review: " + review.getTitle());
         }
+
+        model.addAttribute("reviews", bookReviews);
+
 
         return "infoBookPage";
     }
