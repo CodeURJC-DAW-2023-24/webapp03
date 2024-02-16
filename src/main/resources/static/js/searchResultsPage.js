@@ -1,4 +1,6 @@
 $(() => {
+    $("#load-more-spinner").hide();
+    $("#noResults").css("display", "none");
     $("#loadMoreBut").parent().css({"display": "flex", "justify-content": "center", "text-align": "center"});
     $("#loadMoreBut").css({
         "width": "85%",
@@ -49,32 +51,36 @@ $(() => {
             {{/bookQueries}}
     `;
 
-    let currentPage = 1;
+    let currentPage = 4;
 
-    $("#loadMoreBut").click(function () {
+    $("#loadMoreBut").click((event) => {
+        $("#load-more-spinner").show();
         // AJAX request
+        url = window.location.href;
+        let query = ((url).substring(url.indexOf("=") + 1, url.length));
         $.ajax({
             type: "POST",
-            url: "/search",
+            url: "/search?query=" + query,
             contentType: "application/json",
-            data: JSON.stringify({
-                query: $("#searchInputQuery").val(),
-                page: currentPage,
-                size: 4
-            }),
             success: function (data) {
-                if (currentPage < data.length) {
-                    currentPage += 4;
-                    let newBooks = Mustache.render(bookTemplate, {bookQueries: data});
-
+                $("#load-more-spinner").hide();
+                if (data.length > 4 && event.which) {
+                    let newBooks = data.slice(currentPage, currentPage + 4);
+                    newBooks = Mustache.render(bookTemplate, {bookQueries: newBooks});
                     $(".row-cols-2").append(newBooks);
+                    currentPage += 4;
                     if (currentPage >= data.length) {
                         $("#loadMoreBut").css("display", "none");
                     }
-                } else {
+                } else if ((data.length > 0) && (data.length <= 4)) {
                     $("#loadMoreBut").css("display", "none");
+                } else if (data.length == 0) {
+                    $("#loadMoreBut").css("display", "none");
+                    $("#noResults").css("display", "block");
                 }
             }
         });
     });
+
+    $("#loadMoreBut").click();
 })

@@ -87,7 +87,6 @@ $(() => {
                 }
                 currentPage += 6;
                 data.forEach(review => {
-                    console.log(review);
                     let moreReviews = Mustache.render(reviewTemplate, review);
                     $("#reviewsArea").append(moreReviews);
                 });

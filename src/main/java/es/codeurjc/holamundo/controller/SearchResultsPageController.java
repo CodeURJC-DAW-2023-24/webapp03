@@ -16,13 +16,9 @@ import java.util.Map;
 public class SearchResultsPageController {
     private BookList books;
     private ArrayList<Book> bookQueries;
-
-    public SearchResultsPageController() {
-        this.books = new BookList();
-    }
-
     @GetMapping("/search")
     public String loadSearchResultsPage(Model model, String query) {
+        this.books = new BookList();
         bookQueries = books.getMatchingResults(query, 1, 4);
         model.addAttribute("searchInputQuery", query);
         model.addAttribute("bookQueries", bookQueries);
@@ -31,7 +27,7 @@ public class SearchResultsPageController {
     }
 
     @PostMapping("/search")
-    public ResponseEntity<ArrayList<Book>> loadSearchResultsPagePost() {
-        return new ResponseEntity<>(books.getMatchingResults("a", 1, 4), HttpStatus.OK);
+    public ResponseEntity<ArrayList<Book>> loadSearchResultsPagePost(String query) {
+        return new ResponseEntity<>(books.getMatchingResults(query, 4, this.books.getSize()), HttpStatus.OK);
     }
 }

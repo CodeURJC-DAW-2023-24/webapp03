@@ -71,18 +71,32 @@ public class BookList {
 
     public ArrayList<Book> getMatchingResults(String searchQuery, int page, int size) {
         ArrayList<Book> matchingBooks = new ArrayList<>();
-        for (int i = page; i <= size; i++) {
+        int i = 1;
+        while (i <= books.size()) {
             if (
-                    (books.get(i).getTitle().toLowerCase().contains(searchQuery.toLowerCase())) ||
-                    (books.get(i).getAuthor().toLowerCase().contains(searchQuery.toLowerCase())) ||
-                    (String.valueOf(books.get(i).getID()).toLowerCase().contains(searchQuery.toLowerCase())) ||
-                    (books.get(i).getISBN().toLowerCase().contains(searchQuery.toLowerCase())) ||
-                    (books.get(i).getSeries().toLowerCase().contains(searchQuery.toLowerCase()))
+                    (this.getBook(i).getTitle().toLowerCase().contains(searchQuery.toLowerCase())) ||
+                    (this.getBook(i).getAuthor().toLowerCase().contains(searchQuery.toLowerCase())) ||
+                    (String.valueOf(this.getBook(i).getID()).toLowerCase().contains(searchQuery.toLowerCase())) ||
+                    (this.getBook(i).getISBN().toLowerCase().contains(searchQuery.toLowerCase())) ||
+                    (this.getBook(i).getSeries().toLowerCase().contains(searchQuery.toLowerCase()))
                 )
             {
-                matchingBooks.add(books.get(i));
+                matchingBooks.add(this.getBook(i));
             }
+            i++;
         }
-        return matchingBooks;
+        if (page == 1) {
+            int maxSize = 0;
+            if (matchingBooks.size() < 4) {
+                maxSize = matchingBooks.size();
+            } else {
+                maxSize = 4;
+            }
+
+            return new ArrayList<>(matchingBooks.subList(0, maxSize));
+        }
+        else {
+            return matchingBooks;
+        }
     }
 }

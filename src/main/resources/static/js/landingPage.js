@@ -27,7 +27,7 @@ $(() => {
                             <div class="small text-muted">{{postDate}}</div>
                             <h2 class="card-title h4">{{title}}</h2>
                             <p class="card-text">{{description}}</p>
-                            <a class="btn btn-primary" href="infoBookPage.html">Leer más</a>
+                            <a class="btn btn-primary" href="infoBookPage.html">Leer m&aacutes</a>
                         </div>
                     </div>
                     {{/postL}}
@@ -48,7 +48,7 @@ $(() => {
                             <div class="small text-muted">{{postDate}}</div>
                             <h2 class="card-title h4">{{title}}</h2>
                             <p class="card-text">{{description}}</p>
-                            <a class="btn btn-primary" href="infoBookPage.html">Leer más</a>
+                            <a class="btn btn-primary" href="infoBookPage.html">Leer m&aacutes</a>
                         </div>
                     </div>
                     {{/postR}}
