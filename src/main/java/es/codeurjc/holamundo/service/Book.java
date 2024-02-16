@@ -52,6 +52,14 @@ public class Book {
 
     }
 
+    public List<Review> getReviewsRange(int start, int end) {
+        List<Review> reviews = new ArrayList<>(this.reviews.values());
+        if (end > reviews.size()) {
+            end = reviews.size();
+        }
+        return reviews.subList(start, end);
+    }
+
     public void setReview(int ID, Review review){
         this.reviews.put(ID, review);
     }

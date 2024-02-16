@@ -69,6 +69,9 @@ $(() => {
                 page: currentPage
             }),
             success: function (data) {
+                // removes spinner animation from button after loading
+                $("#load-more-spinner").hide();
+                $("#load-more-label").show();
                 if (currentPage < data.length) {
                     currentPage += 4;
                     let postL = data.slice(0, 2);
@@ -86,9 +89,6 @@ $(() => {
                 }
             }
         });
-        // removes spinner animation from button after loading
-        $("#load-more-spinner").hide();
-        $("#load-more-label").show();
 
 
     })

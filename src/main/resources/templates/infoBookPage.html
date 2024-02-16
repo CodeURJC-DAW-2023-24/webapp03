@@ -7,6 +7,8 @@
     <meta name="description" content=""/>
     <meta name="author" content=""/>
     <title>Bookmarks - Información sobre el libro</title>
+    <link href="/css/animations.css" rel="stylesheet"/>
+
 
     <!-- NEEDED FOR THE NAVBAR AND FOOTER BRANDING -->
     <link href="/css/navbarAndBranding.css" rel="stylesheet"/>
@@ -26,6 +28,9 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet"/>
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="/css/infoBookPageStyles.css" rel="stylesheet"/>
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 </head>
 
@@ -108,6 +113,7 @@
             <div class="col-md-5"><img class="card-img-top mb-5 mb-md-0"
                                        src="{{bookImage}}" alt="..."/></div>
             <div class="col-md-6 book-info-area">
+                <div class="small mb-1">ID: <p id="bookID">{{id}}</p></div>
                 <div class="small mb-1" id="inputBookPublisher">Editorial: {{bookPublisher}}</div>
                 <div class="small mb-1" id="inputBookISBN">ISBN: {{bookISBN}}</div>
                 <h1 class="display-5 fw-bolder" id="inputBookName">{{bookTitle}}</h1>
@@ -196,7 +202,7 @@
             </div>
             <hr class="my-0">
         </div>
-        <div class="row gx-4 gx-lg-5 row-cols-md-3 justify-content-left">
+        <div class="row gx-4 gx-lg-5 row-cols-md-3 justify-content-left" id="reviewsArea">
             {{#reviews}}
             <div class="col mb-5">
                 <div class="card h-100">
@@ -221,6 +227,13 @@
             </div>
             {{/reviews}}
         </div>
+        <!-- Load more button-->
+        <div class="text-center justify-content-center load-more-section">
+            <div id="load-more-spinner" class="loader" role="status">
+            </div>
+            <a class="btn btn-outline-dark mt-3" id="load-more-btn">Cargar más</a>
+            <p id="no-more-reviews">No hay más reseñas</p>
+        </div>
     </div>
 </section>
 
@@ -237,6 +250,12 @@
 </footer>
 <!-- Footer ENDS HERE -->
 
+<script src="/js/infoBookPage.js"></script>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/3.1.0/mustache.min.js"></script>
+
+
 <!-- CORE BOOTSTRAP JS (THIS GOES RIGHT AFTER THE FOOTER, IT HAS THE NAVBAR DROPDOWN TOGGLE FUNCTIONALITY)-->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 <!-- ----------------------------------------------------------------- -->
@@ -244,7 +263,6 @@
 <!-- Core theme JS-->
 <script src="/js/scripts.js"></script>
 
-<script src="/js/infoBookPage.js"></script>
 </body>
 
 </html>

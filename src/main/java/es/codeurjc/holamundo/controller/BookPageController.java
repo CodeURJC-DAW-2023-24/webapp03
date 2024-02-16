@@ -3,6 +3,9 @@ package es.codeurjc.holamundo.controller;
 import es.codeurjc.holamundo.service.BookList;
 import es.codeurjc.holamundo.component.Review;
 
+import org.apache.coyote.Request;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -51,11 +55,12 @@ public class BookPageController {
         model.addAttribute("bookPageCount", bookPageCount);
         model.addAttribute("bookPublisher", bookPublisher);
 
-        List<Review> bookReviews = books.getBook(bookID).getReviews();
-        System.out.println(bookReviews.size() + " reviews found for book " + bookID);
+        List<Review> bookReviews = books.getBook(bookID).getReviewsRange(0, 6);
+        // load the first 6 reviews
         for (Review review : bookReviews) {
-            System.out.println("Review: " + review.getTitle());
+            System.out.println(review.getTitle());
         }
+
 
         model.addAttribute("reviews", bookReviews);
 
@@ -66,7 +71,7 @@ public class BookPageController {
     @GetMapping("/book/{bookID}/edit")
     public String loadModifyBookPage(Model model, @PathVariable int bookID) {
         //this.selectedBookID = bookID;
-        
+
         String bookTitle = books.getBook(bookID).getTitle();
         String bookAuthor = books.getBook(bookID).getAuthor();
         String bookDescription = books.getBook(bookID).getDescription();
@@ -94,13 +99,13 @@ public class BookPageController {
     }
 
     @PostMapping("/modifyDone/{bookID}") //Parametros del formulario
-    public String modifyDone(Model model,@PathVariable("bookID") int bookID, @RequestParam("inputBookName") String inputBookName
-                                    , @RequestParam("inputBookAuthorName") String inputBookAuthorName, @RequestParam("inputBookISBN") String inputBookISBN
-                                    , @RequestParam("inputBookPages") int inputBookPages, @RequestParam("inputBookGenre") String inputBookGenre
-                                    , @RequestParam("inputBookDate") String inputBookDate
-                                    , @RequestParam("inputBookPublisher") String inputBookPublisher, @RequestParam("inputBookSeries") String inputBookSeries
-                                    , @RequestParam("inputBookDescription") String inputBookDescription) {
-        
+    public String modifyDone(Model model, @PathVariable("bookID") int bookID, @RequestParam("inputBookName") String inputBookName
+            , @RequestParam("inputBookAuthorName") String inputBookAuthorName, @RequestParam("inputBookISBN") String inputBookISBN
+            , @RequestParam("inputBookPages") int inputBookPages, @RequestParam("inputBookGenre") String inputBookGenre
+            , @RequestParam("inputBookDate") String inputBookDate
+            , @RequestParam("inputBookPublisher") String inputBookPublisher, @RequestParam("inputBookSeries") String inputBookSeries
+            , @RequestParam("inputBookDescription") String inputBookDescription) {
+
         //Se puede realizar con setter en la clase Book
         books.getBook(bookID).setTitle(inputBookName);
         books.getBook(bookID).setAuthor(inputBookAuthorName);
@@ -115,8 +120,15 @@ public class BookPageController {
         //Tambien se puede crear una clase Book y sobreescribir con updateBook y el id
         //Book newBook = new Book(bookID, inputBookName, inputBookAuthorName, inputBookDescription, inputBookDate, inputBookDescription, inputBookISBN, inputBookGenre, inputBookSeries, inputBookPages, inputBookPublisher);
         //books.updateBook(bookID, newBook);
-        
+
         return "redirect:/book/" + bookID;
+    }
+
+    @PostMapping("/book/{currentBookID}/loadMoreReviews")
+    public ResponseEntity<ArrayList<Review>> loadMoreReviews(@PathVariable int currentBookID, @RequestParam int page, @RequestParam int pageSize) {
+        List<Review> bookReviews = books.getBook(currentBookID).getReviewsRange(page, page + pageSize);
+        return new ResponseEntity<>(new ArrayList<>(bookReviews), HttpStatus.OK);
+
     }
 
 }
