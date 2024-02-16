@@ -12706,9 +12706,6 @@ fieldset:disabled .btn {
     box-shadow: 0 0 0 0.25rem rgba(40, 167, 69, 0.5) !important;
 }
 
-.save-button {
-    margin-left: 0.5rem;
-}
 
 .bg-branding-white {
     background-color: var(--branding-white) !important;
@@ -12726,10 +12723,16 @@ fieldset:disabled .btn {
     margin-top: 1rem;
 }
 
-.review-text-area{
+.review-text-area {
     resize: none !important;
 }
 
-.action-button{
+.action-button {
     margin-right: 1rem !important;
+}
+
+input[type="radio"] {
+    appearance: none;
+    opacity: 0;
+    position: absolute;
 }
