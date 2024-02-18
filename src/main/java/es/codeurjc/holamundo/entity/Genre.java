@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -12,7 +13,7 @@ public class Genre {
     private String name;
 
     @OneToMany(mappedBy = "genre")
-    private List<Book> books;
+    private List<Book> books = new ArrayList<>();
 
     public Genre() {
     }

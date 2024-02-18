@@ -13,7 +13,7 @@ public class Book {
     private long ID;
     private String title;
 
-    @ManyToMany(mappedBy = "books")
+    @ManyToMany
     private List<Author> author = new ArrayList<>();
 
     private String description;
@@ -50,6 +50,8 @@ public class Book {
         /* General method to load all stored reviews for a specific book*/
         this.reviews = reviewList;
     }
+
+
 
     public List<Review> getReviews() {
         return this.reviews;
@@ -100,8 +102,8 @@ public class Book {
     }
 
     // Getter for 'genre'
-    public String getGenre() {
-        return this.genre.getName();
+    public Genre getGenre() {
+        return this.genre;
     }
 
     // Getter for 'series'
@@ -155,10 +157,6 @@ public class Book {
         this.ISBN = ISBN;
     }
 
-    public void setGenre(String genre) {
-        this.genre.setName(genre);
-    }
-
     public void setSeries(String series) {
         this.series = series;
     }
@@ -175,7 +173,7 @@ public class Book {
         this.genre = genre;
     }
 
-    public void setAuthor(Author author) {
+    public void addAuthor(Author author) {
         this.author.add(author);
     }
 

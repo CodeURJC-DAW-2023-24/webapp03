@@ -9,11 +9,11 @@ public class Review {
     @GeneratedValue(strategy = jakarta.persistence.GenerationType.AUTO)
     private long ID;
     private String title;
-    private String author;
+
+    @OneToOne
+    private User author;
     private int rating;
     private String content;
-
-    private int bookID;
 
     @JsonIgnore
     @ManyToOne
@@ -22,12 +22,12 @@ public class Review {
     public Review() {
     }
 
-    public Review(String title, String author, int rating, String content, int bookID) {
+    public Review(String title, User author, int rating, String content, Book book) {
         this.title = title;
-        this.author = author;
         this.rating = rating;
         this.content = content;
-        this.bookID = bookID;
+        this.author = author;
+        this.book = book;
     }
 
     public String getTitle() {
@@ -35,7 +35,11 @@ public class Review {
     }
 
     public String getAuthor() {
-        return this.author;
+        return this.author.getUsername();
+    }
+
+    public void setAuthor(User author) {
+        this.author = author;
     }
 
     public String getContent() {
@@ -46,20 +50,8 @@ public class Review {
         return this.rating;
     }
 
-    public int getBookID() {
-        return this.bookID;
-    }
-
-    public void setBookID(int bookID) {
-        this.bookID = bookID;
-    }
-
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public void setAuthor(String author) {
-        this.author = author;
     }
 
     public void setContent(String content) {
@@ -88,6 +80,6 @@ public class Review {
     }
 
     public String toString() {
-        return "Review[ID=" + this.ID + ", title='" + this.title + "', author='" + this.author + "', rating=" + this.rating + ", content='" + this.content + "', bookID=" + this.bookID + "]";
+        return "Review[ID=" + this.ID + ", title='" + this.title + "', author='" + this.author + "', rating=" + this.rating + ", content='" + this.content + "]";
     }
 }

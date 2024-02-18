@@ -1,9 +1,8 @@
 package es.codeurjc.holamundo.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -24,14 +23,23 @@ public class User {
 
     private String password;
 
-    @OneToMany
-    private List<Book> readBooks; // books an user has read
+    @ManyToMany
+    @JoinTable(name = "user_read_books",
+            joinColumns = @JoinColumn(name = "username"),
+            inverseJoinColumns = @JoinColumn(name = "book_id"))
+    private List<Book> readBooks = new ArrayList<>(); // books a user has read
 
-    @OneToMany
-    private List<Book> readingBooks; // books an user is currently reading
+    @ManyToMany
+    @JoinTable(name = "user_reading_books",
+            joinColumns = @JoinColumn(name = "username"),
+            inverseJoinColumns = @JoinColumn(name = "book_id"))
+    private List<Book> readingBooks = new ArrayList<>(); // books a user is currently reading
 
-    @OneToMany
-    private List<Book> wantedBooks; // books an user wants to read
+    @ManyToMany
+    @JoinTable(name = "user_wanted_books",
+            joinColumns = @JoinColumn(name = "username"),
+            inverseJoinColumns = @JoinColumn(name = "book_id"))
+    private List<Book> wantedBooks = new ArrayList<>(); // books a user wants to read
 
     public User() {
     }
