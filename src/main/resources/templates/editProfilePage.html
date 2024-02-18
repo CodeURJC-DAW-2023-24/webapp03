@@ -30,7 +30,7 @@
 <nav class="bm-navbar bm-navbar-expand-lg bm-navbar-light bm-bg-white">
     <div class="bm-container bm-navbar-px-4 bm-navbar-px-lg-5">
         <!-- Navbar brand (is an image) and has alternative text for when the image does not load-->
-        <a class="bm-navbar-brand">
+        <a class="bm-navbar-brand" href="/">
             <img src="/assets/imagotipo.svg" alt="Bookmarks"/>
         </a>
         <button class="bm-navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -40,7 +40,7 @@
             <!-- Has to be centered -->
             <ul class="bm-navbar-nav bm-me-auto bm-mb-lg-0 bm-ms-auto">
                 <!-- Main page option (has little house icon on the left)-->
-                <li class="bm-nav-item"><a class="bm-nav-link" href="landingPage.html">
+                <li class="bm-nav-item"><a class="bm-nav-link" href="/">
                     <i class="bi-house-door-fill"></i>
                     Inicio
                 </a>
@@ -54,17 +54,17 @@
                 </li>
 
                 <!-- Administrator menu option -->
-                <li class="bm-nav-item"><a class="bm-nav-link" href="administratorMainPage.html">
+                <li class="bm-nav-item"><a class="bm-nav-link" href="/admin">
                     <i class="bi-gear-fill"></i>
                     Administrador
                 </a>
                 </li>
                 <!-- Search widget-->
                 <li class="bm-nav-item">
-                    <form class="bm-d-flex position-relative">
+                    <form class="bm-d-flex position-relative" onsubmit="return false;">
                         <input id="search-bar" class="form-control search-bar" type="search" placeholder="Buscar"
                                aria-label="Search">
-                        <a id="magnifier-icon-link" href="searchResultsPage.html">
+                        <a id="magnifier-icon-link">
                             <i id="magnifier-icon"
                                class="fa-solid fa-magnifying-glass position-absolute top-50 end-0 translate-middle-y me-2"></i>
                         </a>
@@ -99,7 +99,7 @@
 <header class="bg-branding-white py-1">
     <div class="container px-4 px-lg-5 my-5">
         <div class="text-start text-dark">
-            <h1 class="display-4 fw-bolder">Usuario</h1>
+            <h1 class="display-4 fw-bolder">{{username}}</h1>
             <p class="lead fw-normal text-black-50 mb-0">Ajustes del perfil</p>
 
         </div>
@@ -135,14 +135,14 @@
                             <div class="col-md-6">
                                 <label class="small mb-1" for="inputUsername">Nombre de usuario</label>
                                 <input class="form-control" id="inputUsername" type="text"
-                                       placeholder="Escribe tu nombre de usuario" value="Usuario">
+                                       placeholder="Escribe tu nombre de usuario" value="{{username}}">
                             </div>
 
                             <div class="col-md-6">
                                 <label class="small mb-1" for="inputEmailAddress">Correo electrónico</label>
                                 <input class="form-control" id="inputEmailAddress" type="email"
                                        placeholder="Escribe tu dirección de correo electrónico"
-                                       value="ejemplo@bookmarks.com">
+                                       value="{{email}}">
                             </div>
                         </div>
 
@@ -150,7 +150,7 @@
                             <label class="small mb-1" for="inputProfileDescription">Descripción</label>
                             <textarea class="form-control description-text-area" id="inputProfileDescription"
                                       rows="4" cols="50"
-                                      placeholder="Escribe una descripción para tu perfil"></textarea>
+                                      placeholder="Escribe una descripción para tu perfil">{{description}}</textarea>
                         </div>
 
                         <div class="row gx-3 mb-3">
@@ -185,7 +185,7 @@
 <footer class="bm-py-5 bm-bg-footer">
     <div class="bm-container bm-footer-container">
         <!-- Bookmarks logo at the start of the footer, Copyright text at the end of the footer-->
-        <a class="bm-d-flex bm-align-items-start" href="landingPage.html">
+        <a class="bm-d-flex bm-align-items-start" href="/">
             <img class="bm-footer-logo" src="/assets/logoDark.svg" alt="Bookmarks"/>
         </a>
 
@@ -193,6 +193,9 @@
     </div>
 </footer>
 <!-- Footer ENDS HERE -->
+
+<!-- SearchBar script -->
+<script src="/js/searchBar.js"></script>
 
 <!-- CORE BOOTSTRAP JS (THIS GOES RIGHT AFTER THE FOOTER, IT HAS THE NAVBAR DROPDOWN TOGGLE FUNCTIONALITY)-->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>

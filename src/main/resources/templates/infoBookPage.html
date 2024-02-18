@@ -63,7 +63,7 @@
                 </li>
 
                 <!-- Administrator menu option -->
-                <li class="bm-nav-item"><a class="bm-nav-link" href="administratorMainPage.html">
+                <li class="bm-nav-item"><a class="bm-nav-link" href="/admin">
                     <i class="bi-gear-fill"></i>
                     Administrador
                 </a>
@@ -71,10 +71,10 @@
 
                 <!-- Search widget-->
                 <li class="bm-nav-item">
-                    <form class="bm-d-flex position-relative">
+                    <form class="bm-d-flex position-relative" onSubmit="return false;">
                         <input id="search-bar" class="form-control search-bar" type="search" placeholder="Buscar"
                                aria-label="Search">
-                        <a id="magnifier-icon-link" href="searchResultsPage.html">
+                        <a id="magnifier-icon-link">
                             <i id="magnifier-icon"
                                class="fa-solid fa-magnifying-glass position-absolute top-50 end-0 translate-middle-y me-2"></i>
                         </a>
@@ -249,6 +249,9 @@
     </div>
 </footer>
 <!-- Footer ENDS HERE -->
+
+<!-- SearchBar script -->
+<script src="/js/searchBar.js"></script>
 
 <script src="/js/infoBookPage.js"></script>
 
