@@ -1,4 +1,4 @@
-package es.codeurjc.holamundo.controller;
+package es.codeurjc.holamundo.service;
 
 import es.codeurjc.holamundo.entity.Book;
 import es.codeurjc.holamundo.entity.Genre;
@@ -6,10 +6,11 @@ import es.codeurjc.holamundo.repository.BookRepository;
 import es.codeurjc.holamundo.repository.GenreRepository;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
-public class GenreController {
+@Service
+public class GenreSampleService {
 
     @Autowired
     private GenreRepository genreRepository;

@@ -23,6 +23,10 @@ public class User {
 
     private String password;
 
+    @OneToMany(mappedBy = "author")
+    private List<Review> reviews = new ArrayList<>(); // reviews a user has made
+
+
     @ManyToMany
     @JoinTable(name = "user_read_books",
             joinColumns = @JoinColumn(name = "username"),
@@ -174,6 +178,26 @@ public class User {
         this.readBooks.clear();
         this.readingBooks.clear();
         this.wantedBooks.clear();
+    }
+
+    public void addReview(Review review) {
+        this.reviews.add(review);
+    }
+
+    public void removeReview(Review review) {
+        this.reviews.remove(review);
+    }
+
+    public void clearReviews() {
+        this.reviews.clear();
+    }
+
+    public List<Review> getReviews() {
+        return this.reviews;
+    }
+
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
     }
 
     public String toString() {

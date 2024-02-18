@@ -1,4 +1,4 @@
-package es.codeurjc.holamundo.controller;
+package es.codeurjc.holamundo.service;
 
 import es.codeurjc.holamundo.entity.User;
 import es.codeurjc.holamundo.repository.BookRepository;
@@ -6,10 +6,11 @@ import es.codeurjc.holamundo.repository.ReviewRepository;
 import es.codeurjc.holamundo.repository.UserRepository;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
-public class UserController { // This class will control the User DB operations
+@Service
+public class UserInitializationSampleService { // This class will control the User DB operations
 
     @Autowired
     private UserRepository userRepository;

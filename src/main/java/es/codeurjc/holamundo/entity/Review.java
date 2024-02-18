@@ -10,7 +10,7 @@ public class Review {
     private long ID;
     private String title;
 
-    @OneToOne
+    @ManyToOne
     private User author;
     private int rating;
     private String content;
