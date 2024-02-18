@@ -1,10 +1,10 @@
 package es.codeurjc.holamundo.service;
 
-import es.codeurjc.holamundo.component.Review;
+import es.codeurjc.holamundo.component.ReviewC;
 
 import java.util.*;
 
-public class Book {
+public class BookC {
     //Data structure that will store example books (ID, Book title, Author, Description, Image, Date of publication, ISBN, Genre, Series, Page count, Publisher)
     private int ID;
     private String title;
@@ -17,11 +17,11 @@ public class Book {
     private String series;
     private int pageCount;
     private String publisher;
-    private Map<Integer, Review> reviews;
+    private Map<Integer, ReviewC> reviews;
 
     private ReviewList reviewList;
 
-    public Book (int ID, String title, String author, String description, String image, String release, String ISBN, String genre, String series, int pageCount, String publisher) {
+    public BookC(int ID, String title, String author, String description, String image, String release, String ISBN, String genre, String series, int pageCount, String publisher) {
         this.reviews = new HashMap<>();
 
         this.ID = ID;
@@ -40,27 +40,27 @@ public class Book {
         this.loadReviews(reviews);
     }
 
-    private void loadReviews(Map<Integer, Review> reviewMap) {
+    private void loadReviews(Map<Integer, ReviewC> reviewMap) {
         // Example reviews to test the functionality of the webpage  
 
         /* General method to load all stored reviews for a specific book*/
         this.reviews = reviewList.getBookReviews(this.ID);
     }
 
-    public List<Review> getReviews() {
+    public List<ReviewC> getReviews() {
         return new ArrayList<>(this.reviews.values());
 
     }
 
-    public List<Review> getReviewsRange(int start, int end) {
-        List<Review> reviews = new ArrayList<>(this.reviews.values());
+    public List<ReviewC> getReviewsRange(int start, int end) {
+        List<ReviewC> reviews = new ArrayList<>(this.reviews.values());
         if (end > reviews.size()) {
             end = reviews.size();
         }
         return reviews.subList(start, end);
     }
 
-    public void setReview(int ID, Review review){
+    public void setReview(int ID, ReviewC review){
         this.reviews.put(ID, review);
     }
 

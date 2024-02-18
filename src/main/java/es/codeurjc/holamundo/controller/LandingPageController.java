@@ -1,10 +1,8 @@
 package es.codeurjc.holamundo.controller;
 
 import es.codeurjc.holamundo.component.Post;
-import es.codeurjc.holamundo.service.Book;
 import es.codeurjc.holamundo.service.BookList;
 import es.codeurjc.holamundo.service.PostList;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -13,9 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 public class LandingPageController {

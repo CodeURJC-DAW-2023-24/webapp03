@@ -1,6 +1,6 @@
 package es.codeurjc.holamundo.controller;
 
-import es.codeurjc.holamundo.service.Book;
+import es.codeurjc.holamundo.service.BookC;
 import es.codeurjc.holamundo.service.BookList;
 import es.codeurjc.holamundo.service.UserBookLists;
 import es.codeurjc.holamundo.service.UserList;
@@ -19,9 +19,9 @@ public class ProfilePageController {
     private UserList users;
     private UserBookLists userBList;
     private BookList bookList;
-    private ArrayList<Book> readBooks;
-    private ArrayList<Book> readingBooks;
-    private ArrayList<Book> wantedBooks;
+    private ArrayList<BookC> readBooks;
+    private ArrayList<BookC> readingBooks;
+    private ArrayList<BookC> wantedBooks;
 
     public ProfilePageController() {
         this.users = new UserList();
@@ -78,10 +78,10 @@ public class ProfilePageController {
     }
 
     @PostMapping("/profile/{username}/loadMore")
-    public ResponseEntity<ArrayList<Book>> loadReadBooks(@PathVariable String username, @RequestParam(defaultValue = "default") String listType) {
+    public ResponseEntity<ArrayList<BookC>> loadReadBooks(@PathVariable String username, @RequestParam(defaultValue = "default") String listType) {
         if (listType.equals("read")) {
             ArrayList<Integer> readBooks = userBList.getRangeList(0, 4, "read", username);
-            ArrayList<Book> readBooksToReturn = new ArrayList<>();
+            ArrayList<BookC> readBooksToReturn = new ArrayList<>();
             for (int idBook : readBooks) {
                 readBooksToReturn.add(bookList.getBook(idBook));
             }
@@ -89,7 +89,7 @@ public class ProfilePageController {
 
         } else if (listType.equals("reading")) {
             ArrayList<Integer> readingBooks = userBList.getRangeList(0, 4, "reading", username);
-            ArrayList<Book> readingBooksToReturn = new ArrayList<>();
+            ArrayList<BookC> readingBooksToReturn = new ArrayList<>();
             for (int idBook : readingBooks) {
                 readingBooksToReturn.add(bookList.getBook(idBook));
             }
@@ -97,7 +97,7 @@ public class ProfilePageController {
 
         } else if (listType.equals("wanted")) {
             ArrayList<Integer> wantedBooks = userBList.getRangeList(0, 4, "wanted", username);
-            ArrayList<Book> wantedBooksToReturn = new ArrayList<>();
+            ArrayList<BookC> wantedBooksToReturn = new ArrayList<>();
             for (int idBook : wantedBooks) {
                 wantedBooksToReturn.add(bookList.getBook(idBook));
             }

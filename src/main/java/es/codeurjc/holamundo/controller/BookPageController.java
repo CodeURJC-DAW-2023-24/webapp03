@@ -1,9 +1,8 @@
 package es.codeurjc.holamundo.controller;
 
 import es.codeurjc.holamundo.service.BookList;
-import es.codeurjc.holamundo.component.Review;
+import es.codeurjc.holamundo.component.ReviewC;
 
-import org.apache.coyote.Request;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 public class BookPageController {
@@ -55,9 +53,9 @@ public class BookPageController {
         model.addAttribute("bookPageCount", bookPageCount);
         model.addAttribute("bookPublisher", bookPublisher);
 
-        List<Review> bookReviews = books.getBook(bookID).getReviewsRange(0, 6);
+        List<ReviewC> bookReviews = books.getBook(bookID).getReviewsRange(0, 6);
         // load the first 6 reviews
-        for (Review review : bookReviews) {
+        for (ReviewC review : bookReviews) {
             System.out.println(review.getTitle());
         }
 
@@ -125,8 +123,8 @@ public class BookPageController {
     }
 
     @PostMapping("/book/{currentBookID}/loadMoreReviews")
-    public ResponseEntity<ArrayList<Review>> loadMoreReviews(@PathVariable int currentBookID, @RequestParam int page, @RequestParam int pageSize) {
-        List<Review> bookReviews = books.getBook(currentBookID).getReviewsRange(page, page + pageSize);
+    public ResponseEntity<ArrayList<ReviewC>> loadMoreReviews(@PathVariable int currentBookID, @RequestParam int page, @RequestParam int pageSize) {
+        List<ReviewC> bookReviews = books.getBook(currentBookID).getReviewsRange(page, page + pageSize);
         return new ResponseEntity<>(new ArrayList<>(bookReviews), HttpStatus.OK);
 
     }

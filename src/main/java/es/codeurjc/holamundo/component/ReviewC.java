@@ -1,13 +1,9 @@
 package es.codeurjc.holamundo.component;
 
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @Component
-public class Review {
+public class ReviewC {
     private int ID;
     private String title;
     private String author;
@@ -16,10 +12,10 @@ public class Review {
 
     private int bookID;
 
-    public Review() {
+    public ReviewC() {
     }
 
-    public Review(int ID, String title, String author, int rating, String content, int bookID) {
+    public ReviewC(int ID, String title, String author, int rating, String content, int bookID) {
         this.ID = ID;
         this.title = title;
         this.author = author;

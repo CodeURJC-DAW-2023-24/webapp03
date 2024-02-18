@@ -1,6 +1,6 @@
 package es.codeurjc.holamundo.controller;
 
-import es.codeurjc.holamundo.service.Book;
+import es.codeurjc.holamundo.service.BookC;
 import es.codeurjc.holamundo.service.BookList;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,13 +9,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 @Controller
 public class SearchResultsPageController {
     private BookList books;
-    private ArrayList<Book> bookQueries;
+    private ArrayList<BookC> bookQueries;
     @GetMapping("/search")
     public String loadSearchResultsPage(Model model, String query) {
         this.books = new BookList();
@@ -27,7 +25,7 @@ public class SearchResultsPageController {
     }
 
     @PostMapping("/search")
-    public ResponseEntity<ArrayList<Book>> loadSearchResultsPagePost(String query) {
+    public ResponseEntity<ArrayList<BookC>> loadSearchResultsPagePost(String query) {
         return new ResponseEntity<>(books.getMatchingResults(query, 4, this.books.getSize()), HttpStatus.OK);
     }
 }
