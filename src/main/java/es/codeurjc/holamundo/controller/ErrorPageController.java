@@ -13,7 +13,7 @@ public class ErrorPageController {
 
     @GetMapping("/errorPage/**")
     public ResponseEntity<Resource> loadErrorPage() throws IOException {
-        Resource resource = new ClassPathResource("static/errorPage.html");
+        Resource resource = new ClassPathResource("templates/errorPage.html");
         if (!resource.exists()) {
             throw new IOException("Error page not found");
 

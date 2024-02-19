@@ -59,9 +59,12 @@ public class Author {
         this.books = bookList;
     }
 
-    // To string method
-
+    // Tostring method
+    @Override
     public String toString() {
-        return "Author[id=" + this.id + ", name='" + this.name + "', books=" + this.books + "]";
+        return "Author{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
     }
 }

@@ -52,7 +52,6 @@ public class Book {
     }
 
 
-
     public List<Review> getReviews() {
         return this.reviews;
     }
@@ -189,20 +188,21 @@ public class Book {
         this.reviews = reviews;
     }
 
+    //ToString method
 
     public String toString() {
-        return "Book[" +
+        return "Book{" +
                 "ID=" + ID +
                 ", title='" + title + '\'' +
-                ", author='" + author + '\'' +
+                ", author=" + author.toString() + '\'' +
                 ", description='" + description + '\'' +
                 ", image='" + image + '\'' +
                 ", releaseDate='" + releaseDate + '\'' +
                 ", ISBN='" + ISBN + '\'' +
-                ", genre='" + genre + '\'' +
+                ", genre=" + genre +
                 ", series='" + series + '\'' +
                 ", pageCount=" + pageCount +
                 ", publisher='" + publisher + '\'' +
-                ']';
+                '}';
     }
 }

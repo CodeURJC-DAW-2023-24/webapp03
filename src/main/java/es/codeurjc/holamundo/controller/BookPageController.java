@@ -1,8 +1,11 @@
 package es.codeurjc.holamundo.controller;
 
+import es.codeurjc.holamundo.entity.Book;
+import es.codeurjc.holamundo.repository.BookRepository;
 import es.codeurjc.holamundo.service.BookList;
 import es.codeurjc.holamundo.component.ReviewC;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -21,6 +24,9 @@ public class BookPageController {
     private BookList books;
     private int selectedBookID;
 
+    @Autowired
+    private BookRepository bookRepository;
+
     //Constructor
     public BookPageController() {
         this.books = new BookList();
@@ -28,18 +34,46 @@ public class BookPageController {
 
     @GetMapping("/book/{bookID}")
     public String loadBookPage(Model model, @PathVariable int bookID) {
+        // Get ratings from the database
+        List<Double> ratings = bookRepository.getRatingsByBookId(bookID);
+        System.out.println(ratings.toString());
+
+        // Calculate the average rating
+        double averageRating = 0;
+        if (ratings.size() > 0) {
+            for (Double rating : ratings) {
+                averageRating += rating;
+            }
+            averageRating /= ratings.size();
+        }
+
+        // truncate averageRating to 2 decimal places
+        averageRating = Math.round(averageRating * 100.0) / 100.0;
+
+        // Get book from the database
+        Book book = bookRepository.findByID(bookID);
+
         this.selectedBookID = bookID;
 
-        String bookTitle = books.getBook(bookID).getTitle();
-        String bookAuthor = books.getBook(bookID).getAuthor();
-        String bookDescription = books.getBook(bookID).getDescription();
-        String bookImage = books.getBook(bookID).getImage();
-        String bookDate = books.getBook(bookID).getRelease();
-        String bookISBN = books.getBook(bookID).getISBN();
-        String bookGenre = books.getBook(bookID).getGenre();
-        String bookSeries = books.getBook(bookID).getSeries();
-        int bookPageCount = books.getBook(bookID).getPageCount();
-        String bookPublisher = books.getBook(bookID).getPublisher();
+        String bookTitle = book.getTitle();
+
+        // Get the authors of the book and form a string separated by commas
+        String bookAuthor = "";
+        for (int i = 0; i < book.getAuthor().size(); i++) {
+            bookAuthor += book.getAuthor().get(i).getName();
+            if (i < book.getAuthor().size() - 1) {
+                bookAuthor += ", ";
+            }
+        }
+
+        String bookDescription = book.getDescription();
+        String bookImage = book.getImage();
+        String bookDate = book.getReleaseDate();
+        String bookISBN = book.getISBN();
+        String bookGenre = book.getGenre().getName();
+        String bookSeries = book.getSeries();
+        int bookPageCount = book.getPageCount();
+        String bookPublisher = book.getPublisher();
 
         model.addAttribute("id", bookID);
         model.addAttribute("bookTitle", bookTitle);
@@ -52,12 +86,9 @@ public class BookPageController {
         model.addAttribute("bookSeries", bookSeries);
         model.addAttribute("bookPageCount", bookPageCount);
         model.addAttribute("bookPublisher", bookPublisher);
+        model.addAttribute("averageRating", averageRating);
 
         List<ReviewC> bookReviews = books.getBook(bookID).getReviewsRange(0, 6);
-        // load the first 6 reviews
-        for (ReviewC review : bookReviews) {
-            System.out.println(review.getTitle());
-        }
 
 
         model.addAttribute("reviews", bookReviews);
