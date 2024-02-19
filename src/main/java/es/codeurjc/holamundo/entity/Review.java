@@ -80,6 +80,6 @@ public class Review {
     }
 
     public String toString() {
-        return "Review[ID=" + this.ID + ", title='" + this.title + "', author='" + this.author + "', rating=" + this.rating + ", content='" + this.content + "]";
+        return "Review{ID=" + this.ID + ", title='" + this.title + "', author='" + this.author.getUsername() + "', rating=" + this.rating + ", content='" + this.content + "}";
     }
 }

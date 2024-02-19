@@ -1,6 +1,23 @@
 // Select all the star elements
 const stars = document.querySelectorAll('.rating input[type="radio"]');
 
+function fillStars(rating, starElements) {
+    for (let i = 0; i < rating; i++) {
+        const label = starElements[i];
+        label.classList.remove('fa-regular');
+        label.classList.add('fa-solid');
+    }
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+    const reviewElements = document.querySelectorAll('.col.mb-5');
+    reviewElements.forEach(reviewElement => {
+        const rating = reviewElement.querySelector('.rating-number').textContent.trim();
+        const starElements = reviewElement.querySelectorAll('.rating i');
+        fillStars(rating, starElements);
+    });
+});
+
 // Add a click event listener to each star
 stars.forEach(star => {
     star.addEventListener('click', function () {
@@ -37,6 +54,8 @@ stars.forEach(star => {
     });
 });
 
+// Function to fill stars based on rating
+
 $(() => {
     $("#no-more-reviews").hide();
     $("#load-more-spinner").hide();
@@ -51,11 +70,14 @@ $(() => {
                             <h5 class="fw-bolder" id="inputReviewAuthor">{{author}}</h5>
                             <h6>{{title}}</h6>
                             <div class="rating">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
+                            <p class="fw-semibold rating-number">
+                                    {{rating}}
+                                </p>
+                                <i class="fa-star fa-regular"></i>
+                                <i class="fa-star fa-regular"></i>
+                                <i class="fa-star fa-regular"></i>
+                                <i class="fa-star fa-regular"></i>
+                                <i class="fa-star fa-regular"></i>
                             </div>
                             <!-- Product price-->
                             <div id="inputReviewContent">{{content}}</div>
@@ -89,6 +111,11 @@ $(() => {
                 data.forEach(review => {
                     let moreReviews = Mustache.render(reviewTemplate, review);
                     $("#reviewsArea").append(moreReviews);
+                    // Call fillStars function for each new review
+                    const newReviewElement = document.querySelector('#reviewsArea .col.mb-5:last-child');
+                    const rating = newReviewElement.querySelector('.rating').textContent.trim();
+                    const starElements = newReviewElement.querySelectorAll('.rating i');
+                    fillStars(rating, starElements);
                 });
             }
         })

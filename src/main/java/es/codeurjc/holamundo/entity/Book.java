@@ -16,6 +16,8 @@ public class Book {
     @ManyToMany
     private List<Author> author = new ArrayList<>();
 
+    private String authorString;
+
     private String description;
     private String image;
     private String releaseDate;
@@ -137,6 +139,7 @@ public class Book {
 
     public void setAuthor(List<Author> author) {
         this.author = author;
+        updateAuthorString();
     }
 
 
@@ -172,12 +175,29 @@ public class Book {
         this.genre = genre;
     }
 
+    public void updateAuthorString() {
+        String authorString = "";
+        if (this.author.size() == 1) {
+            authorString = this.author.get(0).getName();
+        } else {
+            for (int i = 0; i < this.author.size(); i++) {
+                authorString += this.author.get(i).getName();
+                if (i < this.author.size() - 1) {
+                    authorString += ", ";
+                }
+            }
+        }
+        this.authorString = authorString;
+    }
+
     public void addAuthor(Author author) {
         this.author.add(author);
+        updateAuthorString();
     }
 
     public void removeAuthor(Author author) {
         this.author.remove(author);
+        updateAuthorString();
     }
 
     public void removeReview(Review review) {
@@ -188,13 +208,35 @@ public class Book {
         this.reviews = reviews;
     }
 
+    public String getAuthorString() {
+        return this.authorString;
+    }
+
+    public void setAuthorString(String authorString) {
+        this.authorString = authorString;
+    }
+
     //ToString method
 
+    @Override
     public String toString() {
+        // Manage authors (if there is only one author, print the name, if there are more than one, print the names separated by commas)
+        String authorString = "";
+        if (this.author.size() == 1) {
+            authorString = this.author.get(0).getName();
+        } else {
+            for (int i = 0; i < this.author.size(); i++) {
+                authorString += this.author.get(i).getName();
+                if (i < this.author.size() - 1) {
+                    authorString += ", ";
+                }
+            }
+        }
+
         return "Book{" +
                 "ID=" + ID +
                 ", title='" + title + '\'' +
-                ", author=" + author.toString() + '\'' +
+                ", author=" + authorString + '\'' +
                 ", description='" + description + '\'' +
                 ", image='" + image + '\'' +
                 ", releaseDate='" + releaseDate + '\'' +

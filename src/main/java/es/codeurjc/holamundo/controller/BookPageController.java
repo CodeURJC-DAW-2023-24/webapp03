@@ -1,11 +1,14 @@
 package es.codeurjc.holamundo.controller;
 
 import es.codeurjc.holamundo.entity.Book;
+import es.codeurjc.holamundo.entity.Review;
 import es.codeurjc.holamundo.repository.BookRepository;
+import es.codeurjc.holamundo.repository.ReviewRepository;
 import es.codeurjc.holamundo.service.BookList;
 import es.codeurjc.holamundo.component.ReviewC;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -26,6 +29,9 @@ public class BookPageController {
 
     @Autowired
     private BookRepository bookRepository;
+
+    @Autowired
+    private ReviewRepository reviewRepository;
 
     //Constructor
     public BookPageController() {
@@ -56,16 +62,7 @@ public class BookPageController {
         this.selectedBookID = bookID;
 
         String bookTitle = book.getTitle();
-
-        // Get the authors of the book and form a string separated by commas
-        String bookAuthor = "";
-        for (int i = 0; i < book.getAuthor().size(); i++) {
-            bookAuthor += book.getAuthor().get(i).getName();
-            if (i < book.getAuthor().size() - 1) {
-                bookAuthor += ", ";
-            }
-        }
-
+        String bookAuthor = book.getAuthorString();
         String bookDescription = book.getDescription();
         String bookImage = book.getImage();
         String bookDate = book.getReleaseDate();
@@ -88,11 +85,10 @@ public class BookPageController {
         model.addAttribute("bookPublisher", bookPublisher);
         model.addAttribute("averageRating", averageRating);
 
-        List<ReviewC> bookReviews = books.getBook(bookID).getReviewsRange(0, 6);
+        // Get reviews from the database
+        List<Review> reviews = reviewRepository.findByBookID(bookID, PageRequest.of(0, 6)).getContent();
 
-
-        model.addAttribute("reviews", bookReviews);
-
+        model.addAttribute("reviews", reviews);
 
         return "infoBookPage";
     }
@@ -154,9 +150,12 @@ public class BookPageController {
     }
 
     @PostMapping("/book/{currentBookID}/loadMoreReviews")
-    public ResponseEntity<ArrayList<ReviewC>> loadMoreReviews(@PathVariable int currentBookID, @RequestParam int page, @RequestParam int pageSize) {
-        List<ReviewC> bookReviews = books.getBook(currentBookID).getReviewsRange(page, page + pageSize);
-        return new ResponseEntity<>(new ArrayList<>(bookReviews), HttpStatus.OK);
+    public ResponseEntity<ArrayList<Review>> loadMoreReviews(@PathVariable int currentBookID, @RequestParam int page, @RequestParam int pageSize) {
+        // Get reviews from the database
+        List<Review> reviews = reviewRepository.findByBookID(currentBookID, PageRequest.of(page, pageSize)).getContent();
+
+        // COMMENTED CODE: List<ReviewC> bookReviews = books.getBook(currentBookID).getReviewsRange(page, page + pageSize);
+        return new ResponseEntity<>(new ArrayList<>(reviews), HttpStatus.OK);
 
     }
 
