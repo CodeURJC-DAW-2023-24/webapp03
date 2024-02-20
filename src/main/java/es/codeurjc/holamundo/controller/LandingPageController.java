@@ -57,9 +57,13 @@ public class LandingPageController {
     }
 
     //Method that will load 4 more posts
-    @PostMapping("/landingPage/loadMore")
-    public ResponseEntity<ArrayList<Post>> loadLandingPagePosts() {
-        return new ResponseEntity<>(posts.getMultiplePosts(1, 6), HttpStatus.OK);
+    @GetMapping("/landingPage/loadMore")
+    public String loadLandingPagePosts(Model model) {
+        List<Post> postList= posts.getMultiplePosts(1, 6);
+
+        model.addAttribute("post", postList);
+
+        return "landingPagePostTemplate";
 
     }
 }
