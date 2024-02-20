@@ -1,32 +1,22 @@
 package es.codeurjc.holamundo.controller;
 
-import es.codeurjc.holamundo.entity.Author;
-import es.codeurjc.holamundo.entity.Book;
-import es.codeurjc.holamundo.entity.User;
-import es.codeurjc.holamundo.repository.UserRepository;
 import es.codeurjc.holamundo.service.BookC;
 import es.codeurjc.holamundo.service.BookList;
 import es.codeurjc.holamundo.service.UserBookLists;
 import es.codeurjc.holamundo.service.UserList;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-
 @Controller
 public class ProfilePageController {
-
-    @Autowired
-    private UserRepository userRepository;
-    private UserList users;
+    private UserRepository user;
+    private String userInfo;
     private UserBookLists userBList;
     private BookList bookList;
     private ArrayList<BookC> readBooks;
@@ -42,10 +32,9 @@ public class ProfilePageController {
     @GetMapping("/profile/{username}/**")
     public String loadProfilePage(Model model, @PathVariable String username) {
 
-        // Get user from the database
-        User user = userRepository.findByUsername(username);
+        this.userInfo = user.findByUsername(username).orElseThrow();
 
-        //User info
+        // User info
         String role = user.getRole();
         String alias = user.getAlias();
         String description = user.getDescription();
@@ -70,8 +59,8 @@ public class ProfilePageController {
         List<Book> readBooksList = userRepository.getReadBooks(username, PageRequest.of(0, 4)).getContent();
         List<Book> readingBooksList = userRepository.getReadingBooks(username, PageRequest.of(0, 4)).getContent();
         List<Book> wantedBooksList = userRepository.getWantedBooks(username, PageRequest.of(0, 4)).getContent();
-
         model.addAttribute("nReadBooks", nReadBooks);
+
         model.addAttribute("nReadingBooks", nReadingBooks);
         model.addAttribute("nWantedBooks", nWantedBooks);
         model.addAttribute("ReadBooks", readBooksList);
@@ -82,7 +71,8 @@ public class ProfilePageController {
     }
 
     @PostMapping("/profile/{username}/loadMore")
-    public ResponseEntity<ArrayList<BookC>> loadReadBooks(@PathVariable String username, @RequestParam(defaultValue = "default") String listType) {
+    public ResponseEntity<ArrayList<BookC>> loadReadBooks(@PathVariable String username,
+            @RequestParam(defaultValue = "default") String listType) {
         if (listType.equals("read")) {
             ArrayList<Integer> readBooks = userBList.getRangeList(0, 4, "read", username);
             ArrayList<BookC> readBooksToReturn = new ArrayList<>();
