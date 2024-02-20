@@ -104,7 +104,9 @@
 <header class="bg-branding-white py-1">
     <div class="container px-4 px-lg-5 my-5">
         <div class="text-start text-dark">
-            <h1 class="display-4 fw-bolder header-welcome-text">Bienvenido, Usuario</h1>
+            <h1 class="display-4 fw-bolder header-welcome-text">
+                Bienvenido{{#user}}, {{username}}{{/user}}{{^user}} a Bookmarks{{/user}}
+            </h1>
             <p class="lead fw-normal text-white-50 mb-0">"Nuestras vidas se definen por las oportunidades, incluso las
                 que perdemos"<br>- F. Scott Fitzgerald</p>
         </div>
@@ -117,6 +119,7 @@
         <!-- Blog entries-->
         <div class="col-lg-8">
             <!-- Featured book (THE FEATURED BOOK SHOULD BE STATIC AND ALWAYS APPEARS ON THE LANDING PAGE -->
+            <h3 class="fw-semibold mb-4">{{#user}}Más de {{mostReadAuthor}}{{/user}}{{^user}}Lo más leído: {{mostReadAuthor}}{{/user}}</h3>
             <!-- Featured book-->
             <div class="card mb-4 featured-book">
                 <div class="img-container-featured">
@@ -124,7 +127,7 @@
                          alt="Libro"/>
                 </div>
                 <div class="card-body">
-                    <div class="small text-muted">1 de Febrero, 2024</div>
+                    <div class="small text-muted">{{bookDate}}</div>
                     <!-- Post date goes here, not book release date -->
                     <h2 class="card-title">{{bookTitle}}</h2>
                     <p class="card-text">{{bookDescription}}</p>
@@ -133,6 +136,8 @@
             </div>
 
             <!-- Nested row for non-featured blog posts. THESE POSTS MUST BE DYNAMICALLY LOADED (AJAX + SPRINGBOOT ,using templates) -->
+            <hr class="my-0"/>
+            <h3 class="fw-semibold mb-4 mt-4">{{#user}}Basado en tus géneros más leídos{{/user}}{{^user}}Basado en los géneros más leídos{{/user}}</h3>
             <div class="row" id="post-container">
                 <div class="col-lg-6" id="left-post-column">
                     <!-- Blog post-->
@@ -146,10 +151,11 @@
                         </div>
                         <div class="card-body">
                             <!-- Text and buttons go here -->
-                            <div class="small text-muted">{{postDate}}</div>
+                            <div class="small text-muted">{{releaseDate}}</div>
                             <h2 class="card-title h4">{{title}}</h2>
-                            <p class="card-text">{{description}}</p>
-                            <a class="btn btn-primary" href="infoBookPage.html">Leer más</a>
+                            <p class="card-text">{{authorString}}</p>
+                            <p class="card-text">Género: {{genre}}</p>
+                            <a class="btn btn-primary" href="book/{{ID}}">Leer más</a>
                         </div>
                     </div>
                     {{/postL}}
@@ -167,10 +173,11 @@
                         </div>
                         <div class="card-body">
                             <!-- Text and buttons go here -->
-                            <div class="small text-muted">{{postDate}}</div>
+                            <div class="small text-muted">{{releaseDate}}</div>
                             <h2 class="card-title h4">{{title}}</h2>
-                            <p class="card-text">{{description}}</p>
-                            <a class="btn btn-primary" href="infoBookPage.html">Leer más</a>
+                            <p class="card-text">{{authorString}}</p>
+                            <p class="card-text">Género: {{genre}}</p>
+                            <a class="btn btn-primary" href="book/{{ID}}">Leer más</a>
                         </div>
                     </div>
                     {{/postR}}
@@ -193,6 +200,7 @@
 
         <!-- Side widgets-->
         <div class="col-lg-4">
+            <h3 class="fw-semibold mb-4">Explora más</h3>
             <!-- Users widget-->
             <div class="card mb-4">
                 <div class="card-header">Acceso usuarios</div>

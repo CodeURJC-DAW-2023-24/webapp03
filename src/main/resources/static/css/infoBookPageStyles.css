@@ -12748,3 +12748,7 @@ input[type="radio"] {
 .rating-number{
     display: none !important;
 }
+
+#bookIDContainer{
+    display: none !important;
+}

@@ -1,8 +1,17 @@
 package es.codeurjc.holamundo.controller;
 
 import es.codeurjc.holamundo.component.Post;
+import es.codeurjc.holamundo.entity.Author;
+import es.codeurjc.holamundo.entity.Book;
+import es.codeurjc.holamundo.entity.Genre;
+import es.codeurjc.holamundo.repository.AuthorRepository;
+import es.codeurjc.holamundo.repository.BookRepository;
+import es.codeurjc.holamundo.repository.GenreRepository;
+import es.codeurjc.holamundo.repository.UserRepository;
 import es.codeurjc.holamundo.service.BookList;
 import es.codeurjc.holamundo.service.PostList;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -16,8 +25,23 @@ import java.util.List;
 @Controller
 public class LandingPageController {
 
+    private String testingCurrentUsername = "FanBook_785"; //This is the username of the current user. This is just for testing purposes
+
+    private boolean isUser = true; //This is just for testing purposes
     private BookList books;
     private PostList posts;
+
+    @Autowired
+    private BookRepository bookRepository;
+
+    @Autowired
+    private GenreRepository genreRepository;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private AuthorRepository authorRepository;
 
     //Constructor
     public LandingPageController() {
@@ -28,30 +52,62 @@ public class LandingPageController {
     //Method that will load the landing page
     @GetMapping("/")
     public String loadLandingPage(Model model) {
-        int ID = 3; //RECOMMENDED BOOK ID
-        int bookID = books.getBook(ID).getID();
-        String bookTitle = books.getBook(ID).getTitle();
-        String bookDescription = books.getBook(ID).getDescription();
-        String bookImage = books.getBook(ID).getImage();
+
+        model.addAttribute("user", isUser);
+        model.addAttribute("username", testingCurrentUsername);
+
+        // Recommendations algorithm---------------------------------------------------------------
+        // If it is a registered user, get the most read genres
+        // Get current user most read genres
+        List<Genre> mostReadGenres;
+
+        //Get current user most read authors
+        List<Author> mostReadAuthors;
+
+        // Get books from the most read genres (these will be the recommended books)
+        List<Book> booksFromMostReadGenres;
+
+        // Get books from the most read author (the first one on the list)
+        List<Book> booksFromMostReadAuthor;
+
+        // Load lists if user is logged in
+        if(isUser) {
+            mostReadGenres = userRepository.getMostReadGenres(testingCurrentUsername);
+            mostReadAuthors = userRepository.getMostReadAuthors(testingCurrentUsername);
+        } else {
+            // If it is not a registered user, get the most read genres from the database
+            mostReadGenres = genreRepository.getMostReadGenres();
+            mostReadAuthors = authorRepository.getMostReadAuthors();
+            System.out.println(mostReadAuthors);
+        }
+        booksFromMostReadGenres = bookRepository.findByGenreIn(mostReadGenres, PageRequest.of(0, 4)).getContent();
+        booksFromMostReadAuthor = bookRepository.findByAuthorString(mostReadAuthors.get(0).getName(), PageRequest.of(0, 5)).getContent();
+        //Get info of the book recommended in the big card (recommended by author)
+
+        long bookID = booksFromMostReadAuthor.get(0).getID();
+        String bookTitle = booksFromMostReadAuthor.get(0).getTitle();
+        String bookDescription = booksFromMostReadAuthor.get(0).getDescription();
+        String bookImage = booksFromMostReadAuthor.get(0).getImage();
+
+        model.addAttribute("mostReadAuthor", mostReadAuthors.get(0).getName());
 
         model.addAttribute("bookTitle", bookTitle);
         model.addAttribute("bookDescription", bookDescription);
         model.addAttribute("bookImage", bookImage);
         model.addAttribute("bookID", bookID);
+        model.addAttribute("bookDate", booksFromMostReadGenres.get(0).getReleaseDate());
+        model.addAttribute("genre", booksFromMostReadGenres.get(0).getGenre().getName());
 
-        ArrayList<Post> highlightPosts = new ArrayList<>(posts.getPosts().values()); //This is the getter of the list of posts the admin will choose to display in the landing page
 
-        //Get only the first 4 posts to display in the landing page
-        highlightPosts = new ArrayList<>(highlightPosts.subList(0, 4));
+        // Split the list of recommended books into two lists to display them in two columns
+        List<Book> recommendedBooksLeft;
+        List<Book> recommendedBooksRight;
 
-        List<Post> highlightPostsLeft;
-        List<Post> highlightPostsRight;
+        recommendedBooksLeft = booksFromMostReadGenres.subList(0, (booksFromMostReadGenres.size() / 2));
+        recommendedBooksRight = booksFromMostReadGenres.subList((booksFromMostReadGenres.size() / 2), booksFromMostReadGenres.size());
 
-        highlightPostsLeft = highlightPosts.subList(0, (highlightPosts.size() / 2));
-        highlightPostsRight = highlightPosts.subList((highlightPosts.size() / 2), highlightPosts.size());
-
-        model.addAttribute("postL", highlightPostsLeft);
-        model.addAttribute("postR", highlightPostsRight);
+        model.addAttribute("postL", recommendedBooksLeft);
+        model.addAttribute("postR", recommendedBooksRight);
 
         return "landingPage";
     }
@@ -59,9 +115,14 @@ public class LandingPageController {
     //Method that will load 4 more posts
     @GetMapping("/landingPage/loadMore")
     public String loadLandingPagePosts(Model model) {
-        List<Post> postList= posts.getMultiplePosts(1, 6);
+        // If it is a registered user, get the most read genres
+        // Get current user most read genres
+        List<Genre> mostReadGenres = userRepository.getMostReadGenres(testingCurrentUsername);
 
-        model.addAttribute("post", postList);
+        // Get books from the most read genres (these will be the recommended books)
+        List<Book> booksFromMostReadGenres = bookRepository.findByGenreIn(mostReadGenres, PageRequest.of(1, 4)).getContent(); // Gets 5 because the first one shows in the big card, the other 4 in the small ones
+
+        model.addAttribute("post", booksFromMostReadGenres);
 
         return "landingPagePostTemplate";
 

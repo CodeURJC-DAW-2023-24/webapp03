@@ -8,10 +8,11 @@
     </div>
     <div class="card-body">
         <!-- Text and buttons go here -->
-        <div class="small text-muted">{{postDate}}</div>
+        <div class="small text-muted">{{releaseDate}}</div>
         <h2 class="card-title h4">{{title}}</h2>
-        <p class="card-text">{{description}}</p>
-        <a class="btn btn-primary" href="infoBookPage.html">Leer m&aacutes</a>
+        <p class="card-text">{{authorString}}</p>
+        <p class="card-text">Género: {{genre}}</p>
+        <a class="btn btn-primary" href="book/{{ID}}">Leer m&aacutes</a>
     </div>
 </div>
 {{/post}}

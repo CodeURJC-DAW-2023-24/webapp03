@@ -11,7 +11,8 @@ $(() => {
     });
     $("#load-more-btn i").css({"margin-right": "10px"});
 
-    let currentPage = 0;
+    let currentPage = 1;
+    let pageSize = 4;
 
     $("#load-more-btn").click(function () {
         // spinner animation to button while loading
