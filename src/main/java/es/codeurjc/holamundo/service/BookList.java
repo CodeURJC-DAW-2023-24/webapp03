@@ -1,5 +1,7 @@
 package es.codeurjc.holamundo.service;
 
+import es.codeurjc.holamundo.repository.BookRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -10,6 +12,9 @@ import java.util.Map;
 public class BookList {
     //Data structure that will store example books (ID, Book title, Author, Description, Image, Date of publication, ISBN, Genre, Series, Page count, Publisher)
     private Map<Integer, BookC> books = new HashMap<>();
+
+    @Autowired
+    private BookRepository bookRepository;
 
     //Constructor
     public BookList() {
@@ -22,7 +27,7 @@ public class BookList {
 
         BookC book3 = new BookC(3, "The Two Towers", "J.R.R. Tolkien", "The Two Towers is the second volume of J.R.R. Tolkien's high fantasy novel The Lord of the Rings. It is preceded by The Fellowship of the Ring and followed by The Return of the King.", "https://m.media-amazon.com/images/I/81HfbQ8F2UL._AC_UF1000,1000_QL80_.jpg", "11 November 1954", "978-0-261-10221-4", "Fantasy", "Middle-earth", 352, "Molino");
         books.put(3, book3);
-        
+
         BookC book4 = new BookC(4, "The Return of the King", "J.R.R. Tolkien", "The Return of the King is the third and final volume of J.R.R. Tolkien's The Lord of the Rings, following The Fellowship of the Ring and The Two Towers.", "https://m.media-amazon.com/images/I/81fMRrrUlqL._AC_UF1000,1000_QL80_.jpg", "20 October 1955", "978-0-261-10221-4", "Fantasy", "Middle-earth", 416, "Molino");
         books.put(4, book4);
 
@@ -37,6 +42,12 @@ public class BookList {
 
         BookC book8 = new BookC(8, "The Return of the King", "J.R.R. Tolkien", "The Return of the King is the third and final volume of J.R.R. Tolkien's The Lord of the Rings, following The Fellowship of the Ring and The Two Towers.", "https://m.media-amazon.com/images/I/81fMRrrUlqL._AC_UF1000,1000_QL80_.jpg", "20 October 1955", "978-0-261-10221-4", "Fantasy", "Middle-earth", 416, "Molino");
         books.put(8, book8);
+
+        BookC book9 = new BookC(9, "The Two Towers", "J.R.R. Tolkien", "The Two Towers is the second volume of J.R.R. Tolkien's high fantasy novel The Lord of the Rings. It is preceded by The Fellowship of the Ring and followed by The Return of the King.", "https://m.media-amazon.com/images/I/81HfbQ8F2UL._AC_UF1000,1000_QL80_.jpg", "11 November 1954", "978-0-261-10221-4", "Fantasy", "Middle-earth", 352, "Molino");
+        books.put(9, book9);
+
+        BookC book10 = new BookC(10, "The Return of the King", "J.R.R. Tolkien", "The Return of the King is the third and final volume of J.R.R. Tolkien's The Lord of the Rings, following The Fellowship of the Ring and The Two Towers.", "https://m.media-amazon.com/images/I/81fMRrrUlqL._AC_UF1000,1000_QL80_.jpg", "20 October 1955", "978-0-261-10221-4", "Fantasy", "Middle-earth", 416, "Molino");
+        books.put(10, book10);
     }
 
     //Method that will return the book list
@@ -69,34 +80,4 @@ public class BookList {
         return books.size();
     }
 
-    public ArrayList<BookC> getMatchingResults(String searchQuery, int page, int size) {
-        ArrayList<BookC> matchingBooks = new ArrayList<>();
-        int i = 1;
-        while (i <= books.size()) {
-            if (
-                    (this.getBook(i).getTitle().toLowerCase().contains(searchQuery.toLowerCase())) ||
-                    (this.getBook(i).getAuthor().toLowerCase().contains(searchQuery.toLowerCase())) ||
-                    (String.valueOf(this.getBook(i).getID()).toLowerCase().contains(searchQuery.toLowerCase())) ||
-                    (this.getBook(i).getISBN().toLowerCase().contains(searchQuery.toLowerCase())) ||
-                    (this.getBook(i).getSeries().toLowerCase().contains(searchQuery.toLowerCase()))
-                )
-            {
-                matchingBooks.add(this.getBook(i));
-            }
-            i++;
-        }
-        if (page == 1) {
-            int maxSize = 0;
-            if (matchingBooks.size() < 4) {
-                maxSize = matchingBooks.size();
-            } else {
-                maxSize = 4;
-            }
-
-            return new ArrayList<>(matchingBooks.subList(0, maxSize));
-        }
-        else {
-            return matchingBooks;
-        }
-    }
 }

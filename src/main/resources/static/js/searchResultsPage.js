@@ -1,4 +1,77 @@
 $(() => {
+
+    function putStars(rating, starElements) {
+        console.log(rating);
+        console.log(rating < 4.0);
+        if (rating >= 5.0) {
+            $(starElements).children().eq(0).addClass("bi-star-fill");
+            $(starElements).children().eq(1).addClass("bi-star-fill");
+            $(starElements).children().eq(2).addClass("bi-star-fill");
+            $(starElements).children().eq(3).addClass("bi-star-fill");
+            $(starElements).children().eq(4).addClass("bi-star-fill");
+        } else if (rating >= 4.5) {
+            $(starElements).children().eq(0).addClass("bi-star-fill");
+            $(starElements).children().eq(1).addClass("bi-star-fill");
+            $(starElements).children().eq(2).addClass("bi-star-fill");
+            $(starElements).children().eq(3).addClass("bi-star-fill");
+            $(starElements).children().eq(4).addClass("bi-star-half");
+        } else if (rating >= 4.0) {
+            $(starElements).children().eq(0).addClass("bi-star-fill");
+            $(starElements).children().eq(1).addClass("bi-star-fill");
+            $(starElements).children().eq(2).addClass("bi-star-fill");
+            $(starElements).children().eq(3).addClass("bi-star-fill");
+            $(starElements).children().eq(4).addClass("bi-star");
+        } else if (rating >= 3.5) {
+            $(starElements).children().eq(0).addClass("bi-star-fill");
+            $(starElements).children().eq(1).addClass("bi-star-fill");
+            $(starElements).children().eq(2).addClass("bi-star-fill");
+            $(starElements).children().eq(3).addClass("bi-star-half");
+            $(starElements).children().eq(4).addClass("bi-star");
+        } else if (rating >= 3.0) {
+            $(starElements).children().eq(0).addClass("bi-star-fill");
+            $(starElements).children().eq(1).addClass("bi-star-fill");
+            $(starElements).children().eq(2).addClass("bi-star-fill");
+            $(starElements).children().eq(3).addClass("bi-star");
+            $(starElements).children().eq(4).addClass("bi-star");
+        } else if (rating >= 2.5) {
+            $(starElements).children().eq(0).addClass("bi-star-fill");
+            $(starElements).children().eq(1).addClass("bi-star-fill");
+            $(starElements).children().eq(2).addClass("bi-star-half");
+            $(starElements).children().eq(3).addClass("bi-star");
+            $(starElements).children().eq(4).addClass("bi-star");
+        } else if (rating >= 2.0) {
+            $(starElements).children().eq(0).addClass("bi-star-fill");
+            $(starElements).children().eq(1).addClass("bi-star-fill");
+            $(starElements).children().eq(2).addClass("bi-star");
+            $(starElements).children().eq(3).addClass("bi-star");
+            $(starElements).children().eq(4).addClass("bi-star");
+        } else if (rating >= 1.5) {
+            $(starElements).children().eq(0).addClass("bi-star-fill");
+            $(starElements).children().eq(1).addClass("bi-star-half");
+            $(starElements).children().eq(2).addClass("bi-star");
+            $(starElements).children().eq(3).addClass("bi-star");
+            $(starElements).children().eq(4).addClass("bi-star");
+        } else if (rating >= 1.0) {
+            $(starElements).children().eq(0).addClass("bi-star-fill");
+            $(starElements).children().eq(1).addClass("bi-star");
+            $(starElements).children().eq(2).addClass("bi-star");
+            $(starElements).children().eq(3).addClass("bi-star");
+            $(starElements).children().eq(4).addClass("bi-star");
+        } else {
+            $(starElements).children().eq(0).addClass("bi-star-half");
+            $(starElements).children().eq(1).addClass("bi-star");
+            $(starElements).children().eq(2).addClass("bi-star");
+            $(starElements).children().eq(3).addClass("bi-star");
+            $(starElements).children().eq(4).addClass("bi-star");
+        }
+
+    }
+
+    $(".stars").each((ind, starElements) => {
+        console.log($(starElements))
+        putStars($(".rating").eq(ind).text(), $(starElements));
+    });
+
     $("#load-more-spinner").hide();
     $("#noResults").css("display", "none");
     $("#loadMoreBut").parent().css({"display": "flex", "justify-content": "center", "text-align": "center"});
@@ -51,36 +124,42 @@ $(() => {
             {{/bookQueries}}
     `;
 
-    let currentPage = 4;
+
+    let currentPage = 1;
+
+    if (currentPage * 4 >= $("#maxBooks").val()) {
+        $("#loadMoreBut").hide();
+    }
+
+    if (!(($(".book")).length)) {
+        $("#noResults").show()
+    }
 
     $("#loadMoreBut").click((event) => {
         $("#load-more-spinner").show();
         // AJAX request
         url = window.location.href;
-        let query = ((url).substring(url.indexOf("=") + 1, url.length));
+        let query = url.substring(url.lastIndexOf("?") + 7, url.length);
+
         $.ajax({
-            type: "POST",
-            url: "/search?query=" + query,
-            contentType: "application/json",
+            type: "GET",
+            url: "/search/loadMore?query=" + query + "&page=" + currentPage,
             success: function (data) {
                 $("#load-more-spinner").hide();
-                if (data.length > 4 && event.which) {
-                    let newBooks = data.slice(currentPage, currentPage + 4);
-                    newBooks = Mustache.render(bookTemplate, {bookQueries: newBooks});
-                    $(".row-cols-2").append(newBooks);
-                    currentPage += 4;
-                    if (currentPage >= data.length) {
-                        $("#loadMoreBut").css("display", "none");
-                    }
-                } else if ((data.length > 0) && (data.length <= 4)) {
-                    $("#loadMoreBut").css("display", "none");
-                } else if (data.length == 0) {
-                    $("#loadMoreBut").css("display", "none");
-                    $("#noResults").css("display", "block");
+                $("#books").append(data)
+                currentPage++;
+                if (currentPage * 4 >= $("#maxBooks").val()) {
+                    $("#loadMoreBut").hide();
                 }
             }
         });
-    });
+        setTimeout(() => {
+            console.log($(".stars").slice((currentPage - 1) * 4, $(".stars").length));
+            $(".stars").slice((currentPage - 1) * 4, $(".stars").length).each((ind, starElements) => {
+                console.log(ind + 4);
+                putStars($(".rating").eq(ind + ((currentPage - 1) * 4)).text(), $(starElements));
+            });
+        }, 100);
 
-    $("#loadMoreBut").click();
-})
+    });
+});
