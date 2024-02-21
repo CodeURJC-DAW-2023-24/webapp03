@@ -119,6 +119,7 @@ public class BookPageController {
         model.addAttribute("Serie", bookSeries);
         model.addAttribute("PageCount", bookPageCount);
         model.addAttribute("Publisher", bookPublisher);
+        model.addAttribute("admin", false);
 
         return "modifyBookPage";
     }
