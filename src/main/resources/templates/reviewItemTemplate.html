@@ -1,0 +1,26 @@
+{{#reviewCard}}
+<div class="col mb-5">
+    <div class="card h-100">
+        <!-- Product details-->
+        <div class="card-body p-4">
+            <div class="text-left">
+                <!-- Product name-->
+                <h5 class="fw-bolder" id="inputReviewAuthor">{{author}}</h5>
+                <h6>{{title}}</h6>
+                <div class="rating">
+                    <p class="fw-semibold rating-number">
+                        {{rating}}
+                    </p>
+                    <i class="fa-star fa-regular"></i>
+                    <i class="fa-star fa-regular"></i>
+                    <i class="fa-star fa-regular"></i>
+                    <i class="fa-star fa-regular"></i>
+                    <i class="fa-star fa-regular"></i>
+                </div>
+                <!-- Product price-->
+                <div id="inputReviewContent">{{content}}</div>
+            </div>
+        </div>
+    </div>
+</div>
+{{/reviewCard}}

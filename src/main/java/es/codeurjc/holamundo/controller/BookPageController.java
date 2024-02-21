@@ -23,8 +23,9 @@ import java.util.List;
 
 @Controller
 public class BookPageController {
-
+    // THIS NEEDS TO BE REMOVED AND THE BOOKS NEED TO BE LOADED FROM THE DATABASE
     private BookList books;
+    // ^ THIS NEEDS TO BE REMOVED AND THE BOOKS NEED TO BE LOADED FROM THE DATABASE
     private int selectedBookID;
 
     @Autowired
@@ -42,7 +43,6 @@ public class BookPageController {
     public String loadBookPage(Model model, @PathVariable int bookID) {
         // Get ratings from the database
         List<Double> ratings = bookRepository.getRatingsByBookId(bookID);
-        System.out.println(ratings.toString());
 
         // Calculate the average rating
         double averageRating = 0;
@@ -149,13 +149,14 @@ public class BookPageController {
         return "redirect:/book/" + bookID;
     }
 
-    @PostMapping("/book/{currentBookID}/loadMoreReviews")
-    public ResponseEntity<ArrayList<Review>> loadMoreReviews(@PathVariable int currentBookID, @RequestParam int page, @RequestParam int pageSize) {
+    @GetMapping("/book/{currentBookID}/loadMoreReviews")
+    public String loadMoreReviews(@PathVariable int currentBookID, @RequestParam int page, @RequestParam int pageSize, Model model) {
         // Get reviews from the database
         List<Review> reviews = reviewRepository.findByBookID(currentBookID, PageRequest.of(page, pageSize)).getContent();
 
-        // COMMENTED CODE: List<ReviewC> bookReviews = books.getBook(currentBookID).getReviewsRange(page, page + pageSize);
-        return new ResponseEntity<>(new ArrayList<>(reviews), HttpStatus.OK);
+        model.addAttribute("reviewCard", reviews);
+
+        return "reviewItemTemplate";
 
     }
 

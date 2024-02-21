@@ -3,6 +3,7 @@ package es.codeurjc.holamundo.controller;
 import es.codeurjc.holamundo.entity.Author;
 import es.codeurjc.holamundo.entity.Book;
 import es.codeurjc.holamundo.entity.User;
+import es.codeurjc.holamundo.repository.BookRepository;
 import es.codeurjc.holamundo.repository.UserRepository;
 import es.codeurjc.holamundo.service.BookC;
 import es.codeurjc.holamundo.service.BookList;
@@ -26,18 +27,9 @@ public class ProfilePageController {
 
     @Autowired
     private UserRepository userRepository;
-    private UserList users;
-    private UserBookLists userBList;
-    private BookList bookList;
-    private ArrayList<BookC> readBooks;
-    private ArrayList<BookC> readingBooks;
-    private ArrayList<BookC> wantedBooks;
 
-    public ProfilePageController() {
-        this.users = new UserList();
-        this.userBList = new UserBookLists();
-        this.bookList = new BookList();
-    }
+    @Autowired
+    private BookRepository bookRepository;
 
     @GetMapping("/profile/{username}/**")
     public String loadProfilePage(Model model, @PathVariable String username) {
@@ -71,6 +63,48 @@ public class ProfilePageController {
         List<Book> readingBooksList = userRepository.getReadingBooks(username, PageRequest.of(0, 4)).getContent();
         List<Book> wantedBooksList = userRepository.getWantedBooks(username, PageRequest.of(0, 4)).getContent();
 
+        List<Double> readBooksRatings = new ArrayList<>();
+        readBooksList.forEach((book) -> {
+            List<Double> bookRatings = bookRepository.getRatingsByBookId(book.getID());
+            double averageRating = 0;
+            if (bookRatings.size() > 0) {
+                for (Double rating : bookRatings) {
+                    averageRating += rating;
+                }
+                averageRating /= bookRatings.size();
+            }
+            readBooksRatings.add(averageRating);
+        });
+        model.addAttribute("ratingsRead", readBooksRatings);
+
+        List<Double> readingBooksRatings = new ArrayList<>();
+        readingBooksList.forEach((book) -> {
+            List<Double> bookRatings = bookRepository.getRatingsByBookId(book.getID());
+            double averageRating = 0;
+            if (bookRatings.size() > 0) {
+                for (Double rating : bookRatings) {
+                    averageRating += rating;
+                }
+                averageRating /= bookRatings.size();
+            }
+            readingBooksRatings.add(averageRating);
+        });
+        model.addAttribute("ratingsReading", readingBooksRatings);
+
+        List<Double> wantedBooksRatings = new ArrayList<>();
+        wantedBooksList.forEach((book) -> {
+            List<Double> bookRatings = bookRepository.getRatingsByBookId(book.getID());
+            double averageRating = 0;
+            if (bookRatings.size() > 0) {
+                for (Double rating : bookRatings) {
+                    averageRating += rating;
+                }
+                averageRating /= bookRatings.size();
+            }
+            wantedBooksRatings.add(averageRating);
+        });
+        model.addAttribute("ratingsWanted", wantedBooksRatings);
+
         model.addAttribute("nReadBooks", nReadBooks);
         model.addAttribute("nReadingBooks", nReadingBooks);
         model.addAttribute("nWantedBooks", nWantedBooks);
@@ -81,34 +115,67 @@ public class ProfilePageController {
         return "profilePage";
     }
 
-    @PostMapping("/profile/{username}/loadMore")
-    public ResponseEntity<ArrayList<BookC>> loadReadBooks(@PathVariable String username, @RequestParam(defaultValue = "default") String listType) {
-        if (listType.equals("read")) {
-            ArrayList<Integer> readBooks = userBList.getRangeList(0, 4, "read", username);
-            ArrayList<BookC> readBooksToReturn = new ArrayList<>();
-            for (int idBook : readBooks) {
-                readBooksToReturn.add(bookList.getBook(idBook));
-            }
-            return new ResponseEntity<>(readBooksToReturn, HttpStatus.OK);
+    @GetMapping("/profile/{username}/loadMore")
+    public String loadReadBooks(@PathVariable String username, @RequestParam(defaultValue = "default") String listType, @RequestParam int page, @RequestParam int size, Model model) {
+        switch (listType) {
+            case "read" -> {
+                List<Book> readBooksList = userRepository.getReadBooks(username, PageRequest.of(page, size)).getContent();
+                model.addAttribute("bookItem", readBooksList);
 
-        } else if (listType.equals("reading")) {
-            ArrayList<Integer> readingBooks = userBList.getRangeList(0, 4, "reading", username);
-            ArrayList<BookC> readingBooksToReturn = new ArrayList<>();
-            for (int idBook : readingBooks) {
-                readingBooksToReturn.add(bookList.getBook(idBook));
+                List<Double> readBooksRatings = new ArrayList<>();
+                readBooksList.forEach((book) -> {
+                    List<Double> bookRatings = bookRepository.getRatingsByBookId(book.getID());
+                    double averageRating = 0;
+                    if (bookRatings.size() > 0) {
+                        for (Double rating : bookRatings) {
+                            averageRating += rating;
+                        }
+                        averageRating /= bookRatings.size();
+                    }
+                    readBooksRatings.add(averageRating);
+                });
+                model.addAttribute("ratings", readBooksRatings);
             }
-            return new ResponseEntity<>(readingBooksToReturn, HttpStatus.OK);
+            case "reading" -> {
+                List<Book> readingBooksList = userRepository.getReadingBooks(username, PageRequest.of(page, size)).getContent();
+                model.addAttribute("bookItem", readingBooksList);
 
-        } else if (listType.equals("wanted")) {
-            ArrayList<Integer> wantedBooks = userBList.getRangeList(0, 4, "wanted", username);
-            ArrayList<BookC> wantedBooksToReturn = new ArrayList<>();
-            for (int idBook : wantedBooks) {
-                wantedBooksToReturn.add(bookList.getBook(idBook));
+                List<Double> readingBooksRatings = new ArrayList<>();
+                readingBooksList.forEach((book) -> {
+                    List<Double> bookRatings = bookRepository.getRatingsByBookId(book.getID());
+                    double averageRating = 0;
+                    if (bookRatings.size() > 0) {
+                        for (Double rating : bookRatings) {
+                            averageRating += rating;
+                        }
+                        averageRating /= bookRatings.size();
+                    }
+                    readingBooksRatings.add(averageRating);
+                });
+                model.addAttribute("ratings", readingBooksRatings);
             }
-            return new ResponseEntity<>(wantedBooksToReturn, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            case "wanted" -> {
+                List<Book> wantedBooksList = userRepository.getWantedBooks(username, PageRequest.of(page, size)).getContent();
+                model.addAttribute("bookItem", wantedBooksList);
+
+                List<Double> wantedBooksRatings = new ArrayList<>();
+                wantedBooksList.forEach((book) -> {
+                    List<Double> bookRatings = bookRepository.getRatingsByBookId(book.getID());
+                    double averageRating = 0;
+                    if (bookRatings.size() > 0) {
+                        for (Double rating : bookRatings) {
+                            averageRating += rating;
+                        }
+                        averageRating /= bookRatings.size();
+                    }
+                    wantedBooksRatings.add(averageRating);
+                });
+                model.addAttribute("ratings", wantedBooksRatings);
+            }
         }
+
+        return "bookListsItemTemplate";
+
 
     }
 }

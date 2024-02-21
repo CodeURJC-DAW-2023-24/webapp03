@@ -2,107 +2,165 @@ $(() => {
     // Get username from userName-header element
     let username = $("#userName-header").text() // WE WILL HAVE TO CHANGE THIS WHEN WE HAVE THE SESSION CONTROL AND DDBB
 
-    let bookListTemplate = `
-        <a href="/book/{{id}}" class="book-link-disabled-decorations">
-        <div class="single_advisor_profile wow fadeInUp" data-wow-delay="0.3s"
-            style="visibility: visible; animation-delay: 0.3s; animation-name: fadeInUp;">
-            <div class="in-card-book-cover-image"><img
-                    src="{{image}}" alt>
-            </div>
-            <div class="single_advisor_details_info">
-                <h6>{{title}}</h6>
-                <p class="designation">{{author}}</p>
-                <div class="rating">
-                    <div class="d-flex justify-content-end small text-warning mb-2">
-                        <div class="bi-star-fill"></div>
-                        <div class="bi-star-fill"></div>
-                        <div class="bi-star-fill"></div>
-                        <div class="bi-star-half"></div>
-                        <div class="bi-star"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </a>
-    `
+    function putStars(rating, starElements) {
+        if (rating >= 5.0) {
+            $(starElements).children().eq(0).addClass("bi-star-fill");
+            $(starElements).children().eq(1).addClass("bi-star-fill");
+            $(starElements).children().eq(2).addClass("bi-star-fill");
+            $(starElements).children().eq(3).addClass("bi-star-fill");
+            $(starElements).children().eq(4).addClass("bi-star-fill");
+        } else if (rating >= 4.5) {
+            $(starElements).children().eq(0).addClass("bi-star-fill");
+            $(starElements).children().eq(1).addClass("bi-star-fill");
+            $(starElements).children().eq(2).addClass("bi-star-fill");
+            $(starElements).children().eq(3).addClass("bi-star-fill");
+            $(starElements).children().eq(4).addClass("bi-star-half");
+        } else if (rating >= 4.0) {
+            $(starElements).children().eq(0).addClass("bi-star-fill");
+            $(starElements).children().eq(1).addClass("bi-star-fill");
+            $(starElements).children().eq(2).addClass("bi-star-fill");
+            $(starElements).children().eq(3).addClass("bi-star-fill");
+            $(starElements).children().eq(4).addClass("bi-star");
+        } else if (rating >= 3.5) {
+            $(starElements).children().eq(0).addClass("bi-star-fill");
+            $(starElements).children().eq(1).addClass("bi-star-fill");
+            $(starElements).children().eq(2).addClass("bi-star-fill");
+            $(starElements).children().eq(3).addClass("bi-star-half");
+            $(starElements).children().eq(4).addClass("bi-star");
+        } else if (rating >= 3.0) {
+            $(starElements).children().eq(0).addClass("bi-star-fill");
+            $(starElements).children().eq(1).addClass("bi-star-fill");
+            $(starElements).children().eq(2).addClass("bi-star-fill");
+            $(starElements).children().eq(3).addClass("bi-star");
+            $(starElements).children().eq(4).addClass("bi-star");
+        } else if (rating >= 2.5) {
+            $(starElements).children().eq(0).addClass("bi-star-fill");
+            $(starElements).children().eq(1).addClass("bi-star-fill");
+            $(starElements).children().eq(2).addClass("bi-star-half");
+            $(starElements).children().eq(3).addClass("bi-star");
+            $(starElements).children().eq(4).addClass("bi-star");
+        } else if (rating >= 2.0) {
+            $(starElements).children().eq(0).addClass("bi-star-fill");
+            $(starElements).children().eq(1).addClass("bi-star-fill");
+            $(starElements).children().eq(2).addClass("bi-star");
+            $(starElements).children().eq(3).addClass("bi-star");
+            $(starElements).children().eq(4).addClass("bi-star");
+        } else if (rating >= 1.5) {
+            $(starElements).children().eq(0).addClass("bi-star-fill");
+            $(starElements).children().eq(1).addClass("bi-star-half");
+            $(starElements).children().eq(2).addClass("bi-star");
+            $(starElements).children().eq(3).addClass("bi-star");
+            $(starElements).children().eq(4).addClass("bi-star");
+        } else if (rating >= 1.0) {
+            $(starElements).children().eq(0).addClass("bi-star-fill");
+            $(starElements).children().eq(1).addClass("bi-star");
+            $(starElements).children().eq(2).addClass("bi-star");
+            $(starElements).children().eq(3).addClass("bi-star");
+            $(starElements).children().eq(4).addClass("bi-star");
+        } else {
+            $(starElements).children().eq(0).addClass("bi-star-half");
+            $(starElements).children().eq(1).addClass("bi-star");
+            $(starElements).children().eq(2).addClass("bi-star");
+            $(starElements).children().eq(3).addClass("bi-star");
+            $(starElements).children().eq(4).addClass("bi-star");
+        }
+
+    }
+
+    //show the empty lists message for each list if it's empty
+    if ($("#read").children().length === 0) {
+        $("#load-more-btn-read").hide();
+        $("#read").append("<p style='text-align: center;'>Los libros que marques como le&iacutedos aparecer&aacuten aqu&iacute</p>");
+    }
+
+    if ($("#reading").children().length === 0) {
+        $("#load-more-btn-reading").hide();
+        $("#reading").append("<p style='text-align: center;'>Los libros que marques como leyendo aparecer&aacuten aqu&iacute</p>");
+    }
+
+    if ($("#wanted").children().length === 0) {
+        $("#load-more-btn-wanted").hide();
+        $("#wanted").append("<p style='text-align: center;'>Los libros que marques como deseados aparecer&aacuten aqu&iacute</p>");
+    }
+
+    $(".stars").each((ind, starElements) => {
+        putStars($(".rating").eq(ind).text(), $(starElements));
+    });
+
+    let pageSize = 4
     let bookContRead = 1
     $("#load-more-btn-read").on("click", () => {
+        // Rotate the icon of the button while loading
+        $("#load-more-btn-read i").addClass("fa-spin");
         $.ajax({
-            type: "POST",
-            url: "/profile/" + username + "/loadMore?listType=read",
-            contentType: "application/json",
-            data: JSON.stringify({
-                page: bookContRead,
-                size: 3
-            })
-            , success: function (data) {
-                bookContRead += 3
-                data.forEach(book => {
-                    let moreBooks = Mustache.render(bookListTemplate, book);
-                    $("#read").append(moreBooks)
-                });
+            type: "GET",
+            url: "/profile/" + username + "/loadMore?listType=read&page=" + bookContRead + "&size=" + pageSize,
+            success: function (data) {
+                // Stop the rotation of the icon
+                $("#load-more-btn-read i").removeClass("fa-spin");
+                if (data.trim() === "") {
+                    $("#load-more-btn-read").hide()
+                    $("#read").append("<p style='text-align: center;'>No hay m&aacutes libros</p>");
+                } else {
+                    bookContRead++
+                    // data is raw html
+                    $("#read").append(data)
+                    $(".stars").slice((bookContRead - 1) * 4, $(".stars").length).each((ind, starElements) => {
+                        putStars($(".rating").eq(ind + ((bookContRead - 1) * 4)).text(), $(starElements));
+                    });
+                }
+
             }
         })
     })
 
     let bookContReading = 1
     $("#load-more-btn-reading").on("click", () => {
+        // Rotate the icon of the button while loading
+        $("#load-more-btn-reading i").addClass("fa-spin");
         $.ajax({
-            type: "POST",
-            url: "/profile/" + username + "/loadMore?listType=reading",
-            contentType: "application/json",
-            data: JSON.stringify({
-                page: bookContReading,
-                size: 3
-            })
-            , success: function (data) {
-                bookContRead += 3
-                data.forEach(book => {
-                    let moreBooks = Mustache.render(bookListTemplate, book);
-                    $("#reading").append(moreBooks)
-                });
+            type: "GET",
+            url: "/profile/" + username + "/loadMore?listType=reading&page=" + bookContReading + "&size=" + pageSize,
+            success: function (data) {
+                // Stop the rotation of the icon
+                $("#load-more-btn-reading i").removeClass("fa-spin");
+                if (data.trim() === "") {
+                    $("#load-more-btn-reading").hide()
+                    $("#reading").append("<p style='text-align: center;'>No hay m&aacutes libros</p>");
+                } else {
+                    bookContReading++
+                    // data is raw html
+                    $("#reading").append(data)
+                    $(".stars").slice((bookContReading - 1) * 4, $(".stars").length).each((ind, starElements) => {
+                        putStars($(".rating").eq(ind + ((bookContReading - 1) * 4)).text(), $(starElements));
+                    });
+                }
             }
         })
     })
 
     let bookContWanted = 1
     $("#load-more-btn-wanted").on("click", () => {
+        // Rotate the icon of the button while loading
+        $("#load-more-btn-wanted i").addClass("fa-spin");
         $.ajax({
-            type: "POST",
-            url: "/profile/" + username + "/loadMore?listType=wanted",
-            contentType: "application/json",
-            data: JSON.stringify({
-                page: bookContReading,
-                size: 3
-            })
-            , success: function (data) {
-                bookContRead += 3
-                data.forEach(book => {
-                    let moreBooks = Mustache.render(bookListTemplate, book);
-                    $("#wanted").append(moreBooks)
-                });
+            type: "GET",
+            url: "/profile/" + username + "/loadMore?listType=wanted&page=" + bookContWanted + "&size=" + pageSize,
+            success: function (data) {
+                // Stop the rotation of the icon
+                $("#load-more-btn-wanted i").removeClass("fa-spin");
+                if (data.trim() === "") {
+                    $("#load-more-btn-wanted").hide()
+                    $("#wanted").append("<p style='text-align: center;'>No hay m&aacutes libros</p>");
+                } else {
+                    bookContWanted++
+                    // data is raw html
+                    $("#wanted").append(data)
+                    $(".stars").slice((bookContWanted - 1) * 4, $(".stars").length).each((ind, starElements) => {
+                        putStars($(".rating").eq(ind + ((bookContWanted - 1) * 4)).text(), $(starElements));
+                    });
+                }
             }
         })
     })
 })
-
-/*
-function ajaxCall(list, HTMLListID){
-    $.ajax({
-        type: "POST",
-        url: "/profile/{{username}}/loadMore?listType=" + list,
-        contentType: "application/json" ,
-        data: JSON.stringify({
-            page: bookContReading,
-            size: 3
-        })
-        , success:function(data){
-            bookContReading += 3
-            let moreBooks = Mustache.render(bookListTemplate, {
-                wantedBooks:data
-            })
-            $(HTMLListID).append(moreBooks);
-        }
-    })
-}
-*/

@@ -12559,3 +12559,18 @@ header {
 .btn-primary:focus {
     box-shadow: 0 0 0 0.2rem rgba(81, 158, 138, 0.5) !important;
 }
+
+.profile-card { /* vertically center the contents */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.profile-picture{
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+}

@@ -59,64 +59,43 @@ stars.forEach(star => {
 $(() => {
     $("#no-more-reviews").hide();
     $("#load-more-spinner").hide();
-    // Mustache review template
-    let reviewTemplate = `
-            <div class="col mb-5">
-                <div class="card h-100">
-                    <!-- Product details-->
-                    <div class="card-body p-4">
-                        <div class="text-left">
-                            <!-- Product name-->
-                            <h5 class="fw-bolder" id="inputReviewAuthor">{{author}}</h5>
-                            <h6>{{title}}</h6>
-                            <div class="rating">
-                            <p class="fw-semibold rating-number">
-                                    {{rating}}
-                                </p>
-                                <i class="fa-star fa-regular"></i>
-                                <i class="fa-star fa-regular"></i>
-                                <i class="fa-star fa-regular"></i>
-                                <i class="fa-star fa-regular"></i>
-                                <i class="fa-star fa-regular"></i>
-                            </div>
-                            <!-- Product price-->
-                            <div id="inputReviewContent">{{content}}</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-    `;
+    $("#no-reviews").hide();
 
-    let currentPage = 6;
+    // If there are no reviews to load, hide the button and show the message
+    if ($("#reviewsArea").children().length === 0) {
+        $("#load-more-btn").hide();
+        $("#no-reviews").show();
+    }
+
+    let currentPage = 1;
 
     $("#load-more-btn").click(function () {
         $("#load-more-spinner").show();
         let currentBookID = $("#bookID").text();
         $.ajax({
-            type: "POST",
+            type: "GET",
             url: "/book/" + currentBookID + "/loadMoreReviews?page=" + currentPage + "&pageSize=6",
-            contentType: "application/json",
-            data: JSON.stringify({
-                page: currentPage,
-                size: 6
-            }),
             success: function (data) {
                 $("#load-more-spinner").hide();
                 // if there are no more reviews to load, hide the button
-                if (data.length === 0) {
+                if (data.trim() === "") {
                     $("#load-more-btn").hide();
                     $("#no-more-reviews").show();
                 }
-                currentPage += 6;
-                data.forEach(review => {
-                    let moreReviews = Mustache.render(reviewTemplate, review);
-                    $("#reviewsArea").append(moreReviews);
-                    // Call fillStars function for each new review
-                    const newReviewElement = document.querySelector('#reviewsArea .col.mb-5:last-child');
-                    const rating = newReviewElement.querySelector('.rating').textContent.trim();
-                    const starElements = newReviewElement.querySelectorAll('.rating i');
-                    fillStars(rating, starElements);
-                });
+                else{
+                    currentPage ++;
+                    // data is raw html (we need to separate the reviews, so we can fill the stars for each one)
+                    let reviews = $(data).filter(".col.mb-5");
+
+                    // Append each review to the reviewsArea and fill the stars
+                    reviews.each((ind, review) => {
+                        $("#reviewsArea").append(review);
+                        let rating = $(review).find(".rating-number").text().trim();
+                        let starElements = $(review).find(".rating i");
+                        fillStars(rating, starElements);
+                    });
+
+                }
             }
         })
     });

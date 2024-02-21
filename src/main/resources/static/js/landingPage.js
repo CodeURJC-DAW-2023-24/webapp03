@@ -21,9 +21,13 @@ $(() => {
         // AJAX request
         $.ajax({
             type: "GET",
-            url: "/landingPage/loadMore",
+            url: "/landingPage/loadMore?page=" + currentPage + "&size=" + pageSize,
             contentType: "application/json",
             success: function (data) {
+                if(data.trim() === ""){
+                    $("#load-more-btn").hide();
+                    $(".load-more-container").append("<p style='text-align: center;'>No hay nada m&aacutes que mostrar.<br>Sigue leyendo para obtener m&aacutes recomendaciones personalizadas.</p>");
+                }
                 currentPage++;
                 $("#load-more-spinner").hide();
                 $("#load-more-label").show();
@@ -35,12 +39,19 @@ $(() => {
                 console.log(rightPosts);
                 $("#left-post-column").append(leftPosts);
                 $("#right-post-column").append(rightPosts);
-                if (posts.length < 6) {
-                    $("#load-more-btn").css("display", "none");
-                }
             }
         });
 
 
     })
+
+    // AJAX request to get data to build the most read genres chart
+    $.ajax({
+        url: "/landingPage/mostReadGenres",
+        method: "GET",
+        success: function (response){
+            console.log(response);
+        }
+    })
+
 })

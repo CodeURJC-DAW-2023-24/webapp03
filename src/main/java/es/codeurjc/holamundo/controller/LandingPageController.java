@@ -17,7 +17,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,8 +30,6 @@ public class LandingPageController {
     private String testingCurrentUsername = "FanBook_785"; //This is the username of the current user. This is just for testing purposes
 
     private boolean isUser = true; //This is just for testing purposes
-    private BookList books;
-    private PostList posts;
 
     @Autowired
     private BookRepository bookRepository;
@@ -43,11 +43,6 @@ public class LandingPageController {
     @Autowired
     private AuthorRepository authorRepository;
 
-    //Constructor
-    public LandingPageController() {
-        this.books = new BookList();
-        this.posts = new PostList();
-    }
 
     //Method that will load the landing page
     @GetMapping("/")
@@ -70,15 +65,26 @@ public class LandingPageController {
         // Get books from the most read author (the first one on the list)
         List<Book> booksFromMostReadAuthor;
 
-        // Load lists if user is logged in
-        if(isUser) {
+        // Load lists if a user is logged in
+        if (isUser) {
             mostReadGenres = userRepository.getMostReadGenres(testingCurrentUsername);
             mostReadAuthors = userRepository.getMostReadAuthors(testingCurrentUsername);
+            model.addAttribute("profilePicture", userRepository.getProfileImageByUsername(testingCurrentUsername));
+
+            // check if the user has read any books
+            if (mostReadGenres.size() == 0) {
+                // If the user has not read any books, get the most read genres from the database
+                mostReadGenres = genreRepository.getMostReadGenres();
+            }
+            if (mostReadAuthors.size() == 0) {
+                // If the user has not read any books, get the most read authors from the database
+                mostReadAuthors = authorRepository.getMostReadAuthors();
+            }
+
         } else {
             // If it is not a registered user, get the most read genres from the database
             mostReadGenres = genreRepository.getMostReadGenres();
             mostReadAuthors = authorRepository.getMostReadAuthors();
-            System.out.println(mostReadAuthors);
         }
         booksFromMostReadGenres = bookRepository.findByGenreIn(mostReadGenres, PageRequest.of(0, 4)).getContent();
         booksFromMostReadAuthor = bookRepository.findByAuthorString(mostReadAuthors.get(0).getName(), PageRequest.of(0, 5)).getContent();
@@ -86,12 +92,14 @@ public class LandingPageController {
 
         long bookID = booksFromMostReadAuthor.get(0).getID();
         String bookTitle = booksFromMostReadAuthor.get(0).getTitle();
+        String bookAuthor = booksFromMostReadAuthor.get(0).getAuthorString();
         String bookDescription = booksFromMostReadAuthor.get(0).getDescription();
         String bookImage = booksFromMostReadAuthor.get(0).getImage();
 
         model.addAttribute("mostReadAuthor", mostReadAuthors.get(0).getName());
 
         model.addAttribute("bookTitle", bookTitle);
+        model.addAttribute("bookAuthor", bookAuthor);
         model.addAttribute("bookDescription", bookDescription);
         model.addAttribute("bookImage", bookImage);
         model.addAttribute("bookID", bookID);
@@ -114,18 +122,25 @@ public class LandingPageController {
 
     //Method that will load 4 more posts
     @GetMapping("/landingPage/loadMore")
-    public String loadLandingPagePosts(Model model) {
+    public String loadLandingPagePosts(Model model, @RequestParam int page, @RequestParam int size) {
         // If it is a registered user, get the most read genres
         // Get current user most read genres
         List<Genre> mostReadGenres = userRepository.getMostReadGenres(testingCurrentUsername);
 
         // Get books from the most read genres (these will be the recommended books)
-        List<Book> booksFromMostReadGenres = bookRepository.findByGenreIn(mostReadGenres, PageRequest.of(1, 4)).getContent(); // Gets 5 because the first one shows in the big card, the other 4 in the small ones
+        List<Book> booksFromMostReadGenres = bookRepository.findByGenreIn(mostReadGenres, PageRequest.of(page, size)).getContent();
 
         model.addAttribute("post", booksFromMostReadGenres);
 
         return "landingPagePostTemplate";
 
+    }
+
+    @GetMapping("/landingPage/mostReadGenres")
+    public ResponseEntity<List<Genre>> getMostReadGenres() {
+        List<Genre> mostReadGenres = genreRepository.getMostReadGenres();
+        System.out.println(mostReadGenres);
+        return new ResponseEntity<>(mostReadGenres, HttpStatus.OK);
     }
 }
 

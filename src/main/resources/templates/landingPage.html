@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
     <link href="/css/modifyBookPageStyles.css" rel="stylesheet">
 
-
     <title>Bookmarks - Inicio</title>
 
     <!--Favicon-->
@@ -119,7 +118,7 @@
         <!-- Blog entries-->
         <div class="col-lg-8">
             <!-- Featured book (THE FEATURED BOOK SHOULD BE STATIC AND ALWAYS APPEARS ON THE LANDING PAGE -->
-            <h3 class="fw-semibold mb-4">{{#user}}Más de {{mostReadAuthor}}{{/user}}{{^user}}Lo más leído: {{mostReadAuthor}}{{/user}}</h3>
+            <h3 class="fw-semibold mb-4">{{#user}}Más de tu autor más leído{{/user}}{{^user}}Del autor más leído{{/user}}</h3>
             <!-- Featured book-->
             <div class="card mb-4 featured-book">
                 <div class="img-container-featured">
@@ -130,6 +129,7 @@
                     <div class="small text-muted">{{bookDate}}</div>
                     <!-- Post date goes here, not book release date -->
                     <h2 class="card-title">{{bookTitle}}</h2>
+                    <p class="card-text">{{bookAuthor}}</p>
                     <p class="card-text">{{bookDescription}}</p>
                     <a class="btn btn-primary" href="book/{{bookID}}">Leer más</a>
                 </div>
@@ -137,7 +137,8 @@
 
             <!-- Nested row for non-featured blog posts. THESE POSTS MUST BE DYNAMICALLY LOADED (AJAX + SPRINGBOOT ,using templates) -->
             <hr class="my-0"/>
-            <h3 class="fw-semibold mb-4 mt-4">{{#user}}Basado en tus géneros más leídos{{/user}}{{^user}}Basado en los géneros más leídos{{/user}}</h3>
+            <h3 class="fw-semibold mb-4 mt-4">{{#user}}Basado en tus géneros más leídos{{/user}}{{^user}}Basado en los
+                géneros más leídos{{/user}}</h3>
             <div class="row" id="post-container">
                 <div class="col-lg-6" id="left-post-column">
                     <!-- Blog post-->
@@ -187,7 +188,7 @@
             <!-- LOAD MORE BBUTTON -->
             <nav aria-label="Pagination">
                 <hr class="my-0"/>
-                <ul class="pagination justify-content-center my-4">
+                <ul class="pagination justify-content-center my-4 load-more-container">
                     <li class="btn btn-secondary" id="load-more-btn">
                         <label id="load-more-label">Cargar más</label>
                         <spinner id="load-more-spinner" class="loader-in-btn" role="status">
@@ -203,9 +204,10 @@
             <h3 class="fw-semibold mb-4">Explora más</h3>
             <!-- Users widget-->
             <div class="card mb-4">
+                {{^user}}
                 <div class="card-header">Acceso usuarios</div>
                 <div class="card-body">
-                    <p>Encuentra nuevos libros, guarda los tuyos, descubre qué opinan tus booktubers favoritos...</p>
+                    <p>Encuentra nuevos libros, guarda los tuyos, ¡únete a Bookmarks!</p>
                     <div class="input-group">
                         <a href="loginPage.html">
                             <button class="btn btn-primary" class="button-search" type="button">Iniciar sesión</button>
@@ -215,27 +217,29 @@
                         </a>
                     </div>
                 </div>
+                {{/user}}
+                {{#user}}
+                <div class="card-header">Acceso rápido a tu perfil</div>
+                <div class="card-body profile-card">
+                    <img class="profile-picture bm-rounded-circle" src="{{profilePicture}}" alt="Foto de perfil"/>
+                    <p class="mt-2">{{username}}</p>
+                    <div class="input-group">
+                        <a href="/profile/{{username}}">
+                            <button class="btn btn-primary" class="button-search" type="button">Ver perfil</button>
+                        </a>
+
+                    </div>
+                </div>
+                {{/user}}
             </div>
             <!-- Categories widget-->
             <div class="card mb-4">
                 <div class="card-header">Géneros</div>
                 <div class="card-body">
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <ul class="list-unstyled mb-0">
-                                <li><a href="#!">Fantasía</a></li>
-                                <li><a href="#!">Ciencia ficción</a></li>
-                                <li><a href="#!">Suspense</a></li>
-                            </ul>
-                        </div>
-                        <div class="col-sm-6">
-                            <ul class="list-unstyled mb-0">
-                                <li><a href="#!">Terror</a></li>
-                                <li><a href="#!">Romance</a></li>
-                                <li><a href="#!">Policiaca</a></li>
-                            </ul>
-                        </div>
+                    <div id="most-read-genres-chart" class="chart-container">
+                        <canvas id="most-read-genres"></canvas>
                     </div>
+
                 </div>
             </div>
             <!-- Side widget-->
@@ -300,6 +304,7 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/3.1.0/mustache.min.js"></script>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
 
 <!-- CORE BOOTSTRAP JS (THIS GOES RIGHT AFTER THE FOOTER, IT HAS THE NAVBAR DROPDOWN TOGGLE FUNCTIONALITY)-->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>

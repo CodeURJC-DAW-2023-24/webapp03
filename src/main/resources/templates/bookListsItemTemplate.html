@@ -1,0 +1,26 @@
+{{#bookItem}}
+<a href="/book/{{ID}}" class="book-link-disabled-decorations">
+    <div class="single_advisor_profile wow fadeInUp" data-wow-delay="0.3s"
+         style="visibility: visible; animation-delay: 0.3s; animation-name: fadeInUp;">
+        <div class="in-card-book-cover-image"><img
+                src="{{image}}" alt>
+        </div>
+        <div class="single_advisor_details_info">
+            <h6>{{title}}</h6>
+            <p class="designation">{{authorString}}</p>
+            <div class="">
+                <div class="d-flex justify-content-end small text-warning mb-2 stars">
+                    <div class=""></div>
+                    <div class=""></div>
+                    <div class=""></div>
+                    <div class=""></div>
+                    <div class=""></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</a>
+{{/bookItem}}
+{{#ratings}}
+<div style="display:none" class="rating">{{.}}</div>
+{{/ratings}}
