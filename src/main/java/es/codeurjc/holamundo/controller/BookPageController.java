@@ -1,6 +1,7 @@
 package es.codeurjc.holamundo.controller;
 
 import es.codeurjc.holamundo.entity.Book;
+import es.codeurjc.holamundo.entity.Genre;
 import es.codeurjc.holamundo.entity.Review;
 import es.codeurjc.holamundo.repository.BookRepository;
 import es.codeurjc.holamundo.repository.ReviewRepository;
@@ -27,6 +28,8 @@ public class BookPageController {
     private BookList books;
     // ^ THIS NEEDS TO BE REMOVED AND THE BOOKS NEED TO BE LOADED FROM THE DATABASE
     private int selectedBookID;
+
+    Book book;
 
     @Autowired
     private BookRepository bookRepository;
@@ -57,7 +60,7 @@ public class BookPageController {
         averageRating = Math.round(averageRating * 100.0) / 100.0;
 
         // Get book from the database
-        Book book = bookRepository.findByID(bookID);
+        this.book = bookRepository.findByID(bookID);
 
         this.selectedBookID = bookID;
 
@@ -95,18 +98,17 @@ public class BookPageController {
 
     @GetMapping("/book/{bookID}/edit")
     public String loadModifyBookPage(Model model, @PathVariable int bookID) {
-        //this.selectedBookID = bookID;
 
-        String bookTitle = books.getBook(bookID).getTitle();
-        String bookAuthor = books.getBook(bookID).getAuthor();
-        String bookDescription = books.getBook(bookID).getDescription();
-        String bookImage = books.getBook(bookID).getImage();
-        String bookDate = books.getBook(bookID).getRelease();
-        String bookISBN = books.getBook(bookID).getISBN();
-        String bookGenre = books.getBook(bookID).getGenre();
-        String bookSeries = books.getBook(bookID).getSeries();
-        int bookPageCount = books.getBook(bookID).getPageCount();
-        String bookPublisher = books.getBook(bookID).getPublisher();
+        String bookTitle = book.getTitle();
+        String bookAuthor = book.getAuthorString();
+        String bookDescription = book.getDescription();
+        String bookImage = book.getImage();
+        String bookDate = book.getReleaseDate();
+        String bookISBN = book.getISBN();
+        Genre bookGenre = book.getGenre();
+        String bookSeries = book.getSeries();
+        int bookPageCount = book.getPageCount();
+        String bookPublisher = book.getPublisher();
 
         model.addAttribute("id", bookID);
         model.addAttribute("Title", bookTitle);
@@ -126,21 +128,21 @@ public class BookPageController {
     @PostMapping("/modifyDone/{bookID}") //Parametros del formulario
     public String modifyDone(Model model, @PathVariable("bookID") int bookID, @RequestParam("inputBookName") String inputBookName
             , @RequestParam("inputBookAuthorName") String inputBookAuthorName, @RequestParam("inputBookISBN") String inputBookISBN
-            , @RequestParam("inputBookPages") int inputBookPages, @RequestParam("inputBookGenre") String inputBookGenre
+            , @RequestParam("inputBookPages") int inputBookPages, @RequestParam("inputBookGenre") Genre inputBookGenre
             , @RequestParam("inputBookDate") String inputBookDate
             , @RequestParam("inputBookPublisher") String inputBookPublisher, @RequestParam("inputBookSeries") String inputBookSeries
             , @RequestParam("inputBookDescription") String inputBookDescription) {
 
         //Se puede realizar con setter en la clase Book
-        books.getBook(bookID).setTitle(inputBookName);
-        books.getBook(bookID).setAuthor(inputBookAuthorName);
-        books.getBook(bookID).setISBN(inputBookISBN);
-        books.getBook(bookID).setPageCount(inputBookPages);
-        books.getBook(bookID).setGenre(inputBookGenre);
-        books.getBook(bookID).setRelease(inputBookDate);
-        books.getBook(bookID).setPublisher(inputBookPublisher);
-        books.getBook(bookID).setSeries(inputBookSeries);
-        books.getBook(bookID).setDescription(inputBookDescription);
+        book.setTitle(inputBookName);
+        book.setAuthorString(inputBookAuthorName);
+        book.setISBN(inputBookISBN);
+        book.setPageCount(inputBookPages);
+        book.setGenre(inputBookGenre);
+        book.setReleaseDate(inputBookDate);;
+        book.setPublisher(inputBookPublisher);
+        book.setSeries(inputBookSeries);
+        book.setDescription(inputBookDescription);
 
         //Tambien se puede crear una clase Book y sobreescribir con updateBook y el id
         //Book newBook = new Book(bookID, inputBookName, inputBookAuthorName, inputBookDescription, inputBookDate, inputBookDescription, inputBookISBN, inputBookGenre, inputBookSeries, inputBookPages, inputBookPublisher);
