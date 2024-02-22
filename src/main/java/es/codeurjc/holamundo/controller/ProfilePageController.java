@@ -1,25 +1,19 @@
 package es.codeurjc.holamundo.controller;
 
-import es.codeurjc.holamundo.entity.Author;
 import es.codeurjc.holamundo.entity.Book;
 import es.codeurjc.holamundo.entity.User;
 import es.codeurjc.holamundo.repository.BookRepository;
 import es.codeurjc.holamundo.repository.UserRepository;
-import es.codeurjc.holamundo.service.BookC;
-import es.codeurjc.holamundo.service.BookList;
-import es.codeurjc.holamundo.service.UserBookLists;
-import es.codeurjc.holamundo.service.UserList;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import jakarta.servlet.http.HttpServletRequest;
 
 
 @Controller
@@ -32,7 +26,7 @@ public class ProfilePageController {
     private BookRepository bookRepository;
 
     @GetMapping("/profile/{username}/**")
-    public String loadProfilePage(Model model, @PathVariable String username) {
+    public String loadProfilePage(Model model, @PathVariable String username, HttpServletRequest request) {
 
         // Get user from the database
         User user = userRepository.findByUsername(username);
@@ -111,6 +105,9 @@ public class ProfilePageController {
         model.addAttribute("ReadBooks", readBooksList);
         model.addAttribute("ReadingBooks", readingBooksList);
         model.addAttribute("WantedBooks", wantedBooksList);
+
+        //Admin
+        model.addAttribute("admin", request.isUserInRole("ADMIN"));
 
         return "profilePage";
     }
