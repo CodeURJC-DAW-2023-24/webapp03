@@ -44,7 +44,7 @@ $(() => {
 
 
     })
-
+    /*
     // AJAX request to get data to build the most read genres chart
     $.ajax({
         url: "/landingPage/mostReadGenres",
@@ -53,5 +53,7 @@ $(() => {
             console.log(response);
         }
     })
+    */
+
 
 })

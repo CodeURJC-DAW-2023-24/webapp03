@@ -1,4 +1,5 @@
-<div class="col mb-5">
+<div class="col mb-5 review-post">
+    <p style="display: none;">{{ID}}</p>
     <div class="card h-100">
         <!-- Product details-->
         <div class="card-body p-4">
@@ -20,5 +21,16 @@
                 <div id="inputReviewContent">{{content}}</div>
             </div>
         </div>
+        <!-- button for deleting reviews -->
+        {{#admin}}
+        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+            <div class="text-center">
+                <form action="/book/{{bookID}}/deleteReview/{{ID}}" method="post">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <button type="submit" class="btn btn-outline-dark mt-3">Eliminar reseña</button>
+                </form>
+            </div>
+        </div>
+        {{/admin}}
     </div>
 </div>

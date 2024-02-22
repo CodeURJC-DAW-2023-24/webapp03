@@ -12752,3 +12752,7 @@ input[type="radio"] {
 #bookIDContainer{
     display: none !important;
 }
+
+.review-card{
+    display: flex !important;
+}

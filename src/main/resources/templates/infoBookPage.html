@@ -176,38 +176,84 @@
         <div class="sub-container mb-5" id="review-form-area">
             <div class="row justify-content-center">
                 <div class="col">
-                    <form class="mb-3 mt-3 review-form" action="">
+                    {{#user}}
+                    {{^hasReviewed}}
+                    <form class="mb-3 mt-3 review-form" action="/book/{{id}}/addReview" method="post">
                         <label class="small mb-3" for="inputBookDescription"><h6>¡Añade tu reseña!</h6></label>
                         <div class="rating mb-3">
-                            <input type="radio" name="rating" value="1" id="star1" name="reviewStarRating">
+                            <input type="radio" name="rating" value="1" id="star1" name="reviewStarRating" required>
                             <label for="star1"><i class="fa-regular fa-star"></i></label>
-                            <input type="radio" name="rating" value="2" id="star2" name="reviewStarRating">
+                            <input type="radio" name="rating" value="2" id="star2" name="reviewStarRating" required>
                             <label for="star2"><i class="fa-regular fa-star"></i></label>
-                            <input type="radio" name="rating" value="3" id="star3" name="reviewStarRating">
+                            <input type="radio" name="rating" value="3" id="star3" name="reviewStarRating" required>
                             <label for="star3"><i class="fa-regular fa-star"></i></label>
-                            <input type="radio" name="rating" value="4" id="star4" name="reviewStarRating">
+                            <input type="radio" name="rating" value="4" id="star4" name="reviewStarRating" required>
                             <label for="star4"><i class="fa-regular fa-star"></i></label>
-                            <input type="radio" name="rating" value="5" id="star5" name="reviewStarRating">
+                            <input type="radio" name="rating" value="5" id="star5" name="reviewStarRating" required>
                             <label for="star5"><i class="fa-regular fa-star"></i></label>
                         </div>
                         <input name="reviewTitle" type="text" class="form-control review-title" id="inputReviewTitle"
-                               placeholder="Título de la reseña">
+                               placeholder="Título de la reseña" required>
                         <textarea name="comment" class="form-control review-text-area mt-3" id="inputReviewForm"
                                   rows="4"
-                                  cols="50" placeholder="Escribe aqui su reseña"></textarea>
-                        <button class="btn btn-primary-light save-button mt-3 mb-4" type="button">Publicar</button>
-
+                                  cols="50" placeholder="Escribe aqui su reseña" required></textarea>
+                        <input class="btn btn-primary-light save-button mt-3 mb-4" type="submit" value="Publicar"
+                               id="post-review-btn">
+                        <p id="error-message" style="display: none; color: red;">Rellena todos los campos.</p>
                     </form>
+                    {{/hasReviewed}}
+                    {{#hasReviewed}}
+                    <h6 class="mb-4 mt-4">Ya has dejado tu reseña:</h6>
+                    {{#userReview}}
+                    <div class="card mb-5 review-post">
+                        <!-- Product details-->
+                        <div class="card-body p-4">
+                            <div class="text-left">
+                                <!-- Product name-->
+                                <h5 class="fw-bolder" id="inputReviewAuthor">{{author}}</h5>
+                                <h6>{{title}}</h6>
+                                <div class="rating">
+                                    <p class="fw-semibold rating-number">
+                                        {{rating}}
+                                    </p>
+                                    <i class="fa-star fa-regular"></i>
+                                    <i class="fa-star fa-regular"></i>
+                                    <i class="fa-star fa-regular"></i>
+                                    <i class="fa-star fa-regular"></i>
+                                    <i class="fa-star fa-regular"></i>
+                                </div>
+                                <!-- Product price-->
+                                <div id="inputReviewContent">{{content}}</div>
+                            </div>
+                        </div>
+                        <!-- button for deleting reviews -->
+                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                            <div class="text-center">
+                                <form action="/book/{{bookID}}/deleteReview/{{ID}}" method="post">
+                                    <input type="hidden" name="_method" value="DELETE">
+                                    <button type="submit" class="btn btn-outline-dark mt-3">Eliminar reseña</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    {{/userReview}}
+
+                    {{/hasReviewed}}
+                    {{/user}}
+                    {{^user}}
+                    <h6 class=" mb-4 mt-4" style='text-align: center;'>Inicia sesión para poder dejar tu reseña.</h6>
+                    {{/user}}
                 </div>
             </div>
             <hr class="my-0">
         </div>
         <div class="row gx-4 gx-lg-5 row-cols-md-3 justify-content-left" id="reviewsArea">
             {{#reviews}}
-            <div class="col mb-5">
+            <div class="col mb-5 review-post">
+                <p style="display: none;">{{ID}}</p>
                 <div class="card h-100">
                     <!-- Product details-->
-                    <div class="card-body p-4">
+                    <div class="card-body p-4 review-card">
                         <div class="text-left">
                             <!-- Product name-->
                             <h5 class="fw-bolder" id="inputReviewAuthor">{{author}}</h5>
@@ -226,6 +272,19 @@
                             <div id="inputReviewContent">{{content}}</div>
                         </div>
                     </div>
+                    <!-- button for deleting reviews -->
+                    {{#admin}}
+                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                        <div class="text-center">
+                            <form action="/book/{{id}}/deleteReview/{{ID}}" method="post">
+                                <input type="hidden" name="_method" value="DELETE">
+                                <button type="submit" class="btn btn-outline-dark mt-3">Eliminar
+                                    reseña
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                    {{/admin}}
                 </div>
             </div>
             {{/reviews}}
