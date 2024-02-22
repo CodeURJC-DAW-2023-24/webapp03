@@ -61,14 +61,14 @@
                     Foro
                 </a>
                 </li>
-
+                {{#admin}}
                 <!-- Administrator menu option -->
                 <li class="bm-nav-item"><a class="bm-nav-link" href="/admin">
                     <i class="bi-gear-fill"></i>
                     Administrador
                 </a>
                 </li>
-
+                {{/admin}}
                 <!-- Search widget-->
                 <li class="bm-nav-item">
                     <form class="bm-d-flex position-relative" onSubmit="return false;">
@@ -148,12 +148,13 @@
                         <i class="fa-solid fa-check"></i>
                         Leído
                     </a>
-
+                    {{#author}}
                     <a href="/book/{{id}}/edit" class="btn btn-secondary-light flex-shrink-0 action-button"
                        class="boton">
                         <i class="fa-solid fa-pencil"></i>
                         Modificar
                     </a>
+                    {{/author}}
                 </div>
             </div>
         </div>

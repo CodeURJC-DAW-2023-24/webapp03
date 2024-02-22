@@ -39,14 +39,20 @@ public class WebSecurityConfiguration {
             .password(passwordEncoder().encode("pass"))
             .roles("USER")
             .build();
+        //AUTHOR
+        UserDetails author = User.builder()
+            .username("author")
+            .password(passwordEncoder().encode("authorpass"))
+            .roles("USER", "AUTHOR")
+            .build();
         //ADMIN
         UserDetails admin = User.builder()
             .username("admin")
             .password(passwordEncoder().encode("adminpass"))
-            .roles("USER", "ADMIN")
+            .roles("AUTHOR", "ADMIN")
             .build();
 
-        return new InMemoryUserDetailsManager(user, admin);
+        return new InMemoryUserDetailsManager(user, admin, author);
     }
 
     
@@ -60,18 +66,23 @@ public class WebSecurityConfiguration {
         http
             .authorizeHttpRequests(authorize -> authorize
                 //Public pages
-                .requestMatchers("/","/loginPage.html", "assets/**", "css/**", "js/**", "templates/**").permitAll()
+                .requestMatchers("assets/**", "css/**", "js/**", "templates/**",
+                    "/book/*", "/book/*/loadMoreReviews", "/errorPage/**", "/", 
+                    "/landingPage/loadMore", "/landingPage/mostReadGenres",  
+                    "/loginError", "/profile/*", "/profile/*/loadMore", "/search/**", 
+                    "loginPage.html").permitAll()
                 //Private pages
-                .requestMatchers("/profile/**").hasAnyRole("USER")
-                .requestMatchers("/book/**").hasAnyRole("USER")
-                .requestMatchers("/search/**").hasAnyRole("USER")
-                .requestMatchers("/errorPage/**").hasAnyRole("USER")
-                .requestMatchers("/static/**").hasAnyRole("USER")
-                .requestMatchers("/admin").hasAnyRole("ADMIN"))
+                //USER
+                .requestMatchers("/profile/*/edit", "/book/*/addReview", 
+                    "/book/*/deleteReview/*").hasAnyRole("USER")
+                //AUTHOR
+                .requestMatchers("/book/*/edit", "/modifyDone/*").hasAnyRole("AUTHOR")
+                //ADMIN
+                .requestMatchers("/admin/**").hasAnyRole("ADMIN"))
             .formLogin(formLogin -> formLogin
                 .loginPage("/login")
                 .failureUrl("/loginError")
-                .defaultSuccessUrl("/profile/FanBook_785")
+                .defaultSuccessUrl("/")
                 .permitAll())
             .logout(logout -> logout
                 .logoutUrl("/logout")

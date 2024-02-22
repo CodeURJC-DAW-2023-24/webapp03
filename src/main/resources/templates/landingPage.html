@@ -104,11 +104,15 @@
 <header class="bg-branding-white py-1">
     <div class="container px-4 px-lg-5 my-5">
         <div class="text-start text-dark">
+
             <h1 class="display-4 fw-bolder header-welcome-text">
                 Bienvenido{{#user}}, {{username}}{{/user}}{{^user}} a Bookmarks{{/user}}
             </h1>
-            <p class="lead fw-normal text-white-50 mb-0">"Nuestras vidas se definen por las oportunidades, incluso las
-                que perdemos"<br>- F. Scott Fitzgerald</p>
+            
+            <p class="lead fw-normal text-white-50 mb-0">{{^admin}}"Nuestras vidas se definen por las oportunidades, incluso las
+                que perdemos"<br>- F. Scott Fitzgerald{{/admin}}
+                {{#admin}}Has iniciado sesión como administrador{{/admin}}
+            </p>
         </div>
     </div>
 </header>

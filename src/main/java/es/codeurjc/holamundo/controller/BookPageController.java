@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.List;
 
@@ -40,7 +41,7 @@ public class BookPageController {
     }
 
     @GetMapping("/book/{bookID}")
-    public String loadBookPage(Model model, @PathVariable int bookID) {
+    public String loadBookPage(Model model, @PathVariable int bookID, HttpServletRequest request) {
         // Get ratings from the database
         List<Double> ratings = bookRepository.getRatingsByBookId(bookID);
 
@@ -108,6 +109,11 @@ public class BookPageController {
         }
 
         model.addAttribute("reviews", reviews);
+
+        //Authors and admins
+        model.addAttribute("author", request.isUserInRole("AUTHOR"));
+        //Admin
+        model.addAttribute("admin", request.isUserInRole("ADMIN"));
 
         return "infoBookPage";
     }
