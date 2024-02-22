@@ -10,7 +10,7 @@ function fillStars(rating, starElements) {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
-    const reviewElements = document.querySelectorAll('.col.mb-5');
+    const reviewElements = document.querySelectorAll('.review-post');
     reviewElements.forEach(reviewElement => {
         const rating = reviewElement.querySelector('.rating-number').textContent.trim();
         const starElements = reviewElement.querySelectorAll('.rating i');
@@ -54,7 +54,17 @@ stars.forEach(star => {
     });
 });
 
-// Function to fill stars based on rating
+// Show a message when trying to post a review without filling all the fields
+$("#post-review-btn").click(function () {
+
+    let reviewRating = $("input[name='rating']:checked").val();
+    let reviewTitle = $("#reviewTitle").val();
+    let reviewText = $("#comment").val();
+
+    if (reviewRating === undefined || reviewTitle === "" || reviewText === "") {
+        $("#error-message").show();
+    }
+});
 
 $(() => {
     $("#no-more-reviews").hide();

@@ -136,7 +136,7 @@ $(() => {
     }
 
     $("#loadMoreBut").click((event) => {
-        $("#load-more-spinner").show();
+        $("#loadMoreBut i").addClass("fa-spin");
         // AJAX request
         url = window.location.href;
         let query = url.substring(url.lastIndexOf("?") + 7, url.length);
@@ -145,7 +145,7 @@ $(() => {
             type: "GET",
             url: "/search/loadMore?query=" + query + "&page=" + currentPage,
             success: function (data) {
-                $("#load-more-spinner").hide();
+                $("#loadMoreBut i").removeClass("fa-spin");
                 $("#books").append(data)
                 currentPage++;
                 if (currentPage * 4 >= $("#maxBooks").val()) {

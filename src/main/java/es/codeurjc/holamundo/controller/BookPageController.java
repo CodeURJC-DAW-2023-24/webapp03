@@ -6,12 +6,8 @@ import es.codeurjc.holamundo.entity.Review;
 import es.codeurjc.holamundo.repository.BookRepository;
 import es.codeurjc.holamundo.repository.ReviewRepository;
 import es.codeurjc.holamundo.service.BookList;
-import es.codeurjc.holamundo.component.ReviewC;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,7 +15,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -30,6 +25,10 @@ public class BookPageController {
     private int selectedBookID;
 
     Book book;
+    private String currentUsername = "FanBook_785"; //This is the username of the current user. This is just for testing purposes
+    private boolean isUser = true; //This is just for testing purposes (if the user is logged in)
+    private boolean isAdmin = false; //This is just for testing purposes (if the user is an admin)
+
 
     @Autowired
     private BookRepository bookRepository;
@@ -91,6 +90,25 @@ public class BookPageController {
         // Get reviews from the database
         List<Review> reviews = reviewRepository.findByBookID(bookID, PageRequest.of(0, 6)).getContent();
 
+        if (isUser == true) {
+            model.addAttribute("user", true);
+            if (isAdmin == true) {
+                model.addAttribute("admin", true);
+            } else {
+                model.addAttribute("admin", false);
+            }
+            // Check if the user has already reviewed the book
+            boolean hasReviewed = reviewRepository.existsByBookIDAndAuthorUsername(bookID, currentUsername);
+
+            // Get the user's review
+            Review userReview = reviewRepository.findByBookIDAndAuthorUsername(bookID, currentUsername);
+            model.addAttribute("hasReviewed", hasReviewed);
+            model.addAttribute("userReview", userReview);
+
+        } else {
+            model.addAttribute("user", false);
+        }
+
         model.addAttribute("reviews", reviews);
 
         return "infoBookPage";
@@ -121,6 +139,7 @@ public class BookPageController {
         model.addAttribute("Serie", bookSeries);
         model.addAttribute("PageCount", bookPageCount);
         model.addAttribute("Publisher", bookPublisher);
+        model.addAttribute("admin", false);
 
         return "modifyBookPage";
     }
@@ -156,7 +175,17 @@ public class BookPageController {
         // Get reviews from the database
         List<Review> reviews = reviewRepository.findByBookID(currentBookID, PageRequest.of(page, pageSize)).getContent();
 
+        if (isUser == true) {
+            if (isAdmin == true) {
+                model.addAttribute("admin", true);
+            } else {
+                model.addAttribute("admin", false);
+            }
+        }
+
         model.addAttribute("reviewCard", reviews);
+        model.addAttribute("bookID", currentBookID);
+
 
         return "reviewItemTemplate";
 

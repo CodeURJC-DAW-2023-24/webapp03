@@ -451,3 +451,15 @@ mark {
     align-content: center;
     border-radius: 12px 12px 0 0 !important;
 }
+
+.logout{
+    background-color: #ffffff;    
+    box-shadow: 0 0 0 0.15rem rgb(222, 48, 48) !important;
+    border-radius: 5px;
+    float:right;
+}
+
+.logout:hover {
+    background-color: #ff0909;
+    color: #000000;
+}

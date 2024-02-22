@@ -58,12 +58,13 @@
                 </li>
 
                 <!-- Administrator menu option -->
+                {{#admin}}
                 <li class="bm-nav-item"><a class="bm-nav-link" href="/admin">
                     <i class="bi-gear-fill"></i>
                     Administrador
                 </a>
                 </li>
-
+                {{/admin}}
                 <!-- Search widget-->
                 <li class="bm-nav-item">
                     <form class="bm-d-flex position-relative" onSubmit="return false;">
@@ -90,7 +91,7 @@
                             <li>
                                 <hr class="dropdown-divider"/>
                             </li>
-                            <li><a class="dropdown-item" href="loginPage.html">Cerrar sesión</a></li>
+                            <li><a class="dropdown-item" href="loginPage.html">Iniciar sesión</a></li>   
                         </ul>
                     </li>
                 </ul>

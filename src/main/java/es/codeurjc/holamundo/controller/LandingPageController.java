@@ -1,6 +1,5 @@
 package es.codeurjc.holamundo.controller;
 
-import es.codeurjc.holamundo.component.Post;
 import es.codeurjc.holamundo.entity.Author;
 import es.codeurjc.holamundo.entity.Book;
 import es.codeurjc.holamundo.entity.Genre;
@@ -8,8 +7,6 @@ import es.codeurjc.holamundo.repository.AuthorRepository;
 import es.codeurjc.holamundo.repository.BookRepository;
 import es.codeurjc.holamundo.repository.GenreRepository;
 import es.codeurjc.holamundo.repository.UserRepository;
-import es.codeurjc.holamundo.service.BookList;
-import es.codeurjc.holamundo.service.PostList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -17,12 +14,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import jakarta.servlet.http.HttpServletRequest;
 
-import java.util.ArrayList;
 import java.util.List;
+
 
 @Controller
 public class LandingPageController {
@@ -46,7 +42,7 @@ public class LandingPageController {
 
     //Method that will load the landing page
     @GetMapping("/")
-    public String loadLandingPage(Model model) {
+    public String loadLandingPage(Model model, HttpServletRequest request) {
 
         model.addAttribute("user", isUser);
         model.addAttribute("username", testingCurrentUsername);
@@ -116,6 +112,9 @@ public class LandingPageController {
 
         model.addAttribute("postL", recommendedBooksLeft);
         model.addAttribute("postR", recommendedBooksRight);
+
+        //Admin
+        model.addAttribute("admin", request.isUserInRole("ADMIN"));
 
         return "landingPage";
     }

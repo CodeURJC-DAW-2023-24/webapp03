@@ -105,26 +105,51 @@
 <!-- Product section-->
 <header class="bg-branding-white py-1">
     <div class="container px-4 px-lg-5 my-5">
+        {{^admin}}
         <div class="text-start text-dark">
-            <h1 class="display-4 fw-bolder">Los juegos del hambre</h1>
+            <h1 class="display-4 fw-bolder">{{Title}}</h1>
             <p class="lead fw-normal text-black-50 mb-0">Modificar libro</p>
 
         </div>
+        {{/admin}}
+        {{#admin}}
+        <div class="text-start text-dark">
+            <h1 class="display-4 fw-bolder">Creando nuevo libro!</h1>
+            <p class="lead fw-normal text-black-50 mb-0">Añade la informacion</p>
+
+        </div>
+        {{/admin}}
+        
     </div>
 </header>
 <section class="py-5">
     <div class="container px-4 px-lg-5 my-5">
         <div class="row gx-4 gx-lg-5 align-items-center">
+            {{^admin}}
+            <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0"
+                                       src="placeholder" alt="..."/></div>
+            {{/admin}}
+            {{^admin}}
             <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0"
                                        src="{{Image}}" alt="..."/></div>
+            {{/admin}}
             <div class="col-md-6">
+                {{^admin}}
                 <form action="/modifyDone/{{id}}" method="post">
-
+                {{/admin}}
+                {{#admin}}
+                <form action="/admin/newBook/done" method="post">
+                {{/admin}}
                     <div class="mb-3">
 
                         <label class="small mb-1" for="inputBookName">Título del libro</label>
+                        {{^admin}}
                         <input class="form-control" name="inputBookName" type="text"
                                value="{{Title}}">
+                        {{/admin}}
+                        {{#admin}}
+                        <input class="form-control" name="inputBookName" type="text">
+                        {{/admin}}
 
                     </div>
 
@@ -132,23 +157,38 @@
 
                         <label class="small mb-1" for="inputBookAuthorName">Nombre completo del autor/a del
                             libro</label>
+                            {{^admin}}
                         <input class="form-control" name="inputBookAuthorName" type="text"
                                value="{{Author}}">
+                            {{/admin}}
+                            {{#admin}}
+                        <input class="form-control" name="inputBookAuthorName" type="text">
+                            {{/admin}}
 
                     </div>
 
                     <div class="row gx-3 mb-3">
                         <div class="col-md-6">
                             <label class="small mb-1" for="inputBookISBN">ISBN</label>
+                            {{^admin}}
                             <input class="form-control" name="inputBookISBN" type="text"
                                    value="{{ISBN}}">
+                            {{/admin}}
+                            {{#admin}}
+                            <input class="form-control" name="inputBookISBN" type="text">
+                            {{/admin}}
                         </div>
 
 
                         <div class="col-md-6">
                             <label class="small mb-1" for="inputBookPages">Número de páginas</label>
+                            {{^admin}}
                             <input class="form-control" name="inputBookPages" type="number"
                                    value="{{PageCount}}">
+                            {{/admin}}
+                            {{#admin}}
+                            <input class="form-control" name="inputBookPages" type="number">
+                            {{/admin}}
                         </div>
 
                     </div>
@@ -157,14 +197,24 @@
 
                         <div class="col-md-6">
                             <label class="small mb-1" for="inputBookGenre">Género</label>
+                            {{^admin}}
                             <input class="form-control" name="inputBookGenre" type="text"
                                    value="{{Genre}}">
+                            {{/admin}}
+                            {{#admin}}
+                            <input class="form-control" name="inputBookGenre" type="text">
+                            {{/admin}}
                         </div>
 
                         <div class="col-md-6">
                             <label class="small mb-1" for="inputBookDate">Fecha de publicación</label>
+                            {{^admin}}
                             <input class="form-control" name="inputBookDate" type="date"
                                    value="{{Date}}">
+                            {{/admin}}
+                            {{#admin}}
+                            <input class="form-control" name="inputBookDate" type="date">
+                            {{/admin}}
                         </div>
                     </div>
 
@@ -172,21 +222,37 @@
 
                         <div class="col-md-6">
                             <label class="small mb-1" for="inputBookPublisher">Editorial</label>
+                            {{^admin}}
                             <input class="form-control" name="inputBookPublisher" type="text"
                                    value="{{Publisher}}">
+                            {{/admin}}
+                            {{#admin}}
+                            <input class="form-control" name="inputBookPublisher" type="text">
+                            {{/admin}}
                         </div>
 
                         <div class="col-md-6">
                             <label class="small mb-1" for="inputBookSeries">Saga</label>
+                            {{^admin}}
                             <input class="form-control" name="inputBookSeries" type="text"
                                    value="{{Serie}}">
+                            {{/admin}}
+                            {{#admin}}
+                            <input class="form-control" name="inputBookSeries" type="text">
+                            {{/admin}}
                         </div>
                     </div>
 
                     <div class="mb-3 description-form">
                         <label class="small mb-1" for="inputBookDescription">Descripción del libro</label>
+                        {{^admin}}
                         <textarea class="form-control description-text-area" name="inputBookDescription" rows="4"
                                   cols="50">{{Description}}</textarea>
+                        {{/admin}}
+                        {{#admin}}
+                        <textarea class="form-control description-text-area" name="inputBookDescription" rows="4"
+                                  cols="50"></textarea>
+                        {{/admin}}
                     </div>
                     <button class="btn btn-secondary-light" type="button">Subir imagen de portada</button>
 
@@ -194,7 +260,7 @@
                 </form>
             </div>
         </div>
-    </div>
+    </div>  
 </section>
 
 
