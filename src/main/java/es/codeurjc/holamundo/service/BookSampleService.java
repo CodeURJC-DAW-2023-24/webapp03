@@ -3,12 +3,14 @@ package es.codeurjc.holamundo.service;
 import es.codeurjc.holamundo.entity.Book;
 import es.codeurjc.holamundo.repository.AuthorRepository;
 import es.codeurjc.holamundo.repository.BookRepository;
-import es.codeurjc.holamundo.repository.GenreRepository;
-import es.codeurjc.holamundo.repository.ReviewRepository;
 import jakarta.annotation.PostConstruct;
+
+import java.sql.SQLException;
+
+import javax.sql.rowset.serial.SerialException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RestController;
 
 @Service
 public class BookSampleService {
@@ -16,16 +18,10 @@ public class BookSampleService {
     private BookRepository bookRepository;
 
     @Autowired
-    private ReviewRepository reviewRepository;
-
-    @Autowired
     private AuthorRepository authorRepository;
 
-    @Autowired
-    private GenreRepository genreRepository;
-
     @PostConstruct
-    public void init() {
+    public void init() throws SerialException, SQLException {
         // Add some books (Tolkien)
         Book book1 = new Book("The Hobbit", "The Hobbit, or There and Back Again is a children's fantasy novel by English author J. R. R. Tolkien.", "https://cdn.kobo.com/book-images/cf32789f-22db-4ad0-bba4-9c0bf69fb872/1200/1200/False/the-hobbit.jpg", "21-09-1937", "978-0261102217", "The Lord of the Rings", 310, "Allen & Unwin");
         Book book2 = new Book("The Fellowship of the Ring", "The Fellowship of the Ring is the first of three volumes of the epic novel The Lord of the Rings by the English author J.R.R. Tolkien. It is followed by The Two Towers and The Return of the King.", "https://m.media-amazon.com/images/I/813UBZ-O8sL._AC_UF1000,1000_QL80_.jpg", "29-07-1954", "978-0261102217", "The Lord of the Rings", 423, "Allen & Unwin");
@@ -35,6 +31,10 @@ public class BookSampleService {
         book2.addAuthor(authorRepository.findByName("J.R.R. Tolkien"));
         book3.addAuthor(authorRepository.findByName("J.R.R. Tolkien"));
         book4.addAuthor(authorRepository.findByName("J.R.R. Tolkien"));
+        book1.setImageFile(book1.URLtoBlob(book1.getImageString()));
+        book2.setImageFile(book2.URLtoBlob(book2.getImageString()));
+        book3.setImageFile(book3.URLtoBlob(book3.getImageString()));
+        book4.setImageFile(book4.URLtoBlob(book4.getImageString()));
         bookRepository.save(book1);
         bookRepository.save(book2);
         bookRepository.save(book3);
@@ -49,6 +49,10 @@ public class BookSampleService {
         book6.addAuthor(authorRepository.findByName("J.K. Rowling"));
         book7.addAuthor(authorRepository.findByName("J.K. Rowling"));
         book8.addAuthor(authorRepository.findByName("J.K. Rowling"));
+        book5.setImageFile(book5.URLtoBlob(book5.getImageString()));
+        book6.setImageFile(book6.URLtoBlob(book6.getImageString()));
+        book7.setImageFile(book7.URLtoBlob(book7.getImageString()));
+        book8.setImageFile(book8.URLtoBlob(book8.getImageString()));
         bookRepository.save(book5);
         bookRepository.save(book6);
         bookRepository.save(book7);
@@ -63,12 +67,14 @@ public class BookSampleService {
         book10.addAuthor(authorRepository.findByName("George R.R. Martin"));
         book11.addAuthor(authorRepository.findByName("George R.R. Martin"));
         book12.addAuthor(authorRepository.findByName("George R.R. Martin"));
+        book9.setImageFile(book9.URLtoBlob(book9.getImageString()));
+        book10.setImageFile(book10.URLtoBlob(book10.getImageString()));
+        book11.setImageFile(book11.URLtoBlob(book11.getImageString()));
+        book12.setImageFile(book12.URLtoBlob(book12.getImageString()));
         bookRepository.save(book9);
         bookRepository.save(book10);
         bookRepository.save(book11);
         bookRepository.save(book12);
-
-
     }
 
 

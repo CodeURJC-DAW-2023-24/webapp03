@@ -1,5 +1,6 @@
 package es.codeurjc.holamundo.entity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
@@ -12,7 +13,7 @@ public class Genre {
     @Id
     private String name;
 
-    @OneToMany(mappedBy = "genre")
+    @OneToMany(mappedBy = "genre", cascade = CascadeType.ALL)
     private List<Book> books = new ArrayList<>();
 
     public Genre() {

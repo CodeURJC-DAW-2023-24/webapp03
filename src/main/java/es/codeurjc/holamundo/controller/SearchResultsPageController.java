@@ -1,9 +1,7 @@
 package es.codeurjc.holamundo.controller;
 
-import es.codeurjc.holamundo.entity.Author;
 import es.codeurjc.holamundo.entity.Book;
 import es.codeurjc.holamundo.repository.BookRepository;
-import es.codeurjc.holamundo.service.BookList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -12,27 +10,28 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Controller
 public class SearchResultsPageController {
-    private BookList books;
     private List<Book> bookQueries;
 
     @Autowired
     private BookRepository bookRepository;
 
     public SearchResultsPageController() {
-        this.books = new BookList();
     }
 
     @GetMapping("/search")
-    public String loadSearchResultsPage(Model model, String query) {
-        this.books = new BookList();
+    public String loadSearchResultsPage(Model model, String query) throws SQLException {
         Page<Book> filteredBooks = bookRepository.searchBooks(query, PageRequest.of(0, 4));
         bookQueries = filteredBooks.getContent();
+
+        for(int i=0;i<bookQueries.size();i++){
+            bookQueries.get(i).setImageString(bookQueries.get(i).blobToString(bookQueries.get(i).getImageFile()));
+        }
 
         List<Double> ratings = new ArrayList<>();
         bookQueries.forEach((book) -> {
@@ -57,9 +56,13 @@ public class SearchResultsPageController {
     }
 
     @GetMapping("/search/loadMore")
-    public String loadSearchResultsPageBooks(@RequestParam String query, @RequestParam int page, Model model) {
+    public String loadSearchResultsPageBooks(@RequestParam String query, @RequestParam int page, Model model) throws SQLException {
         Page<Book> filteredBooks = bookRepository.searchBooks(query, PageRequest.of(page, 4));
         bookQueries = filteredBooks.getContent();
+
+        for(int i=0;i<bookQueries.size();i++){
+            bookQueries.get(i).setImageString(bookQueries.get(i).blobToString(bookQueries.get(i).getImageFile()));
+        }
 
         List<Double> ratings = new ArrayList<>();
         bookQueries.forEach((book) -> {

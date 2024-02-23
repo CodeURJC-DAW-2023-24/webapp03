@@ -5,6 +5,7 @@ import es.codeurjc.holamundo.entity.User;
 import es.codeurjc.holamundo.repository.BookRepository;
 import es.codeurjc.holamundo.repository.UserRepository;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +27,7 @@ public class ProfilePageController {
     private BookRepository bookRepository;
 
     @GetMapping("/profile/{username}/**")
-    public String loadProfilePage(Model model, @PathVariable String username, HttpServletRequest request) {
+    public String loadProfilePage(Model model, @PathVariable String username, HttpServletRequest request) throws SQLException {
 
         // Get user from the database
         User user = userRepository.findByUsername(username);
@@ -57,6 +58,18 @@ public class ProfilePageController {
         List<Book> readingBooksList = userRepository.getReadingBooks(username, PageRequest.of(0, 4)).getContent();
         List<Book> wantedBooksList = userRepository.getWantedBooks(username, PageRequest.of(0, 4)).getContent();
 
+        for(int i=0;i<readBooksList.size();i++){
+            readBooksList.get(i).setImageString(readBooksList.get(i).blobToString(readBooksList.get(i).getImageFile()));
+        }
+
+        for(int i=0;i<readingBooksList.size();i++){
+            readingBooksList.get(i).setImageString(readingBooksList.get(i).blobToString(readingBooksList.get(i).getImageFile()));
+        }
+
+        for(int i=0;i<wantedBooksList.size();i++){
+            wantedBooksList.get(i).setImageString(wantedBooksList.get(i).blobToString(wantedBooksList.get(i).getImageFile()));
+        }
+    
         List<Double> readBooksRatings = new ArrayList<>();
         readBooksList.forEach((book) -> {
             List<Double> bookRatings = bookRepository.getRatingsByBookId(book.getID());
@@ -113,10 +126,15 @@ public class ProfilePageController {
     }
 
     @GetMapping("/profile/{username}/loadMore")
-    public String loadReadBooks(@PathVariable String username, @RequestParam(defaultValue = "default") String listType, @RequestParam int page, @RequestParam int size, Model model) {
+    public String loadReadBooks(@PathVariable String username, @RequestParam(defaultValue = "default") String listType, @RequestParam int page, @RequestParam int size, Model model) throws SQLException {
         switch (listType) {
             case "read" -> {
                 List<Book> readBooksList = userRepository.getReadBooks(username, PageRequest.of(page, size)).getContent();
+                
+                for(int i=0;i<readBooksList.size();i++){
+                    readBooksList.get(i).setImageString(readBooksList.get(i).blobToString(readBooksList.get(i).getImageFile()));
+                }
+                
                 model.addAttribute("bookItem", readBooksList);
 
                 List<Double> readBooksRatings = new ArrayList<>();
@@ -135,6 +153,11 @@ public class ProfilePageController {
             }
             case "reading" -> {
                 List<Book> readingBooksList = userRepository.getReadingBooks(username, PageRequest.of(page, size)).getContent();
+                
+                for(int i=0;i<readingBooksList.size();i++){
+                    readingBooksList.get(i).setImageString(readingBooksList.get(i).blobToString(readingBooksList.get(i).getImageFile()));
+                }
+                
                 model.addAttribute("bookItem", readingBooksList);
 
                 List<Double> readingBooksRatings = new ArrayList<>();
@@ -153,6 +176,11 @@ public class ProfilePageController {
             }
             case "wanted" -> {
                 List<Book> wantedBooksList = userRepository.getWantedBooks(username, PageRequest.of(page, size)).getContent();
+                
+                for(int i=0;i<wantedBooksList.size();i++){
+                    wantedBooksList.get(i).setImageString(wantedBooksList.get(i).blobToString(wantedBooksList.get(i).getImageFile()));
+                }
+                
                 model.addAttribute("bookItem", wantedBooksList);
 
                 List<Double> wantedBooksRatings = new ArrayList<>();

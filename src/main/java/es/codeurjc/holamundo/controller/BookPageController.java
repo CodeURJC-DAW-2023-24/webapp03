@@ -6,7 +6,6 @@ import es.codeurjc.holamundo.entity.Review;
 import es.codeurjc.holamundo.repository.BookRepository;
 import es.codeurjc.holamundo.repository.ReviewRepository;
 import es.codeurjc.holamundo.repository.UserRepository;
-import es.codeurjc.holamundo.service.BookList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
@@ -17,14 +16,22 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import jakarta.servlet.http.HttpServletRequest;
 
+import es.codeurjc.holamundo.entity.Author;
+import es.codeurjc.holamundo.repository.AuthorRepository;
+import es.codeurjc.holamundo.repository.GenreRepository;
+
+import org.hibernate.engine.jdbc.BlobProxy;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.sql.Blob;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 @Controller
 public class BookPageController {
-    // THIS NEEDS TO BE REMOVED AND THE BOOKS NEED TO BE LOADED FROM THE DATABASE
-    private BookList books;
-    // ^ THIS NEEDS TO BE REMOVED AND THE BOOKS NEED TO BE LOADED FROM THE DATABASE
-    private int selectedBookID;
 
     Book book;
     private String currentUsername = "FanBook_785"; //This is the username of the current user. This is just for testing purposes
@@ -41,13 +48,20 @@ public class BookPageController {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private AuthorRepository authorsBD;
+
+    @Autowired
+    private GenreRepository genreBD;
+
+    //delete?? not being used
     //Constructor
     public BookPageController() {
-        this.books = new BookList();
+        //this.books = new BookList();
     }
 
     @GetMapping("/book/{bookID}")
-    public String loadBookPage(Model model, @PathVariable int bookID, HttpServletRequest request) {
+    public String loadBookPage(Model model, @PathVariable int bookID, HttpServletRequest request) throws SQLException {
         // Get ratings from the database
         List<Double> ratings = bookRepository.getRatingsByBookId(bookID);
 
@@ -66,18 +80,21 @@ public class BookPageController {
         // Get book from the database
         this.book = bookRepository.findByID(bookID);
 
-        this.selectedBookID = bookID;
-
         String bookTitle = book.getTitle();
         String bookAuthor = book.getAuthorString();
         String bookDescription = book.getDescription();
-        String bookImage = book.getImage();
+        //String bookImage = book.getImage();
         String bookDate = book.getReleaseDate();
         String bookISBN = book.getISBN();
         String bookGenre = book.getGenre().getName();
         String bookSeries = book.getSeries();
         int bookPageCount = book.getPageCount();
         String bookPublisher = book.getPublisher();
+
+        //Convert the imageFile to Base64 for it to appear in html
+        Blob blob = book.getImageFile();
+        byte[] bytes = blob.getBytes(1, (int) blob.length());
+        String bookImage = Base64.getEncoder().encodeToString(bytes);
 
         model.addAttribute("id", bookID);
         model.addAttribute("bookTitle", bookTitle);
@@ -140,18 +157,23 @@ public class BookPageController {
     }
 
     @GetMapping("/book/{bookID}/edit")
-    public String loadModifyBookPage(Model model, @PathVariable int bookID) {
+    public String loadModifyBookPage(Model model, @PathVariable int bookID) throws SQLException {
 
         String bookTitle = book.getTitle();
         String bookAuthor = book.getAuthorString();
         String bookDescription = book.getDescription();
-        String bookImage = book.getImage();
+        //String bookImage = book.getImage();
         String bookDate = book.getReleaseDate();
         String bookISBN = book.getISBN();
         Genre bookGenre = book.getGenre();
         String bookSeries = book.getSeries();
         int bookPageCount = book.getPageCount();
         String bookPublisher = book.getPublisher();
+
+        //Convert the imageFile to Base64 for it to appear in html
+        Blob blob = book.getImageFile();
+        byte[] bytes = blob.getBytes(1, (int) blob.length());
+        String bookImage = Base64.getEncoder().encodeToString(bytes);
 
         model.addAttribute("id", bookID);
         model.addAttribute("Title", bookTitle);
@@ -172,27 +194,58 @@ public class BookPageController {
     @PostMapping("/modifyDone/{bookID}") //Parametros del formulario
     public String modifyDone(Model model, @PathVariable("bookID") int bookID, @RequestParam("inputBookName") String inputBookName
             , @RequestParam("inputBookAuthorName") String inputBookAuthorName, @RequestParam("inputBookISBN") String inputBookISBN
-            , @RequestParam("inputBookPages") int inputBookPages, @RequestParam("inputBookGenre") Genre inputBookGenre
+            , @RequestParam("inputBookPages") int inputBookPages, @RequestParam("inputBookGenre") String inputBookGenre
             , @RequestParam("inputBookDate") String inputBookDate
             , @RequestParam("inputBookPublisher") String inputBookPublisher, @RequestParam("inputBookSeries") String inputBookSeries
-            , @RequestParam("inputBookDescription") String inputBookDescription) {
+            , @RequestParam("inputBookDescription") String inputBookDescription, @RequestParam("inputImageFile") MultipartFile InputImageFile) throws IOException, SQLException  {
+
+        Book book = bookRepository.findByID(bookID);
 
         //Se puede realizar con setter en la clase Book
         book.setTitle(inputBookName);
-        book.setAuthorString(inputBookAuthorName);
         book.setISBN(inputBookISBN);
         book.setPageCount(inputBookPages);
-        book.setGenre(inputBookGenre);
         book.setReleaseDate(inputBookDate);
-        ;
         book.setPublisher(inputBookPublisher);
         book.setSeries(inputBookSeries);
         book.setDescription(inputBookDescription);
 
-        //Tambien se puede crear una clase Book y sobreescribir con updateBook y el id
-        //Book newBook = new Book(bookID, inputBookName, inputBookAuthorName, inputBookDescription, inputBookDate, inputBookDescription, inputBookISBN, inputBookGenre, inputBookSeries, inputBookPages, inputBookPublisher);
-        //books.updateBook(bookID, newBook);
+        //Check if authors exist, they are separated by ","
+        String[] authorsSplit = inputBookAuthorName.split(",");
+        ArrayList<Author> authorList = new ArrayList<>();
+        for (int i=0; i<authorsSplit.length;i++){
+            Author found = authorsBD.findByName(authorsSplit[i]);
+            if(found != null){
+                authorList.add(found);
+            }else{
+                Author newAuthor = new Author(authorsSplit[i]); 
+                newAuthor.addBook(book); //Add author to DB
+                authorList.add(newAuthor); //Add to list
+                authorsBD.save(newAuthor); 
+            }
+        }
+        book.setAuthor(authorList); //Add author/s to list
 
+        //Check if Genre exist
+        Genre genreFound = genreBD.findByName(inputBookGenre);
+        if(genreFound != null){
+            book.setGenre(genreFound);
+        }else{
+            Genre newGenre = new Genre(inputBookGenre); 
+            book.setGenre(newGenre); //Add genre to Book
+            newGenre.addBook(book);
+            genreBD.save(newGenre);
+        }
+
+        //If no picture was added, check for old pic. If there never was a pic, insert placeholder.
+        if (InputImageFile.isEmpty()) {
+            if(book.getImageFile().length() == 0 || book.getImageFile() == null){
+                book.setImageFile(book.URLtoBlob("https://fissac.com/wp-content/uploads/2020/11/placeholder.png"));
+            }
+        }else{
+            book.setImageFile(BlobProxy.generateProxy(InputImageFile.getInputStream(), InputImageFile.getSize()));
+        }
+        bookRepository.save(book);
         return "redirect:/book/" + bookID;
     }
 

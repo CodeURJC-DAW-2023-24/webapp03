@@ -2,8 +2,19 @@ package es.codeurjc.holamundo.entity;
 
 import jakarta.persistence.*;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.sql.Blob;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
+
+import javax.sql.rowset.serial.SerialBlob;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Book {
@@ -19,9 +30,14 @@ public class Book {
     private String authorString;
 
     private String description;
-    private String image;
+    
     private String releaseDate;
     private String ISBN;
+
+    @Lob
+    @JsonIgnore
+    private Blob imageFile;
+    private String imageString;
 
     @ManyToOne
     private Genre genre;
@@ -35,10 +51,10 @@ public class Book {
     public Book() {
     }
 
-    public Book(String title, String description, String image, String releaseDate, String ISBN, String series, int pageCount, String publisher) {
+    public Book(String title, String description, String imageString, String releaseDate, String ISBN, String series, int pageCount, String publisher) {
         this.title = title;
         this.description = description;
-        this.image = image;
+        this.imageString = imageString;
         this.releaseDate = releaseDate;
         this.ISBN = ISBN;
         this.series = series;
@@ -46,6 +62,7 @@ public class Book {
         this.publisher = publisher;
     }
 
+    //ever used??
     private void loadReviews(List<Review> reviewList) {
         // Example reviews to test the functionality of the webpage
 
@@ -88,9 +105,9 @@ public class Book {
     }
 
     // Getter for 'image'
-    public String getImage() {
+    /*public String getImage() {
         return this.image;
-    }
+    }*/
 
     // Getter for 'release'
     public String getReleaseDate() {
@@ -147,9 +164,9 @@ public class Book {
         this.description = description;
     }
 
-    public void setImage(String image) {
+    /*public void setImage(String image) {
         this.image = image;
-    }
+    }*/
 
     public void setReleaseDate(String release) {
         this.releaseDate = release;
@@ -238,7 +255,7 @@ public class Book {
                 ", title='" + title + '\'' +
                 ", author=" + authorString + '\'' +
                 ", description='" + description + '\'' +
-                ", image='" + image + '\'' +
+                //", image='" + image + '\'' +
                 ", releaseDate='" + releaseDate + '\'' +
                 ", ISBN='" + ISBN + '\'' +
                 ", genre=" + genre +
@@ -246,5 +263,49 @@ public class Book {
                 ", pageCount=" + pageCount +
                 ", publisher='" + publisher + '\'' +
                 '}';
+    }
+
+    public Blob getImageFile() {
+        return this.imageFile;
+    }
+
+    public void setImageFile(Blob imageFile) {
+        this.imageFile = imageFile;
+    }
+
+    public String blobToString(Blob blob) throws SQLException{
+        byte[] bytes = blob.getBytes(1, (int) blob.length());
+        String bookImage = Base64.getEncoder().encodeToString(bytes);
+        return bookImage;
+    }
+
+    public Blob URLtoBlob(String webURL){
+        try {
+            URL url = new URL(webURL);
+            InputStream in = url.openStream();
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            // Read the image data into a byte array
+            byte[] buffer = new byte[1024];
+            int length;
+            while ((length = in.read(buffer)) != -1) {
+                baos.write(buffer, 0, length);
+            }
+            in.close();
+            // Convert the ByteArrayOutputStream to a byte array
+            byte[] imageBytes = baos.toByteArray();
+            Blob imageBlob = new SerialBlob(imageBytes);
+            return imageBlob;
+        } catch (IOException | SQLException e) {
+            System.out.println("Error");
+            return null;
+        }
+    }
+
+    public String getImageString() {
+        return this.imageString;
+    }
+
+    public void setImageString(String imageString) {
+        this.imageString = imageString;
     }
 }

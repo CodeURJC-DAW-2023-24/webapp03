@@ -127,18 +127,18 @@
         <div class="row gx-4 gx-lg-5 align-items-center">
             {{^admin}}
             <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0"
-                                       src="placeholder" alt="..."/></div>
+                                       src="data:image/png;base64,{{Image}}" alt="..."/></div>
             {{/admin}}
-            {{^admin}}
+            {{#admin}}
             <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0"
-                                       src="{{Image}}" alt="..."/></div>
+                                       src="https://fissac.com/wp-content/uploads/2020/11/placeholder.png" alt="..."/></div>
             {{/admin}}
             <div class="col-md-6">
                 {{^admin}}
-                <form action="/modifyDone/{{id}}" method="post">
+                <form action="/modifyDone/{{id}}" method="post" enctype="multipart/form-data">
                 {{/admin}}
                 {{#admin}}
-                <form action="/admin/newBook/done" method="post">
+                <form action="/admin/newBook/done" method="post" enctype="multipart/form-data">
                 {{/admin}}
                     <div class="mb-3">
 
@@ -241,6 +241,11 @@
                             <input class="form-control" name="inputBookSeries" type="text">
                             {{/admin}}
                         </div>
+
+                        <div class="col-md-6">
+                            <label class="small mb-1" for="inputImageFile">Image</label>
+                            <input type="file" name ="inputImageFile" accept="image/*"/>
+                        </div> 
                     </div>
 
                     <div class="mb-3 description-form">
@@ -254,7 +259,6 @@
                                   cols="50"></textarea>
                         {{/admin}}
                     </div>
-                    <button class="btn btn-secondary-light" type="button">Subir imagen de portada</button>
 
                     <input type='submit' value='Guardar' class="btn btn-primary-light save-button">
                 </form>

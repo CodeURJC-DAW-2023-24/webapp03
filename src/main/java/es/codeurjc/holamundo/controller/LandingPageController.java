@@ -17,6 +17,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.sql.Blob;
+import java.sql.SQLException;
+import java.util.Base64;
 import java.util.List;
 
 
@@ -42,7 +45,7 @@ public class LandingPageController {
 
     //Method that will load the landing page
     @GetMapping("/")
-    public String loadLandingPage(Model model, HttpServletRequest request) {
+    public String loadLandingPage(Model model, HttpServletRequest request) throws SQLException {
 
         model.addAttribute("user", isUser);
         model.addAttribute("username", testingCurrentUsername);
@@ -90,8 +93,13 @@ public class LandingPageController {
         String bookTitle = booksFromMostReadAuthor.get(0).getTitle();
         String bookAuthor = booksFromMostReadAuthor.get(0).getAuthorString();
         String bookDescription = booksFromMostReadAuthor.get(0).getDescription();
-        String bookImage = booksFromMostReadAuthor.get(0).getImage();
+        //String bookImage = booksFromMostReadAuthor.get(0).getImage();
 
+        //Convert the imageFile to Base64 for it to appear in html
+        Blob blob = booksFromMostReadAuthor.get(0).getImageFile();
+        byte[] bytes = blob.getBytes(1, (int) blob.length());
+        String bookImage = Base64.getEncoder().encodeToString(bytes);
+        
         model.addAttribute("mostReadAuthor", mostReadAuthors.get(0).getName());
 
         model.addAttribute("bookTitle", bookTitle);
@@ -110,6 +118,14 @@ public class LandingPageController {
         recommendedBooksLeft = booksFromMostReadGenres.subList(0, (booksFromMostReadGenres.size() / 2));
         recommendedBooksRight = booksFromMostReadGenres.subList((booksFromMostReadGenres.size() / 2), booksFromMostReadGenres.size());
 
+        for(int i=0;i<recommendedBooksRight.size();i++){
+            recommendedBooksRight.get(i).setImageString(recommendedBooksRight.get(i).blobToString(recommendedBooksRight.get(i).getImageFile()));
+        }
+
+        for(int i=0;i<recommendedBooksLeft.size();i++){
+            recommendedBooksLeft.get(i).setImageString(recommendedBooksLeft.get(i).blobToString(recommendedBooksLeft.get(i).getImageFile()));
+        }
+
         model.addAttribute("postL", recommendedBooksLeft);
         model.addAttribute("postR", recommendedBooksRight);
 
@@ -121,7 +137,7 @@ public class LandingPageController {
 
     //Method that will load 4 more posts
     @GetMapping("/landingPage/loadMore")
-    public String loadLandingPagePosts(Model model, @RequestParam int page, @RequestParam int size) {
+    public String loadLandingPagePosts(Model model, @RequestParam int page, @RequestParam int size) throws SQLException {
         // If it is a registered user, get the most read genres
         // Get current user most read genres
         List<Genre> mostReadGenres = userRepository.getMostReadGenres(testingCurrentUsername);
@@ -129,6 +145,10 @@ public class LandingPageController {
         // Get books from the most read genres (these will be the recommended books)
         List<Book> booksFromMostReadGenres = bookRepository.findByGenreIn(mostReadGenres, PageRequest.of(page, size)).getContent();
 
+        for(int i=0;i<booksFromMostReadGenres.size();i++){
+            booksFromMostReadGenres.get(i).setImageString(booksFromMostReadGenres.get(i).blobToString(booksFromMostReadGenres.get(i).getImageFile()));
+        }
+        
         model.addAttribute("post", booksFromMostReadGenres);
 
         return "landingPagePostTemplate";
