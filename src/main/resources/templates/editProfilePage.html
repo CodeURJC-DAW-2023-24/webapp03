@@ -129,13 +129,19 @@
                 <div class="card-header">Detalles de tu cuenta</div>
                 <div class="card-body">
                     <form>
+                        <div style="margin-bottom: 7px">
+                            <button class="btn btn-secondary-light" id="returnBut" type="button" style="border: 1px solid dimgrey">
+                                <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
+                                Volver
+                            </button>
+                        </div>
 
                         <div class="row gx-3 mb-3">
 
                             <div class="col-md-6">
-                                <label class="small mb-1" for="inputUsername">Nombre de usuario</label>
-                                <input class="form-control" id="inputUsername" type="text"
-                                       placeholder="Escribe tu nombre de usuario" value="{{username}}">
+                                <label class="small mb-1" for="inputAlias">Alias</label>
+                                <input class="form-control" id="inputAlias" type="text"
+                                       placeholder="Escribe tu nombre de usuario" value="{{alias}}">
                             </div>
 
                             <div class="col-md-6">
@@ -157,20 +163,35 @@
 
                             <div style="display: flex; justify-content: space-between;" class="new-password-flex">
                                 <div style="flex: 1; margin-right: 10px;" class="col-md-6">
+                                    <label class="small mb-1" for="inputOldPassword">Contraseña actual</label>
+                                    <input class="form-control" id="inputOldPassword" type="password"
+                                           placeholder="Escribe tu contraseña actual" value="">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row gx-3 mb-3">
+
+                            <div style="display: flex; justify-content: space-between;" class="new-password-flex">
+                                <div style="flex: 1; margin-right: 10px;" class="col-md-6">
                                     <label class="small mb-1" for="inputPassword">Nueva contraseña</label>
                                     <input class="form-control" id="inputPassword" type="password"
-                                           placeholder="Escribe tu contraseña nueva" value="············">
+                                           placeholder="Escribe tu contraseña nueva" value="">
                                 </div>
                                 <div style="flex: 1; margin-right: 10px;" class="col-md-6">
                                     <label class="small mb-1" for="inputConfirmPassword">Confirma tu
                                         contraseña</label>
                                     <input class="form-control" id="inputConfirmPassword" type="password"
-                                           placeholder="Escribe tu contraseña nueva otra vez" value="············">
+                                           placeholder="Escribe tu contraseña de nuevo" value="">
                                 </div>
                                 <button class="btn btn-primary change-password-button" type="button">Cambiar
                                     contraseña
                                 </button>
                             </div>
+                            <a id="passwordsNotMatching" style="color:darkred">Las contraseñas no coinciden</a>
+                            <a id="passwordRequirements" style="color:darkred">La contraseña debe incluir al menos 8 caracteres y un número</a>
+                            <a id="passwordChanged" style="color:darkgreen">Se actualizó la contraseña correctamente</a>
+                            <a id="confirmPasswordChange" style="color:darkred">Por favor, confirme su cambio de contraseña antes de continuar</a>
                         </div>
 
                         <button class="btn btn-primary" id="saveChangesBut" type="button">Guardar</button>
