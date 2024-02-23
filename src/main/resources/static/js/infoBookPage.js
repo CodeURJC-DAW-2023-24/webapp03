@@ -1,6 +1,36 @@
 // Select all the star elements
 const stars = document.querySelectorAll('.rating input[type="radio"]');
 
+// Select all the radio buttons
+const radioButtons = document.querySelectorAll('.action-buttons-flex input[type="radio"]');
+
+// Add a click event listener to each radio button
+radioButtons.forEach(radioButton => {
+    radioButton.addEventListener('click', function () {
+        // Get the label for the clicked radio button
+        const label = document.querySelector(`label[for="${this.id}"] a`);
+
+        // Add the 'btn-primary-light' class and remove the 'btn-outline-dark' class
+        // check if it is the remove button
+        if (this.id === "removeButton") {
+            label.classList.remove('btn-primary-light');
+            label.classList.add('btn-danger');
+        } else {
+            label.classList.add('btn-primary-light');
+            label.classList.remove('btn-outline-dark');
+        }
+
+        // Reset all other radio buttons
+        radioButtons.forEach(otherRadioButton => {
+            if (otherRadioButton !== this) {
+                const otherLabel = document.querySelector(`label[for="${otherRadioButton.id}"] a`);
+                otherLabel.classList.remove('btn-primary-light');
+                otherLabel.classList.add('btn-outline-dark');
+            }
+        });
+    });
+});
+
 function fillStars(rating, starElements) {
     for (let i = 0; i < rating; i++) {
         const label = starElements[i];
@@ -109,5 +139,19 @@ $(() => {
             }
         })
     });
+
+    // Change lists buttons depending on whether the book is read, reading or to read
+    let bookStatus = $("#bookStatus").text().trim();
+    console.log(bookStatus);
+    if (bookStatus === "read") {
+        $("#readButton").addClass("btn-primary-light").removeClass("btn-outline-dark");
+    } else if (bookStatus === "reading") {
+        $("#readingButton").addClass("btn-primary-light").removeClass("btn-outline-dark");
+    } else if (bookStatus === "wanted") {
+        $("#toReadButton").addClass("btn-primary-light").removeClass("btn-outline-dark");
+    } else {
+        $("#removeButton").addClass("btn-danger").removeClass("btn-outline-dark");
+
+    }
 
 })

@@ -139,18 +139,28 @@ public class User {
     }
 
     public void addReadBook(Book book) {
-        this.readBooks.add(book);
+        // check if the book is already in the read books list
+        if (!this.readBooks.contains(book)) {
+            this.readBooks.add(book);
+        }
     }
 
     public void addReadingBook(Book book) {
-        this.readingBooks.add(book);
+        // check if the book is already in the reading books list
+        if(!this.readingBooks.contains(book)){
+            this.readingBooks.add(book);
+        }
     }
 
     public void addWantedBook(Book book) {
-        this.wantedBooks.add(book);
+        // check if the book is already in the wanted books list
+        if (!this.wantedBooks.contains(book)) {
+            this.wantedBooks.add(book);
+        }
     }
 
     public void removeReadBook(Book book) {
+        // check if the book is in the read books list
         this.readBooks.remove(book);
     }
 

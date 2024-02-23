@@ -5,6 +5,7 @@ import es.codeurjc.holamundo.entity.Genre;
 import es.codeurjc.holamundo.entity.Review;
 import es.codeurjc.holamundo.repository.BookRepository;
 import es.codeurjc.holamundo.repository.ReviewRepository;
+import es.codeurjc.holamundo.repository.UserRepository;
 import es.codeurjc.holamundo.service.BookList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -36,6 +37,9 @@ public class BookPageController {
 
     @Autowired
     private ReviewRepository reviewRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     //Constructor
     public BookPageController() {
@@ -117,6 +121,21 @@ public class BookPageController {
         //Admin
         model.addAttribute("admin", request.isUserInRole("ADMIN"));
 
+        // check if the book is in the user's read, reading or wanted books
+        boolean isRead = userRepository.findByUsername(currentUsername).getReadBooks().contains(book);
+        boolean isReading = userRepository.findByUsername(currentUsername).getReadingBooks().contains(book);
+        boolean isWanted = userRepository.findByUsername(currentUsername).getWantedBooks().contains(book);
+
+        if (isRead) {
+            model.addAttribute("bookState", "read");
+        } else if (isReading) {
+            model.addAttribute("bookState", "reading");
+        } else if (isWanted) {
+            model.addAttribute("bookState", "wanted");
+        } else {
+            model.addAttribute("bookState", "none");
+        }
+
         return "infoBookPage";
     }
 
@@ -164,7 +183,8 @@ public class BookPageController {
         book.setISBN(inputBookISBN);
         book.setPageCount(inputBookPages);
         book.setGenre(inputBookGenre);
-        book.setReleaseDate(inputBookDate);;
+        book.setReleaseDate(inputBookDate);
+        ;
         book.setPublisher(inputBookPublisher);
         book.setSeries(inputBookSeries);
         book.setDescription(inputBookDescription);

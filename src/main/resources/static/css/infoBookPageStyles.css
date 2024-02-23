@@ -12756,3 +12756,17 @@ input[type="radio"] {
 .review-card{
     display: flex !important;
 }
+
+.vertical-separator {
+    border-left: 1px solid #8d8d8d; /* Change color as needed */
+    height: 25px; /* Adjust as needed */
+    width: 1px;
+    margin-right: 1rem;
+}
+
+.action-buttons-flex{
+    display: flex !important;
+    align-items: center;
+    margin-top: 1rem;
+    flex-direction: row;
+}

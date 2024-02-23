@@ -124,7 +124,7 @@
                         <p class="lead">{{bookDescription}}</p>
                     </div>
                 </div>
-                <div class="sub-container mb-4" id="gender-series-container">
+                <div class="sub-container mb-5" id="gender-series-container">
                     <h3 class="fw-bolder mb-2" id="more-info-header">Más información</h3>
                     <div id="inputBookGenre">Género: {{bookGenre}}</div>
                     <div id="inputBookSeries">Saga: {{bookSeries}}</div>
@@ -132,22 +132,48 @@
                     <div id="inputBookPages">Número de páginas: {{bookPageCount}}</div>
                 </div>
                 <div></div>
+                <h5 class="fw-bold mb-3">
+                    <i class="fa-solid fa-circle-plus"></i>
+                    Añádelo a tus listas:
+                </h5>
+                {{#user}}
                 <div class="d-flex action-buttons-flex">
-                    <a href="" id="toReadButton" class="btn btn-outline-dark flex-shrink-0 action-button" class="boton">
-                        <i class="fa-solid fa-bookmark"></i>
-                        Por leer
-                    </a>
+                    <p id="bookStatus" style="display: none;">{{bookState}}</p>
 
-                    <a href="" id="readingButton" class="btn btn-outline-dark flex-shrink-0 action-button"
-                       class="boton">
-                        <i class="fa-solid fa-clock"></i>
-                        Leyendo
-                    </a>
+                    <form class="list-button" action="/book/{{id}}/add/read" method="POST">
+                        <input type="hidden" name="bookId" value="{{id}}">
+                        <button type="submit" id="readButton" class="btn btn-outline-dark flex-shrink-0 action-button">
+                            <i class="fa-solid fa-check"></i>
+                            Leído
+                        </button>
+                    </form>
 
-                    <a href="" id="readButton" class="btn btn-primary-light flex-shrink-0 action-button" class="boton">
-                        <i class="fa-solid fa-check"></i>
-                        Leído
-                    </a>
+                    <form class="list-button" action="/book/{{id}}/add/reading" method="POST">
+                        <input type="hidden" name="bookId" value="{{id}}">
+                        <button type="submit" id="readingButton" class="btn btn-outline-dark flex-shrink-0 action-button">
+                            <i class="fa-solid fa-clock"></i>
+                            Leyendo
+                        </button>
+                    </form>
+
+                    <form class="list-button" action="/book/{{id}}/add/wanted" method="POST">
+                        <input type="hidden" name="bookId" value="{{id}}">
+                        <button type="submit" id="toReadButton" class="btn btn-outline-dark flex-shrink-0 action-button">
+                            <i class="fa-solid fa-bookmark"></i>
+                            Por leer
+                        </button>
+                    </form>
+
+                    <!-- vertical separator -->
+                    <div class="vertical-separator"></div>
+
+                    <form class="list-button" action="/book/{{id}}/removeFromLists" method="POST">
+                        <input type="hidden" name="bookId" value="{{id}}">
+                        <button type="submit" id="removeButton" class="btn btn-outline-dark flex-shrink-0 action-button">
+                            <i class="fa-solid fa-xmark"></i>
+                            Nada
+                        </button>
+                    </form>
                     {{#author}}
                     <a href="/book/{{id}}/edit" class="btn btn-secondary-light flex-shrink-0 action-button"
                        class="boton">
@@ -156,6 +182,10 @@
                     </a>
                     {{/author}}
                 </div>
+                {{/user}}
+                {{^user}}
+                <h6 class=" mb-4 mt-4" style='text-align: center;'>Inicia sesión para poder añadir el libro a tus listas.</h6>
+                {{/user}}
             </div>
         </div>
     </div>

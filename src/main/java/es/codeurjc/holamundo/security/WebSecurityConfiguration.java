@@ -74,7 +74,7 @@ public class WebSecurityConfiguration {
                 //Private pages
                 //USER
                 .requestMatchers("/profile/*/edit", "/book/*/addReview", 
-                    "/book/*/deleteReview/*").hasAnyRole("USER")
+                    "/book/*/deleteReview/*", "/book/*/add/**", "/profile/*/editPassword", "/book/*/removeFromLists/**").hasAnyRole("USER")
                 //AUTHOR
                 .requestMatchers("/book/*/edit", "/modifyDone/*").hasAnyRole("AUTHOR")
                 //ADMIN
