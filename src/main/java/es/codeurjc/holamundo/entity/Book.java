@@ -40,6 +40,7 @@ public class Book {
     private String imageString;
 
     @ManyToOne
+    @JoinColumn(name = "genre_id")
     private Genre genre;
 
     private String series;

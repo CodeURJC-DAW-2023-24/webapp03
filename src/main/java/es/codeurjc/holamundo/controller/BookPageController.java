@@ -10,9 +10,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -197,55 +203,62 @@ public class BookPageController {
             , @RequestParam("inputBookPages") int inputBookPages, @RequestParam("inputBookGenre") String inputBookGenre
             , @RequestParam("inputBookDate") String inputBookDate
             , @RequestParam("inputBookPublisher") String inputBookPublisher, @RequestParam("inputBookSeries") String inputBookSeries
-            , @RequestParam("inputBookDescription") String inputBookDescription, @RequestParam("inputImageFile") MultipartFile InputImageFile) throws IOException, SQLException  {
+            , @RequestParam("inputBookDescription") String inputBookDescription, @RequestParam("inputImageFile") MultipartFile InputImageFile
+            , @RequestParam String accion) throws IOException, SQLException  {
 
         Book book = bookRepository.findByID(bookID);
 
-        //Se puede realizar con setter en la clase Book
-        book.setTitle(inputBookName);
-        book.setISBN(inputBookISBN);
-        book.setPageCount(inputBookPages);
-        book.setReleaseDate(inputBookDate);
-        book.setPublisher(inputBookPublisher);
-        book.setSeries(inputBookSeries);
-        book.setDescription(inputBookDescription);
+        if("Guardar".equals(accion)){
+            //Se puede realizar con setter en la clase Book
+            book.setTitle(inputBookName);
+            book.setISBN(inputBookISBN);
+            book.setPageCount(inputBookPages);
+            book.setReleaseDate(inputBookDate);
+            book.setPublisher(inputBookPublisher);
+            book.setSeries(inputBookSeries);
+            book.setDescription(inputBookDescription);
 
-        //Check if authors exist, they are separated by ","
-        String[] authorsSplit = inputBookAuthorName.split(",");
-        ArrayList<Author> authorList = new ArrayList<>();
-        for (int i=0; i<authorsSplit.length;i++){
-            Author found = authorsBD.findByName(authorsSplit[i]);
-            if(found != null){
-                authorList.add(found);
+            //Check if authors exist, they are separated by ","
+            String[] authorsSplit = inputBookAuthorName.split(",");
+            ArrayList<Author> authorList = new ArrayList<>();
+            for (int i=0; i<authorsSplit.length;i++){
+                Author found = authorsBD.findByName(authorsSplit[i]);
+                if(found != null){
+                    authorList.add(found);
+                }else{
+                    Author newAuthor = new Author(authorsSplit[i]); 
+                    newAuthor.addBook(book); //Add author to DB
+                    authorList.add(newAuthor); //Add to list
+                    authorsBD.save(newAuthor); 
+                }
+            }
+            book.setAuthor(authorList); //Add author/s to list
+
+            //Check if Genre exist
+            Genre genreFound = genreBD.findByName(inputBookGenre);
+            if(genreFound != null){
+                book.setGenre(genreFound);
             }else{
-                Author newAuthor = new Author(authorsSplit[i]); 
-                newAuthor.addBook(book); //Add author to DB
-                authorList.add(newAuthor); //Add to list
-                authorsBD.save(newAuthor); 
+                Genre newGenre = new Genre(inputBookGenre); 
+                book.setGenre(newGenre); //Add genre to Book
+                newGenre.addBook(book);
+                genreBD.save(newGenre);
             }
-        }
-        book.setAuthor(authorList); //Add author/s to list
 
-        //Check if Genre exist
-        Genre genreFound = genreBD.findByName(inputBookGenre);
-        if(genreFound != null){
-            book.setGenre(genreFound);
-        }else{
-            Genre newGenre = new Genre(inputBookGenre); 
-            book.setGenre(newGenre); //Add genre to Book
-            newGenre.addBook(book);
-            genreBD.save(newGenre);
-        }
-
-        //If no picture was added, check for old pic. If there never was a pic, insert placeholder.
-        if (InputImageFile.isEmpty()) {
-            if(book.getImageFile().length() == 0 || book.getImageFile() == null){
-                book.setImageFile(book.URLtoBlob("https://fissac.com/wp-content/uploads/2020/11/placeholder.png"));
+            //If no picture was added, check for old pic. If there never was a pic, insert placeholder.
+            if (InputImageFile.isEmpty()) {
+                if(book.getImageFile().length() == 0 || book.getImageFile() == null){
+                    book.setImageFile(book.URLtoBlob("https://fissac.com/wp-content/uploads/2020/11/placeholder.png"));
+                }
+            }else{
+                book.setImageFile(BlobProxy.generateProxy(InputImageFile.getInputStream(), InputImageFile.getSize()));
             }
-        }else{
-            book.setImageFile(BlobProxy.generateProxy(InputImageFile.getInputStream(), InputImageFile.getSize()));
+            bookRepository.save(book);
+
+        } else if("Borrar".equals(accion)){
+            bookRepository.deleteById(book.getID());
         }
-        bookRepository.save(book);
+
         return "redirect:/book/" + bookID;
     }
 
