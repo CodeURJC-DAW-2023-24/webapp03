@@ -1,8 +1,6 @@
 $(() => {
 
     function putStars(rating, starElements) {
-        console.log(rating);
-        console.log(rating < 4.0);
         if (rating >= 5.0) {
             $(starElements).children().eq(0).addClass("bi-star-fill");
             $(starElements).children().eq(1).addClass("bi-star-fill");
@@ -68,7 +66,6 @@ $(() => {
     }
 
     $(".stars").each((ind, starElements) => {
-        console.log($(starElements))
         putStars($(".rating").eq(ind).text(), $(starElements));
     });
 
@@ -154,9 +151,7 @@ $(() => {
             }
         });
         setTimeout(() => {
-            console.log($(".stars").slice((currentPage - 1) * 4, $(".stars").length));
             $(".stars").slice((currentPage - 1) * 4, $(".stars").length).each((ind, starElements) => {
-                console.log(ind + 4);
                 putStars($(".rating").eq(ind + ((currentPage - 1) * 4)).text(), $(starElements));
             });
         }, 100);
