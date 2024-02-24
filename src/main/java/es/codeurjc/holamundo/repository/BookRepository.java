@@ -1,6 +1,5 @@
 package es.codeurjc.holamundo.repository;
 
-import es.codeurjc.holamundo.entity.Author;
 import es.codeurjc.holamundo.entity.Book;
 import es.codeurjc.holamundo.entity.Genre;
 import org.springframework.data.domain.Page;

@@ -104,12 +104,19 @@
 <header class="bg-branding-white py-1">
     <div class="container px-4 px-lg-5 my-5">
         <div class="text-start text-dark">
+            <!--THIS IS A TEMPORAL CHANGE, check if is the user-->
+            {{#noUser}}
+            <p class="lead fw-normal text-black-50 mb-0">Estás viendo el perfil de</p>
+            {{/noUser}}
             <h1 class="display-4 fw-bolder" id="userName-header">{{username}}</h1>
+            {{^noUser}}
             <p class="lead fw-normal text-black-50 mb-0">Este es tu perfil</p>
+           
 
             <form  action="/logout" method="post" class="logout">
                 <input type="submit" value="Cerrar sesión" class="btn"/>
             </form>
+             {{/noUser}}
 
         </div>
     </div>

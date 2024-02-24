@@ -7,7 +7,7 @@ import es.codeurjc.holamundo.repository.UserRepository;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Service
 public class UserInitializationSampleService { // This class will control the User DB operations
@@ -21,12 +21,16 @@ public class UserInitializationSampleService { // This class will control the Us
     @Autowired
     private BookRepository bookRepository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @PostConstruct
     public void init() {
         // Add some users
-        User user1 = new User("BookReader_14", "User", "BookReader", "I'm a reader fan that loves fantasy books", "", "bookreader14@gmail.com", "12345678");
-        User user2 = new User("FanBook_785", "User", "FanB", "I love books", "", "fanBook@gmail.com", "12345678");
-        User user3 = new User("YourReader", "User", "YourReader", "I'm a reader", "", "reader@gmail.com", "12345678");
+        User user1 = new User("BookReader_14", "USER", "BookReader", "I'm a reader fan that loves fantasy books", "", "bookreader14@gmail.com", passwordEncoder.encode("pass"));
+        User user2 = new User("FanBook_785", "USER", "FanB", "I love books", "", "fanBook@gmail.com", passwordEncoder.encode("pass"));
+        User user3 = new User("YourReader", "USER", "YourReader", "I'm a reader", "", "reader@gmail.com", passwordEncoder.encode("pass"));
+        User admin = new User("AdminReader", "ADMIN", "adminR", "I'm a Bookmarks admin", "", "adminReader@gmail.com", passwordEncoder.encode("adminpass"));
 
         // Add some books to their lists
 
@@ -90,5 +94,6 @@ public class UserInitializationSampleService { // This class will control the Us
         userRepository.save(user1);
         userRepository.save(user2);
         userRepository.save(user3);
+        userRepository.save(admin);
     }
 }

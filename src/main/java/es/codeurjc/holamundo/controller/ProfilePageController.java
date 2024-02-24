@@ -122,6 +122,11 @@ public class ProfilePageController {
         //Admin
         model.addAttribute("admin", request.isUserInRole("ADMIN"));
 
+         //Unregistered user
+         model.addAttribute("noUser", !request.isUserInRole("USER"));
+         model.addAttribute("noUser", !request.isUserInRole("AUTHOR"));
+         model.addAttribute("noUser", !request.isUserInRole("ADMIN"));
+
         return "profilePage";
     }
 
