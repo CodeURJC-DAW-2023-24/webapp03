@@ -195,6 +195,13 @@ public class BookPageController {
 
         }
 
+         // Get the current logged in user
+         Authentication authentication = (Authentication) request.getUserPrincipal();
+             String currentUsername = authentication.getName();
+             User user = userRepository.findByUsername(currentUsername);
+             String imageString = user.blobToString(user.getProfileImageFile());
+             model.addAttribute("profileImageString", imageString);
+
         String bookTitle = book.getTitle();
         String bookAuthor = book.getAuthorString();
         String bookDescription = book.getDescription();

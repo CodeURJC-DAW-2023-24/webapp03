@@ -56,7 +56,17 @@ public class AdminPageController {
     }
 
     @GetMapping("/admin/newBook")
-    public String loadNewBookPage(Model model) {
+    public String loadNewBookPage(Model model, HttpServletRequest request) throws SQLException {
+        // Get the current logged in user
+        Authentication authentication = (Authentication) request.getUserPrincipal();
+        if (authentication != null) {
+            String currentUsername = authentication.getName();
+            User user = userRepository.findByUsername(currentUsername);
+            String imageString = user.blobToString(user.getProfileImageFile());
+            model.addAttribute("profileImageString", imageString);
+        } else {
+            return "redirect:/login";
+        }
         //load blank form
         model.addAttribute("admin", true);
         return "modifyBookPage";

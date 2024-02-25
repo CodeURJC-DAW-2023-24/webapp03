@@ -52,9 +52,9 @@ public class WebSecurityConfiguration {
                 .requestMatchers("/profile/*/edit", "/upload", "/book/*/addReview",
                     "/book/*/deleteReview/*", "/book/*/add/**", "/profile/*/editPassword", "/book/*/removeFromLists/**").hasAnyRole("USER")
                 //AUTHOR
-                .requestMatchers("/book/*/edit", "/modifyDone/*").hasAnyRole("AUTHOR")
+                .requestMatchers("/book/*/edit", "/modifyDone/*").hasAnyRole("AUTHOR","ADMIN")
                 //ADMIN
-                .requestMatchers("/**").hasAnyRole("ADMIN"))
+                .requestMatchers("/**").hasRole("ADMIN"))
             .formLogin(formLogin -> formLogin
                 .loginPage("/login")
                 .failureUrl("/loginError")
