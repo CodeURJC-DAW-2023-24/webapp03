@@ -41,7 +41,7 @@ public class UserInitializationSampleService { // This class will control the Us
         User user1 = new User("BookReader_14", "BookReader", "I'm a reader fan that loves fantasy books", "", "bookreader14@gmail.com", passwordEncoder.encode("pass"), "USER");
         User user2 = new User("FanBook_785", "FanB", "I love books", "", "fanBook@gmail.com", passwordEncoder.encode("pass"), "USER");
         User user3 = new User("YourReader", "YourReader", "I'm a reader", "", "reader@gmail.com", passwordEncoder.encode("pass"), "USER");
-        User admin = new User("AdminReader", "adminR", "I'm a Bookmarks admin", "", "adminReader@gmail.com", passwordEncoder.encode("adminpass"), "USER" , "ADMIN");
+        User admin = new User("AdminReader", "adminR", "I'm a Bookmarks admin", null, "adminReader@gmail.com", passwordEncoder.encode("adminpass"), "USER" , "ADMIN");
 
         // Add some books to their lists
 

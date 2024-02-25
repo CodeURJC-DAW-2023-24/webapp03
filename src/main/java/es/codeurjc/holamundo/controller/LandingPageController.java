@@ -133,6 +133,7 @@ public class LandingPageController {
         recommendedBooksLeft = booksFromMostReadGenres.subList(0, (booksFromMostReadGenres.size() / 2));
         recommendedBooksRight = booksFromMostReadGenres.subList((booksFromMostReadGenres.size() / 2), booksFromMostReadGenres.size());
 
+        //Adding images into the Strings since inside iteration you cant pass blob to string
         for(int i=0;i<recommendedBooksRight.size();i++){
             recommendedBooksRight.get(i).setImageString(recommendedBooksRight.get(i).blobToString(recommendedBooksRight.get(i).getImageFile()));
         }

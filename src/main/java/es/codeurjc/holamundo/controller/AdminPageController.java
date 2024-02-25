@@ -19,6 +19,7 @@ import es.codeurjc.holamundo.repository.BookRepository;
 import es.codeurjc.holamundo.repository.GenreRepository;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 @Controller
@@ -36,9 +37,12 @@ public class AdminPageController {
     private UserRepository userRepository;
 
     @GetMapping("/admin/**")
-    public String loadAdminPage() {
+    public String loadAdminPage(Model model) throws SQLException {
 
-        User user = userRepository.findByUsername("YourReader");
+        User user = userRepository.findByUsername("AdminReader");
+        String imageString = user.blobToString(user.getProfileImageFile());
+
+        model.addAttribute("profileImageString", imageString);
 
         return "administratorMainPage";
     }

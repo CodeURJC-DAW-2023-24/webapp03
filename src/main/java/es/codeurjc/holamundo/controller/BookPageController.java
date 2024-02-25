@@ -159,18 +159,21 @@ public class BookPageController {
         model.addAttribute("admin", request.isUserInRole("ADMIN"));
 
         // check if the book is in the user's read, reading or wanted books
-        boolean isRead = userRepository.findByUsername(currentUsername).getReadBooks().contains(book);
-        boolean isReading = userRepository.findByUsername(currentUsername).getReadingBooks().contains(book);
-        boolean isWanted = userRepository.findByUsername(currentUsername).getWantedBooks().contains(book);
+        // Also checks that user is logged in
+        if(isUser){
+            boolean isRead = userRepository.findByUsername(currentUsername).getReadBooks().contains(book);
+            boolean isReading = userRepository.findByUsername(currentUsername).getReadingBooks().contains(book);
+            boolean isWanted = userRepository.findByUsername(currentUsername).getWantedBooks().contains(book);
 
-        if (isRead) {
-            model.addAttribute("bookState", "read");
-        } else if (isReading) {
-            model.addAttribute("bookState", "reading");
-        } else if (isWanted) {
-            model.addAttribute("bookState", "wanted");
-        } else {
-            model.addAttribute("bookState", "none");
+            if (isRead) {
+                model.addAttribute("bookState", "read");
+            } else if (isReading) {
+                model.addAttribute("bookState", "reading");
+            } else if (isWanted) {
+                model.addAttribute("bookState", "wanted");
+            } else {
+                model.addAttribute("bookState", "none");
+            }
         }
 
         return "infoBookPage";
