@@ -33,7 +33,17 @@ public class ProfilePageController {
         User user = userRepository.findByUsername(username);
 
         //User info
-        String role = user.getRole();
+        List<String> userRoles = user.getRole();
+
+        // Search for admin role
+        String role = "USER";
+        for (String userRole : userRoles) {
+            if (userRole.equals("ADMIN")) {
+                role = "ADMIN";
+                break;
+            }
+        }
+
         String alias = user.getAlias();
         String description = user.getDescription();
         String profileImage = user.getProfileImage();
@@ -53,6 +63,7 @@ public class ProfilePageController {
         int nReadBooks = user.getReadBooks().size();
         int nReadingBooks = user.getReadingBooks().size();
         int nWantedBooks = user.getWantedBooks().size();
+        int nReviews = user.getReviews().size();
 
         List<Book> readBooksList = userRepository.getReadBooks(username, PageRequest.of(0, 4)).getContent();
         List<Book> readingBooksList = userRepository.getReadingBooks(username, PageRequest.of(0, 4)).getContent();
@@ -115,6 +126,7 @@ public class ProfilePageController {
         model.addAttribute("nReadBooks", nReadBooks);
         model.addAttribute("nReadingBooks", nReadingBooks);
         model.addAttribute("nWantedBooks", nWantedBooks);
+        model.addAttribute("nReviews", nReviews);
         model.addAttribute("ReadBooks", readBooksList);
         model.addAttribute("ReadingBooks", readingBooksList);
         model.addAttribute("WantedBooks", wantedBooksList);
@@ -124,8 +136,7 @@ public class ProfilePageController {
 
          //Unregistered user
          model.addAttribute("noUser", !request.isUserInRole("USER"));
-         model.addAttribute("noUser", !request.isUserInRole("AUTHOR"));
-         model.addAttribute("noUser", !request.isUserInRole("ADMIN"));
+
 
         return "profilePage";
     }

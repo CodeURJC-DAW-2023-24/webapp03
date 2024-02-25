@@ -37,24 +37,24 @@ public class WebSecurityConfiguration {
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
 
         http.authenticationProvider(authenticationProvider());
-        
+
         //Public pages
         http
             .authorizeHttpRequests(authorize -> authorize
                 //Public pages
                 .requestMatchers("assets/**", "css/**", "js/**", "templates/**",
-                    "/book/*", "/book/*/loadMoreReviews", "/errorPage/**", "/", 
-                    "/landingPage/loadMore", "/landingPage/mostReadGenres",  
-                    "/loginError", "/profile/*", "/profile/*/loadMore", "/search/**", 
-                    "loginPage.html").permitAll()
+                    "/book/*", "/book/*/loadMoreReviews", "/errorPage/**", "/",
+                    "/landingPage/loadMore", "/landingPage/mostReadGenres",
+                    "/loginError", "/profile/*", "/profile/*/loadMore", "/search/**",
+                    "loginPage.html", "static/**").permitAll()
                 //Private pages
                 //USER
-                .requestMatchers("/profile/*/edit", "/book/*/addReview", 
+                .requestMatchers("/profile/*/edit", "/book/*/addReview",
                     "/book/*/deleteReview/*", "/book/*/add/**", "/profile/*/editPassword", "/book/*/removeFromLists/**").hasAnyRole("USER")
                 //AUTHOR
                 .requestMatchers("/book/*/edit", "/modifyDone/*").hasAnyRole("AUTHOR")
                 //ADMIN
-                .requestMatchers("/admin/**").hasAnyRole("ADMIN"))
+                .requestMatchers("/**").hasAnyRole("ADMIN"))
             .formLogin(formLogin -> formLogin
                 .loginPage("/login")
                 .failureUrl("/loginError")
@@ -72,5 +72,5 @@ public class WebSecurityConfiguration {
 
 
     }
-    
+
 }

@@ -8,6 +8,7 @@ import es.codeurjc.holamundo.repository.ReviewRepository;
 import es.codeurjc.holamundo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -40,9 +41,9 @@ import java.util.List;
 public class BookPageController {
 
     Book book;
-    private String currentUsername = "FanBook_785"; //This is the username of the current user. This is just for testing purposes
-    private boolean isUser = true; //This is just for testing purposes (if the user is logged in)
-    private boolean isAdmin = false; //This is just for testing purposes (if the user is an admin)
+    private String currentUsername;
+    private boolean isUser;
+    private boolean isAdmin;
 
 
     @Autowired
@@ -68,6 +69,17 @@ public class BookPageController {
 
     @GetMapping("/book/{bookID}")
     public String loadBookPage(Model model, @PathVariable int bookID, HttpServletRequest request) throws SQLException {
+
+        //Get current user
+        Authentication authentication = (Authentication) request.getUserPrincipal();
+        if (authentication != null) {
+            currentUsername = authentication.getName();
+            isUser = true;
+            isAdmin = request.isUserInRole("ADMIN");
+        } else {
+            isUser = false;
+        }
+
         // Get ratings from the database
         List<Double> ratings = bookRepository.getRatingsByBookId(bookID);
 

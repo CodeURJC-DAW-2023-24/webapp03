@@ -9,6 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class UserInitializationSampleService { // This class will control the User DB operations
 
@@ -27,10 +30,17 @@ public class UserInitializationSampleService { // This class will control the Us
     @PostConstruct
     public void init() {
         // Add some users
-        User user1 = new User("BookReader_14", "USER", "BookReader", "I'm a reader fan that loves fantasy books", "", "bookreader14@gmail.com", passwordEncoder.encode("pass"));
-        User user2 = new User("FanBook_785", "USER", "FanB", "I love books", "", "fanBook@gmail.com", passwordEncoder.encode("pass"));
-        User user3 = new User("YourReader", "USER", "YourReader", "I'm a reader", "", "reader@gmail.com", passwordEncoder.encode("pass"));
-        User admin = new User("AdminReader", "ADMIN", "adminR", "I'm a Bookmarks admin", "", "adminReader@gmail.com", passwordEncoder.encode("adminpass"));
+        List<String> userRoles = new ArrayList<>();
+        userRoles.add("USER");
+
+        List<String> adminRoles = new ArrayList<>();
+        adminRoles.add("USER");
+        adminRoles.add("ADMIN");
+
+        User user1 = new User("BookReader_14", "BookReader", "I'm a reader fan that loves fantasy books", "", "bookreader14@gmail.com", passwordEncoder.encode("pass"), "USER");
+        User user2 = new User("FanBook_785", "FanB", "I love books", "", "fanBook@gmail.com", passwordEncoder.encode("pass"), "USER");
+        User user3 = new User("YourReader", "YourReader", "I'm a reader", "", "reader@gmail.com", passwordEncoder.encode("pass"), "USER");
+        User admin = new User("AdminReader", "adminR", "I'm a Bookmarks admin", "", "adminReader@gmail.com", passwordEncoder.encode("adminpass"), "USER" , "ADMIN");
 
         // Add some books to their lists
 

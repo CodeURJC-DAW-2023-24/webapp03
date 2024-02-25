@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,9 +27,9 @@ import java.util.List;
 @Controller
 public class LandingPageController {
 
-    private String testingCurrentUsername = "FanBook_785"; //This is the username of the current user. This is just for testing purposes
+    private String testingCurrentUsername;
 
-    private boolean isUser = true; //This is just for testing purposes
+    private boolean isUser;
 
     @Autowired
     private BookRepository bookRepository;
@@ -46,6 +47,15 @@ public class LandingPageController {
     //Method that will load the landing page
     @GetMapping("/")
     public String loadLandingPage(Model model, HttpServletRequest request) throws SQLException {
+
+        Authentication authentication = (Authentication) request.getUserPrincipal();
+        if (authentication != null) {
+            testingCurrentUsername = authentication.getName();
+            isUser = true;
+        } else {
+            isUser = false;
+        }
+
 
         model.addAttribute("user", isUser);
         model.addAttribute("username", testingCurrentUsername);

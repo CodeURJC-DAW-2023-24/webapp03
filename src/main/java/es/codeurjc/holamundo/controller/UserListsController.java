@@ -3,7 +3,9 @@ package es.codeurjc.holamundo.controller;
 import es.codeurjc.holamundo.entity.Book;
 import es.codeurjc.holamundo.repository.BookRepository;
 import es.codeurjc.holamundo.repository.UserRepository;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,7 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class UserListsController {
 
-    private String currentUsername = "FanBook_785"; //This is the username of the current user. This is just for testing purposes
+    private String currentUsername;
 
     @Autowired
     private UserRepository userRepository;
@@ -21,7 +23,13 @@ public class UserListsController {
 
 
     @PostMapping("/book/{id}/add/read")
-    public String addReadBook(@PathVariable long id) {
+    public String addReadBook(@PathVariable long id, HttpServletRequest request) {
+
+        Authentication authentication = (Authentication) request.getUserPrincipal();
+        if (authentication != null) {
+            currentUsername = authentication.getName();
+        }
+
         // Add the book to the user's reading books and remove it from the read books and wanted books
         // Book to add (treat the optional)
         Book book = bookRepository.findByID(id);
@@ -42,7 +50,13 @@ public class UserListsController {
     }
 
     @PostMapping("/book/{id}/add/reading")
-    public String addReadingBook(@PathVariable long id) {
+    public String addReadingBook(@PathVariable long id, HttpServletRequest request) {
+
+        Authentication authentication = (Authentication) request.getUserPrincipal();
+        if (authentication != null) {
+            currentUsername = authentication.getName();
+        }
+
         // Add the book to the user's reading books and remove it from the read books and wanted books
         // Book to add (treat the optional)
         Book book = bookRepository.findByID(id);
@@ -63,7 +77,13 @@ public class UserListsController {
     }
 
     @PostMapping("/book/{id}/add/wanted")
-    public String addWantedBook(@PathVariable long id) {
+    public String addWantedBook(@PathVariable long id, HttpServletRequest request) {
+
+        Authentication authentication = (Authentication) request.getUserPrincipal();
+        if (authentication != null) {
+            currentUsername = authentication.getName();
+        }
+
         // Add the book to the user's reading books and remove it from the read books and wanted books
         // Book to add (treat the optional)
         Book book = bookRepository.findByID(id);
@@ -84,7 +104,13 @@ public class UserListsController {
     }
 
     @PostMapping("/book/{id}/removeFromLists")
-    public String removeBookFromLists(@PathVariable long id) {
+    public String removeBookFromLists(@PathVariable long id, HttpServletRequest request) {
+
+        Authentication authentication = (Authentication) request.getUserPrincipal();
+        if (authentication != null) {
+            currentUsername = authentication.getName();
+        }
+
         // Remove the book from the user's reading books, read books and wanted books
         // Book to remove (treat the optional)
         Book book = bookRepository.findByID(id);

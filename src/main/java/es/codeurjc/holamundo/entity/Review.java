@@ -30,6 +30,10 @@ public class Review {
         this.book = book;
     }
 
+    public User getUser() {
+        return this.author;
+    }
+
     public String getTitle() {
         return this.title;
     }

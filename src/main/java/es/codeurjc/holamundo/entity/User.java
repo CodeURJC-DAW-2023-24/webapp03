@@ -11,7 +11,8 @@ public class User {
     @Id
     private String username;
 
-    private String role;
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<String> roles;
 
     private String alias;
 
@@ -48,9 +49,9 @@ public class User {
     public User() {
     }
 
-    public User(String username, String role, String alias, String description, String profileImage, String email, String password) {
+    public User(String username, String alias, String description, String profileImage, String email, String password, String... roles) {
         this.username = username;
-        this.role = role;
+        this.roles = List.of(roles);
         this.alias = alias;
         this.description = description;
         this.profileImage = profileImage;
@@ -62,8 +63,8 @@ public class User {
         return this.username;
     }
 
-    public String getRole() {
-        return this.role;
+    public List<String> getRole() {
+        return this.roles;
     }
 
     public String getAlias() {
@@ -90,8 +91,8 @@ public class User {
         this.username = username;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setRole(List<String> role) {
+        this.roles = role;
     }
 
     public void setAlias(String alias) {
