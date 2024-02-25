@@ -31,6 +31,7 @@ public class ProfilePageController {
 
         // Get user from the database
         User user = userRepository.findByUsername(username);
+        user.setProfileImageString(user.blobToString(user.getProfileImageFile()));
 
         //User info
         List<String> userRoles = user.getRole();
@@ -46,7 +47,7 @@ public class ProfilePageController {
 
         String alias = user.getAlias();
         String description = user.getDescription();
-        String profileImage = user.getProfileImage();
+        String profileImage = user.getProfileImageString();
         String email = user.getEmail();
         String password = user.getPassword();
 
@@ -54,7 +55,7 @@ public class ProfilePageController {
         model.addAttribute("alias", alias);
         model.addAttribute("role", role);
         model.addAttribute("description", description);
-        model.addAttribute("profileImage", profileImage);
+        model.addAttribute("profileImageString", profileImage);
         model.addAttribute("email", email);
         model.addAttribute("password", password);
 

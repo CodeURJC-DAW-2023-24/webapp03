@@ -79,7 +79,7 @@
                         <a class="bm-nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
                            data-bs-toggle="dropdown" aria-expanded="false">
                             <img class="bm-navbar-profile-picture bm-rounded-circle"
-                                 src="/assets/defaultProfilePicture.png" alt="Perfil"/>
+                                 src="data:image/png;base64, {{profileImageString}}" alt="Perfil"/>
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <li><a class="dropdown-item" href="profile">Mi perfil</a></li>
@@ -115,11 +115,11 @@
                 <div class="card-body text-center">
                     <!-- Profile picture -->
                     <img class="img-account-profile rounded-circle mb-2"
-                         src="http://bootdey.com/img/Content/avatar/avatar1.png" alt>
+                         src="data:image/png;base64, {{profileImageString}}" alt>
 
                     <div class="small font-italic text-muted mb-4">JPG o PNG de no más de 5 MB</div>
-
-                    <button class="btn btn-primary" type="button">Subir imagen</button>
+                    <input type="file" id="inputProfileImage" accept=",.jpg,.jpeg,.png" style="display: none">
+                    <button class="btn btn-primary" type="button" id="uploadImage">Subir imagen</button>
                 </div>
             </div>
         </div>

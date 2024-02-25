@@ -84,7 +84,7 @@
                         <a class="bm-nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
                            data-bs-toggle="dropdown" aria-expanded="false">
                             <img class="bm-navbar-profile-picture bm-rounded-circle"
-                                 src="/assets/defaultProfilePicture.png" alt="Perfil"/>
+                                 src="data:image/png;base64, {{profileImageString}}" alt="Perfil"/>
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <li><a class="dropdown-item" href="/profile/{{username}}">Mi perfil</a></li>
@@ -226,7 +226,7 @@
                 {{#user}}
                 <div class="card-header">Acceso rápido a tu perfil</div>
                 <div class="card-body profile-card">
-                    <img class="profile-picture bm-rounded-circle" src="{{profilePicture}}" alt="Foto de perfil"/>
+                    <img class="profile-picture bm-rounded-circle" src="data:image/png;base64, {{profileImageString}}" alt="Foto de perfil"/>
                     <p class="mt-2">{{username}}</p>
                     <div class="input-group">
                         <a href="/profile/{{username}}">

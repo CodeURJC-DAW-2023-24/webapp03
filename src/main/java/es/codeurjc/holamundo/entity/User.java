@@ -1,8 +1,16 @@
 package es.codeurjc.holamundo.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
+import javax.sql.rowset.serial.SerialBlob;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.sql.Blob;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 @Entity
@@ -18,7 +26,11 @@ public class User {
 
     private String description;
 
-    private String profileImage;
+    @Lob
+    @JsonIgnore
+    private Blob profileImageFile;
+
+    private String profileImageString;
 
     private String email;
 
@@ -47,14 +59,20 @@ public class User {
     private List<Book> wantedBooks = new ArrayList<>(); // books a user wants to read
 
     public User() {
+
     }
 
-    public User(String username, String alias, String description, String profileImage, String email, String password, String... roles) {
+    public User(String username, String alias, String description, String profileImage, String email, String password, String... roles) throws SQLException, IOException {
         this.username = username;
         this.roles = List.of(roles);
         this.alias = alias;
         this.description = description;
-        this.profileImage = profileImage;
+        if (profileImageString == null) {
+            this.profileImageString = "/assets/defaultProfilePicture.png";
+        } else {
+            this.profileImageString = profileImage;
+        }
+        this.profileImageFile = LocalImageToBlob(profileImageString);
         this.email = email;
         this.password = password;
     }
@@ -75,8 +93,10 @@ public class User {
         return this.description;
     }
 
-    public String getProfileImage() {
-        return this.profileImage;
+    public Blob getProfileImageFile() { return this.profileImageFile; }
+
+    public String getProfileImageString() {
+        return this.profileImageString;
     }
 
     public String getEmail() {
@@ -103,8 +123,10 @@ public class User {
         this.description = description;
     }
 
-    public void setProfileImage(String profileImage) {
-        this.profileImage = profileImage;
+    public void setProfileImageFile(Blob profileImageFile) { this.profileImageFile = profileImageFile; }
+
+    public void setProfileImageString(String profileImageString) {
+        this.profileImageString = profileImageString;
     }
 
     public void setEmail(String email) {
@@ -137,6 +159,20 @@ public class User {
 
     public void setWantedBooks(List<Book> wantedBooks) {
         this.wantedBooks = wantedBooks;
+    }
+
+    public String blobToString(Blob blob) throws SQLException {
+        byte[] bytes = blob.getBytes(1, (int) blob.length());
+        String userImage = Base64.getEncoder().encodeToString(bytes);
+        return userImage;
+    }
+
+    public Blob LocalImageToBlob(String imagePath) throws IOException, SQLException {
+            imagePath = imagePath.replace("/assets", "src/main/resources/static/assets");
+            File fi = new File(imagePath);
+            byte[] byteContent = Files.readAllBytes(fi.toPath());
+            Blob imageBlob = new SerialBlob(byteContent);
+            return imageBlob;
     }
 
     public void addReadBook(Book book) {
@@ -212,6 +248,6 @@ public class User {
     }
 
     public String toString() {
-        return "User[username=" + this.getUsername() + ", role=" + this.getRole() + ", alias=" + this.getAlias() + ", description=" + this.getDescription() + ", profileImage=" + this.getProfileImage() + ", email=" + this.getEmail() + ", password=" + this.getPassword() + ", readBooks=" + this.getReadBooks() + ", readingBooks=" + this.getReadingBooks() + ", wantedBooks=" + this.getWantedBooks() + "]";
+        return "User[username=" + this.getUsername() + ", role=" + this.getRole() + ", alias=" + this.getAlias() + ", description=" + this.getDescription() + ", profileImageString=" + this.getProfileImageString() + ", email=" + this.getEmail() + ", password=" + this.getPassword() + ", readBooks=" + this.getReadBooks() + ", readingBooks=" + this.getReadingBooks() + ", wantedBooks=" + this.getWantedBooks() + "]";
     }
 }

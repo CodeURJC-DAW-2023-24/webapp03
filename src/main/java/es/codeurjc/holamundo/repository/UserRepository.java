@@ -31,7 +31,7 @@ public interface UserRepository extends JpaRepository<User, String> {
     @Query("SELECT a.name, COUNT(a) FROM User u JOIN u.readBooks b JOIN b.author a WHERE u.username = :username GROUP BY a.name ORDER BY COUNT(a) DESC")
     List<Author> getMostReadAuthors(String username);
 
-    @Query("SELECT u.profileImage FROM User u WHERE u.username = :username")
-    String getProfileImageByUsername(String username);
+    @Query("SELECT u.profileImageString FROM User u WHERE u.username = :username")
+    String getProfileImageStringByUsername(String username);
 
 }

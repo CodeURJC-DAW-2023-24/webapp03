@@ -1,5 +1,7 @@
 package es.codeurjc.holamundo.controller;
 
+import es.codeurjc.holamundo.entity.User;
+import es.codeurjc.holamundo.repository.UserRepository;
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,8 +31,15 @@ public class AdminPageController {
     @Autowired
     private GenreRepository genreBD;
 
+    //Temporary
+    @Autowired
+    private UserRepository userRepository;
+
     @GetMapping("/admin/**")
     public String loadAdminPage() {
+
+        User user = userRepository.findByUsername("YourReader");
+
         return "administratorMainPage";
     }
 

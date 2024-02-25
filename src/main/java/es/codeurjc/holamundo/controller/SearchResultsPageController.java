@@ -1,7 +1,9 @@
 package es.codeurjc.holamundo.controller;
 
 import es.codeurjc.holamundo.entity.Book;
+import es.codeurjc.holamundo.entity.User;
 import es.codeurjc.holamundo.repository.BookRepository;
+import es.codeurjc.holamundo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -21,11 +23,21 @@ public class SearchResultsPageController {
     @Autowired
     private BookRepository bookRepository;
 
+    //Temporary
+    @Autowired
+    public UserRepository userRepository;
+
     public SearchResultsPageController() {
     }
 
     @GetMapping("/search")
     public String loadSearchResultsPage(Model model, String query) throws SQLException {
+
+        //Temporary user until the current logged in user is accessible by all controllers
+        User user = userRepository.findByUsername("YourReader");
+        user.setProfileImageString(user.blobToString(user.getProfileImageFile()));
+        model.addAttribute("profileImageString", user.getProfileImageString());
+
         Page<Book> filteredBooks = bookRepository.searchBooks(query, PageRequest.of(0, 4));
         bookQueries = filteredBooks.getContent();
 
@@ -57,6 +69,7 @@ public class SearchResultsPageController {
 
     @GetMapping("/search/loadMore")
     public String loadSearchResultsPageBooks(@RequestParam String query, @RequestParam int page, Model model) throws SQLException {
+
         Page<Book> filteredBooks = bookRepository.searchBooks(query, PageRequest.of(page, 4));
         bookQueries = filteredBooks.getContent();
 

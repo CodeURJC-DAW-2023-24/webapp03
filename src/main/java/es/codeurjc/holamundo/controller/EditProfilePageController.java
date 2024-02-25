@@ -2,7 +2,6 @@ package es.codeurjc.holamundo.controller;
 
 import es.codeurjc.holamundo.entity.User;
 import es.codeurjc.holamundo.repository.UserRepository;
-import es.codeurjc.holamundo.service.UserList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,32 +16,35 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.sql.SQLException;
+
 @Controller
-public class EditProfileController {
-    private UserList users;
+public class EditProfilePageController {
 
     @Autowired
     UserRepository userRepository;
 
-    public EditProfileController() {
-        this.users = new UserList();
+    public EditProfilePageController() {
+
     }
 
     @GetMapping("/profile/{username}/edit")
-    public String loadEditProfilePage(Model model, @PathVariable String username) {
+    public String loadEditProfilePage(Model model, @PathVariable String username) throws SQLException {
 
-        String alias = users.getUserInfo(username)[2];
-        String role = users.getUserInfo(username)[1];
-        String description = users.getUserInfo(username)[3];
-        String profileImage = users.getUserInfo(username)[4];
-        String email = users.getUserInfo(username)[5];
-        String password = users.getUserInfo(username)[6];
+        User user = userRepository.findByUsername(username);
+        String alias = user.getAlias();
+        String role = user.getRole().toString();
+        String description = user.getDescription();
+        user.setProfileImageString(user.blobToString(user.getProfileImageFile()));
+        String profileImage = user.getProfileImageString();
+        String email = user.getEmail();
+        String password = user.getPassword();
 
         model.addAttribute("username", username);
         model.addAttribute("alias", alias);
         model.addAttribute("role", role);
         model.addAttribute("description", description);
-        model.addAttribute("profileImage", profileImage);
+        model.addAttribute("profileImageString", profileImage);
         model.addAttribute("email", email);
         model.addAttribute("password", password);
 

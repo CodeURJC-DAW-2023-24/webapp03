@@ -8,9 +8,10 @@ import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
 import java.util.ArrayList;
 import java.util.List;
+import java.io.IOException;
+import java.sql.SQLException;
 
 @Service
 public class UserInitializationSampleService { // This class will control the User DB operations
@@ -28,7 +29,7 @@ public class UserInitializationSampleService { // This class will control the Us
     private PasswordEncoder passwordEncoder;
 
     @PostConstruct
-    public void init() {
+    public void init() throws SQLException, IOException {
         // Add some users
         List<String> userRoles = new ArrayList<>();
         userRoles.add("USER");

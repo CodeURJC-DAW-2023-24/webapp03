@@ -43,13 +43,13 @@ public class WebSecurityConfiguration {
             .authorizeHttpRequests(authorize -> authorize
                 //Public pages
                 .requestMatchers("assets/**", "css/**", "js/**", "templates/**",
-                    "/book/*", "/book/*/loadMoreReviews", "/errorPage/**", "/",
-                    "/landingPage/loadMore", "/landingPage/mostReadGenres",
+                    "/book/*", "/book/*/loadMoreReviews", "/errorPage/**", "/", 
+                    "/landingPage/loadMore", "/landingPage/mostReadGenres",  
                     "/loginError", "/profile/*", "/profile/*/loadMore", "/search/**",
-                    "loginPage.html", "static/**").permitAll()
+                    "loginPage.html").permitAll()
                 //Private pages
                 //USER
-                .requestMatchers("/profile/*/edit", "/book/*/addReview",
+                .requestMatchers("/profile/*/edit", "/upload", "/book/*/addReview",
                     "/book/*/deleteReview/*", "/book/*/add/**", "/profile/*/editPassword", "/book/*/removeFromLists/**").hasAnyRole("USER")
                 //AUTHOR
                 .requestMatchers("/book/*/edit", "/modifyDone/*").hasAnyRole("AUTHOR")

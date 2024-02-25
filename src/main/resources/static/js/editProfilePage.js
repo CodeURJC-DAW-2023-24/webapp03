@@ -6,6 +6,57 @@ $(() => {
 
     let passwordChanged = false;
 
+    $("#uploadImage").on("click", () => {
+        $("#inputProfileImage").click();
+    });
+
+    $("#inputProfileImage").on("change", () => {
+
+
+        let imgPath = $("input[type=file]").get(0).files[0];
+
+        let reader = new FileReader(),
+            binary, base64;
+        $(reader).on("loadend", function () {
+            localStorage.setItem("inputProfileImage", reader.result);
+        }, false);
+
+        if (imgPath) {
+            reader.readAsDataURL(imgPath);
+        }
+
+        let profileImg = $("#inputProfileImage")
+        profileImg.src = localStorage.getItem("inputProfileImage");
+
+        //IMAGE STORING
+        fetch(profileImg)
+            .then(res => res.blob())
+            .then(blob => {
+                // Crear un nuevo objeto File a partir del Blob
+                let file = new File([blob], "profileImage.png", {type: "image/png"});
+
+                // Crear un nuevo objeto FormData y agregar el archivo
+                let formData = new FormData();
+                formData.append("file", file);
+
+                // Enviar el archivo al servidor
+                fetch('/upload', {
+                    method: 'POST',
+                    body: formData
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            console.log('La imagen del perfil se ha subido correctamente');
+                        } else {
+                            console.error('Error al subir la imagen del perfil');
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
+            });
+        //IMAGE STORING
+
+    });
+
     $("#editProfileBut").on("click", () => {
         window.location.assign(window.location.href + "/edit");
     });

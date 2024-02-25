@@ -3,6 +3,7 @@ package es.codeurjc.holamundo.controller;
 import es.codeurjc.holamundo.entity.Author;
 import es.codeurjc.holamundo.entity.Book;
 import es.codeurjc.holamundo.entity.Genre;
+import es.codeurjc.holamundo.entity.User;
 import es.codeurjc.holamundo.repository.AuthorRepository;
 import es.codeurjc.holamundo.repository.BookRepository;
 import es.codeurjc.holamundo.repository.GenreRepository;
@@ -56,6 +57,10 @@ public class LandingPageController {
             isUser = false;
         }
 
+        //Temporary user until the current logged in user is accessible by all controllers
+        User user = userRepository.findByUsername("YourReader");
+        user.setProfileImageString(user.blobToString(user.getProfileImageFile()));
+        model.addAttribute("profileImageString", user.getProfileImageString());
 
         model.addAttribute("user", isUser);
         model.addAttribute("username", testingCurrentUsername);
@@ -78,7 +83,7 @@ public class LandingPageController {
         if (isUser) {
             mostReadGenres = userRepository.getMostReadGenres(testingCurrentUsername);
             mostReadAuthors = userRepository.getMostReadAuthors(testingCurrentUsername);
-            model.addAttribute("profilePicture", userRepository.getProfileImageByUsername(testingCurrentUsername));
+            model.addAttribute("profilePicture", userRepository.getProfileImageStringByUsername(testingCurrentUsername));
 
             // check if the user has read any books
             if (mostReadGenres.size() == 0) {

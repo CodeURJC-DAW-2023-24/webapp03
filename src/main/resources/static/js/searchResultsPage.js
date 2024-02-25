@@ -73,7 +73,7 @@ $(() => {
     $("#noResults").css("display", "none");
     $("#loadMoreBut").parent().css({"display": "flex", "justify-content": "center", "text-align": "center"});
     $("#loadMoreBut").css({
-        "width": "85%",
+        "width": "55%",
         "position": "relative",
         "display": "flex",
         "justify-content": "center",

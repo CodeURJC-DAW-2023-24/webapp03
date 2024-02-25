@@ -1,8 +1,6 @@
 package es.codeurjc.holamundo.controller;
 
-import es.codeurjc.holamundo.entity.Book;
-import es.codeurjc.holamundo.entity.Genre;
-import es.codeurjc.holamundo.entity.Review;
+import es.codeurjc.holamundo.entity.*;
 import es.codeurjc.holamundo.repository.BookRepository;
 import es.codeurjc.holamundo.repository.ReviewRepository;
 import es.codeurjc.holamundo.repository.UserRepository;
@@ -23,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import jakarta.servlet.http.HttpServletRequest;
 
-import es.codeurjc.holamundo.entity.Author;
 import es.codeurjc.holamundo.repository.AuthorRepository;
 import es.codeurjc.holamundo.repository.GenreRepository;
 
@@ -79,6 +76,11 @@ public class BookPageController {
         } else {
             isUser = false;
         }
+
+        //Temporary user until the current logged in user is accessible by all controllers
+        User user = userRepository.findByUsername("YourReader");
+        user.setProfileImageString(user.blobToString(user.getProfileImageFile()));
+        model.addAttribute("profileImageString", user.getProfileImageString());
 
         // Get ratings from the database
         List<Double> ratings = bookRepository.getRatingsByBookId(bookID);
