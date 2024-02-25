@@ -174,13 +174,20 @@
                             Nada
                         </button>
                     </form>
-                    {{#author}}
+                    {{#author}} 
                     <a href="/book/{{id}}/edit" class="btn btn-secondary-light flex-shrink-0 action-button"
                        class="boton">
                         <i class="fa-solid fa-pencil"></i>
                         Modificar
                     </a>
                     {{/author}}
+                    {{#admin}}
+                    <a href="/book/{{id}}/edit" class="btn btn-secondary-light flex-shrink-0 action-button"
+                       class="boton">
+                        <i class="fa-solid fa-pencil"></i>
+                        Modificar
+                    </a>
+                    {{/admin}}
                 </div>
                 {{/user}}
                 {{^user}}
