@@ -4,6 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import javax.sql.rowset.serial.SerialBlob;
+
+import org.hibernate.annotations.OnDeleteAction;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -36,7 +39,7 @@ public class User {
 
     private String password;
 
-    @OneToMany(mappedBy = "author")
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
     private List<Review> reviews = new ArrayList<>(); // reviews a user has made
 
 

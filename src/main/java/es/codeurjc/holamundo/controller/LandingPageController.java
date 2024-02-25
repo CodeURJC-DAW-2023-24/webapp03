@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.io.IOException;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.Base64;
@@ -47,18 +48,20 @@ public class LandingPageController {
 
     //Method that will load the landing page
     @GetMapping("/")
-    public String loadLandingPage(Model model, HttpServletRequest request) throws SQLException {
+    public String loadLandingPage(Model model, HttpServletRequest request) throws SQLException, IOException {
 
+        User user;
         Authentication authentication = (Authentication) request.getUserPrincipal();
         if (authentication != null) {
             testingCurrentUsername = authentication.getName();
+            user = userRepository.findByUsername("YourReader");
             isUser = true;
         } else {
             isUser = false;
+            user = new User("test", "test", "test", null, "test", "test", "none");
         }
 
         //Temporary user until the current logged in user is accessible by all controllers
-        User user = userRepository.findByUsername("YourReader");
         user.setProfileImageString(user.blobToString(user.getProfileImageFile()));
         model.addAttribute("profileImageString", user.getProfileImageString());
 
