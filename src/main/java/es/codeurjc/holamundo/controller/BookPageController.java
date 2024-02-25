@@ -154,13 +154,14 @@ public class BookPageController {
         model.addAttribute("reviews", reviews);
 
         //Authors and admins
-        model.addAttribute("author", request.isUserInRole("AUTHOR"));
+        model.addAttribute("modifyButton", request.isUserInRole("AUTHOR"));
+        model.addAttribute("modifyButton", request.isUserInRole("ADMIN"));
         //Admin
         model.addAttribute("admin", request.isUserInRole("ADMIN"));
 
-        // check if the book is in the user's read, reading or wanted books
-        // Also checks that user is logged in
+        // check if the book is in the user's read, reading or wanted books (only if the user is logged in)
         if(isUser){
+            // check if the book is in the user's read, reading or wanted books (only if the user is logged in)
             boolean isRead = userRepository.findByUsername(currentUsername).getReadBooks().contains(book);
             boolean isReading = userRepository.findByUsername(currentUsername).getReadingBooks().contains(book);
             boolean isWanted = userRepository.findByUsername(currentUsername).getWantedBooks().contains(book);
@@ -180,7 +181,19 @@ public class BookPageController {
     }
 
     @GetMapping("/book/{bookID}/edit")
-    public String loadModifyBookPage(Model model, @PathVariable int bookID) throws SQLException {
+    public String loadModifyBookPage(Model model, @PathVariable int bookID, HttpServletRequest request) throws SQLException {
+        // Check if the user is an author or an admin
+        if (!request.isUserInRole("AUTHOR") && !request.isUserInRole("ADMIN")) {
+            return "redirect:/book/" + bookID;
+        } else { // if it's an author and the book is not his, redirect to the book page
+            if (request.isUserInRole("AUTHOR")) {
+
+                if (!bookRepository.findByID(bookID).getAuthor().contains(authorsBD.findByName(userRepository.findByUsername(currentUsername).getAlias()))) {
+                    return "redirect:/book/" + bookID;
+                }
+            }
+
+        }
 
         String bookTitle = book.getTitle();
         String bookAuthor = book.getAuthorString();
@@ -221,11 +234,11 @@ public class BookPageController {
             , @RequestParam("inputBookDate") String inputBookDate
             , @RequestParam("inputBookPublisher") String inputBookPublisher, @RequestParam("inputBookSeries") String inputBookSeries
             , @RequestParam("inputBookDescription") String inputBookDescription, @RequestParam("inputImageFile") MultipartFile InputImageFile
-            , @RequestParam String accion) throws IOException, SQLException  {
+            , @RequestParam String accion) throws IOException, SQLException {
 
         Book book = bookRepository.findByID(bookID);
 
-        if("Guardar".equals(accion)){
+        if ("Guardar".equals(accion)) {
             //Se puede realizar con setter en la clase Book
             book.setTitle(inputBookName);
             book.setISBN(inputBookISBN);
@@ -238,25 +251,25 @@ public class BookPageController {
             //Check if authors exist, they are separated by ","
             String[] authorsSplit = inputBookAuthorName.split(",");
             ArrayList<Author> authorList = new ArrayList<>();
-            for (int i=0; i<authorsSplit.length;i++){
+            for (int i = 0; i < authorsSplit.length; i++) {
                 Author found = authorsBD.findByName(authorsSplit[i]);
-                if(found != null){
+                if (found != null) {
                     authorList.add(found);
-                }else{
-                    Author newAuthor = new Author(authorsSplit[i]); 
+                } else {
+                    Author newAuthor = new Author(authorsSplit[i]);
                     newAuthor.addBook(book); //Add author to DB
                     authorList.add(newAuthor); //Add to list
-                    authorsBD.save(newAuthor); 
+                    authorsBD.save(newAuthor);
                 }
             }
             book.setAuthor(authorList); //Add author/s to list
 
             //Check if Genre exist
             Genre genreFound = genreBD.findByName(inputBookGenre);
-            if(genreFound != null){
+            if (genreFound != null) {
                 book.setGenre(genreFound);
-            }else{
-                Genre newGenre = new Genre(inputBookGenre); 
+            } else {
+                Genre newGenre = new Genre(inputBookGenre);
                 book.setGenre(newGenre); //Add genre to Book
                 newGenre.addBook(book);
                 genreBD.save(newGenre);
@@ -264,15 +277,15 @@ public class BookPageController {
 
             //If no picture was added, check for old pic. If there never was a pic, insert placeholder.
             if (InputImageFile.isEmpty()) {
-                if(book.getImageFile().length() == 0 || book.getImageFile() == null){
+                if (book.getImageFile().length() == 0 || book.getImageFile() == null) {
                     book.setImageFile(book.URLtoBlob("https://fissac.com/wp-content/uploads/2020/11/placeholder.png"));
                 }
-            }else{
+            } else {
                 book.setImageFile(BlobProxy.generateProxy(InputImageFile.getInputStream(), InputImageFile.getSize()));
             }
             bookRepository.save(book);
 
-        } else if("Borrar".equals(accion)){
+        } else if ("Borrar".equals(accion)) {
             bookRepository.deleteById(book.getID());
         }
 

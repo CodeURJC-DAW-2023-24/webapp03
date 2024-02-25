@@ -2,8 +2,10 @@ package es.codeurjc.holamundo.controller;
 
 import es.codeurjc.holamundo.entity.User;
 import es.codeurjc.holamundo.repository.UserRepository;
+import jakarta.servlet.http.HttpServletRequest;
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,12 +39,18 @@ public class AdminPageController {
     private UserRepository userRepository;
 
     @GetMapping("/admin/**")
-    public String loadAdminPage(Model model) throws SQLException {
+    public String loadAdminPage(Model model, HttpServletRequest request) throws SQLException {
 
-        User user = userRepository.findByUsername("AdminReader");
-        String imageString = user.blobToString(user.getProfileImageFile());
-
-        model.addAttribute("profileImageString", imageString);
+        // Get the current logged in user
+        Authentication authentication = (Authentication) request.getUserPrincipal();
+        if (authentication != null) {
+            String currentUsername = authentication.getName();
+            User user = userRepository.findByUsername(currentUsername);
+            String imageString = user.blobToString(user.getProfileImageFile());
+            model.addAttribute("profileImageString", imageString);
+        } else {
+            return "redirect:/login";
+        }
 
         return "administratorMainPage";
     }
