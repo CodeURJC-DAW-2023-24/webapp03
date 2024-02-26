@@ -1,4 +1,69 @@
 $(() => {
+    // set spinner while the chart loads
+    $("#mostReadGenresSpinner").show();
+    $("#mostReadGenresChart").hide();
+    // get data for the most read genres chart (AJAX request and data from the database)
+
+    let mostReadGenresData = [];
+    let mostReadGenresLabels = [];
+
+    $.ajax({
+        url: "/mostReadGenres",
+        method: "GET",
+        success: function (response) {
+            // hide spinner
+            $("#mostReadGenresSpinner").hide();
+            $("#mostReadGenresChart").show();
+            // response is an array of objects (genre and number of books read) (get only the top 5)
+            response = response.slice(0, 5);
+            response.forEach((genre) => {
+                    mostReadGenresData.push(genre[0])
+                    mostReadGenresLabels.push(genre[1])
+                }
+            )
+
+            // CHART FOR MOST READ GENRES
+            const ctx = document.getElementById('mostReadGenresChart');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: mostReadGenresData,
+                    datasets: [{
+                        label: 'Número de libros leídos',
+                        data: mostReadGenresLabels,
+                        backgroundColor: '#519E8A',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function (value, index, values) {
+                                    return Math.round(value);
+                                }
+                            },
+                            grid: {
+                                display: false
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        }
+                    }
+                }
+            });
+        } // end of success function
+        // if the request fails, append a text to the container
+    }).fail(() => {
+        $("#mostReadGenresSpinner").hide();
+        $("#mostReadGenresChart").parent().append("<p>Ha habido un error al cargar el gráfico.</p>");
+
+    })
+
     $("#load-more-spinner").hide();
     $("#load-more-btn").parent().css({"display": "flex", "justify-content": "center", "text-align": "center"});
     $("#load-more-btn").css({
@@ -24,7 +89,7 @@ $(() => {
             url: "/landingPage/loadMore?page=" + currentPage + "&size=" + pageSize,
             contentType: "application/json",
             success: function (data) {
-                if(data.trim() === ""){
+                if (data.trim() === "") {
                     $("#load-more-btn").hide();
                     $(".load-more-container").append("<p style='text-align: center;'>No hay nada m&aacutes que mostrar.<br>Sigue leyendo para obtener m&aacutes recomendaciones personalizadas.</p>");
                 }
@@ -44,16 +109,6 @@ $(() => {
 
 
     })
-    /*
-    // AJAX request to get data to build the most read genres chart
-    $.ajax({
-        url: "/landingPage/mostReadGenres",
-        method: "GET",
-        success: function (response){
-            console.log(response);
-        }
-    })
-    */
 
 
 })

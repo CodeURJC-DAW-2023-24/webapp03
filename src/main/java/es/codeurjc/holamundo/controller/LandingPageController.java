@@ -16,6 +16,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -24,6 +26,7 @@ import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.Base64;
 import java.util.List;
+import java.util.Map;
 
 
 @Controller
@@ -62,12 +65,30 @@ public class LandingPageController {
             isUser = true;
         } else {
             isUser = false;
-            user = new User("test", "test", "test", null, "test", "test", "none");
+
         }
 
 
         model.addAttribute("user", isUser);
         model.addAttribute("username", testingCurrentUsername);
+
+        // Get total site genres count
+        long totalGenres = genreRepository.count();
+
+        // Get total site authors count
+        long totalAuthors = authorRepository.count();
+
+        // Get total site books count
+        long totalBooks = bookRepository.count();
+
+        // Get total site users count
+        long totalUsers = userRepository.count();
+
+        model.addAttribute("totalSiteGenres", totalGenres);
+        model.addAttribute("totalSiteAuthors", totalAuthors);
+        model.addAttribute("totalSiteBooks", totalBooks);
+        model.addAttribute("totalSiteUsers", totalUsers);
+
 
         // Recommendations algorithm---------------------------------------------------------------
         // If it is a registered user, get the most read genres
@@ -118,7 +139,7 @@ public class LandingPageController {
         Blob blob = booksFromMostReadAuthor.get(0).getImageFile();
         byte[] bytes = blob.getBytes(1, (int) blob.length());
         String bookImage = Base64.getEncoder().encodeToString(bytes);
-        
+
         model.addAttribute("mostReadAuthor", mostReadAuthors.get(0).getName());
 
         model.addAttribute("bookTitle", bookTitle);
@@ -138,11 +159,11 @@ public class LandingPageController {
         recommendedBooksRight = booksFromMostReadGenres.subList((booksFromMostReadGenres.size() / 2), booksFromMostReadGenres.size());
 
         //Adding images into the Strings since inside iteration you cant pass blob to string
-        for(int i=0;i<recommendedBooksRight.size();i++){
+        for (int i = 0; i < recommendedBooksRight.size(); i++) {
             recommendedBooksRight.get(i).setImageString(recommendedBooksRight.get(i).blobToString(recommendedBooksRight.get(i).getImageFile()));
         }
 
-        for(int i=0;i<recommendedBooksLeft.size();i++){
+        for (int i = 0; i < recommendedBooksLeft.size(); i++) {
             recommendedBooksLeft.get(i).setImageString(recommendedBooksLeft.get(i).blobToString(recommendedBooksLeft.get(i).getImageFile()));
         }
 
@@ -165,21 +186,20 @@ public class LandingPageController {
         // Get books from the most read genres (these will be the recommended books)
         List<Book> booksFromMostReadGenres = bookRepository.findByGenreIn(mostReadGenres, PageRequest.of(page, size)).getContent();
 
-        for(int i=0;i<booksFromMostReadGenres.size();i++){
+        for (int i = 0; i < booksFromMostReadGenres.size(); i++) {
             booksFromMostReadGenres.get(i).setImageString(booksFromMostReadGenres.get(i).blobToString(booksFromMostReadGenres.get(i).getImageFile()));
         }
-        
+
         model.addAttribute("post", booksFromMostReadGenres);
 
         return "landingPagePostTemplate";
 
     }
 
-    @GetMapping("/landingPage/mostReadGenres")
-    public ResponseEntity<List<Genre>> getMostReadGenres() {
-        List<Genre> mostReadGenres = genreRepository.getMostReadGenres();
-        System.out.println(mostReadGenres);
-        return new ResponseEntity<>(mostReadGenres, HttpStatus.OK);
+    @GetMapping("/mostReadGenres") // should return a json with a list of the most read genres and their count
+    public ResponseEntity<List<Object[]>> getMostReadGenres() {
+        return new ResponseEntity<>(genreRepository.getMostReadGenresNameAndCount(), HttpStatus.OK);
     }
+
 }
 

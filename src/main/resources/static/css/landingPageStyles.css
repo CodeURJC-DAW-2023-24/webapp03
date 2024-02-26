@@ -12574,3 +12574,20 @@ header {
     height: 120px;
     object-fit: cover;
 }
+
+#mostReadGenresChartContainer{
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.stats-list{
+    list-style-type: none !important;
+}
+
+.stats-list-item{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+}

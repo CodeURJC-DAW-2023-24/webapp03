@@ -24,6 +24,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Gabarito&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/8f3c0a721b.js" crossorigin="anonymous"></script>
 
+    <!-- Chart.js script -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.js"></script>
+
     <!-- jQuery library -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
@@ -84,8 +87,14 @@
                     <li class="bm-nav-item dropdown">
                         <a class="bm-nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
                            data-bs-toggle="dropdown" aria-expanded="false">
+                            {{#user}}
                             <img class="bm-navbar-profile-picture bm-rounded-circle"
                                  src="data:image/png;base64, {{profileImageString}}" alt="Perfil"/>
+                            {{/user}}
+                            {{^user}}
+                            <img class="bm-navbar-profile-picture bm-rounded-circle"
+                                 src="/assets/defaultProfilePicture.png" alt="Perfil"/>
+                            {{/user}}
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                             {{#user}}
@@ -112,8 +121,9 @@
             <h1 class="display-4 fw-bolder header-welcome-text">
                 Bienvenido{{#user}}, {{username}}{{/user}}{{^user}} a Bookmarks{{/user}}
             </h1>
-            
-            <p class="lead fw-normal text-white-50 mb-0">{{^admin}}"Nuestras vidas se definen por las oportunidades, incluso las
+
+            <p class="lead fw-normal text-white-50 mb-0">{{^admin}}"Nuestras vidas se definen por las oportunidades,
+                incluso las
                 que perdemos"<br>- F. Scott Fitzgerald{{/admin}}
                 {{#admin}}Has iniciado sesión como administrador{{/admin}}
             </p>
@@ -127,7 +137,8 @@
         <!-- Blog entries-->
         <div class="col-lg-8">
             <!-- Featured book (THE FEATURED BOOK SHOULD BE STATIC AND ALWAYS APPEARS ON THE LANDING PAGE -->
-            <h3 class="fw-semibold mb-4">{{#user}}Más de tu autor más leído{{/user}}{{^user}}Del autor más leído{{/user}}</h3>
+            <h3 class="fw-semibold mb-4">{{#user}}Más de tu autor más leído{{/user}}{{^user}}Del autor más
+                leído{{/user}}</h3>
             <!-- Featured book-->
             <div class="card mb-4 featured-book">
                 <div class="img-container-featured">
@@ -230,7 +241,14 @@
                 {{#user}}
                 <div class="card-header">Acceso rápido a tu perfil</div>
                 <div class="card-body profile-card">
-                    <img class="profile-picture bm-rounded-circle" src="data:image/png;base64, {{profileImageString}}" alt="Foto de perfil"/>
+                    {{#user}}
+                    <img class="profile-picture bm-rounded-circle" src="data:image/png;base64, {{profileImageString}}"
+                         alt="Foto de perfil"/>
+                    {{/user}}
+                    {{^user}}
+                    <img class="profile-picture bm-rounded-circle" src="/assets/defaultProfilePicture.png"
+                         alt="Foto de perfil"/>
+                    {{/user}}
                     <p class="mt-2">{{username}}</p>
                     <div class="input-group">
                         <a href="/profile/{{username}}">
@@ -243,46 +261,55 @@
             </div>
             <!-- Categories widget-->
             <div class="card mb-4">
-                <div class="card-header">Géneros</div>
+                <div class="card-header">Top 5 géneros más populares</div>
                 <div class="card-body">
-                    <div id="most-read-genres-chart" class="chart-container">
-                        <canvas id="most-read-genres"></canvas>
+                    <div id="mostReadGenresChartContainer">
+                        <div id="mostReadGenresSpinner" class="loader-green" role="status">
+                        </div>
+                        <canvas id="mostReadGenresChart"></canvas>
                     </div>
 
                 </div>
             </div>
             <!-- Side widget-->
             <div class="card mb-4">
-                <div class="card-header">Booktubers más populares</div>
+                <div class="card-header">Más sobre Bookmarks</div>
                 <div class="card-body">
-                    <p>Los booktubers preferidos de la gente</p>
                     <div class="row">
-                        <div class="col-sm-6">
-                            <ol class="list-styled mb-0">
-                                <li>
-                                    <a href="#!">Nombre 1</a>
-                                    <a href="https://www.instagram.com/tu_perfil" target="_blank"
-                                       rel="noopener noreferrer">
-                                        <i class="bi bi-instagram">usuario</i>
-
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#!">Nombre 2</a>
-                                    <a href="https://www.instagram.com/tu_perfil" target="_blank"
-                                       rel="noopener noreferrer">
-                                        <i class="bi bi-instagram">usuario</i>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#!">Nombre 3</a>
-                                    <a href="https://www.instagram.com/tu_perfil" target="_blank"
-                                       rel="noopener noreferrer">
-                                        <i class="bi bi-instagram">usuario</i>
-                                    </a>
-                                </li>
-                            </ol>
-                        </div>
+                        <ul class="list-styled mb-0 stats-list">
+                            <li>
+                                <div class="stats-list-item">
+                                    <h6 class="fw-normal">Libros totales: </h6>
+                                    <h6 class="fw-bold stats-number">
+                                        {{totalSiteBooks}}
+                                    </h6>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="stats-list-item">
+                                    <h6 class="fw-normal">Géneros totales: </h6>
+                                    <h6 class="fw-bold stats-number">
+                                        {{totalSiteGenres}}
+                                    </h6>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="stats-list-item">
+                                    <h6 class="fw-normal">Autores totales: </h6>
+                                    <h6 class="fw-bold stats-number">
+                                        {{totalSiteAuthors}}
+                                    </h6>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="stats-list-item">
+                                    <h6 class="fw-normal">Usuarios totales: </h6>
+                                    <h6 class="fw-bold stats-number">
+                                        {{totalSiteUsers}}
+                                    </h6>
+                                </div>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -312,8 +339,6 @@
 <script src="/js/landingPage.js"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/3.1.0/mustache.min.js"></script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
 
 <!-- CORE BOOTSTRAP JS (THIS GOES RIGHT AFTER THE FOOTER, IT HAS THE NAVBAR DROPDOWN TOGGLE FUNCTIONALITY)-->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>

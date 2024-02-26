@@ -21,7 +21,7 @@ public class ErrorPageController {
     @Autowired
     public UserRepository userRepository;
 
-    @GetMapping({"/errorPage/**", "/error/**"})
+    @GetMapping({"/errorPage/**", "/error/**", "/errorPage", "/error"})
     public ResponseEntity<Resource> loadErrorPage(Model model, HttpServletRequest request) throws IOException, SQLException {
 
         Authentication authentication = (Authentication) request.getUserPrincipal();

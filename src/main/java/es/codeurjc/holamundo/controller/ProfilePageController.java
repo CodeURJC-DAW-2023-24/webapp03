@@ -46,6 +46,22 @@ public class ProfilePageController {
             }
         }
 
+        boolean isCurrentUser = false;
+        Authentication authentication = (Authentication) request.getUserPrincipal();
+        if (authentication != null) {
+            String currentUsername = authentication.getName();
+            if (currentUsername.equals(username)) {
+                isCurrentUser = true;
+            } else {
+                // Check if the current user is an admin
+                User currentUser = userRepository.findByUsername(currentUsername);
+                if (currentUser.getRole().contains("ADMIN")) {
+                    isCurrentUser = true;
+                }
+            }
+        }
+        model.addAttribute("currentUser", isCurrentUser);
+
         String alias = user.getAlias();
         String description = user.getDescription();
         String profileImage = user.getProfileImageString();
@@ -71,18 +87,18 @@ public class ProfilePageController {
         List<Book> readingBooksList = userRepository.getReadingBooks(username, PageRequest.of(0, 4)).getContent();
         List<Book> wantedBooksList = userRepository.getWantedBooks(username, PageRequest.of(0, 4)).getContent();
 
-        for(int i=0;i<readBooksList.size();i++){
+        for (int i = 0; i < readBooksList.size(); i++) {
             readBooksList.get(i).setImageString(readBooksList.get(i).blobToString(readBooksList.get(i).getImageFile()));
         }
 
-        for(int i=0;i<readingBooksList.size();i++){
+        for (int i = 0; i < readingBooksList.size(); i++) {
             readingBooksList.get(i).setImageString(readingBooksList.get(i).blobToString(readingBooksList.get(i).getImageFile()));
         }
 
-        for(int i=0;i<wantedBooksList.size();i++){
+        for (int i = 0; i < wantedBooksList.size(); i++) {
             wantedBooksList.get(i).setImageString(wantedBooksList.get(i).blobToString(wantedBooksList.get(i).getImageFile()));
         }
-    
+
         List<Double> readBooksRatings = new ArrayList<>();
         readBooksList.forEach((book) -> {
             List<Double> bookRatings = bookRepository.getRatingsByBookId(book.getID());
@@ -136,8 +152,8 @@ public class ProfilePageController {
         //Admin
         model.addAttribute("admin", request.isUserInRole("ADMIN"));
 
-         //Unregistered user
-         model.addAttribute("noUser", !request.isUserInRole("USER"));
+        //Unregistered user
+        model.addAttribute("noUser", !request.isUserInRole("USER"));
 
 
         return "profilePage";
@@ -148,11 +164,11 @@ public class ProfilePageController {
         switch (listType) {
             case "read" -> {
                 List<Book> readBooksList = userRepository.getReadBooks(username, PageRequest.of(page, size)).getContent();
-                
-                for(int i=0;i<readBooksList.size();i++){
+
+                for (int i = 0; i < readBooksList.size(); i++) {
                     readBooksList.get(i).setImageString(readBooksList.get(i).blobToString(readBooksList.get(i).getImageFile()));
                 }
-                
+
                 model.addAttribute("bookItem", readBooksList);
 
                 List<Double> readBooksRatings = new ArrayList<>();
@@ -171,11 +187,11 @@ public class ProfilePageController {
             }
             case "reading" -> {
                 List<Book> readingBooksList = userRepository.getReadingBooks(username, PageRequest.of(page, size)).getContent();
-                
-                for(int i=0;i<readingBooksList.size();i++){
+
+                for (int i = 0; i < readingBooksList.size(); i++) {
                     readingBooksList.get(i).setImageString(readingBooksList.get(i).blobToString(readingBooksList.get(i).getImageFile()));
                 }
-                
+
                 model.addAttribute("bookItem", readingBooksList);
 
                 List<Double> readingBooksRatings = new ArrayList<>();
@@ -194,11 +210,11 @@ public class ProfilePageController {
             }
             case "wanted" -> {
                 List<Book> wantedBooksList = userRepository.getWantedBooks(username, PageRequest.of(page, size)).getContent();
-                
-                for(int i=0;i<wantedBooksList.size();i++){
+
+                for (int i = 0; i < wantedBooksList.size(); i++) {
                     wantedBooksList.get(i).setImageString(wantedBooksList.get(i).blobToString(wantedBooksList.get(i).getImageFile()));
                 }
-                
+
                 model.addAttribute("bookItem", wantedBooksList);
 
                 List<Double> wantedBooksRatings = new ArrayList<>();
@@ -228,12 +244,12 @@ public class ProfilePageController {
         if (authentication != null) {
             String currentUsername = authentication.getName();
             User user = userRepository.findByUsername(currentUsername);
-            if(user.getRole().contains("ADMIN")){
+            if (user.getRole().contains("ADMIN")) {
                 User deletedUser = userRepository.findByUsername(username);
-                if(deletedUser != null){
+                if (deletedUser != null) {
                     userRepository.delete(deletedUser);
                 }
-            }else{
+            } else {
                 return "redirect:/login";
             }
         } else {
