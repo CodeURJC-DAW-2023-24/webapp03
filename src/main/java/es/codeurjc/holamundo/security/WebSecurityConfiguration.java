@@ -46,7 +46,7 @@ public class WebSecurityConfiguration {
                     "/book/*", "/book/*/loadMoreReviews", "/errorPage/**", "/", 
                     "/landingPage/loadMore", "/landingPage/mostReadGenres",  
                     "/loginError", "/profile/*", "/profile/*/loadMore", "/search/**",
-                    "loginPage.html").permitAll()
+                    "/login", "/login", "/login/**", "/signup/**", "/signup").permitAll()
                 //Private pages
                 //USER
                 .requestMatchers("/profile/*/edit", "/upload", "/book/*/addReview",
