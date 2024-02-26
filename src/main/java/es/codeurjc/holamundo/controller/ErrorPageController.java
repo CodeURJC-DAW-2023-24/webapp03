@@ -20,7 +20,7 @@ public class ErrorPageController {
     @Autowired
     public UserRepository userRepository;
 
-    @GetMapping("/errorPage/**")
+    @GetMapping({"/errorPage/**", "/error/**"})
     public ResponseEntity<Resource> loadErrorPage(Model model) throws IOException, SQLException {
 
         //Temporary user until the current logged in user is accessible by all controllers
