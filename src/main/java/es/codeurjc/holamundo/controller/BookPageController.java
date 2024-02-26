@@ -71,16 +71,16 @@ public class BookPageController {
         Authentication authentication = (Authentication) request.getUserPrincipal();
         if (authentication != null) {
             currentUsername = authentication.getName();
+
+            User user = userRepository.findByUsername(currentUsername);
+            user.setProfileImageString(user.blobToString(user.getProfileImageFile()));
+            model.addAttribute("profileImageString", user.getProfileImageString());
+
             isUser = true;
             isAdmin = request.isUserInRole("ADMIN");
         } else {
             isUser = false;
         }
-
-        //Temporary user until the current logged in user is accessible by all controllers
-        User user = userRepository.findByUsername("YourReader");
-        user.setProfileImageString(user.blobToString(user.getProfileImageFile()));
-        model.addAttribute("profileImageString", user.getProfileImageString());
 
         // Get ratings from the database
         List<Double> ratings = bookRepository.getRatingsByBookId(bookID);

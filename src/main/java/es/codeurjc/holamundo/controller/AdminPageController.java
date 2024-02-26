@@ -34,7 +34,6 @@ public class AdminPageController {
     @Autowired
     private GenreRepository genreBD;
 
-    //Temporary
     @Autowired
     private UserRepository userRepository;
 

@@ -49,7 +49,7 @@ public class WebSecurityConfiguration {
                     "/login", "/login", "/login/**", "/signup/**", "/signup", "/error/**").permitAll()
                 //Private pages
                 //USER
-                .requestMatchers("/profile/*/edit", "/upload", "/book/*/addReview",
+                .requestMatchers("/profile/*/edit", "/profile/*/upload", "/book/*/addReview",
                     "/book/*/deleteReview/*", "/book/*/add/**", "/profile/*/editPassword", "/book/*/removeFromLists/**").hasAnyRole("USER")
                 //AUTHOR
                 .requestMatchers("/book/*/edit", "/modifyDone/*").hasAnyRole("AUTHOR","ADMIN")

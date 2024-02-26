@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.security.core.Authentication;
 
 import java.sql.SQLException;
 
@@ -15,17 +16,19 @@ import java.sql.SQLException;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-    //Temporary
     @Autowired
     public UserRepository userRepository;
 
     @ExceptionHandler(Exception.class)
     public String handleException(HttpServletRequest request, Exception ex, Model model) throws SQLException {
 
-        //Temporary user until the current logged in user is accessible by all controllers
-        User user = userRepository.findByUsername("YourReader");
-        user.setProfileImageString(user.blobToString(user.getProfileImageFile()));
-        model.addAttribute("profileImageString", user.getProfileImageString());
+        Authentication authentication = (Authentication) request.getUserPrincipal();
+        if (authentication != null) {
+            String currentUsername = authentication.getName();
+            User user = userRepository.findByUsername(currentUsername);
+            user.setProfileImageString(user.blobToString(user.getProfileImageFile()));
+            model.addAttribute("profileImageString", user.getProfileImageString());
+        }
 
         model.addAttribute("errorDetails", ex.getMessage());
         model.addAttribute("errorCode", HttpStatus.INTERNAL_SERVER_ERROR.value());

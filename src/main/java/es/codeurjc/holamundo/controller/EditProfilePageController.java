@@ -2,6 +2,8 @@ package es.codeurjc.holamundo.controller;
 
 import es.codeurjc.holamundo.entity.User;
 import es.codeurjc.holamundo.repository.UserRepository;
+import jakarta.servlet.http.HttpServletRequest;
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,12 +13,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
+import javax.sql.rowset.serial.SerialBlob;
 import java.sql.SQLException;
+import java.util.Map;
 
 @Controller
 public class EditProfilePageController {
@@ -56,8 +57,7 @@ public class EditProfilePageController {
                               @RequestParam("alias") String newAlias,
                               @RequestParam("email") String newEmail,
                               @RequestParam("description") String newDescription,
-                              @RequestParam("password") String newPassword)
-    {
+                              @RequestParam("password") String newPassword) throws SQLException {
 
         User user = userRepository.findByUsername(username);
 
@@ -69,7 +69,27 @@ public class EditProfilePageController {
             userRepository.save(user);
         }
 
-        return "redirect:https://localhost:8443/profile/" + username;
+        model.addAttribute("alias", user.getAlias());
+        model.addAttribute("email", user.getEmail());
+        model.addAttribute("description", user.getDescription());
+        model.addAttribute("password", user.getPassword());
+        model.addAttribute("profileImageString", user.blobToString(user.getProfileImageFile()));
+
+        return "editProfilePage";
+    }
+
+
+
+    @PostMapping("/profile/{username}/upload")
+    public ResponseEntity<?> uploadProfileImage(@RequestBody Map<String, Object> image, Model model, HttpServletRequest request) throws SQLException {
+        Authentication authentication = (Authentication) request.getUserPrincipal();
+        if (authentication != null) {
+            String currentUsername = authentication.getName();
+            User user = userRepository.findByUsername(currentUsername);
+            user.setProfileImageFile(new SerialBlob(Base64.decodeBase64((String) image.get("image"))));
+            userRepository.save(user);
+        }
+        return new ResponseEntity<>("Imagen subida con éxito", HttpStatus.OK);
     }
 
     @PostMapping("/profile/{username}/editPassword")

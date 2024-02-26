@@ -54,16 +54,17 @@ public class LandingPageController {
         Authentication authentication = (Authentication) request.getUserPrincipal();
         if (authentication != null) {
             testingCurrentUsername = authentication.getName();
-            user = userRepository.findByUsername("YourReader");
+
+            user = userRepository.findByUsername(testingCurrentUsername);
+            user.setProfileImageString(user.blobToString(user.getProfileImageFile()));
+            model.addAttribute("profileImageString", user.getProfileImageString());
+
             isUser = true;
         } else {
             isUser = false;
             user = new User("test", "test", "test", null, "test", "test", "none");
         }
 
-        //Temporary user until the current logged in user is accessible by all controllers
-        user.setProfileImageString(user.blobToString(user.getProfileImageFile()));
-        model.addAttribute("profileImageString", user.getProfileImageString());
 
         model.addAttribute("user", isUser);
         model.addAttribute("username", testingCurrentUsername);
