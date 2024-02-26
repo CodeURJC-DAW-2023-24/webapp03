@@ -74,6 +74,7 @@
                             <i id="magnifier-icon"
                                class="fa-solid fa-magnifying-glass position-absolute top-50 end-0 translate-middle-y me-2"></i>
                         </a>
+                        <input type="hidden" name="_csrf" value="{{token}}"/>
                     </form>
                 </li>
             </ul>
@@ -95,6 +96,7 @@
                         </ul>
                     </li>
                 </ul>
+                <input type="hidden" name="_csrf" value="{{token}}"/>
             </form>
         </div>
     </div>
@@ -115,6 +117,7 @@
 
             <form  action="/logout" method="post" class="logout">
                 <input type="submit" value="Cerrar sesión" class="btn"/>
+                <input type="hidden" name="_csrf" value="{{token}}"/>
             </form>
              {{/noUser}}
 

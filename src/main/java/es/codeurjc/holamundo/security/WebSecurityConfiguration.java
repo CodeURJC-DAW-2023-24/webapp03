@@ -42,7 +42,7 @@ public class WebSecurityConfiguration {
         http
             .authorizeHttpRequests(authorize -> authorize
                 //Public pages
-                .requestMatchers("assets/**", "css/**", "js/**", "templates/**",
+                .requestMatchers("/assets/**", "/css/**", "/js/**", "templates/**",
                     "/book/*", "/book/*/loadMoreReviews", "/errorPage/**", "/", 
                     "/landingPage/loadMore", "/landingPage/mostReadGenres",  
                     "/loginError", "/profile/*", "/profile/*/loadMore", "/search/**",
@@ -65,12 +65,7 @@ public class WebSecurityConfiguration {
                 .logoutSuccessUrl("/")
                 .permitAll());
 
-        //Disable CSRF 
-        http.csrf(csrf -> csrf.disable());
-
         return http.build();
-
-
     }
 
 }

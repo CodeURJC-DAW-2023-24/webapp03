@@ -78,6 +78,7 @@
                             <i id="magnifier-icon"
                                class="fa-solid fa-magnifying-glass position-absolute top-50 end-0 translate-middle-y me-2"></i>
                         </a>
+                        <input type="hidden" name="_csrf" value="{{token}}"/>
                     </form>
                 </li>
 
@@ -100,6 +101,7 @@
                         </ul>
                     </li>
                 </ul>
+                <input type="hidden" name="_csrf" value="{{token}}"/>
             </form>
         </div>
     </div>
@@ -146,6 +148,7 @@
                             <i class="fa-solid fa-check"></i>
                             Leído
                         </button>
+                        <input type="hidden" name="_csrf" value="{{token}}"/>
                     </form>
 
                     <form class="list-button" action="/book/{{id}}/add/reading" method="POST">
@@ -154,6 +157,7 @@
                             <i class="fa-solid fa-clock"></i>
                             Leyendo
                         </button>
+                        <input type="hidden" name="_csrf" value="{{token}}"/>
                     </form>
 
                     <form class="list-button" action="/book/{{id}}/add/wanted" method="POST">
@@ -162,6 +166,7 @@
                             <i class="fa-solid fa-bookmark"></i>
                             Por leer
                         </button>
+                        <input type="hidden" name="_csrf" value="{{token}}"/>
                     </form>
 
                     <!-- vertical separator -->
@@ -173,6 +178,7 @@
                             <i class="fa-solid fa-xmark"></i>
                             Nada
                         </button>
+                        <input type="hidden" name="_csrf" value="{{token}}"/>
                     </form>
                     {{#author}} 
                     <a href="/book/{{id}}/edit" class="btn btn-secondary-light flex-shrink-0 action-button"
@@ -238,6 +244,7 @@
                         <input class="btn btn-primary-light save-button mt-3 mb-4" type="submit" value="Publicar"
                                id="post-review-btn">
                         <p id="error-message" style="display: none; color: red;">Rellena todos los campos.</p>
+                        <input type="hidden" name="_csrf" value="{{token}}"/>
                     </form>
                     {{/hasReviewed}}
                     {{#hasReviewed}}
@@ -270,6 +277,7 @@
                                 <form action="/book/{{bookID}}/deleteReview/{{ID}}" method="post">
                                     <input type="hidden" name="_method" value="DELETE">
                                     <button type="submit" class="btn btn-outline-dark mt-3">Eliminar reseña</button>
+                                    <input type="hidden" name="_csrf" value="{{token}}"/>
                                 </form>
                             </div>
                         </div>
@@ -319,6 +327,7 @@
                                 <button type="submit" class="btn btn-outline-dark mt-3">Eliminar
                                     reseña
                                 </button>
+                                <input type="hidden" name="_csrf" value="{{token}}"/>
                             </form>
                         </div>
                     </div>

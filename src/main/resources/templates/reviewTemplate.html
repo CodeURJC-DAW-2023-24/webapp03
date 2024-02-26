@@ -28,6 +28,7 @@
                 <form action="/book/{{bookID}}/deleteReview/{{ID}}" method="post">
                     <input type="hidden" name="_method" value="DELETE">
                     <button type="submit" class="btn btn-outline-dark mt-3">Eliminar reseña</button>
+                    <input type="hidden" name="_csrf" value="{{token}}"/>
                 </form>
             </div>
         </div>
