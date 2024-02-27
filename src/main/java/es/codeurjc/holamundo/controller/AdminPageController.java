@@ -5,6 +5,8 @@ import es.codeurjc.holamundo.repository.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +25,7 @@ import es.codeurjc.holamundo.repository.GenreRepository;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class AdminPageController {
@@ -36,6 +39,9 @@ public class AdminPageController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private AuthorRepository authorRepository;
 
     @GetMapping("/admin/**")
     public String loadAdminPage(Model model, HttpServletRequest request) throws SQLException {
@@ -123,5 +129,16 @@ public class AdminPageController {
         booksBD.save(newBook);
         return "redirect:/admin";
     }
+
+    @GetMapping("/mostReadAuthorsTotal")
+    public ResponseEntity<List<Object[]>> getMostReadAuthorsTotal() {
+        return new ResponseEntity<>(authorRepository.getMostReadAuthorsNameAndCount(), HttpStatus.OK);
+    }
+
+    @GetMapping("/bestReaders")
+    public ResponseEntity<List<Object[]>> getBestReaders() {
+        return new ResponseEntity<>(userRepository.getUsersAndNumberOfBooksRead(), HttpStatus.OK);
+    }
+
 
 }

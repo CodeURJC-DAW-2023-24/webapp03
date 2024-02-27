@@ -21,8 +21,10 @@ public class ErrorPageController {
     @Autowired
     public UserRepository userRepository;
 
+    private boolean isUser;
+
     @GetMapping({"/errorPage/**", "/error/**", "/errorPage", "/error"})
-    public ResponseEntity<Resource> loadErrorPage(Model model, HttpServletRequest request) throws IOException, SQLException {
+    public String loadErrorPage(Model model, HttpServletRequest request) throws IOException, SQLException {
 
         Authentication authentication = (Authentication) request.getUserPrincipal();
         if (authentication != null) {
@@ -30,13 +32,15 @@ public class ErrorPageController {
             User user = userRepository.findByUsername(currentUsername);
             user.setProfileImageString(user.blobToString(user.getProfileImageFile()));
             model.addAttribute("profileImageString", user.getProfileImageString());
+            isUser = true;
+        } else {
+            isUser = false;
         }
 
-        Resource resource = new ClassPathResource("templates/errorPage.html");
-        if (!resource.exists()) {
-            throw new IOException("Error page not found");
-        }
+        model.addAttribute("isUser", isUser);
+        model.addAttribute("errorDetails", "Ha ocurrido un error inesperado. Por favor, inténtelo de nuevo más tarde.");
+        model.addAttribute("errorCode", "000");
 
-        return ResponseEntity.ok(resource);
+        return "errorPage";
     }
 }

@@ -19,6 +19,8 @@ public class GlobalExceptionHandler {
     @Autowired
     public UserRepository userRepository;
 
+    private boolean isUser;
+
     @ExceptionHandler(Exception.class)
     public String handleException(HttpServletRequest request, Exception ex, Model model) throws SQLException {
 
@@ -28,7 +30,13 @@ public class GlobalExceptionHandler {
             User user = userRepository.findByUsername(currentUsername);
             user.setProfileImageString(user.blobToString(user.getProfileImageFile()));
             model.addAttribute("profileImageString", user.getProfileImageString());
+            isUser = true;
+        } else {
+            isUser = false;
+
         }
+
+        model.addAttribute("user", isUser);
 
         model.addAttribute("errorDetails", ex.getMessage());
         model.addAttribute("errorCode", HttpStatus.INTERNAL_SERVER_ERROR.value());
