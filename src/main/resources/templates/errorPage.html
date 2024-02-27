@@ -75,10 +75,11 @@
                             <i id="magnifier-icon"
                                class="fa-solid fa-magnifying-glass position-absolute top-50 end-0 translate-middle-y me-2"></i>
                         </a>
+                        <input type="hidden" name="_csrf" value="{{token}}"/>
                     </form>
                 </li>
             </ul>
-            <form class="bm-d-flex">
+            <form class="bm-d-flex" action="/logout" method="post">
                 <ul class="bm-navbar-nav bm-me-auto bm-mb-lg-0 bm-ms-lg-4">
                     <!-- Profile dropdown -->
                     <li class="bm-nav-item dropdown">
@@ -94,14 +95,15 @@
                             {{/user}}
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="profile">Mi perfil</a></li>
+                            <li><a class="dropdown-item" href="/profile/{{username}}">Mi perfil</a></li>
                             <li>
                                 <hr class="dropdown-divider"/>
                             </li>
-                            <li><a class="dropdown-item" href="/login">Cerrar sesión</a></li>
+                            <li><input type="submit" value="Cerrar sesión" class="btn"/></li>
                         </ul>
                     </li>
                 </ul>
+                <input type="hidden" name="_csrf" value="{{token}}"/>
             </form>
         </div>
     </div>
@@ -122,6 +124,8 @@
             <p class="fs-5">{{errorCode}}</p>
             <h2 class="fs-4">Detalles del error:</h2>
             <p class="fs-5">{{errorDetails}}</p>
+
+            <a href="/" class="btn landing-btn">Volver a la página principal</a>
         </div>
     </div>
 </section>

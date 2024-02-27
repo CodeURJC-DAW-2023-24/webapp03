@@ -24,3 +24,20 @@
     margin-top: auto !important;
     margin-bottom: auto !important;
 }
+
+.landing-btn{
+    background-color: var(--branding-green) !important;
+    border-color: var(--branding-green) !important;
+    color: var(--branding-white) !important;
+}
+
+.btn {
+    background-color: #F8DDA4;
+    border-color: #583E23;
+    color: #583E23;
+}
+
+.btn:hover {
+    background-color: #F9A03F;
+    border-color: #583E23;
+}

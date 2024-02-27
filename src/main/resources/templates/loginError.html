@@ -79,32 +79,6 @@
                     </form>
                 </li>
             </ul>
-            <form class="bm-d-flex">
-                <ul class="bm-navbar-nav bm-me-auto bm-mb-lg-0 bm-ms-lg-4">
-                    <!-- Profile dropdown -->
-                    <li class="bm-nav-item dropdown">
-                        <a class="bm-nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
-                           data-bs-toggle="dropdown" aria-expanded="false">
-                            {{#user}}
-                            <img class="bm-navbar-profile-picture bm-rounded-circle"
-                                 src="data:image/png;base64, {{profileImageString}}" alt="Perfil"/>
-                            {{/user}}
-                            {{^user}}
-                            <img class="bm-navbar-profile-picture bm-rounded-circle"
-                                 src="/assets/defaultProfilePicture.png" alt="Perfil"/>
-                            {{/user}}
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="profile">Mi perfil</a></li>
-                            <li>
-                                <hr class="dropdown-divider"/>
-                            </li>
-                            <li><a class="dropdown-item" href="/login">Cerrar sesión</a></li>
-                        </ul>
-                    </li>
-                </ul>
-                <input type="hidden" name="_csrf" value="{{token}}"/>
-            </form>
         </div>
     </div>
 </nav>

@@ -75,7 +75,8 @@
                     </form>
                 </li>
             </ul>
-            <form class="bm-d-flex">
+            {{#user}}
+            <form class="bm-d-flex" action="/logout" method="post">
                 <ul class="bm-navbar-nav bm-me-auto bm-mb-lg-0 bm-ms-lg-4">
                     <!-- Profile dropdown -->
                     <li class="bm-nav-item dropdown">
@@ -91,16 +92,17 @@
                             {{/user}}
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="profile">Mi perfil</a></li>
+                            <li><a class="dropdown-item" href="/profile/{{username}}">Mi perfil</a></li>
                             <li>
                                 <hr class="dropdown-divider"/>
                             </li>
-                            <li><a class="dropdown-item" href="/login">Cerrar sesión</a></li>
+                            <li><input type="submit" value="Cerrar sesión" class="btn"/></li>
                         </ul>
                     </li>
                 </ul>
                 <input type="hidden" name="_csrf" value="{{token}}"/>
             </form>
+            {{/user}}
         </div>
     </div>
 </nav>

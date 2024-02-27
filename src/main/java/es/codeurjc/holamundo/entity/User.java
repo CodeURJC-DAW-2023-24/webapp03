@@ -5,8 +5,6 @@ import jakarta.persistence.*;
 
 import javax.sql.rowset.serial.SerialBlob;
 
-import org.hibernate.annotations.OnDeleteAction;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;

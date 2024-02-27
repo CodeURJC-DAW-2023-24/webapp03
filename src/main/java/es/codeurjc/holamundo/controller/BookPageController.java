@@ -9,15 +9,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -75,6 +69,7 @@ public class BookPageController {
             User user = userRepository.findByUsername(currentUsername);
             user.setProfileImageString(user.blobToString(user.getProfileImageFile()));
             model.addAttribute("profileImageString", user.getProfileImageString());
+            model.addAttribute("username", currentUsername);
 
             isUser = true;
             isAdmin = request.isUserInRole("ADMIN");
@@ -182,6 +177,8 @@ public class BookPageController {
 
     @GetMapping("/book/{bookID}/edit")
     public String loadModifyBookPage(Model model, @PathVariable int bookID, HttpServletRequest request) throws SQLException {
+
+        model.addAttribute("username", currentUsername);
         // Check if the user is an author or an admin
         if (!request.isUserInRole("AUTHOR") && !request.isUserInRole("ADMIN")) {
             return "redirect:/book/" + bookID;
@@ -192,7 +189,6 @@ public class BookPageController {
                     return "redirect:/book/" + bookID;
                 }
             }
-
         }
 
          // Get the current logged in user

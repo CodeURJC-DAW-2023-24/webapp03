@@ -35,11 +35,13 @@ public class SearchResultsPageController {
     public String loadSearchResultsPage(Model model, String query, HttpServletRequest request) throws SQLException {
 
         Authentication authentication = (Authentication) request.getUserPrincipal();
+        model.addAttribute("user", authentication);
         if (authentication != null) {
             String currentUsername = authentication.getName();
             User user = userRepository.findByUsername(currentUsername);
             user.setProfileImageString(user.blobToString(user.getProfileImageFile()));
             model.addAttribute("profileImageString", user.getProfileImageString());
+            model.addAttribute("username", currentUsername);
         }
 
         Page<Book> filteredBooks = bookRepository.searchBooks(query, PageRequest.of(0, 4));
