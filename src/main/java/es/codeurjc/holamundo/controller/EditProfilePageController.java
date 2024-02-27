@@ -83,13 +83,19 @@ public class EditProfilePageController {
     @PostMapping("/profile/{username}/upload")
     public ResponseEntity<?> uploadProfileImage(@RequestBody Map<String, Object> image, Model model, HttpServletRequest request) throws SQLException {
         Authentication authentication = (Authentication) request.getUserPrincipal();
+        ResponseEntity<?> responseEntity = null;
         if (authentication != null) {
             String currentUsername = authentication.getName();
             User user = userRepository.findByUsername(currentUsername);
-            user.setProfileImageFile(new SerialBlob(Base64.decodeBase64((String) image.get("image"))));
-            userRepository.save(user);
+            if (user != null) {
+                user.setProfileImageFile(new SerialBlob(Base64.decodeBase64((String) image.get("image"))));
+                userRepository.save(user);
+                responseEntity =  new ResponseEntity<>("Imagen subida con éxito", HttpStatus.OK);
+            }
+        } else {
+            responseEntity = new ResponseEntity<>("Error: No se pudo subir la imagen", HttpStatus.FORBIDDEN);
         }
-        return new ResponseEntity<>("Imagen subida con éxito", HttpStatus.OK);
+        return responseEntity;
     }
 
     @PostMapping("/profile/{username}/editPassword")
