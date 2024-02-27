@@ -101,7 +101,7 @@
 <header class="bg-branding-white py-1">
     <div class="container px-4 px-lg-5 my-5">
         <div class="text-start text-dark">
-            <h1 class="display-4 fw-bolder">{{username}}</h1>
+            <h1 class="display-4 fw-bolder" id="username">{{username}}</h1>
             <p class="lead fw-normal text-black-50 mb-0">Ajustes del perfil</p>
 
         </div>
@@ -122,7 +122,7 @@
                     <div class="small font-italic text-muted mb-4">JPG o PNG de no más de 5 MB</div>
                     <input type="file" id="inputProfileImage" accept=",.jpg,.jpeg,.png" style="display: none">
                     <button class="btn btn-primary" type="button" id="uploadImage">Subir imagen</button>
-                    <div id="uploadSuccessful" style="display: none; background-color: darkgreen; color: white; text-align: center; width: 100%; height: 20px; vertical-align: center; border-radius: 10px; margin-top: 7px">La imagen se actualizó correcamente.</div>
+                    <div id="uploadSuccessful" style="display: none; background-color: darkgreen; color: white; text-align: center; width: 100%; height: 25px; align-content: center; border-radius: 10px; margin-top: 7px">La imagen se actualizó correcamente.</div>
                 </div>
             </div>
         </div>
@@ -132,6 +132,7 @@
                 <div class="card-header">Detalles de tu cuenta</div>
                 <div class="card-body">
                     <form>
+                        <div id="correctPassword" style="display: none; background-color: darkgreen; color: white; text-align: center; width: 100%; height: 25px; align-content: center; border-radius: 10px; margin-bottom: 7px">La contraseña se actualizó correctamente.</div>
                         <div style="margin-bottom: 7px">
                             <button class="btn btn-secondary-light" id="returnBut" type="button" style="border: 1px solid dimgrey">
                                 <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
@@ -169,6 +170,7 @@
                                     <label class="small mb-1" for="inputOldPassword">Contraseña actual</label>
                                     <input class="form-control" id="inputOldPassword" type="password"
                                            placeholder="Escribe tu contraseña actual" value="">
+                                    <div id="wrongPassword" style="display: none; background-color: darkred; color: white; text-align: center; width: 100%; height: 25px; align-content: center; border-radius: 10px; margin-top: 7px">La contraseña no es correcta.</div>
                                 </div>
                             </div>
                         </div>
@@ -187,14 +189,9 @@
                                     <input class="form-control" id="inputConfirmPassword" type="password"
                                            placeholder="Escribe tu contraseña de nuevo" value="">
                                 </div>
-                                <button class="btn btn-primary change-password-button" type="button">Cambiar
-                                    contraseña
-                                </button>
                             </div>
-                            <a id="passwordsNotMatching" style="color:darkred">Las contraseñas no coinciden</a>
-                            <a id="passwordRequirements" style="color:darkred">La contraseña debe incluir al menos 8 caracteres y un número</a>
-                            <a id="passwordChanged" style="color:darkgreen">Se actualizó la contraseña correctamente</a>
-                            <a id="confirmPasswordChange" style="color:darkred">Por favor, confirme su cambio de contraseña antes de continuar</a>
+                            <a id="passwordsNotMatching" style="display: none; color:darkred; align-content: center">Las contraseñas no coinciden</a>
+                            <a id="passwordRequirements" style="display: none; color:darkred; align-content: center">La contraseña debe incluir al menos 8 caracteres y un número</a>
                         </div>
 
                         <button class="btn btn-primary" id="saveChangesBut" type="button">Guardar</button>

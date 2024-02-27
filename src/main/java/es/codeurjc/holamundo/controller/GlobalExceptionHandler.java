@@ -28,6 +28,7 @@ public class GlobalExceptionHandler {
         if (authentication != null) {
             String currentUsername = authentication.getName();
             User user = userRepository.findByUsername(currentUsername);
+            model.addAttribute("username", currentUsername);
             user.setProfileImageString(user.blobToString(user.getProfileImageFile()));
             model.addAttribute("profileImageString", user.getProfileImageString());
             isUser = true;

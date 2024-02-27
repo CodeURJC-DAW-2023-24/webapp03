@@ -33,7 +33,7 @@ public class ProfilePageController {
         // Get user from the database
         User user = userRepository.findByUsername(username);
         user.setProfileImageString(user.blobToString(user.getProfileImageFile()));
-
+        user.setProfileImageString(user.blobToString(user.getProfileImageFile()));
         //User info
         List<String> userRoles = user.getRole();
 
@@ -49,6 +49,7 @@ public class ProfilePageController {
         boolean isCurrentUser = false;
         Authentication authentication = (Authentication) request.getUserPrincipal();
         if (authentication != null) {
+            model.addAttribute("user", true);
             String currentUsername = authentication.getName();
             if (currentUsername.equals(username)) {
                 isCurrentUser = true;

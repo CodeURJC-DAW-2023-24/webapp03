@@ -75,7 +75,9 @@
                             <i id="magnifier-icon"
                                class="fa-solid fa-magnifying-glass position-absolute top-50 end-0 translate-middle-y me-2"></i>
                         </a>
+                        {{#token}}
                         <input type="hidden" name="_csrf" value="{{token}}"/>
+                        {{/token}}
                     </form>
                 </li>
             </ul>
@@ -85,14 +87,9 @@
                     <li class="bm-nav-item dropdown">
                         <a class="bm-nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
                            data-bs-toggle="dropdown" aria-expanded="false">
-                            {{#user}}
+
                             <img class="bm-navbar-profile-picture bm-rounded-circle"
                                  src="data:image/png;base64, {{profileImageString}}" alt="Perfil"/>
-                            {{/user}}
-                            {{^user}}
-                            <img class="bm-navbar-profile-picture bm-rounded-circle"
-                                 src="/assets/defaultProfilePicture.png" alt="Perfil"/>
-                            {{/user}}
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <li><a class="dropdown-item" href="/profile/{{username}}">Mi perfil</a></li>
@@ -103,7 +100,9 @@
                         </ul>
                     </li>
                 </ul>
+                {{#token}}
                 <input type="hidden" name="_csrf" value="{{token}}"/>
+                {{/token}}
             </form>
         </div>
     </div>

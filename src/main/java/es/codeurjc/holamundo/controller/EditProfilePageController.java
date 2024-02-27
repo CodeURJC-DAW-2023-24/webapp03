@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +24,9 @@ public class EditProfilePageController {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     public EditProfilePageController() {
 
@@ -56,8 +59,7 @@ public class EditProfilePageController {
     public String editProfile(Model model, @PathVariable String username,
                               @RequestParam("alias") String newAlias,
                               @RequestParam("email") String newEmail,
-                              @RequestParam("description") String newDescription,
-                              @RequestParam("password") String newPassword) throws SQLException {
+                              @RequestParam("description") String newDescription) throws SQLException {
 
         User user = userRepository.findByUsername(username);
 
@@ -65,14 +67,12 @@ public class EditProfilePageController {
             user.setAlias(newAlias);
             user.setEmail(newEmail);
             user.setDescription(newDescription);
-            user.setPassword(newPassword);
             userRepository.save(user);
         }
 
         model.addAttribute("alias", user.getAlias());
         model.addAttribute("email", user.getEmail());
         model.addAttribute("description", user.getDescription());
-        model.addAttribute("password", user.getPassword());
         model.addAttribute("profileImageString", user.blobToString(user.getProfileImageFile()));
 
         return "editProfilePage";
@@ -99,22 +99,21 @@ public class EditProfilePageController {
     }
 
     @PostMapping("/profile/{username}/editPassword")
-    public ResponseEntity<?> editProfile(@RequestParam("currentPassword") String currentPassword, @RequestParam("newPassword") String newPassword) {
+    public ResponseEntity<?> editProfile(@RequestParam("currentPassword") String currentPassword, @RequestBody String newPassword) {
         // Obtén el usuario actual
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UserDetails userDetails = (UserDetails) auth.getPrincipal();
+        User user = userRepository.findByUsername(userDetails.getUsername());
+
 
         // Compara la contraseña actual con la almacenada en la base de datos
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        if (!encoder.matches(currentPassword, userDetails.getPassword())) {
+        if (!passwordEncoder.matches(currentPassword, user.getPassword())) {
             return new ResponseEntity<>("La contraseña actual es incorrecta", HttpStatus.BAD_REQUEST);
+        } else {
+            String encodedNewPassword = passwordEncoder.encode(newPassword);
+            user.setPassword(encodedNewPassword);
+            userRepository.save(user);
+            return new ResponseEntity<>("Contraseña actualizada con éxito", HttpStatus.OK);
         }
-
-        // Encripta la nueva contraseña
-        String encodedNewPassword = encoder.encode(newPassword);
-
-        // Aquí debes implementar la lógica para actualizar la contraseña del usuario en la base de datos
-
-        return new ResponseEntity<>("Contraseña actualizada con éxito", HttpStatus.OK);
     }
 }
