@@ -81,12 +81,19 @@
                     <li class="bm-nav-item dropdown">
                         <a class="bm-nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
                            data-bs-toggle="dropdown" aria-expanded="false">
-
+                            {{#user}}
                             <img class="bm-navbar-profile-picture bm-rounded-circle"
                                  src="data:image/png;base64, {{profileImageString}}" alt="Perfil"/>
+                            {{/user}}
+                            {{^user}}
+                            <img class="bm-navbar-profile-picture bm-rounded-circle"
+                                 src="/assets/defaultProfilePicture.png" alt="Perfil"/>
+                            {{/user}}
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            {{#user}}
                             <li><a class="dropdown-item" href="/profile/{{username}}">Mi perfil</a></li>
+                            {{/user}}
                             <li>
                                 <hr class="dropdown-divider"/>
                             </li>
