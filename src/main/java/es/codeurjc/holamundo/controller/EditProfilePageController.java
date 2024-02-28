@@ -33,7 +33,23 @@ public class EditProfilePageController {
     }
 
     @GetMapping("/profile/{username}/edit")
-    public String loadEditProfilePage(Model model, @PathVariable String username, HttpServletRequest request) throws SQLException {
+    public String loadEditProfilePage(Model model, HttpServletRequest request, @PathVariable String username) throws SQLException {
+
+        //Check for correct username logged in.
+        /*User user = userRepository.findByUsername(username);
+        Authentication authentication = (Authentication) request.getUserPrincipal();
+        if (authentication != null) {
+            String currentUsername = authentication.getName();
+            if(!currentUsername.equals(username)){
+                return "redirect:/login";
+            }
+        } else {
+            return "redirect:/login";
+        }*/
+
+        if(!checkCorrectProfile(username,request)){
+            return "redirect:/error";
+        }
 
         User user = userRepository.findByUsername(username);
         String alias = user.getAlias();
@@ -121,6 +137,20 @@ public class EditProfilePageController {
             user.setPassword(encodedNewPassword);
             userRepository.save(user);
             return new ResponseEntity<>("Contraseña actualizada con éxito", HttpStatus.OK);
+        }
+    }
+
+    private boolean checkCorrectProfile(String username, HttpServletRequest request){
+        Authentication authentication = (Authentication) request.getUserPrincipal();
+        User user = userRepository.findByUsername(authentication.getName());
+        if (authentication != null && user != null) {
+            if(!user.getUsername().equals(username) && !user.getRole().contains("ADMIN")){
+                return false;
+            }else{
+                return true;
+            }
+        } else {
+            return false;
         }
     }
 }
