@@ -52,20 +52,14 @@
                     Inicio
                 </a>
                 </li>
-
-                <!-- Forum option-->
-                <li class="bm-nav-item"><a class="bm-nav-link" href="../static/forumPage.html">
-                    <i class="bi-chat-left-text-fill"></i>
-                    Foro
-                </a>
-                </li>
-
+                {{#admin}}
                 <!-- Administrator menu option -->
                 <li class="bm-nav-item"><a class="bm-nav-link" href="/admin">
                     <i class="bi-gear-fill"></i>
                     Administrador
                 </a>
                 </li>
+                {{/admin}}
                 <!-- Search widget-->
                 <li class="bm-nav-item">
                     <form class="bm-d-flex position-relative" onSubmit="return false;">
@@ -87,16 +81,23 @@
                     <li class="bm-nav-item dropdown">
                         <a class="bm-nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
                            data-bs-toggle="dropdown" aria-expanded="false">
-
+                            {{#user}}
                             <img class="bm-navbar-profile-picture bm-rounded-circle"
                                  src="data:image/png;base64, {{profileImageString}}" alt="Perfil"/>
+                            {{/user}}
+                            {{^user}}
+                            <img class="bm-navbar-profile-picture bm-rounded-circle"
+                                 src="/assets/defaultProfilePicture.png" alt="Perfil"/>
+                            {{/user}}
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            {{#user}}
                             <li><a class="dropdown-item" href="/profile/{{username}}">Mi perfil</a></li>
+                            {{/user}}
                             <li>
                                 <hr class="dropdown-divider"/>
                             </li>
-                            <li><input type="submit" value="Cerrar sesión" class="btn"/></li>
+                            <li><input type="submit" value="Cerrar sesión" class="dropdown-item"/></li>
                         </ul>
                     </li>
                 </ul>
