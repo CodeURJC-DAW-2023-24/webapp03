@@ -47,21 +47,14 @@
                     Inicio
                 </a>
                 </li>
-
-                <!-- Forum option-->
-                <li class="bm-nav-item"><a class="bm-nav-link" href="forumPage.html">
-                    <i class="bi-chat-left-text-fill"></i>
-                    Foro
-                </a>
-                </li>
-
+                {{#admin}}
                 <!-- Administrator menu option -->
                 <li class="bm-nav-item"><a class="bm-nav-link" href="/admin">
                     <i class="bi-gear-fill"></i>
                     Administrador
                 </a>
                 </li>
-
+                {{/admin}}
                 <!-- Search widget-->
                 <li class="bm-nav-item">
                     <form class="bm-d-flex position-relative" onSubmit="return false;">
@@ -96,7 +89,7 @@
                             <li>
                                 <hr class="dropdown-divider"/>
                             </li>
-                            <li><input type="submit" value="Cerrar sesión" class="btn"/></li>
+                            <li><input type="submit" value="Cerrar sesión" class="dropdown-item"/></li>
                         </ul>
                     </li>
                 </ul>
@@ -126,9 +119,6 @@
             <!-- Book card-->
             <div class="col mb-5 book">
                 <div class="card h-100">
-                    <!-- Read badge-->
-                    <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Leído
-                    </div>
                     <!-- Book cover image-->
                     <img class="card-img-top" src="data:image/png;base64,{{imageString}}" alt="..."/>
                     <!-- Product details-->

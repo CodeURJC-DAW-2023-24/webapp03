@@ -225,7 +225,9 @@ public class BookPageController {
         model.addAttribute("Serie", bookSeries);
         model.addAttribute("PageCount", bookPageCount);
         model.addAttribute("Publisher", bookPublisher);
-        model.addAttribute("admin", false);
+
+        //Admin
+        model.addAttribute("admin", request.isUserInRole("ADMIN"));
 
         return "modifyBookPage";
     }

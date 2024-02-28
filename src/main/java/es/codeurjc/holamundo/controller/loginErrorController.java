@@ -28,6 +28,10 @@ public class loginErrorController {
             model.addAttribute("profileImageString", user.getProfileImageString());
         }
 
+        //Admin
+        model.addAttribute("admin", request.isUserInRole("ADMIN"));
+
+
         return "loginError";
     }
 }

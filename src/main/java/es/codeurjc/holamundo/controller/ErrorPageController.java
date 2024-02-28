@@ -37,6 +37,8 @@ public class ErrorPageController {
         } else {
             isUser = false;
         }
+        //Admin
+        model.addAttribute("admin", request.isUserInRole("ADMIN"));
 
         model.addAttribute("isUser", isUser);
         model.addAttribute("errorDetails", "Ha ocurrido un error inesperado. Por favor, inténtelo de nuevo más tarde.");

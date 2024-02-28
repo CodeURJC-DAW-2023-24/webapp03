@@ -70,6 +70,9 @@ public class SearchResultsPageController {
         model.addAttribute("maxBooks", maxBooks);
         model.addAttribute("ratings", ratings);
 
+        //Admin
+        model.addAttribute("admin", request.isUserInRole("ADMIN"));
+
         return "searchResultsPage";
     }
 

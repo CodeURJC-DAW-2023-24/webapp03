@@ -36,6 +36,9 @@ public class GlobalExceptionHandler {
             isUser = false;
 
         }
+        //Admin
+        model.addAttribute("admin", request.isUserInRole("ADMIN"));
+
 
         model.addAttribute("user", isUser);
 

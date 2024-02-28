@@ -33,7 +33,7 @@ public class EditProfilePageController {
     }
 
     @GetMapping("/profile/{username}/edit")
-    public String loadEditProfilePage(Model model, @PathVariable String username) throws SQLException {
+    public String loadEditProfilePage(Model model, @PathVariable String username, HttpServletRequest request) throws SQLException {
 
         User user = userRepository.findByUsername(username);
         String alias = user.getAlias();
@@ -52,6 +52,10 @@ public class EditProfilePageController {
         model.addAttribute("email", email);
         model.addAttribute("password", password);
 
+        //Admin
+        model.addAttribute("admin", request.isUserInRole("ADMIN"));
+
+
         return "editProfilePage";
     }
 
@@ -59,7 +63,8 @@ public class EditProfilePageController {
     public String editProfile(Model model, @PathVariable String username,
                               @RequestParam("alias") String newAlias,
                               @RequestParam("email") String newEmail,
-                              @RequestParam("description") String newDescription) throws SQLException {
+                              @RequestParam("description") String newDescription,
+                              HttpServletRequest request) throws SQLException {
 
         User user = userRepository.findByUsername(username);
 
@@ -70,6 +75,9 @@ public class EditProfilePageController {
             userRepository.save(user);
         }
 
+        //Admin
+        model.addAttribute("admin", request.isUserInRole("ADMIN"));
+
         model.addAttribute("alias", user.getAlias());
         model.addAttribute("email", user.getEmail());
         model.addAttribute("description", user.getDescription());
@@ -77,7 +85,6 @@ public class EditProfilePageController {
 
         return "editProfilePage";
     }
-
 
 
     @PostMapping("/profile/{username}/upload")
@@ -90,7 +97,7 @@ public class EditProfilePageController {
             if (user != null) {
                 user.setProfileImageFile(new SerialBlob(Base64.decodeBase64((String) image.get("image"))));
                 userRepository.save(user);
-                responseEntity =  new ResponseEntity<>("Imagen subida con éxito", HttpStatus.OK);
+                responseEntity = new ResponseEntity<>("Imagen subida con éxito", HttpStatus.OK);
             }
         } else {
             responseEntity = new ResponseEntity<>("Error: No se pudo subir la imagen", HttpStatus.FORBIDDEN);
