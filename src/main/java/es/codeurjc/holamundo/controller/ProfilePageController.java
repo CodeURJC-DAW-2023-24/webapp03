@@ -53,15 +53,11 @@ public class ProfilePageController {
         if (authentication != null) {
             model.addAttribute("user", true);
             String currentUsername = authentication.getName();
-            if (currentUsername.equals(username)) {
+            User userlogged = userRepository.findByUsername(authentication.getName());
+            if (currentUsername.equals(username) && !userlogged.getRole().contains("ADMIN")) {
                 isCurrentUser = true;
             } else {
                 isCurrentUser = false;
-                // Check if the current user is an admin
-                /*User currentUser = userRepository.findByUsername(currentUsername);
-                if (currentUser.getRole().contains("ADMIN")) {
-                    isCurrentUser = true;
-                }*/ //Not needed since admins wil have their own button
             }
         }
         model.addAttribute("currentUser", isCurrentUser);
@@ -80,8 +76,6 @@ public class ProfilePageController {
         model.addAttribute("email", email);
         model.addAttribute("password", password);
 
-        // Get user's book lists from the database
-        //UserBookLists
         int nReadBooks = user.getReadBooks().size();
         int nReadingBooks = user.getReadingBooks().size();
         int nWantedBooks = user.getWantedBooks().size();
@@ -157,8 +151,6 @@ public class ProfilePageController {
         model.addAttribute("admin", request.isUserInRole("ADMIN"));
 
         //Unregistered user
-        /*if(authentication.getName().equals(username)){
-        }*/
         model.addAttribute("noUser", !request.isUserInRole("USER"));
 
 
