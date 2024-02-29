@@ -302,10 +302,24 @@ public class BookPageController {
                 bookRepository.save(book);
 
             }else if ("Borrar".equals(accion)) {
+                for (User userBD : userRepository.findAll()) {
+                    userBD.removeReadBook(book);
+                    userBD.removeReadingBook(book);
+                    userBD.removeWantedBook(book); 
+
+                    userRepository.save(user);
+                }
+    
+                
+                for (Review review : reviewRepository.findByBook(book)) {
+                    book.removeReview(review);                        
+                    
+                    reviewRepository.delete(review);
+                }
+    
                 bookRepository.deleteById(book.getID());
             }
-
-            return "redirect:/book/" + bookID;
+            return "redirect:/";
         }else{
             return"redirect:/error";
         }

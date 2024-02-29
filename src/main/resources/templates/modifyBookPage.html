@@ -256,7 +256,7 @@
                     </div>
 
                     <input type='submit' name="accion" value='Guardar' class="btn btn-primary-light save-button">
-                    <input type="submit" name="accion" value="Borrar" class="btn btn-danger"/>
+                    <input type="submit" name="accion" value="Borrar" class="btn btn-danger" onclick="return confirm('¿Estás seguro de que deseas borrarlo?\n(este cambio es irreversible)')"/>
                     <input type="hidden" name="_csrf" value="{{token}}"/>
                 </form>
             </div>

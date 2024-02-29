@@ -46,7 +46,7 @@ public class Book {
     private String series;
     private int pageCount;
     private String publisher;
-    @OneToMany(mappedBy = "book")
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
     private List<Review> reviews = new ArrayList<>();
 
     public Book() {
