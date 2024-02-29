@@ -2,6 +2,8 @@ package es.codeurjc.holamundo.controller;
 
 import es.codeurjc.holamundo.entity.User;
 import es.codeurjc.holamundo.repository.UserRepository;
+import es.codeurjc.holamundo.service.EmailService;
+import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,9 @@ public class EditProfilePageController {
 
     @Autowired
     PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private EmailService emailService;
 
     public EditProfilePageController() {
 
@@ -122,7 +127,7 @@ public class EditProfilePageController {
     }
 
     @PostMapping("/profile/{username}/editPassword")
-    public ResponseEntity<?> editProfile(@RequestParam("currentPassword") String currentPassword, @RequestBody String newPassword) {
+    public ResponseEntity<?> editProfile(@RequestParam("currentPassword") String currentPassword, @RequestBody String newPassword) throws MessagingException {
         // Obtén el usuario actual
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UserDetails userDetails = (UserDetails) auth.getPrincipal();
@@ -136,6 +141,8 @@ public class EditProfilePageController {
             String encodedNewPassword = passwordEncoder.encode(newPassword);
             user.setPassword(encodedNewPassword);
             userRepository.save(user);
+            // notify via email
+            emailService.sendEmail(user.getEmail(), "Contraseña actualizada", "Su contraseña ha sido actualizada con éxito");
             return new ResponseEntity<>("Contraseña actualizada con éxito", HttpStatus.OK);
         }
     }
