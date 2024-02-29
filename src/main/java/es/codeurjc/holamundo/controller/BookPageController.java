@@ -73,6 +73,12 @@ public class BookPageController {
 
             isUser = true;
             isAdmin = request.isUserInRole("ADMIN");
+
+            String authorUser = bookRepository.findByID(bookID).getAuthorString();
+
+            if(currentUsername.equals(authorUser) && user.getRole().contains("AUTHOR")){
+                model.addAttribute("author",true);
+            }
         } else {
             isUser = false;
         }
@@ -227,13 +233,13 @@ public class BookPageController {
         model.addAttribute("Publisher", bookPublisher);
 
         //Admin
-        model.addAttribute("admin", request.isUserInRole("ADMIN"));
+        //model.addAttribute("admin", request.isUserInRole("ADMIN"));
 
         return "modifyBookPage";
     }
 
     @PostMapping("/modifyDone/{bookID}") //Parametros del formulario
-    public String modifyDone(Model model, @PathVariable("bookID") int bookID, @RequestParam("inputBookName") String inputBookName
+    public String modifyDone(Model model,HttpServletRequest request, @PathVariable("bookID") int bookID, @RequestParam("inputBookName") String inputBookName
             , @RequestParam("inputBookAuthorName") String inputBookAuthorName, @RequestParam("inputBookISBN") String inputBookISBN
             , @RequestParam("inputBookPages") int inputBookPages, @RequestParam("inputBookGenre") String inputBookGenre
             , @RequestParam("inputBookDate") String inputBookDate
@@ -241,60 +247,68 @@ public class BookPageController {
             , @RequestParam("inputBookDescription") String inputBookDescription, @RequestParam("inputImageFile") MultipartFile InputImageFile
             , @RequestParam String accion) throws IOException, SQLException {
 
-        Book book = bookRepository.findByID(bookID);
+        Authentication authentication = (Authentication) request.getUserPrincipal();
+        String currentUsername = authentication.getName();
+        User user = userRepository.findByUsername(currentUsername);
+        String authorUser = bookRepository.findByID(bookID).getAuthorString();
 
-        if ("Guardar".equals(accion)) {
-            //Se puede realizar con setter en la clase Book
-            book.setTitle(inputBookName);
-            book.setISBN(inputBookISBN);
-            book.setPageCount(inputBookPages);
-            book.setReleaseDate(inputBookDate);
-            book.setPublisher(inputBookPublisher);
-            book.setSeries(inputBookSeries);
-            book.setDescription(inputBookDescription);
+        if((user.getUsername().equals(authorUser) && user.getRole().contains("AUTHOR")) || user.getRole().contains("ADMIN")){
+            Book book = bookRepository.findByID(bookID);
+            if ("Guardar".equals(accion)) {
+                //Se puede realizar con setter en la clase Book
+                book.setTitle(inputBookName);
+                book.setISBN(inputBookISBN);
+                book.setPageCount(inputBookPages);
+                book.setReleaseDate(inputBookDate);
+                book.setPublisher(inputBookPublisher);
+                book.setSeries(inputBookSeries);
+                book.setDescription(inputBookDescription);
 
-            //Check if authors exist, they are separated by ","
-            String[] authorsSplit = inputBookAuthorName.split(",");
-            ArrayList<Author> authorList = new ArrayList<>();
-            for (int i = 0; i < authorsSplit.length; i++) {
-                Author found = authorsBD.findByName(authorsSplit[i]);
-                if (found != null) {
-                    authorList.add(found);
+                //Check if authors exist, they are separated by ","
+                String[] authorsSplit = inputBookAuthorName.split(",");
+                ArrayList<Author> authorList = new ArrayList<>();
+                for (int i = 0; i < authorsSplit.length; i++) {
+                    Author found = authorsBD.findByName(authorsSplit[i]);
+                    if (found != null) {
+                        authorList.add(found);
+                    } else {
+                        Author newAuthor = new Author(authorsSplit[i]);
+                        newAuthor.addBook(book); //Add author to DB
+                        authorList.add(newAuthor); //Add to list
+                        authorsBD.save(newAuthor);
+                    }
+                }
+                book.setAuthor(authorList); //Add author/s to list
+
+                //Check if Genre exist
+                Genre genreFound = genreBD.findByName(inputBookGenre);
+                if (genreFound != null) {
+                    book.setGenre(genreFound);
                 } else {
-                    Author newAuthor = new Author(authorsSplit[i]);
-                    newAuthor.addBook(book); //Add author to DB
-                    authorList.add(newAuthor); //Add to list
-                    authorsBD.save(newAuthor);
+                    Genre newGenre = new Genre(inputBookGenre);
+                    book.setGenre(newGenre); //Add genre to Book
+                    newGenre.addBook(book);
+                    genreBD.save(newGenre);
                 }
-            }
-            book.setAuthor(authorList); //Add author/s to list
 
-            //Check if Genre exist
-            Genre genreFound = genreBD.findByName(inputBookGenre);
-            if (genreFound != null) {
-                book.setGenre(genreFound);
-            } else {
-                Genre newGenre = new Genre(inputBookGenre);
-                book.setGenre(newGenre); //Add genre to Book
-                newGenre.addBook(book);
-                genreBD.save(newGenre);
-            }
-
-            //If no picture was added, check for old pic. If there never was a pic, insert placeholder.
-            if (InputImageFile.isEmpty()) {
-                if (book.getImageFile().length() == 0 || book.getImageFile() == null) {
-                    book.setImageFile(book.URLtoBlob("https://fissac.com/wp-content/uploads/2020/11/placeholder.png"));
+                //If no picture was added, check for old pic. If there never was a pic, insert placeholder.
+                if (InputImageFile.isEmpty()) {
+                    if (book.getImageFile().length() == 0 || book.getImageFile() == null) {
+                        book.setImageFile(book.URLtoBlob("https://fissac.com/wp-content/uploads/2020/11/placeholder.png"));
+                    }
+                } else {
+                    book.setImageFile(BlobProxy.generateProxy(InputImageFile.getInputStream(), InputImageFile.getSize()));
                 }
-            } else {
-                book.setImageFile(BlobProxy.generateProxy(InputImageFile.getInputStream(), InputImageFile.getSize()));
-            }
-            bookRepository.save(book);
+                bookRepository.save(book);
 
-        } else if ("Borrar".equals(accion)) {
-            bookRepository.deleteById(book.getID());
+            }else if ("Borrar".equals(accion)) {
+                bookRepository.deleteById(book.getID());
+            }
+
+            return "redirect:/book/" + bookID;
+        }else{
+            return"redirect:/error";
         }
-
-        return "redirect:/book/" + bookID;
     }
 
     @GetMapping("/book/{currentBookID}/loadMoreReviews")

@@ -70,6 +70,7 @@ public class AdminPageController {
             User user = userRepository.findByUsername(currentUsername);
             String imageString = user.blobToString(user.getProfileImageFile());
             model.addAttribute("profileImageString", imageString);
+            model.addAttribute("username", currentUsername);
         } else {
             return "redirect:/login";
         }

@@ -157,7 +157,7 @@
                     <a class="btn btn-primary branding-btn-primary" id="editProfileBut">Modificar perfil</a>
                     {{/currentUser}}
                     {{#admin}}
-                    <a href="#" class="btn btn-secondary branding-btn-secondary">Convertir en autor</a>
+                    <a href="/profile/{{username}}/convertAuthor" class="btn btn-secondary branding-btn-secondary">Convertir en autor</a>
                     {{/admin}}
                     {{#admin}}
                     <a href="/profile/{{username}}/delete" class="btn btn-secondary branding-btn-secondary">Banear usuario</a>

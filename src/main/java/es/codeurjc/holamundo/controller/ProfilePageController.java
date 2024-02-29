@@ -16,6 +16,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 @Controller
@@ -39,11 +42,16 @@ public class ProfilePageController {
 
         // Search for admin role
         String role = "USER";
-        for (String userRole : userRoles) {
+        /*for (String userRole : userRoles) {
             if (userRole.equals("ADMIN")) {
                 role = "ADMIN";
                 break;
             }
+        }*/
+        if(userRoles.contains("ADMIN")){
+            role = "ADMIN";
+        }else if(userRoles.contains("AUTHOR")){
+            role = "AUTHOR";
         }
 
         boolean isCurrentUser = false;
@@ -258,4 +266,23 @@ public class ProfilePageController {
         }
         return "redirect:/admin";
     }
+
+    @GetMapping("/profile/{username}/convertAuthor")
+    public String getMethodName(@PathVariable String username, HttpServletRequest request) {
+        Authentication authentication = (Authentication) request.getUserPrincipal();
+        if(authentication != null){
+            User user = userRepository.findByUsername(authentication.getName());
+            if(user.getRole().contains("ADMIN")){
+                User userConverted = userRepository.findByUsername(username);
+                userConverted.getRole().add("AUTHOR");
+                userRepository.save(userConverted);
+            }else{
+                return "redirect:/error";
+            }
+        }else{
+            return "redirect:/error";
+        }
+        return "redirect:/";
+    }
+    
 }
