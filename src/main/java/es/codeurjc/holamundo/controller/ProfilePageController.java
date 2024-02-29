@@ -53,8 +53,8 @@ public class ProfilePageController {
         if (authentication != null) {
             model.addAttribute("user", true);
             String currentUsername = authentication.getName();
-            User userlogged = userRepository.findByUsername(authentication.getName());
-            if (currentUsername.equals(username) && !userlogged.getRole().contains("ADMIN")) {
+            //User userlogged = userRepository.findByUsername(authentication.getName());
+            if (currentUsername.equals(username)) {
                 isCurrentUser = true;
             } else {
                 isCurrentUser = false;

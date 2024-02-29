@@ -152,7 +152,9 @@
                 </div>
                 <div class="buttons-container">
                     {{#currentUser}}
-                    <a class="btn btn-primary branding-btn-primary" id="editProfileBut">Modificar perfil</a>
+                        {{^admin}}
+                            <a class="btn btn-primary branding-btn-primary" id="editProfileBut">Modificar perfil</a>
+                        {{/admin}}
                     {{/currentUser}}
                     {{#admin}}
                     <a class="btn btn-primary branding-btn-primary" id="editProfileBut">Modificar perfil</a>
