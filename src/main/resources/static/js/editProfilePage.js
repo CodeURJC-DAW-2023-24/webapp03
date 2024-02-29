@@ -81,9 +81,11 @@ $(() => {
         let newPassword;
         let url = "https://" + window.location.host + "/profile/" + $("#username").text() + "/editPassword";
         let correctPassword = false;
+        let noPasswordChange = true;
 
         //If password is to be changed...
         if (($("#inputOldPassword").val() !== "") && ($("#inputPassword").val() !== "")) {
+            noPasswordChange = false;
             newPassword = $("#inputPassword").val();
             url += "?currentPassword=" + $("#inputOldPassword").val();
             $.ajax({
@@ -111,7 +113,7 @@ $(() => {
         }
 
         //Fields will only be updated if either the password is to be changed and is also correct or either if it doesn't want to be changed at all
-        if (correctPassword) {
+        if (correctPassword || noPasswordChange) {
             $.ajax({
                 url: "https://" + window.location.host + "/profile/" + $("#username").text() + "/edit" + "?alias=" + $("#inputAlias").val() + "&email=" + $("#inputEmailAddress").val() + "&description=" + $("#inputProfileDescription").val(),
                 type: "POST",
