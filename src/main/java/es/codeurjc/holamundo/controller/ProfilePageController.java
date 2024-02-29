@@ -157,9 +157,8 @@ public class ProfilePageController {
         model.addAttribute("admin", request.isUserInRole("ADMIN"));
 
         //Unregistered user
-        if(authentication.getName().equals(username)){
-
-        }
+        /*if(authentication.getName().equals(username)){
+        }*/
         model.addAttribute("noUser", !request.isUserInRole("USER"));
 
 
