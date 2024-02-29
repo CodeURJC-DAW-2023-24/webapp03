@@ -40,14 +40,8 @@ public class ProfilePageController {
         //User info
         List<String> userRoles = user.getRole();
 
-        // Search for admin role
+        // Search for admin role or Author role
         String role = "USER";
-        /*for (String userRole : userRoles) {
-            if (userRole.equals("ADMIN")) {
-                role = "ADMIN";
-                break;
-            }
-        }*/
         if(userRoles.contains("ADMIN")){
             role = "ADMIN";
         }else if(userRoles.contains("AUTHOR")){
@@ -62,11 +56,12 @@ public class ProfilePageController {
             if (currentUsername.equals(username)) {
                 isCurrentUser = true;
             } else {
+                isCurrentUser = false;
                 // Check if the current user is an admin
-                User currentUser = userRepository.findByUsername(currentUsername);
+                /*User currentUser = userRepository.findByUsername(currentUsername);
                 if (currentUser.getRole().contains("ADMIN")) {
                     isCurrentUser = true;
-                }
+                }*/ //Not needed since admins wil have their own button
             }
         }
         model.addAttribute("currentUser", isCurrentUser);
@@ -162,6 +157,9 @@ public class ProfilePageController {
         model.addAttribute("admin", request.isUserInRole("ADMIN"));
 
         //Unregistered user
+        if(authentication.getName().equals(username)){
+
+        }
         model.addAttribute("noUser", !request.isUserInRole("USER"));
 
 

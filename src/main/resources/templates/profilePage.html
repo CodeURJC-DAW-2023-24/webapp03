@@ -106,19 +106,17 @@
     <div class="container px-4 px-lg-5 my-5">
         <div class="text-start text-dark">
             <!--THIS IS A TEMPORAL CHANGE, check if is the user-->
-            {{#noUser}}
+            {{^currentUser}}
             <p class="lead fw-normal text-black-50 mb-0">Estás viendo el perfil de</p>
-            {{/noUser}}
+            {{/currentUser}}
             <h1 class="display-4 fw-bolder" id="userName-header">{{username}}</h1>
-            {{^noUser}}
+            {{#currentUser}}
             <p class="lead fw-normal text-black-50 mb-0">Este es tu perfil</p>
-           
-
             <form  action="/logout" method="post" class="logout">
                 <input type="submit" value="Cerrar sesión" class="btn"/>
                 <input type="hidden" name="_csrf" value="{{token}}"/>
             </form>
-             {{/noUser}}
+             {{/currentUser}}
 
         </div>
     </div>
@@ -157,9 +155,10 @@
                     <a class="btn btn-primary branding-btn-primary" id="editProfileBut">Modificar perfil</a>
                     {{/currentUser}}
                     {{#admin}}
-                    <a href="/profile/{{username}}/convertAuthor" class="btn btn-secondary branding-btn-secondary">Convertir en autor</a>
+                    <a class="btn btn-primary branding-btn-primary" id="editProfileBut">Modificar perfil</a>
                     {{/admin}}
                     {{#admin}}
+                    <a href="/profile/{{username}}/convertAuthor" class="btn btn-secondary branding-btn-secondary">Convertir en autor</a>
                     <a href="/profile/{{username}}/delete" class="btn btn-secondary branding-btn-secondary">Banear usuario</a>
                     {{/admin}}
                 </div>
