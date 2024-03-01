@@ -5,12 +5,17 @@ import es.codeurjc.holamundo.entity.User;
 import es.codeurjc.holamundo.repository.BookRepository;
 import es.codeurjc.holamundo.repository.UserRepository;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,7 +23,6 @@ import org.springframework.web.bind.annotation.*;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
 
 
 @Controller
@@ -42,9 +46,9 @@ public class ProfilePageController {
 
         // Search for admin role or Author role
         String role = "USER";
-        if(userRoles.contains("ADMIN")){
+        if (userRoles.contains("ADMIN")) {
             role = "ADMIN";
-        }else if(userRoles.contains("AUTHOR")){
+        } else if (userRoles.contains("AUTHOR")) {
             role = "AUTHOR";
         }
 
@@ -259,19 +263,94 @@ public class ProfilePageController {
     @GetMapping("/profile/{username}/convertAuthor")
     public String getMethodName(@PathVariable String username, HttpServletRequest request) {
         Authentication authentication = (Authentication) request.getUserPrincipal();
-        if(authentication != null){
+        if (authentication != null) {
             User user = userRepository.findByUsername(authentication.getName());
-            if(user.getRole().contains("ADMIN")){
+            if (user.getRole().contains("ADMIN")) {
                 User userConverted = userRepository.findByUsername(username);
                 userConverted.getRole().add("AUTHOR");
                 userRepository.save(userConverted);
-            }else{
+            } else {
                 return "redirect:/error";
             }
-        }else{
+        } else {
             return "redirect:/error";
         }
         return "redirect:/";
     }
-    
+
+    private String convertBooksToCSV(List<Book> books) {
+        StringBuilder builder = new StringBuilder();
+        builder.append("ID,Title,Author\n"); // CSV header
+        for (Book book : books) {
+            builder.append(book.getID()).append(",");
+            builder.append(book.getTitle()).append(",");
+            builder.append(book.getAuthor()).append("\n");
+        }
+        return builder.toString();
+    }
+
+    @GetMapping("/profile/{username}/exportLists")
+    public ResponseEntity<String> exportLists(@PathVariable String username, HttpServletRequest request) throws IOException {
+        //How to convert each list of books to a CSV file and download it to the browser?
+        User user = userRepository.findByUsername(username);
+
+        String readBooksCSV = convertBooksToCSV(user.getReadBooks());
+        String readingBooksCSV = convertBooksToCSV(user.getReadingBooks());
+        String wantedBooksCSV = convertBooksToCSV(user.getWantedBooks());
+
+        String allBooksCSV = "Read Books:\n" + readBooksCSV + "\nReading Books:\n" + readingBooksCSV + "\nWanted Books:\n" + wantedBooksCSV;
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_TYPE, "text/csv; charset=UTF-8")
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + username + "Lists.csv\"")
+                .body(allBooksCSV);
+    }
+
+    @PostMapping("/profile/{username}/importLists")
+    public String importLists(@RequestBody String file, HttpServletRequest request) {
+        Authentication authentication = (Authentication) request.getUserPrincipal();
+        String username = authentication.getName();
+
+        String[] lines = file.split("\n");
+        List<Book> readBooks = new ArrayList<>();
+        List<Book> readingBooks = new ArrayList<>();
+        List<Book> wantedBooks = new ArrayList<>();
+        for (String line : lines) {
+            String[] fields = line.split(",");
+            Long bookId = Long.parseLong(fields[1]);
+            Optional<Book> optionalBook = bookRepository.findById(bookId);
+            if (optionalBook.isPresent()) {
+                Book book = optionalBook.get();
+                switch (fields[0]) {
+                    case "Read Books":
+                        readBooks.add(book);
+                        break;
+                    case "Reading Books":
+                        readingBooks.add(book);
+                        break;
+                    case "Wanted Books":
+                        wantedBooks.add(book);
+                        break;
+                }
+            }
+        }
+        System.out.println("Read Books: " + readBooks);
+
+        // Retrieve the user from the database
+        User user = userRepository.findByUsername(username);
+
+        // Update the user's book lists with the new books
+        user.getReadBooks().clear();
+        user.getReadBooks().addAll(readBooks);
+        user.getReadingBooks().clear();
+        user.getReadingBooks().addAll(readingBooks);
+        user.getWantedBooks().clear();
+        user.getWantedBooks().addAll(wantedBooks);
+
+        // Save the updated user back to the database
+        userRepository.save(user);
+
+        return "redirect:/profile/" + username;
+    }
+
 }

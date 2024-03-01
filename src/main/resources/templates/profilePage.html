@@ -112,11 +112,11 @@
             <h1 class="display-4 fw-bolder" id="userName-header">{{username}}</h1>
             {{#currentUser}}
             <p class="lead fw-normal text-black-50 mb-0">Este es tu perfil</p>
-            <form  action="/logout" method="post" class="logout">
+            <form action="/logout" method="post" class="logout">
                 <input type="submit" value="Cerrar sesión" class="btn"/>
                 <input type="hidden" name="_csrf" value="{{token}}"/>
             </form>
-             {{/currentUser}}
+            {{/currentUser}}
 
         </div>
     </div>
@@ -152,16 +152,18 @@
                 </div>
                 <div class="buttons-container">
                     {{#currentUser}}
-                        {{^admin}}
-                            <a class="btn btn-primary branding-btn-primary" id="editProfileBut">Modificar perfil</a>
-                        {{/admin}}
+                    {{^admin}}
+                    <a class="btn btn-primary branding-btn-primary" id="editProfileBut">Modificar perfil</a>
+                    {{/admin}}
                     {{/currentUser}}
                     {{#admin}}
                     <a class="btn btn-primary branding-btn-primary" id="editProfileBut">Modificar perfil</a>
                     {{/admin}}
                     {{#admin}}
-                    <a href="/profile/{{username}}/convertAuthor" class="btn btn-secondary branding-btn-secondary">Convertir en autor</a>
-                    <a href="/profile/{{username}}/delete" class="btn btn-secondary branding-btn-secondary">Banear usuario</a>
+                    <a href="/profile/{{username}}/convertAuthor" class="btn btn-secondary branding-btn-secondary">Convertir
+                        en autor</a>
+                    <a href="/profile/{{username}}/delete" class="btn btn-secondary branding-btn-secondary">Banear
+                        usuario</a>
                     {{/admin}}
                 </div>
             </div>
@@ -191,6 +193,23 @@
                         <h6 class="count h2" data-to="" data-speed="">{{nReviews}}</h6>
                         <p class="m-0px font-w-600">Reseñas</p>
                     </div>
+                </div>
+            </div>
+            <div class="row" id="exportImport" style="text-align: center; justify-content: center; margin-top: 20px">
+                <div class="col-6 col-lg-3">
+                    <a id="csvExportButton" class="btn btn-secondary branding-btn-secondary action-button"
+                       style="border: 1px solid dimgrey">
+                        <i class="fa-solid fa-file-export" aria-hidden="true"></i>
+                        Exportar
+                    </a>
+                    {{#currentUser}}
+                    <a id="csvImportBtn" class="btn btn-secondary branding-btn-secondary action-button"
+                       style="border: 1px solid dimgrey">
+                        <i class="fa-solid fa-file-import" aria-hidden="true"></i>
+                        Importar
+                    </a>
+                    <input id="importIn" type="file" accept=".csv" style="display: none"></input>
+                    {{/currentUser}}
                 </div>
             </div>
         </div>
@@ -228,7 +247,8 @@
                         <div style="display:none" class="rating">{{.}}</div>
                         {{/ratingsRead}}
                     </div>
-                    <a id="load-more-btn-read" class="btn btn-secondary-light flex-shrink-0 action-button" style="border: 1px solid dimgrey">
+                    <a id="load-more-btn-read" class="btn btn-secondary-light flex-shrink-0 action-button"
+                       style="border: 1px solid dimgrey">
                         <i class="fa-solid fa-arrows-rotate" aria-hidden="true"></i>
                         Cargar más
                     </a>
@@ -267,7 +287,8 @@
                         <div style="display:none" class="rating">{{.}}</div>
                         {{/ratingsReading}}
                     </div>
-                    <a id="load-more-btn-reading" class="btn btn-secondary-light flex-shrink-0 action-button" style="border: 1px solid dimgrey">
+                    <a id="load-more-btn-reading" class="btn btn-secondary-light flex-shrink-0 action-button"
+                       style="border: 1px solid dimgrey">
                         <i class="fa-solid fa-arrows-rotate" aria-hidden="true"></i>
                         Cargar más
                     </a>
@@ -305,7 +326,8 @@
                         <div style="display:none" class="rating">{{.}}</div>
                         {{/ratingsWanted}}
                     </div>
-                    <a id="load-more-btn-wanted" class="btn btn-secondary-light flex-shrink-0 action-button" style="border: 1px solid dimgrey">
+                    <a id="load-more-btn-wanted" class="btn btn-secondary-light flex-shrink-0 action-button"
+                       style="border: 1px solid dimgrey">
                         <i class="fa-solid fa-arrows-rotate" aria-hidden="true"></i>
                         Cargar más
                     </a>

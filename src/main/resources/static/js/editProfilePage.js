@@ -1,6 +1,6 @@
 $(() => {
 
-    let token = $("#_csrf").attr("value");
+    let token = $("#_csrf").first().attr("value");
 
     if (localStorage.getItem("wrongPassword")) {
         $("#wrongPassword").show();
