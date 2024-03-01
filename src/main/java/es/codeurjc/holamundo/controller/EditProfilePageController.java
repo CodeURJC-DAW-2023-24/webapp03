@@ -18,6 +18,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.sql.rowset.serial.SerialBlob;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Map;
 
@@ -127,7 +128,7 @@ public class EditProfilePageController {
     }
 
     @PostMapping("/profile/{username}/editPassword")
-    public ResponseEntity<?> editProfile(@RequestParam("currentPassword") String currentPassword, @RequestBody String newPassword) throws MessagingException {
+    public ResponseEntity<?> editProfile(@RequestParam("currentPassword") String currentPassword, @RequestBody String newPassword) throws MessagingException, IOException {
         // Obtén el usuario actual
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UserDetails userDetails = (UserDetails) auth.getPrincipal();

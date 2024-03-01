@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import es.codeurjc.holamundo.service.EmailService;
 
+import java.io.IOException;
+
 @RestController
 @RequestMapping("/email")
 public class EmailController {
@@ -20,7 +22,7 @@ public class EmailController {
     public String sendEmail(
             @RequestParam String to,
             @RequestParam String subject,
-            @RequestParam String text) throws MessagingException {
+            @RequestParam String text) throws MessagingException, IOException {
 
         emailService.sendEmail(to, subject, text);
         return "Email sent successfully!";
