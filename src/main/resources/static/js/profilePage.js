@@ -183,33 +183,4 @@ $(() => {
             }
         })
     });
-
-    $("#csvImportBtn").on("click", () => {
-        $("#importIn").click();
-    });
-
-    $("#importIn").on("change", () => {
-        let decision = confirm("Esto sobreescribirá tus listas actuales. ¿Estás seguro?");
-        if (decision) {
-            let file = $("#importIn")[0].files[0];
-            $.ajax({
-                type: "POST",
-                url: "https://" + window.location.host + "/profile/" + username + "/importLists",
-                data: file,
-                datatype: "json",
-                contentType: "text/csv",
-                processData: false,
-                beforeSend: (xhr) => {
-                    xhr.setRequestHeader("X-CSRF-TOKEN", token);
-                },
-                success: () => {
-                    location.reload();
-                },
-                error: (err) => {
-                    console.log(err);
-                }
-            });
-        }
-        //location.reload();
-    });
 })
