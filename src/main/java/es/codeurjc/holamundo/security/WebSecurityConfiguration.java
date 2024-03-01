@@ -45,7 +45,7 @@ public class WebSecurityConfiguration {
                 .requestMatchers("/assets/**", "/css/**", "/js/**", "templates/**",
                     "/book/*", "/book/*/loadMoreReviews", "/errorPage/**", "/",
                     "/landingPage/loadMore", "/landingPage/mostReadGenres",
-                    "/loginError", "/profile/*", "/profile/*/loadMore", "/search/**",
+                    "/loginError", "/profile/*", "/profile/*/loadMore", "/profile/*/exportLists", "/search/**",
                     "/login", "/login", "/login/**", "/signup/**", "/signup", "/error/**", "/mostReadGenres/**").permitAll()
                 //Private pages
                 //USER
