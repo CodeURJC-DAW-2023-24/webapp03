@@ -5,12 +5,18 @@ import es.codeurjc.holamundo.repository.AuthorRepository;
 import es.codeurjc.holamundo.repository.BookRepository;
 import jakarta.annotation.PostConstruct;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.SQLException;
 
 import javax.sql.rowset.serial.SerialException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
+
+import org.json.JSONArray;
 
 @Service
 public class BookSampleService {
@@ -20,8 +26,11 @@ public class BookSampleService {
     @Autowired
     private AuthorRepository authorRepository;
 
+    @Autowired
+    private JSONArray books;
+
     @PostConstruct
-    public void init() throws SerialException, SQLException {
+    public void init() throws SerialException, SQLException, IOException {
         // Add some books (Tolkien)
         Book book1 = new Book("The Hobbit", "The Hobbit, or There and Back Again is a children's fantasy novel by English author J. R. R. Tolkien.", "https://cdn.kobo.com/book-images/cf32789f-22db-4ad0-bba4-9c0bf69fb872/1200/1200/False/the-hobbit.jpg", "21-09-1937", "978-0261102217", "The Lord of the Rings", 310, "Allen & Unwin");
         Book book2 = new Book("The Fellowship of the Ring", "The Fellowship of the Ring is the first of three volumes of the epic novel The Lord of the Rings by the English author J.R.R. Tolkien. It is followed by The Two Towers and The Return of the King.", "https://m.media-amazon.com/images/I/813UBZ-O8sL._AC_UF1000,1000_QL80_.jpg", "29-07-1954", "978-0261102217", "The Lord of the Rings", 423, "Allen & Unwin");
@@ -75,6 +84,16 @@ public class BookSampleService {
         bookRepository.save(book10);
         bookRepository.save(book11);
         bookRepository.save(book12);
+
+        //Add books from dataset
+        for (int i = 0; i < books.length(); i++) {
+            if (bookRepository.findByTitle(books.getJSONObject(i).getString("title")) == null) {
+                Book book = new Book(books.getJSONObject(i).getString("title"), books.getJSONObject(i).getString("description"), books.getJSONObject(i).getString("imageString"), String.valueOf(books.getJSONObject(i).getInt("releaseDate")), books.getJSONObject(i).getString("ISBN"), books.getJSONObject(i).getString("series"), Integer.parseInt(books.getJSONObject(i).getString("Page Count").replaceAll(" ", "")), books.getJSONObject(i).getString("publisher"));
+                book.addAuthor(authorRepository.findByName(books.getJSONObject(i).getString("author")));
+                book.setImageFile(book.URLtoBlob(book.getImageString()));
+                bookRepository.save(book);
+            }
+        }
     }
 
 

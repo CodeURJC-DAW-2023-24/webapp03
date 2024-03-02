@@ -5,6 +5,7 @@ import es.codeurjc.holamundo.entity.Genre;
 import es.codeurjc.holamundo.repository.BookRepository;
 import es.codeurjc.holamundo.repository.GenreRepository;
 import jakarta.annotation.PostConstruct;
+import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +17,9 @@ public class GenreSampleService {
 
     @Autowired
     private BookRepository bookRepository;
+
+    @Autowired
+    private JSONArray books;
 
     @PostConstruct
     public void init() {
@@ -89,5 +93,23 @@ public class GenreSampleService {
         bookRepository.save(book11);
         bookRepository.save(book12);
 
+        //Add genres from the books dataset
+        for (int i = 0; i < books.length(); i++) {
+            String newGenreName = books.getJSONObject(i).getString("genre");
+            Book book = bookRepository.findByTitle(books.getJSONObject(i).getString("title"));
+            if (genreRepository.findByName(newGenreName) == null) {
+                Genre genre = new Genre(newGenreName);
+                book.setGenre(genre);
+                genre.addBook(book);
+                genreRepository.save(genre);
+                bookRepository.save(book);
+            } else {
+                Genre genre = genreRepository.findByName(newGenreName);
+                book.setGenre(genre);
+                bookRepository.save(book);
+            }
+        }
     }
+
 }
+

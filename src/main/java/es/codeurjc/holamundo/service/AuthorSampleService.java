@@ -7,6 +7,12 @@ import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import org.json.JSONArray;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
 @Service
 public class AuthorSampleService {
 
@@ -16,8 +22,11 @@ public class AuthorSampleService {
     @Autowired
     private BookRepository bookRepository;
 
+    @Autowired
+    private JSONArray books;
+
     @PostConstruct
-    public void init() {
+    public void init() throws IOException {
         // Add some authors
         Author author1 = new Author("J.R.R. Tolkien");
         Author author2 = new Author("J.K. Rowling");
@@ -43,6 +52,15 @@ public class AuthorSampleService {
         author3.addBook(bookRepository.findByTitle("A Clash of Kings"));
         author3.addBook(bookRepository.findByTitle("A Storm of Swords"));
         author3.addBook(bookRepository.findByTitle("A Feast for Crows"));
+
+        // Add authors from book datasets
+        for (int i = 0; i < books.length(); i++) {
+            String newAuthorName = books.getJSONObject(i).getString("author");
+            if (authorRepository.findByName(newAuthorName) == null) {
+                Author author = new Author(newAuthorName);
+                authorRepository.save(author);
+            }
+        }
 
     }
 
