@@ -32,18 +32,18 @@
 
 ## ✅ Tabla de Contenido
 
-- [Autores](https://github.com/CodeURJC-DAW-2023-24/webapp03/tree/Database-Implementation?tab=readme-ov-file#autores)
-- [Trello](https://github.com/CodeURJC-DAW-2023-24/webapp03/tree/Database-Implementation?tab=readme-ov-file#autores)
-- [Entidades](https://github.com/CodeURJC-DAW-2023-24/webapp03/tree/Database-Implementation?tab=readme-ov-file#entidades)
-- [Permisos de los usuarios](https://github.com/CodeURJC-DAW-2023-24/webapp03/tree/Database-Implementation?tab=readme-ov-file#permisos-de-los-usuarios)
-- [Imágenes](https://github.com/CodeURJC-DAW-2023-24/webapp03/tree/Database-Implementation?tab=readme-ov-file#imágenes)
-- [Gráficos](https://github.com/CodeURJC-DAW-2023-24/webapp03/tree/Database-Implementation?tab=readme-ov-file#gráficos)
-- [Tecnología complementaria](https://github.com/CodeURJC-DAW-2023-24/webapp03/tree/Database-Implementation?tab=readme-ov-file#tecnología-complementaria)
-- [Algoritmos o consulta avanzada](https://github.com/CodeURJC-DAW-2023-24/webapp03/tree/Database-Implementation?tab=readme-ov-file#algoritmos-o-consulta-avanzada)
-- [Pantallas](https://github.com/CodeURJC-DAW-2023-24/webapp03/tree/Database-Implementation?tab=readme-ov-file#pantallas)
-- [Mapa de navegación](https://github.com/CodeURJC-DAW-2023-24/webapp03/tree/Database-Implementation?tab=readme-ov-file#mapa-de-navegación)
-- [Instalación](https://github.com/CodeURJC-DAW-2023-24/webapp03/tree/Database-Implementation?tab=readme-ov-file#instalación)
-- [Participación](https://github.com/CodeURJC-DAW-2023-24/webapp03/tree/Database-Implementation?tab=readme-ov-file#participación)
+- [Autores](https://github.com/CodeURJC-DAW-2023-24/webapp03/tree/Database-Implementation?tab=readme-ov-file#-autores)
+- [Trello](https://github.com/CodeURJC-DAW-2023-24/webapp03/tree/Database-Implementation?tab=readme-ov-file#%EF%B8%8F-trello)
+- [Entidades](https://github.com/CodeURJC-DAW-2023-24/webapp03/tree/Database-Implementation?tab=readme-ov-file#%EF%B8%8F-entidades)
+- [Permisos de los usuarios](https://github.com/CodeURJC-DAW-2023-24/webapp03/tree/Database-Implementation?tab=readme-ov-file#-permisos-de-los-usuarios)
+- [Imágenes](https://github.com/CodeURJC-DAW-2023-24/webapp03/tree/Database-Implementation?tab=readme-ov-file#%EF%B8%8F-im%C3%A1genes)
+- [Gráficos](https://github.com/CodeURJC-DAW-2023-24/webapp03/tree/Database-Implementation?tab=readme-ov-file#-gr%C3%A1ficos)
+- [Tecnología complementaria](https://github.com/CodeURJC-DAW-2023-24/webapp03/tree/Database-Implementation?tab=readme-ov-file#-tecnolog%C3%ADa-complementaria)
+- [Algoritmos o consulta avanzada](https://github.com/CodeURJC-DAW-2023-24/webapp03/tree/Database-Implementation?tab=readme-ov-file#-algoritmos-o-consulta-avanzada)
+- [Pantallas](https://github.com/CodeURJC-DAW-2023-24/webapp03/tree/Database-Implementation?tab=readme-ov-file#-pantallas)
+- [Mapa de navegación](https://github.com/CodeURJC-DAW-2023-24/webapp03/tree/Database-Implementation?tab=readme-ov-file#-mapa-de-navegaci%C3%B3n)
+- [Instalación](https://github.com/CodeURJC-DAW-2023-24/webapp03/tree/Database-Implementation?tab=readme-ov-file#%EF%B8%8F-instalaci%C3%B3n)
+- [Participación](https://github.com/CodeURJC-DAW-2023-24/webapp03/tree/Database-Implementation?tab=readme-ov-file#-participaci%C3%B3n)
 
 ## 💻 Autores:
 |Nombre          |Correo                         |Cuenta                       | 
