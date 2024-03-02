@@ -297,7 +297,6 @@ public class Book {
             Blob imageBlob = new SerialBlob(imageBytes);
             return imageBlob;
         } catch (IOException | SQLException e) {
-            System.out.println("Error");
             return null;
         }
     }

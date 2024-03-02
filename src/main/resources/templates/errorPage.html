@@ -77,6 +77,7 @@
             </ul>
             <form class="bm-d-flex" action="/logout" method="post">
                 <ul class="bm-navbar-nav bm-me-auto bm-mb-lg-0 bm-ms-lg-4">
+                    {{#user}}
                     <!-- Profile dropdown -->
                     <li class="bm-nav-item dropdown">
                         <a class="bm-nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
@@ -100,6 +101,7 @@
                             <li><input type="submit" value="Cerrar sesión" class="dropdown-item"/></li>
                         </ul>
                     </li>
+                    {{/user}}
                 </ul>
                 {{#token}}
                 <input type="hidden" name="_csrf" value="{{token}}"/>

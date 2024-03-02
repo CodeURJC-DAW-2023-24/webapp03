@@ -13194,3 +13194,19 @@ body {
 .main-admin-container {
   background-color: var(--branding-light-grey) !important;
 }
+
+#layoutSidenav_content{
+  background-color: var(--branding-light-grey) !important;
+}
+
+.page-header{
+    background-color: var(--branding-white) !important;
+}
+
+#mostReadAuthorsChartContainer{
+  height: auto;
+}
+
+#mostReadUsersChartContainer{
+  height: auto;
+}

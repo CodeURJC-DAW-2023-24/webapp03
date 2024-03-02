@@ -100,8 +100,6 @@ $(() => {
                 let half = Math.ceil(posts.length / 2);
                 let leftPosts = posts.slice(0, half);
                 let rightPosts = posts.slice(half, posts.length);
-                console.log(leftPosts);
-                console.log(rightPosts);
                 $("#left-post-column").append(leftPosts);
                 $("#right-post-column").append(rightPosts);
             }

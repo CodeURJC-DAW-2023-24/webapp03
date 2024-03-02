@@ -191,7 +191,7 @@ public class BookPageController {
         } else { // if it's an author and the book is not his, redirect to the book page
             if (request.isUserInRole("AUTHOR")) {
 
-                if (!bookRepository.findByID(bookID).getAuthor().contains(authorsBD.findByName(userRepository.findByUsername(currentUsername).getAlias()))) {
+                if (!bookRepository.findByID(bookID).getAuthor().contains(authorsBD.findByName(userRepository.findByUsername(currentUsername).getUsername()))) {
                     return "redirect:/book/" + bookID;
                 }
             }

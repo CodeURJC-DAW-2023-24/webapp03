@@ -142,7 +142,6 @@ $(() => {
 
     // Change lists buttons depending on whether the book is read, reading or to read
     let bookStatus = $("#bookStatus").text().trim();
-    console.log(bookStatus);
     if (bookStatus === "read") {
         $("#readButton").addClass("btn-primary-light").removeClass("btn-outline-dark");
     } else if (bookStatus === "reading") {

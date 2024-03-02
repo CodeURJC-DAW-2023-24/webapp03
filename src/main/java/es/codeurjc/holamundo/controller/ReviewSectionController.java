@@ -36,7 +36,6 @@ public class ReviewSectionController {
             testingCurrentUsername = authentication.getName();
         }
 
-        System.out.println("Adding review" + title + " " + rating + " " + comment + " " + id);
         // Add a review to the database
         Review review = new Review(title, userRepository.findByUsername(testingCurrentUsername), rating, comment, bookRepository.findByID(id));
         reviewRepository.save(review);
