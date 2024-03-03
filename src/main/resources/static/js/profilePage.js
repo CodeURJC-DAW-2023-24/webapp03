@@ -184,3 +184,14 @@ $(() => {
         })
     });
 })
+
+let counterDiv = document.querySelector('.counter');
+let exportImport = document.querySelector('#exportImport');
+
+counterDiv.addEventListener('mouseover', function() {
+    exportImport.style.visibility = 'visible';
+});
+
+counterDiv.addEventListener('mouseout', function() {
+    exportImport.style.visibility = 'hidden';
+});

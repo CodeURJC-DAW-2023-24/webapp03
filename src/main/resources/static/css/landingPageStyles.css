@@ -12591,3 +12591,7 @@ header {
     justify-content: space-between;
     flex-direction: row;
 }
+
+.input-group{
+    gap: 10px !important;
+}

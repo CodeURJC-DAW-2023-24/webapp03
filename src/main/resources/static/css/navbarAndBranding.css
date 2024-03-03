@@ -1282,3 +1282,15 @@ body {
 #magnifier-icon-link{
     color: var(--branding-brown) !important;
 }
+
+.bm-navbar{ /* must be always on top and has to drop a shadow when scrolling */
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 1000 !important;
+
+}
+
+.bm-navbar-scrolled {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2) !important;
+    transition: all 0.3s ease-in-out !important;
+}

@@ -115,7 +115,9 @@
             {{#currentUser}}
             <p class="lead fw-normal text-black-50 mb-0">Este es tu perfil</p>
             <form action="/logout" method="post" class="logout">
-                <input type="submit" value="Cerrar sesión" class="btn"/>
+                <button type="submit" class="btn logout-btn">
+                    <i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión
+                </button>
                 <input type="hidden" name="_csrf" value="{{token}}"/>
             </form>
             {{/currentUser}}
@@ -155,16 +157,20 @@
                 <div class="buttons-container">
                     {{#currentUser}}
                     {{^admin}}
-                    <a class="btn btn-primary branding-btn-primary" id="editProfileBut">Modificar perfil</a>
+                    <a class="btn btn-primary branding-btn-primary" id="editProfileBut">
+                        <i class="fa-solid fa-pen-to-square"></i> Modificar perfil</a>
                     {{/admin}}
                     {{/currentUser}}
                     {{#admin}}
-                    <a class="btn btn-primary branding-btn-primary" id="editProfileBut">Modificar perfil</a>
+                    <a class="btn btn-primary branding-btn-primary" id="editProfileBut">
+                        <i class="fa-solid fa-pen-to-square"></i> Modificar perfil</a>
                     {{/admin}}
                     {{#admin}}
-                    <a href="/profile/{{username}}/convertAuthor" class="btn btn-secondary branding-btn-secondary">Convertir
+                    <a href="/profile/{{username}}/convertAuthor" class="btn btn-secondary branding-btn-secondary">
+                        <i class="fa-solid fa-book"></i> Convertir
                         en autor</a>
-                    <a href="/profile/{{username}}/delete" class="btn btn-secondary branding-btn-secondary">Banear
+                    <a href="/profile/{{username}}/delete" class="btn btn-secondary branding-btn-secondary">
+                        <i class="fa-solid fa-ban"></i> Banear
                         usuario</a>
                     {{/admin}}
                 </div>
@@ -199,10 +205,9 @@
             </div>
             <div class="row" id="exportImport" style="text-align: center; justify-content: center; margin-top: 20px">
                 <div class="col-6 col-lg-3">
-                    <a id="csvExportButton" class="btn btn-secondary branding-btn-secondary action-button"
+                    <a id="csvExportButton" title="Exportar como CSV" class="btn btn-secondary branding-btn-secondary action-button"
                        style="border: 1px solid dimgrey">
                         <i class="fa-solid fa-file-export" aria-hidden="true"></i>
-                        Exportar
                     </a>
                 </div>
             </div>
@@ -359,6 +364,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/3.1.0/mustache.min.js"></script>
 <script src="/js/editProfilePage.js"></script>
 <script src="/js/profilePage.js"></script>
+<script src="/js/navbarScript.js"></script>
 </body>
 
 </html>
