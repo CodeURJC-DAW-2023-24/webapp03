@@ -1584,6 +1584,18 @@
         "Page Count": "192"
     },
     {
+        "title": "Made in abyss. 4",
+        "description": "Made in abyss. 4 by Akihito Tsukushi (2018)",
+        "imageString": "https://images-na.ssl-images-amazon.com/images/P/162692919X.01._SX180_SCLZZZZZZZ_.jpg",
+        "releaseDate": 2018,
+        "ISBN": "162692919X",
+        "series": "Made in abyss. 4",
+        "publisher": "[Los Angeles, California] : Seven Seas Entertainment, [2018]",
+        "author": "Akihito Tsukushi",
+        "genre": "Comic books, strips, etc. Japan",
+        "Page Count": "180"
+    },
+    {
         "title": "El mapa del cielo",
         "description": "El mapa del cielo by FÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©lix J. Palma (2012)",
         "imageString": "https://images-na.ssl-images-amazon.com/images/P/8401339553.01._SX180_SCLZZZZZZZ_.jpg",
@@ -1630,6 +1642,78 @@
         "author": " Ryukishi07.",
         "genre": "Desconocido",
         "Page Count": "624"
+    },
+    {
+        "title": "Mr. Penumbra's 24-hour bookstore",
+        "description": "Mr. Penumbra's 24-hour bookstore by Robin Sloan (2012)",
+        "imageString": "https://images-na.ssl-images-amazon.com/images/P/0374214913.01._SX180_SCLZZZZZZZ_.jpg",
+        "releaseDate": 2012,
+        "ISBN": "0374214913",
+        "series": "Mr. Penumbra's 24-hour bookstore",
+        "publisher": "New York : Farrar, Straus and Giroux, 2012.",
+        "author": "Robin Sloan",
+        "genre": "Bookstores California San Francisco Fiction",
+        "Page Count": "288"
+    },
+    {
+        "title": "The temporal void",
+        "description": "The temporal void by Peter F. Hamilton (2008)",
+        "imageString": "https://images-na.ssl-images-amazon.com/images/P/1405088834.01._SX180_SCLZZZZZZZ_.jpg",
+        "releaseDate": 2008,
+        "ISBN": "1405088834",
+        "series": "The temporal void",
+        "publisher": "Macmillan, 2008",
+        "author": "Peter F. Hamilton",
+        "genre": "Science fiction SknÃƒÆ’Ã†â€™Ãƒâ€¦Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â²litteratur",
+        "Page Count": "746"
+    },
+    {
+        "title": "The years of rice and salt",
+        "description": "The years of rice and salt by Kim Stanley Robinson (2002)",
+        "imageString": "https://images-na.ssl-images-amazon.com/images/P/0553580078.01._SX180_SCLZZZZZZZ_.jpg",
+        "releaseDate": 2002,
+        "ISBN": "0553580078",
+        "series": "The years of rice and salt",
+        "publisher": "New York : Bantam Books, 2003, c2002.",
+        "author": "Kim Stanley Robinson",
+        "genre": "Black Death Fiction",
+        "Page Count": "763"
+    },
+    {
+        "title": "Absolution gap",
+        "description": "Absolution gap by Alastair Reynolds (2005)",
+        "imageString": "https://images-na.ssl-images-amazon.com/images/P/0441012914.01._SX180_SCLZZZZZZZ_.jpg",
+        "releaseDate": 2005,
+        "ISBN": "0441012914",
+        "series": "Absolution gap",
+        "publisher": "New York : Ace Books, c2005, c2004.",
+        "author": "Alastair Reynolds",
+        "genre": "Space colonies Fiction",
+        "Page Count": "756"
+    },
+    {
+        "title": "Binti",
+        "description": "Binti by Nnedi Okorafor (2015)",
+        "imageString": "https://pics.cdn.librarything.com/picsizes/38/ed/38eda2304a6ac8959674c526c51433041414141_v5.jpg",
+        "releaseDate": 2015,
+        "ISBN": "0765384469",
+        "series": "Binti",
+        "publisher": "Tom Doherty Assoc LLC, 2015.",
+        "author": "Nnedi Okorafor",
+        "genre": "FICTION / Science Fiction / Adventure",
+        "Page Count": "96"
+    },
+    {
+        "title": "The speed of dark",
+        "description": "The speed of dark by Elizabeth Moon (2002)",
+        "imageString": "https://images-na.ssl-images-amazon.com/images/P/0345481399.01._SX180_SCLZZZZZZZ_.jpg",
+        "releaseDate": 2002,
+        "ISBN": "0345481399",
+        "series": "The speed of dark",
+        "publisher": "New York : Del Ray ; Ballantine Books, 2005, c2002.",
+        "author": "Elizabeth Moon",
+        "genre": "Desconocido",
+        "Page Count": "369"
     },
     {
         "title": "Umineko WHEN THEY CRY Episode 4: Alliance of the Golden Witch, Vol. 1 - manga",
@@ -2964,18 +3048,6 @@
         "Page Count": "484"
     },
     {
-        "title": "Made in abyss. 4",
-        "description": "Made in abyss. 4 by Akihito Tsukushi (2018)",
-        "imageString": "https://images-na.ssl-images-amazon.com/images/P/162692919X.01._SX180_SCLZZZZZZZ_.jpg",
-        "releaseDate": 2018,
-        "ISBN": "162692919X",
-        "series": "Made in abyss. 4",
-        "publisher": "[Los Angeles, California] : Seven Seas Entertainment, [2018]",
-        "author": "Akihito Tsukushi",
-        "genre": "Comic books, strips, etc. Japan",
-        "Page Count": "180"
-    },
-    {
         "title": "Umineko : when they cry",
         "description": "Umineko : when they cry by Ryukishi07., (2013)",
         "imageString": "https://images-na.ssl-images-amazon.com/images/P/0316345865.01._SX180_SCLZZZZZZZ_.jpg",
@@ -4006,78 +4078,6 @@
         "author": "Margaret Atwood",
         "genre": "SCIENCE FICTION",
         "Page Count": "394"
-    },
-    {
-        "title": "Mr. Penumbra's 24-hour bookstore",
-        "description": "Mr. Penumbra's 24-hour bookstore by Robin Sloan (2012)",
-        "imageString": "https://images-na.ssl-images-amazon.com/images/P/0374214913.01._SX180_SCLZZZZZZZ_.jpg",
-        "releaseDate": 2012,
-        "ISBN": "0374214913",
-        "series": "Mr. Penumbra's 24-hour bookstore",
-        "publisher": "New York : Farrar, Straus and Giroux, 2012.",
-        "author": "Robin Sloan",
-        "genre": "Bookstores California San Francisco Fiction",
-        "Page Count": "288"
-    },
-    {
-        "title": "The temporal void",
-        "description": "The temporal void by Peter F. Hamilton (2008)",
-        "imageString": "https://images-na.ssl-images-amazon.com/images/P/1405088834.01._SX180_SCLZZZZZZZ_.jpg",
-        "releaseDate": 2008,
-        "ISBN": "1405088834",
-        "series": "The temporal void",
-        "publisher": "Macmillan, 2008",
-        "author": "Peter F. Hamilton",
-        "genre": "Science fiction SknÃƒÆ’Ã†â€™Ãƒâ€¦Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â²litteratur",
-        "Page Count": "746"
-    },
-    {
-        "title": "The years of rice and salt",
-        "description": "The years of rice and salt by Kim Stanley Robinson (2002)",
-        "imageString": "https://images-na.ssl-images-amazon.com/images/P/0553580078.01._SX180_SCLZZZZZZZ_.jpg",
-        "releaseDate": 2002,
-        "ISBN": "0553580078",
-        "series": "The years of rice and salt",
-        "publisher": "New York : Bantam Books, 2003, c2002.",
-        "author": "Kim Stanley Robinson",
-        "genre": "Black Death Fiction",
-        "Page Count": "763"
-    },
-    {
-        "title": "Absolution gap",
-        "description": "Absolution gap by Alastair Reynolds (2005)",
-        "imageString": "https://images-na.ssl-images-amazon.com/images/P/0441012914.01._SX180_SCLZZZZZZZ_.jpg",
-        "releaseDate": 2005,
-        "ISBN": "0441012914",
-        "series": "Absolution gap",
-        "publisher": "New York : Ace Books, c2005, c2004.",
-        "author": "Alastair Reynolds",
-        "genre": "Space colonies Fiction",
-        "Page Count": "756"
-    },
-    {
-        "title": "Binti",
-        "description": "Binti by Nnedi Okorafor (2015)",
-        "imageString": "https://pics.cdn.librarything.com/picsizes/38/ed/38eda2304a6ac8959674c526c51433041414141_v5.jpg",
-        "releaseDate": 2015,
-        "ISBN": "0765384469",
-        "series": "Binti",
-        "publisher": "Tom Doherty Assoc LLC, 2015.",
-        "author": "Nnedi Okorafor",
-        "genre": "FICTION / Science Fiction / Adventure",
-        "Page Count": "96"
-    },
-    {
-        "title": "The speed of dark",
-        "description": "The speed of dark by Elizabeth Moon (2002)",
-        "imageString": "https://images-na.ssl-images-amazon.com/images/P/0345481399.01._SX180_SCLZZZZZZZ_.jpg",
-        "releaseDate": 2002,
-        "ISBN": "0345481399",
-        "series": "The speed of dark",
-        "publisher": "New York : Del Ray ; Ballantine Books, 2005, c2002.",
-        "author": "Elizabeth Moon",
-        "genre": "Desconocido",
-        "Page Count": "369"
     },
     {
         "title": "Illuminae",
