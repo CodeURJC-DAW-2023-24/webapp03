@@ -182,12 +182,21 @@ Para poder instalar y ejecutar la aplicación correctamente es necesario:
 
 ### Pasos para la instalación:
 1. Clona el repositorio a tu ruta deseada:    
-   `git clone https://github.com/CodeURJC-DAW-2023-24/webapp03`
+   ```
+   git clone https://github.com/CodeURJC-DAW-2023-24/webapp03
+   ```
+   
 2. Conectarse a la base de datos:    
-   `docker run -d --name bookmarksDB -p 3306:3306 -e MYSQL_ROOT_PASSWORD=password -e MYSQL_DATABASE=bookmarks mysql:latest`
+   ```
+   docker run -d --name bookmarksDB -p 3306:3306 -e MYSQL_ROOT_PASSWORD=password -e MYSQL_DATABASE=bookmarks mysql:latest
+   ```
+   
 3. Hacer clean and Build del proyecto y ejecutar la aplicación (según IDE)
+
 4. Abrir la aplicación en el navegador deseado:    
-   `start https://localhost:8443`
+   ```
+   start https://localhost:8443
+   ```
 
 ## 📋 Participación
 
