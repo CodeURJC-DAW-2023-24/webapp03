@@ -160,11 +160,11 @@ Se implementará un algoritmo de recomendaciones de libros en la página princip
 
 - Diagrama Entidad-Relación:
 
-<img src="C:\Users\blase\OneDrive - Universidad Rey Juan Carlos\Uni\3\DAW\Bookmarks\webapp03\src\main\resources\static\assets\documentation\ERDiagram.png" width="70%"/>
+<img src="src\main\resources\static\assets\documentation\ERDiagram.png" width="70%"/>
 
 - Diagrama de clases y templates:
 
-<img src="C:\Users\blase\OneDrive - Universidad Rey Juan Carlos\Uni\3\DAW\Bookmarks\webapp03\src\main\resources\static\assets\documentation\MVCDiagram.png" width="70%"/>
+<img src="src\main\resources\static\assets\documentation\MVCDiagram.png" width="70%"/>
 
 ## 🛠️ Instalación
 
