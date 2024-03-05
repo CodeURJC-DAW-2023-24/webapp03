@@ -12,7 +12,7 @@ import java.nio.file.Paths;
 public class BookConfiguration {
     @Bean
     public JSONArray books() throws IOException {
-        JSONArray books = new JSONArray(new String(Files.readAllBytes(Paths.get("src/main/resources/static/assets/data/books.json"))));
+        JSONArray books = new JSONArray(new String(Files.readAllBytes(Paths.get("backend/src/main/resources/static/assets/data/books.json"))));
         //Temporary
         JSONArray lessBooks = new JSONArray();
         for (int i = 0; i < 200; i++) {
