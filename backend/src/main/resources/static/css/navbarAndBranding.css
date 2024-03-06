@@ -2,6 +2,7 @@
     /* BOOKMARKS BRANDING COLORS */
     --branding-grey: #808F85;
     --branding-brown: #583E23;
+    --branding-brown-greyed-out: rgba(88, 62, 35, 0.54);
     --branding-orange: #F9A03F;
     --branding-peach: #F8DDA4;
     --branding-green: #519E8A;
@@ -200,18 +201,18 @@ body {
 }
 
 .nav-pills .bm-nav-link.active,
-.nav-pills .show>.bm-nav-link {
+.nav-pills .show > .bm-nav-link {
     color: var(--bs-nav-pills-link-active-color);
     background-color: var(--bs-nav-pills-link-active-bg);
 }
 
-.nav-fill>.bm-nav-link,
+.nav-fill > .bm-nav-link,
 .nav-fill .bm-nav-item {
     flex: 1 1 auto;
     text-align: center;
 }
 
-.nav-justified>.bm-nav-link,
+.nav-justified > .bm-nav-link,
 .nav-justified .bm-nav-item {
     flex-basis: 0;
     flex-grow: 1;
@@ -223,11 +224,11 @@ body {
     width: 100%;
 }
 
-.tab-content>.tab-pane {
+.tab-content > .tab-pane {
     display: none;
 }
 
-.tab-content>.active {
+.tab-content > .active {
     display: block;
 }
 
@@ -260,13 +261,13 @@ body {
     padding: var(--bs-navbar-padding-y) var(--bs-navbar-padding-x);
 }
 
-.bm-navbar>.bm-container,
-.bm-navbar>.bm-container-fluid,
-.bm-navbar>.bm-container-sm,
-.bm-navbar>.bm-container-md,
-.bm-navbar>.bm-container-lg,
-.bm-navbar>.bm-container-xl,
-.bm-navbar>.bm-container-xxl {
+.bm-navbar > .bm-container,
+.bm-navbar > .bm-container-fluid,
+.bm-navbar > .bm-container-sm,
+.bm-navbar > .bm-container-md,
+.bm-navbar > .bm-container-lg,
+.bm-navbar > .bm-container-xl,
+.bm-navbar > .bm-container-xxl {
     display: flex;
     flex-wrap: inherit;
     align-items: center;
@@ -308,7 +309,7 @@ body {
     list-style: none;
 }
 
-.bm-navbar-nav .show>.bm-nav-link,
+.bm-navbar-nav .show > .bm-nav-link,
 .bm-navbar-nav .bm-nav-link.active {
     color: var(--bs-navbar-active-color);
 }
@@ -1256,8 +1257,8 @@ body {
     margin-left: 3rem !important;
     outline: 2px solid var(--branding-brown) !important;
     width: 100% !important;
-    padding-left:30px !important;
-    padding-right:30px !important;
+    padding-left: 30px !important;
+    padding-right: 30px !important;
     border-radius: 12px !important;
     background-color: rgba(0, 0, 0, 0.2) !important;
     color: var(--branding-brown) !important;
@@ -1279,11 +1280,11 @@ body {
 
 }
 
-#magnifier-icon-link{
+#magnifier-icon-link {
     color: var(--branding-brown) !important;
 }
 
-.bm-navbar{ /* must be always on top and has to drop a shadow when scrolling */
+.bm-navbar { /* must be always on top and has to drop a shadow when scrolling */
     position: sticky !important;
     top: 0 !important;
     z-index: 1000 !important;
@@ -1318,7 +1319,6 @@ body {
 }
 
 
-
 #search-select-label:after {
 
     content: "";
@@ -1344,13 +1344,11 @@ body {
 }
 
 
-
 #search-select:checked + #search-select-label {
 
     border-color: var(--branding-brown);
 
 }
-
 
 
 #search-select:checked + #search-select-label:after {
@@ -1360,7 +1358,6 @@ body {
     border-color: var(--branding-brown);
 
 }
-
 
 
 .select-color {
@@ -1374,13 +1371,11 @@ body {
 }
 
 
-
 #book-icon {
 
     order: 1;
 
 }
-
 
 
 #search-select-label {
@@ -1390,7 +1385,6 @@ body {
 }
 
 
-
 #user-icon {
 
     order: 3;
@@ -1398,45 +1392,40 @@ body {
 }
 
 
-
 #search-select:not(:checked) ~ #book-icon {
 
-    background-color: var(--branding-brown);
     -webkit-transition: background-color 500ms linear;
     -ms-transition: background-color 500ms linear;
+    color: var(--branding-brown);
 
-    color: var(--branding-peach);
 
 }
 
 #search-select:checked ~ #book-icon {
 
-    background-color: var(--branding-peach);
     -webkit-transition: background-color 500ms linear;
     -ms-transition: background-color 500ms linear;
 
-    color: var(--branding-brown);
+    color: var(--branding-brown-greyed-out);
+
 
 }
 
 
-
 #search-select:checked ~ #user-icon {
 
-    background-color: var(--branding-brown);
     -webkit-transition: background-color 500ms linear;
     -ms-transition: background-color 500ms linear;
 
-    color: var(--branding-peach);
+    color: var(--branding-brown);
 
 }
 
 #search-select:not(:checked) ~ #user-icon {
 
-    background-color: var(--branding-peach);
     -webkit-transition: background-color 500ms linear;
     -ms-transition: background-color 500ms linear;
 
-    color: var(--branding-brown);
+    color: var(--branding-brown-greyed-out);
 
 }

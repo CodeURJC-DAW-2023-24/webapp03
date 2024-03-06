@@ -3,13 +3,8 @@ package es.codeurjc.webapp03.controller;
 import es.codeurjc.webapp03.entity.Book;
 import es.codeurjc.webapp03.entity.User;
 import es.codeurjc.webapp03.repository.BookRepository;
-import es.codeurjc.webapp03.repository.UserRepository;
-
-import java.io.IOException;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-
+import es.codeurjc.webapp03.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpHeaders;
@@ -17,17 +12,21 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Controller
 public class ProfilePageController {
 
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
     @Autowired
     private BookRepository bookRepository;
@@ -36,7 +35,7 @@ public class ProfilePageController {
     public String loadProfilePage(Model model, @PathVariable String username, HttpServletRequest request) throws SQLException {
 
         // Get user from the database
-        User user = userRepository.findByUsername(username);
+        User user = userService.getUser(username);
         user.setProfileImageString(user.blobToString(user.getProfileImageFile()));
         user.setProfileImageString(user.blobToString(user.getProfileImageFile()));
         //User info
@@ -84,9 +83,9 @@ public class ProfilePageController {
         int nWantedBooks = user.getWantedBooks().size();
         int nReviews = user.getReviews().size();
 
-        List<Book> readBooksList = userRepository.getReadBooks(username, PageRequest.of(0, 4)).getContent();
-        List<Book> readingBooksList = userRepository.getReadingBooks(username, PageRequest.of(0, 4)).getContent();
-        List<Book> wantedBooksList = userRepository.getWantedBooks(username, PageRequest.of(0, 4)).getContent();
+        List<Book> readBooksList = userService.getListPageable(user, "read", PageRequest.of(0, 4));
+        List<Book> readingBooksList = userService.getListPageable(user, "reading", PageRequest.of(0, 4));
+        List<Book> wantedBooksList = userService.getListPageable(user, "wanted", PageRequest.of(0, 4));
 
         for (int i = 0; i < readBooksList.size(); i++) {
             readBooksList.get(i).setImageString(readBooksList.get(i).blobToString(readBooksList.get(i).getImageFile()));
@@ -164,7 +163,7 @@ public class ProfilePageController {
     public String loadReadBooks(@PathVariable String username, @RequestParam(defaultValue = "default") String listType, @RequestParam int page, @RequestParam int size, Model model) throws SQLException {
         switch (listType) {
             case "read" -> {
-                List<Book> readBooksList = userRepository.getReadBooks(username, PageRequest.of(page, size)).getContent();
+                List<Book> readBooksList = userService.getListPageable(userService.getUser(username), "read", PageRequest.of(page, size));
 
                 for (int i = 0; i < readBooksList.size(); i++) {
                     readBooksList.get(i).setImageString(readBooksList.get(i).blobToString(readBooksList.get(i).getImageFile()));
@@ -187,7 +186,7 @@ public class ProfilePageController {
                 model.addAttribute("ratings", readBooksRatings);
             }
             case "reading" -> {
-                List<Book> readingBooksList = userRepository.getReadingBooks(username, PageRequest.of(page, size)).getContent();
+                List<Book> readingBooksList = userService.getListPageable(userService.getUser(username), "reading", PageRequest.of(page, size));
 
                 for (int i = 0; i < readingBooksList.size(); i++) {
                     readingBooksList.get(i).setImageString(readingBooksList.get(i).blobToString(readingBooksList.get(i).getImageFile()));
@@ -210,7 +209,7 @@ public class ProfilePageController {
                 model.addAttribute("ratings", readingBooksRatings);
             }
             case "wanted" -> {
-                List<Book> wantedBooksList = userRepository.getWantedBooks(username, PageRequest.of(page, size)).getContent();
+                List<Book> wantedBooksList = userService.getListPageable(userService.getUser(username), "wanted", PageRequest.of(page, size));
 
                 for (int i = 0; i < wantedBooksList.size(); i++) {
                     wantedBooksList.get(i).setImageString(wantedBooksList.get(i).blobToString(wantedBooksList.get(i).getImageFile()));
@@ -244,12 +243,9 @@ public class ProfilePageController {
         Authentication authentication = (Authentication) request.getUserPrincipal();
         if (authentication != null) {
             String currentUsername = authentication.getName();
-            User user = userRepository.findByUsername(currentUsername);
+            User user = userService.getUser(currentUsername);
             if (user.getRole().contains("ADMIN")) {
-                User deletedUser = userRepository.findByUsername(username);
-                if (deletedUser != null) {
-                    userRepository.delete(deletedUser);
-                }
+                userService.deleteUser(userService.getUser(username));
             } else {
                 return "redirect:/login";
             }
@@ -263,11 +259,9 @@ public class ProfilePageController {
     public String getMethodName(@PathVariable String username, HttpServletRequest request) {
         Authentication authentication = (Authentication) request.getUserPrincipal();
         if (authentication != null) {
-            User user = userRepository.findByUsername(authentication.getName());
+            User user = userService.getUser(authentication.getName());
             if (user.getRole().contains("ADMIN")) {
-                User userConverted = userRepository.findByUsername(username);
-                userConverted.getRole().add("AUTHOR");
-                userRepository.save(userConverted);
+                userService.makeAuthor(userService.getUser(username));
             } else {
                 return "redirect:/error";
             }
@@ -277,25 +271,14 @@ public class ProfilePageController {
         return "redirect:/";
     }
 
-    private String convertBooksToCSV(List<Book> books) {
-        StringBuilder builder = new StringBuilder();
-        builder.append("ID,Title,Author\n"); // CSV header
-        for (Book book : books) {
-            builder.append(book.getID()).append(",");
-            builder.append(book.getTitle()).append(",");
-            builder.append(book.getAuthor()).append("\n");
-        }
-        return builder.toString();
-    }
-
     @GetMapping("/profile/{username}/exportLists")
     public ResponseEntity<String> exportLists(@PathVariable String username, HttpServletRequest request) throws IOException {
         //How to convert each list of books to a CSV file and download it to the browser?
-        User user = userRepository.findByUsername(username);
+        User user = userService.getUser(username);
 
-        String readBooksCSV = convertBooksToCSV(user.getReadBooks());
-        String readingBooksCSV = convertBooksToCSV(user.getReadingBooks());
-        String wantedBooksCSV = convertBooksToCSV(user.getWantedBooks());
+        String readBooksCSV = userService.convertBooksToCSV(userService.getList(user, "read"));
+        String readingBooksCSV = userService.convertBooksToCSV(userService.getList(user, "reading"));
+        String wantedBooksCSV = userService.convertBooksToCSV(userService.getList(user, "wanted"));
 
         String allBooksCSV = "Read Books:\n" + readBooksCSV + "\nReading Books:\n" + readingBooksCSV + "\nWanted Books:\n" + wantedBooksCSV;
 

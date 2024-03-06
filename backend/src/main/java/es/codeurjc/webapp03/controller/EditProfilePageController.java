@@ -1,8 +1,8 @@
 package es.codeurjc.webapp03.controller;
 
 import es.codeurjc.webapp03.entity.User;
-import es.codeurjc.webapp03.repository.UserRepository;
 import es.codeurjc.webapp03.service.EmailService;
+import es.codeurjc.webapp03.service.UserService;
 import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.tomcat.util.codec.binary.Base64;
@@ -26,13 +26,7 @@ import java.util.Map;
 public class EditProfilePageController {
 
     @Autowired
-    UserRepository userRepository;
-
-    @Autowired
-    PasswordEncoder passwordEncoder;
-
-    @Autowired
-    private EmailService emailService;
+    private UserService userService;
 
     public EditProfilePageController() {
 
@@ -53,11 +47,12 @@ public class EditProfilePageController {
             return "redirect:/login";
         }*/
 
-        if(!checkCorrectProfile(username,request)){
+        if (!userService.checkCorrectProfile(username, request)) {
             return "redirect:/error";
         }
 
-        User user = userRepository.findByUsername(username);
+        User user = userService.getUser(username);
+
         String alias = user.getAlias();
         String role = user.getRole().toString();
         String description = user.getDescription();
@@ -88,17 +83,14 @@ public class EditProfilePageController {
                               @RequestParam("description") String newDescription,
                               HttpServletRequest request) throws SQLException {
 
-        if(!checkCorrectProfile(username,request)){
+        if (!userService.checkCorrectProfile(username, request)) {
             return "redirect:/error";
         }
 
-        User user = userRepository.findByUsername(username);
+        User user = userService.getUser(username);
 
         if (user != null) {
-            user.setAlias(newAlias);
-            user.setEmail(newEmail);
-            user.setDescription(newDescription);
-            userRepository.save(user);
+            userService.updateUserInfo(user, newAlias, newEmail, newDescription);
         }
 
         //Admin
@@ -119,11 +111,13 @@ public class EditProfilePageController {
         ResponseEntity<?> responseEntity = null;
         if (authentication != null) {
             String currentUsername = authentication.getName();
-            User user = userRepository.findByUsername(currentUsername);
+            // Check that the user is the same as the one logged in
+            if (!userService.checkCorrectProfile(currentUsername, request)) {
+                return new ResponseEntity<>("Error: No se pudo subir la imagen", HttpStatus.FORBIDDEN);
+            }
+            User user = userService.getUser(currentUsername);
             if (user != null) {
-                user.setProfileImageFile(new SerialBlob(Base64.decodeBase64((String) image.get("image"))));
-                userRepository.save(user);
-                responseEntity = new ResponseEntity<>("Imagen subida con éxito", HttpStatus.OK);
+                responseEntity = userService.changeProfileImage(user, (String) image.get("image"));
             }
         } else {
             responseEntity = new ResponseEntity<>("Error: No se pudo subir la imagen", HttpStatus.FORBIDDEN);
@@ -132,37 +126,17 @@ public class EditProfilePageController {
     }
 
     @PostMapping("/profile/{username}/editPassword")
-    public ResponseEntity<?> editProfile(@RequestParam("currentPassword") String currentPassword, @RequestBody String newPassword) throws MessagingException, IOException {
+    public ResponseEntity<?> editProfile(@RequestParam("currentPassword") String currentPassword, @RequestBody String newPassword, HttpServletRequest request) throws MessagingException, IOException {
         // Obtén el usuario actual
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UserDetails userDetails = (UserDetails) auth.getPrincipal();
-        User user = userRepository.findByUsername(userDetails.getUsername());
+        User user = userService.getUser(userDetails.getUsername());
 
-
-        // Compara la contraseña actual con la almacenada en la base de datos
-        if (!passwordEncoder.matches(currentPassword, user.getPassword())) {
-            return new ResponseEntity<>("La contraseña actual es incorrecta", HttpStatus.BAD_REQUEST);
-        } else {
-            String encodedNewPassword = passwordEncoder.encode(newPassword);
-            user.setPassword(encodedNewPassword);
-            userRepository.save(user);
-            // notify via email
-            emailService.sendEmail(user.getEmail(), "Contraseña actualizada", "Su contraseña ha sido actualizada con éxito");
-            return new ResponseEntity<>("Contraseña actualizada con éxito", HttpStatus.OK);
+        // Check that the user is the same as the one logged in
+        if (!userService.checkCorrectProfile(user.getUsername(), request)) {
+            return new ResponseEntity<>("Error: No se pudo cambiar la contraseña", HttpStatus.FORBIDDEN);
         }
-    }
 
-    private boolean checkCorrectProfile(String username, HttpServletRequest request){
-        Authentication authentication = (Authentication) request.getUserPrincipal();
-        User user = userRepository.findByUsername(authentication.getName());
-        if (authentication != null && user != null) {
-            if(!user.getUsername().equals(username) && !user.getRole().contains("ADMIN")){
-                return false;
-            }else{
-                return true;
-            }
-        } else {
-            return false;
-        }
+        return userService.changePassword(user, newPassword, currentPassword);
     }
 }
