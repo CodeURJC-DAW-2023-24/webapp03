@@ -65,7 +65,12 @@
                         <input id="_csrf" type="hidden" name="_csrf" value="{{token}}"/>
                     </form>
                 </li>
-
+                <li class="bm-nav-item" style="display: flex; align-items: center">
+                    <input type="checkbox" id="search-select" style="display: none; margin-left: 20px">
+                    <label id="search-select-label" for="search-select" style="margin-left: 20px"></label>
+                    <i class="fa-solid fa-book select-color" id="book-icon" style="margin-left: 20px"></i>
+                    <i class="fa-solid fa-user select-color" id="user-icon" style="margin-left: 20px"></i>
+                </li>
             </ul>
             <form class="bm-d-flex" action="/logout" method="post">
                 <ul class="bm-navbar-nav bm-me-auto bm-mb-lg-0 bm-ms-lg-4">
