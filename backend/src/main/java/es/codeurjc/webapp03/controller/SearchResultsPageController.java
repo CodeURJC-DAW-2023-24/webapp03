@@ -3,7 +3,7 @@ package es.codeurjc.webapp03.controller;
 import es.codeurjc.webapp03.entity.Book;
 import es.codeurjc.webapp03.entity.User;
 import es.codeurjc.webapp03.repository.BookRepository;
-import es.codeurjc.webapp03.repository.UserRepository;
+import es.codeurjc.webapp03.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -27,7 +27,7 @@ public class SearchResultsPageController {
     private BookRepository bookRepository;
 
     @Autowired
-    public UserRepository userRepository;
+    public UserService userService;
 
     public SearchResultsPageController() {
     }
@@ -39,7 +39,7 @@ public class SearchResultsPageController {
         model.addAttribute("userSearch", users);
         if (authentication != null) {
             String currentUsername = authentication.getName();
-            User user = userRepository.findByUsername(currentUsername);
+            User user = userService.getUser(currentUsername);
             user.setProfileImageString(user.blobToString(user.getProfileImageFile()));
             model.addAttribute("profileImageString", user.getProfileImageString());
             model.addAttribute("username", currentUsername);
@@ -75,7 +75,7 @@ public class SearchResultsPageController {
             //Admin
             model.addAttribute("admin", request.isUserInRole("ADMIN"));
         } else {
-            Page<User> filteredUsers = userRepository.searchUsers(query, PageRequest.of(0, 4));
+            Page<User> filteredUsers = userService.getUsersPageable(query, PageRequest.of(0, 4));
             userQueries = filteredUsers.getContent();
 
             for (int i = 0; i < userQueries.size(); i++) {
@@ -122,7 +122,7 @@ public class SearchResultsPageController {
 
             return "searchResultsBookTemplate";
         } else {
-            Page<User> filteredUsers = userRepository.searchUsers(query, PageRequest.of(page, 4));
+            Page<User> filteredUsers = userService.getUsersPageable(query, PageRequest.of(page, 4));
             userQueries = filteredUsers.getContent();
 
             for (int i = 0; i < userQueries.size(); i++) {

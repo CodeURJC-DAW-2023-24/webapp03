@@ -1,23 +1,19 @@
 package es.codeurjc.webapp03.controller;
 
 import es.codeurjc.webapp03.entity.User;
-import es.codeurjc.webapp03.service.EmailService;
 import es.codeurjc.webapp03.service.UserService;
 import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpServletRequest;
-import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.sql.rowset.serial.SerialBlob;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Map;
@@ -34,18 +30,6 @@ public class EditProfilePageController {
 
     @GetMapping("/profile/{username}/edit")
     public String loadEditProfilePage(Model model, HttpServletRequest request, @PathVariable String username) throws SQLException {
-
-        //Check for correct username logged in.
-        /*User user = userRepository.findByUsername(username);
-        Authentication authentication = (Authentication) request.getUserPrincipal();
-        if (authentication != null) {
-            String currentUsername = authentication.getName();
-            if(!currentUsername.equals(username)){
-                return "redirect:/login";
-            }
-        } else {
-            return "redirect:/login";
-        }*/
 
         if (!userService.checkCorrectProfile(username, request)) {
             return "redirect:/error";

@@ -1,14 +1,14 @@
 package es.codeurjc.webapp03.controller;
 
 import es.codeurjc.webapp03.entity.User;
-import es.codeurjc.webapp03.repository.UserRepository;
+import es.codeurjc.webapp03.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.security.core.Authentication;
 
 import java.sql.SQLException;
 
@@ -17,7 +17,7 @@ import java.sql.SQLException;
 public class GlobalExceptionHandler {
 
     @Autowired
-    public UserRepository userRepository;
+    public UserService userService;
 
     private boolean isUser;
 
@@ -27,7 +27,7 @@ public class GlobalExceptionHandler {
         Authentication authentication = (Authentication) request.getUserPrincipal();
         if (authentication != null) {
             String currentUsername = authentication.getName();
-            User user = userRepository.findByUsername(currentUsername);
+            User user = userService.getUser(currentUsername);
             model.addAttribute("username", currentUsername);
             user.setProfileImageString(user.blobToString(user.getProfileImageFile()));
             model.addAttribute("profileImageString", user.getProfileImageString());

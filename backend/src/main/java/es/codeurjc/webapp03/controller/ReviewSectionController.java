@@ -3,13 +3,16 @@ package es.codeurjc.webapp03.controller;
 import es.codeurjc.webapp03.entity.Review;
 import es.codeurjc.webapp03.repository.BookRepository;
 import es.codeurjc.webapp03.repository.ReviewRepository;
-import es.codeurjc.webapp03.repository.UserRepository;
+import es.codeurjc.webapp03.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class ReviewSectionController {
@@ -23,7 +26,7 @@ public class ReviewSectionController {
     private BookRepository bookRepository;
 
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
     @PostMapping("/book/{id}/addReview")
     public String addReview(Model model, @PathVariable int id,
@@ -37,7 +40,7 @@ public class ReviewSectionController {
         }
 
         // Add a review to the database
-        Review review = new Review(title, userRepository.findByUsername(testingCurrentUsername), rating, comment, bookRepository.findByID(id));
+        Review review = new Review(title, userService.getUser(testingCurrentUsername), rating, comment, bookRepository.findByID(id));
         reviewRepository.save(review);
         return "redirect:/book/" + id;
     }
@@ -52,7 +55,7 @@ public class ReviewSectionController {
         if (authentication != null) {
             testingCurrentUsername = authentication.getName();
 
-            if (reviewRepository.findByID(reviewID).getUser().getUsername().equals(testingCurrentUsername) || userRepository.findByUsername(testingCurrentUsername).getRole().contains("ADMIN")) {
+            if (reviewRepository.findByID(reviewID).getUser().getUsername().equals(testingCurrentUsername) || userService.getUser(testingCurrentUsername).getRole().contains("ADMIN")) {
                 reviewRepository.deleteById(reviewID);
             }
         }

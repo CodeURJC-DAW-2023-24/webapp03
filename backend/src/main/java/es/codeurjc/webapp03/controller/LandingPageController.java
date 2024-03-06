@@ -7,7 +7,8 @@ import es.codeurjc.webapp03.entity.User;
 import es.codeurjc.webapp03.repository.AuthorRepository;
 import es.codeurjc.webapp03.repository.BookRepository;
 import es.codeurjc.webapp03.repository.GenreRepository;
-import es.codeurjc.webapp03.repository.UserRepository;
+import es.codeurjc.webapp03.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -17,7 +18,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import jakarta.servlet.http.HttpServletRequest;
 
 import java.io.IOException;
 import java.sql.Blob;
@@ -40,7 +40,7 @@ public class LandingPageController {
     private GenreRepository genreRepository;
 
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
     @Autowired
     private AuthorRepository authorRepository;
@@ -55,7 +55,7 @@ public class LandingPageController {
         if (authentication != null) {
             testingCurrentUsername = authentication.getName();
 
-            user = userRepository.findByUsername(testingCurrentUsername);
+            user = userService.getUser(testingCurrentUsername);
             user.setProfileImageString(user.blobToString(user.getProfileImageFile()));
             model.addAttribute("profileImageString", user.getProfileImageString());
 
@@ -78,7 +78,7 @@ public class LandingPageController {
         long totalBooks = bookRepository.count();
 
         // Get total site users count
-        long totalUsers = userRepository.count();
+        long totalUsers = userService.getTotalUsers();
 
         model.addAttribute("totalSiteGenres", totalGenres);
         model.addAttribute("totalSiteAuthors", totalAuthors);
@@ -102,9 +102,9 @@ public class LandingPageController {
 
         // Load lists if a user is logged in
         if (isUser) {
-            mostReadGenres = userRepository.getMostReadGenres(testingCurrentUsername);
-            mostReadAuthors = userRepository.getMostReadAuthors(testingCurrentUsername);
-            model.addAttribute("profilePicture", userRepository.getProfileImageStringByUsername(testingCurrentUsername));
+            mostReadGenres = userService.getMostReadGenres(testingCurrentUsername);
+            mostReadAuthors = userService.getMostReadAuthors(testingCurrentUsername);
+            model.addAttribute("profilePicture", userService.getProfileImageStringByUsername(testingCurrentUsername));
 
             // check if the user has read any books
             if (mostReadGenres.size() == 0) {
@@ -177,7 +177,7 @@ public class LandingPageController {
     public String loadLandingPagePosts(Model model, @RequestParam int page, @RequestParam int size) throws SQLException {
         // If it is a registered user, get the most read genres
         // Get current user most read genres
-        List<Genre> mostReadGenres = userRepository.getMostReadGenres(testingCurrentUsername);
+        List<Genre> mostReadGenres = userService.getMostReadGenres(testingCurrentUsername);
 
         // Get books from the most read genres (these will be the recommended books)
         List<Book> booksFromMostReadGenres = bookRepository.findByGenreIn(mostReadGenres, PageRequest.of(page, size)).getContent();

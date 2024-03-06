@@ -1,7 +1,13 @@
 package es.codeurjc.webapp03.controller;
 
+import es.codeurjc.webapp03.entity.Author;
+import es.codeurjc.webapp03.entity.Book;
+import es.codeurjc.webapp03.entity.Genre;
 import es.codeurjc.webapp03.entity.User;
-import es.codeurjc.webapp03.repository.UserRepository;
+import es.codeurjc.webapp03.repository.AuthorRepository;
+import es.codeurjc.webapp03.repository.BookRepository;
+import es.codeurjc.webapp03.repository.GenreRepository;
+import es.codeurjc.webapp03.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,13 +20,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-
-import es.codeurjc.webapp03.entity.Author;
-import es.codeurjc.webapp03.entity.Book;
-import es.codeurjc.webapp03.entity.Genre;
-import es.codeurjc.webapp03.repository.AuthorRepository;
-import es.codeurjc.webapp03.repository.BookRepository;
-import es.codeurjc.webapp03.repository.GenreRepository;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -38,7 +37,7 @@ public class AdminPageController {
     private GenreRepository genreBD;
 
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
     @Autowired
     private AuthorRepository authorRepository;
@@ -50,7 +49,7 @@ public class AdminPageController {
         Authentication authentication = (Authentication) request.getUserPrincipal();
         if (authentication != null) {
             String currentUsername = authentication.getName();
-            User user = userRepository.findByUsername(currentUsername);
+            User user = userService.getUser(currentUsername);
             String imageString = user.blobToString(user.getProfileImageFile());
             model.addAttribute("profileImageString", imageString);
             model.addAttribute("username", currentUsername);
@@ -67,7 +66,7 @@ public class AdminPageController {
         Authentication authentication = (Authentication) request.getUserPrincipal();
         if (authentication != null) {
             String currentUsername = authentication.getName();
-            User user = userRepository.findByUsername(currentUsername);
+            User user = userService.getUser(currentUsername);
             String imageString = user.blobToString(user.getProfileImageFile());
             model.addAttribute("profileImageString", imageString);
             model.addAttribute("username", currentUsername);
@@ -89,7 +88,7 @@ public class AdminPageController {
 
         Book newBook = new Book(inputBookName, inputBookDescription, "placeholderImage", inputBookDate
                             ,inputBookISBN, inputBookSeries, inputBookPages, inputBookPublisher);
-        
+
         //Check if authors exist, they are separated by ","
         String[] authorsSplit = inputBookAuthorName.split(",");
         ArrayList<Author> authorList = new ArrayList<>();
@@ -98,21 +97,21 @@ public class AdminPageController {
             if(found != null){
                 authorList.add(found);
             }else{
-                Author newAuthor = new Author(authorsSplit[i]); 
+                Author newAuthor = new Author(authorsSplit[i]);
                 newAuthor.addBook(newBook); //Add author to DB
                 authorList.add(newAuthor); //Add to list
-                authorsBD.save(newAuthor); 
+                authorsBD.save(newAuthor);
             }
         }
         newBook.setAuthor(authorList); //Add author/s to list
 
         //Check if Genre exist
-        
+
         Genre genreFound = genreBD.findByName(inputBookGenre);
         if(genreFound != null){
             newBook.setGenre(genreFound);
         }else{
-            Genre newGenre = new Genre(inputBookGenre); 
+            Genre newGenre = new Genre(inputBookGenre);
             newBook.setGenre(newGenre); //Add genre to Book
             newGenre.addBook(newBook);
             genreBD.save(newGenre);
@@ -139,7 +138,7 @@ public class AdminPageController {
 
     @GetMapping("/bestReaders")
     public ResponseEntity<List<Object[]>> getBestReaders() {
-        return new ResponseEntity<>(userRepository.getUsersAndNumberOfBooksRead(), HttpStatus.OK);
+        return new ResponseEntity<>(userService.getUsersTotalReadings(), HttpStatus.OK);
     }
 
 

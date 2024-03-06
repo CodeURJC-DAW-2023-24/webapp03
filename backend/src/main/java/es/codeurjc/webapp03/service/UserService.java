@@ -1,12 +1,15 @@
 package es.codeurjc.webapp03.service;
 
+import es.codeurjc.webapp03.entity.Author;
 import es.codeurjc.webapp03.entity.Book;
+import es.codeurjc.webapp03.entity.Genre;
 import es.codeurjc.webapp03.entity.User;
 import es.codeurjc.webapp03.repository.UserRepository;
 import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -53,7 +56,7 @@ public class UserService {
         return userRepository.findByUsername(username);
     }
 
-    public void SaveUser(User user) {
+    public void saveUser(User user) {
         userRepository.save(user);
     }
 
@@ -131,6 +134,10 @@ public class UserService {
         };
     }
 
+    public Page<User> getUsersPageable(String searchTerm, Pageable pageable) {
+        return userRepository.searchUsers(searchTerm, pageable);
+    }
+
     public void makeAuthor (User user) {
         if (user != null) {
             user.getRole().add("AUTHOR");
@@ -147,6 +154,57 @@ public class UserService {
             builder.append(book.getAuthor()).append("\n");
         }
         return builder.toString();
+    }
+
+    public List<Object[]> getUsersTotalReadings() {
+        return userRepository.getUsersAndNumberOfBooksRead();
+    }
+
+    public boolean hasBookInList(User user, Book book, String listType) {
+        return switch (listType) {
+            case "read" -> user.getReadBooks().contains(book);
+            case "reading" -> user.getReadingBooks().contains(book);
+            case "wanted" -> user.getWantedBooks().contains(book);
+            default -> false;
+        };
+    }
+
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
+    }
+
+    public long getTotalUsers() {
+        return userRepository.count();
+    }
+
+    public List<Genre> getMostReadGenres(String username) {
+        return userRepository.getMostReadGenres(username);
+    }
+
+    public List<Author> getMostReadAuthors(String username) {
+        return userRepository.getMostReadAuthors(username);
+    }
+
+    public String getProfileImageStringByUsername(String username) {
+        return userRepository.getProfileImageStringByUsername(username);
+    }
+
+    public void addBookToList(User user, Book book, String listType) {
+        switch (listType) {
+            case "read" -> user.addReadBook(book);
+            case "reading" -> user.addReadingBook(book);
+            case "wanted" -> user.addWantedBook(book);
+        }
+        userRepository.save(user);
+    }
+
+    public void removeBookFromList(User user, Book book, String listType) {
+        switch (listType) {
+            case "read" -> user.removeReadBook(book);
+            case "reading" -> user.removeReadingBook(book);
+            case "wanted" -> user.removeWantedBook(book);
+        }
+        userRepository.save(user);
     }
 
 }

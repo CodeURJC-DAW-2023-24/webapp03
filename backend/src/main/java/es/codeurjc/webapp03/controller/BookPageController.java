@@ -1,9 +1,13 @@
 package es.codeurjc.webapp03.controller;
 
 import es.codeurjc.webapp03.entity.*;
+import es.codeurjc.webapp03.repository.AuthorRepository;
 import es.codeurjc.webapp03.repository.BookRepository;
+import es.codeurjc.webapp03.repository.GenreRepository;
 import es.codeurjc.webapp03.repository.ReviewRepository;
-import es.codeurjc.webapp03.repository.UserRepository;
+import es.codeurjc.webapp03.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
+import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.Authentication;
@@ -13,12 +17,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import jakarta.servlet.http.HttpServletRequest;
-
-import es.codeurjc.webapp03.repository.AuthorRepository;
-import es.codeurjc.webapp03.repository.GenreRepository;
-
-import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -44,7 +42,7 @@ public class BookPageController {
     private ReviewRepository reviewRepository;
 
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
     @Autowired
     private AuthorRepository authorsBD;
@@ -66,7 +64,7 @@ public class BookPageController {
         if (authentication != null) {
             currentUsername = authentication.getName();
 
-            User user = userRepository.findByUsername(currentUsername);
+            User user = userService.getUser(currentUsername);
             user.setProfileImageString(user.blobToString(user.getProfileImageFile()));
             model.addAttribute("profileImageString", user.getProfileImageString());
             model.addAttribute("username", currentUsername);
@@ -163,9 +161,10 @@ public class BookPageController {
         // check if the book is in the user's read, reading or wanted books (only if the user is logged in)
         if(isUser){
             // check if the book is in the user's read, reading or wanted books (only if the user is logged in)
-            boolean isRead = userRepository.findByUsername(currentUsername).getReadBooks().contains(book);
-            boolean isReading = userRepository.findByUsername(currentUsername).getReadingBooks().contains(book);
-            boolean isWanted = userRepository.findByUsername(currentUsername).getWantedBooks().contains(book);
+            User userToCheck = userService.getUser(currentUsername);
+            boolean isRead = userService.hasBookInList(userToCheck, book, "read");
+            boolean isReading = userService.hasBookInList(userToCheck, book, "reading");
+            boolean isWanted = userService.hasBookInList(userToCheck, book, "wanted");
 
             if (isRead) {
                 model.addAttribute("bookState", "read");
@@ -191,7 +190,7 @@ public class BookPageController {
         } else { // if it's an author and the book is not his, redirect to the book page
             if (request.isUserInRole("AUTHOR")) {
 
-                if (!bookRepository.findByID(bookID).getAuthor().contains(authorsBD.findByName(userRepository.findByUsername(currentUsername).getUsername()))) {
+                if (!bookRepository.findByID(bookID).getAuthor().contains(authorsBD.findByName(userService.getUser(currentUsername).getUsername()))) {
                     return "redirect:/book/" + bookID;
                 }
             }
@@ -200,7 +199,7 @@ public class BookPageController {
          // Get the current logged in user
          Authentication authentication = (Authentication) request.getUserPrincipal();
              String currentUsername = authentication.getName();
-             User user = userRepository.findByUsername(currentUsername);
+             User user = userService.getUser(currentUsername);
              String imageString = user.blobToString(user.getProfileImageFile());
              model.addAttribute("profileImageString", imageString);
 
@@ -249,7 +248,7 @@ public class BookPageController {
 
         Authentication authentication = (Authentication) request.getUserPrincipal();
         String currentUsername = authentication.getName();
-        User user = userRepository.findByUsername(currentUsername);
+        User user = userService.getUser(currentUsername);
         String authorUser = bookRepository.findByID(bookID).getAuthorString();
 
         if((user.getUsername().equals(authorUser) && user.getRole().contains("AUTHOR")) || user.getRole().contains("ADMIN")){
@@ -302,12 +301,12 @@ public class BookPageController {
                 bookRepository.save(book);
 
             }else if ("Borrar".equals(accion)) {
-                for (User userBD : userRepository.findAll()) {
+                for (User userBD : userService.getAllUsers()) {
                     userBD.removeReadBook(book);
                     userBD.removeReadingBook(book);
                     userBD.removeWantedBook(book); 
 
-                    userRepository.save(user);
+                    userService.saveUser(userBD);
                 }
     
                 
