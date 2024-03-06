@@ -2,7 +2,9 @@ $(() => {
     function loadQuery(query) {
         let searchQuery = $(query).val();
         if (searchQuery.trim() !== "") {
-            let url = '/search?query=' + encodeURIComponent(searchQuery);
+            let userSearch = $("#search-select").is(":checked");
+            localStorage.setItem("userSearch", userSearch);
+            let url = "https://" + window.location.host + "/search?users=" + userSearch + "&query=" + encodeURIComponent(searchQuery);
             window.location.assign(url);
         }
     }

@@ -21,6 +21,7 @@ import java.util.List;
 @Controller
 public class SearchResultsPageController {
     private List<Book> bookQueries;
+    private List<User> userQueries;
 
     @Autowired
     private BookRepository bookRepository;
@@ -32,10 +33,10 @@ public class SearchResultsPageController {
     }
 
     @GetMapping("/search")
-    public String loadSearchResultsPage(Model model, String query, HttpServletRequest request) throws SQLException {
-
+    public String loadSearchResultsPage(Model model, @RequestParam boolean users, @RequestParam String query, HttpServletRequest request) throws SQLException {
         Authentication authentication = (Authentication) request.getUserPrincipal();
         model.addAttribute("user", authentication);
+        model.addAttribute("userSearch", users);
         if (authentication != null) {
             String currentUsername = authentication.getName();
             User user = userRepository.findByUsername(currentUsername);
@@ -44,66 +45,95 @@ public class SearchResultsPageController {
             model.addAttribute("username", currentUsername);
         }
 
-        Page<Book> filteredBooks = bookRepository.searchBooks(query, PageRequest.of(0, 4));
-        bookQueries = filteredBooks.getContent();
+        if (!users) {
+            Page<Book> filteredBooks = bookRepository.searchBooks(query, PageRequest.of(0, 4));
+            bookQueries = filteredBooks.getContent();
 
-        for(int i=0;i<bookQueries.size();i++){
-            bookQueries.get(i).setImageString(bookQueries.get(i).blobToString(bookQueries.get(i).getImageFile()));
-        }
-
-        List<Double> ratings = new ArrayList<>();
-        bookQueries.forEach((book) -> {
-            List<Double> bookRatings = bookRepository.getRatingsByBookId(book.getID());
-            double averageRating = 0;
-            if (bookRatings.size() > 0) {
-                for (Double rating : bookRatings) {
-                    averageRating += rating;
-                }
-                averageRating /= bookRatings.size();
+            for (int i = 0; i < bookQueries.size(); i++) {
+                bookQueries.get(i).setImageString(bookQueries.get(i).blobToString(bookQueries.get(i).getImageFile()));
             }
-            ratings.add(averageRating);
-        });
 
-        long maxBooks = filteredBooks.getTotalElements();
-        model.addAttribute("searchInputQuery", query);
-        model.addAttribute("bookQueries", bookQueries);
-        model.addAttribute("maxBooks", maxBooks);
-        model.addAttribute("ratings", ratings);
+            List<Double> ratings = new ArrayList<>();
+            bookQueries.forEach((book) -> {
+                List<Double> bookRatings = bookRepository.getRatingsByBookId(book.getID());
+                double averageRating = 0;
+                if (bookRatings.size() > 0) {
+                    for (Double rating : bookRatings) {
+                        averageRating += rating;
+                    }
+                    averageRating /= bookRatings.size();
+                }
+                ratings.add(averageRating);
+            });
 
-        //Admin
-        model.addAttribute("admin", request.isUserInRole("ADMIN"));
+            long maxBooks = filteredBooks.getTotalElements();
+            model.addAttribute("searchInputQuery", query);
+            model.addAttribute("bookQueries", bookQueries);
+            model.addAttribute("maxBooks", maxBooks);
+            model.addAttribute("ratings", ratings);
+
+            //Admin
+            model.addAttribute("admin", request.isUserInRole("ADMIN"));
+        } else {
+            Page<User> filteredUsers = userRepository.searchUsers(query, PageRequest.of(0, 4));
+            userQueries = filteredUsers.getContent();
+
+            for (int i = 0; i < userQueries.size(); i++) {
+                userQueries.get(i).setProfileImageString(userQueries.get(i).blobToString(userQueries.get(i).getProfileImageFile()));
+            }
+
+            long maxUsers = filteredUsers.getTotalElements();
+            model.addAttribute("searchInputQuery", query);
+            model.addAttribute("userQueries", userQueries);
+            model.addAttribute("maxUsers", maxUsers);
+
+        }
 
         return "searchResultsPage";
     }
 
     @GetMapping("/search/loadMore")
-    public String loadSearchResultsPageBooks(@RequestParam String query, @RequestParam int page, Model model) throws SQLException {
+    public String loadSearchResultsPageBooks(@RequestParam boolean userSearch, @RequestParam String query, @RequestParam int page, Model model) throws SQLException {
+        if (!userSearch) {
+            Page<Book> filteredBooks = bookRepository.searchBooks(query, PageRequest.of(page, 4));
+            bookQueries = filteredBooks.getContent();
 
-        Page<Book> filteredBooks = bookRepository.searchBooks(query, PageRequest.of(page, 4));
-        bookQueries = filteredBooks.getContent();
-
-        for(int i=0;i<bookQueries.size();i++){
-            bookQueries.get(i).setImageString(bookQueries.get(i).blobToString(bookQueries.get(i).getImageFile()));
-        }
-
-        List<Double> ratings = new ArrayList<>();
-        bookQueries.forEach((book) -> {
-            List<Double> bookRatings = bookRepository.getRatingsByBookId(book.getID());
-            double averageRating = 0;
-            if (bookRatings.size() > 0) {
-                for (Double rating : bookRatings) {
-                    averageRating += rating;
-                }
-                averageRating /= bookRatings.size();
+            for (int i = 0; i < bookQueries.size(); i++) {
+                bookQueries.get(i).setImageString(bookQueries.get(i).blobToString(bookQueries.get(i).getImageFile()));
             }
-            ratings.add(averageRating);
-        });
 
-        long maxBooks = filteredBooks.getTotalElements();
-        model.addAttribute("book", bookQueries);
-        model.addAttribute("maxBooks", maxBooks);
-        model.addAttribute("ratings", ratings);
+            List<Double> ratings = new ArrayList<>();
+            bookQueries.forEach((book) -> {
+                List<Double> bookRatings = bookRepository.getRatingsByBookId(book.getID());
+                double averageRating = 0;
+                if (bookRatings.size() > 0) {
+                    for (Double rating : bookRatings) {
+                        averageRating += rating;
+                    }
+                    averageRating /= bookRatings.size();
+                }
+                ratings.add(averageRating);
+            });
 
-        return "searchResultsBookTemplate";
+            long maxBooks = filteredBooks.getTotalElements();
+            model.addAttribute("book", bookQueries);
+            model.addAttribute("maxBooks", maxBooks);
+            model.addAttribute("ratings", ratings);
+
+            return "searchResultsBookTemplate";
+        } else {
+            Page<User> filteredUsers = userRepository.searchUsers(query, PageRequest.of(page, 4));
+            userQueries = filteredUsers.getContent();
+
+            for (int i = 0; i < userQueries.size(); i++) {
+                userQueries.get(i).setProfileImageString(userQueries.get(i).blobToString(userQueries.get(i).getProfileImageFile()));
+            }
+
+            long maxUsers = filteredUsers.getTotalElements();
+            model.addAttribute("user", userQueries);
+            model.addAttribute("maxUsers", maxUsers);
+
+            return "searchResultsUserTemplate";
+        }
     }
 }

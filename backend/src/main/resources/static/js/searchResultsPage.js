@@ -82,53 +82,13 @@ $(() => {
     });
     $("#loadMoreBut i").css({"margin-right": "10px"});
 
-    // Mustache book template
-    let bookTemplate = `
-    {{#bookQueries}}
-            <!-- Book card-->
-            <div class="col mb-5">
-                <div class="card h-100">
-                    <!-- Read badge-->
-                    <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Le&iacutedo
-                    </div>
-                    <!-- Book cover image-->
-                    <img class="card-img-top" src="{{image}}" alt="..."/>
-                    <!-- Product details-->
-                    <div class="card-body p-4">
-                        <div class="text-center">
-                            <!-- Book name-->
-                            <h5 class="fw-bolder">{{title}}</h5>
-                            <!-- Book Author-->
-                            <h6 class="fw-normal">{{author}}</h6>
-                            <!-- Product reviews-->
-                            <div class="d-flex justify-content-center small text-warning mb-2">
-                                <div class="bi-star-fill"></div>
-                                <div class="bi-star-fill"></div>
-                                <div class="bi-star-fill"></div>
-                                <div class="bi-star-fill"></div>
-                                <div class="bi-star"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Product actions-->
-                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="/book/{{id}}">Ver
-                            libro</a>
-                        </div>
-                    </div>
-                </div>
-            </div> <!-- End of book card-->
-            {{/bookQueries}}
-    `;
-
-
     let currentPage = 1;
 
     if (currentPage * 4 >= $("#maxBooks").val()) {
         $("#loadMoreBut").hide();
     }
 
-    if (!(($(".book")).length)) {
+    if (!(($(".book")).length) && !($(".user")).length) {
         $("#noResults").show()
     }
 
@@ -136,25 +96,45 @@ $(() => {
         $("#loadMoreBut i").addClass("fa-spin");
         // AJAX request
         url = window.location.href;
-        let query = url.substring(url.lastIndexOf("?") + 7, url.length);
+        let query = url.substring(url.lastIndexOf("&") + 7, url.length);
+
+        let userSearch = localStorage.getItem("userSearch");
+
 
         $.ajax({
             type: "GET",
-            url: "/search/loadMore?query=" + query + "&page=" + currentPage,
-            success: function (data) {
+            url: "https://" + window.location.host + "/search/loadMore?userSearch=" + userSearch + "&query=" + query + "&page=" + currentPage,
+            success: (data) => {
                 $("#loadMoreBut i").removeClass("fa-spin");
-                $("#books").append(data)
+
                 currentPage++;
+                if (userSearch === "false") {
+                    $("#books").append(data);
+
+                    if (currentPage * 4 >= $("#maxBooks").val()) {
+                        $("#loadMoreBut").hide();
+                    }
+
+                } else {
+                    $("#users").append(data);
+
+                    if (currentPage * 4 >= $("#maxUsers").val()) {
+                        $("#loadMoreBut").hide();
+                    }
+                }
                 if (currentPage * 4 >= $("#maxBooks").val()) {
                     $("#loadMoreBut").hide();
                 }
             }
         });
-        setTimeout(() => {
-            $(".stars").slice((currentPage - 1) * 4, $(".stars").length).each((ind, starElements) => {
-                putStars($(".rating").eq(ind + ((currentPage - 1) * 4)).text(), $(starElements));
-            });
-        }, 100);
+        if (userSearch) {
+            setTimeout(() => {
+                $(".stars").slice((currentPage - 1) * 4, $(".stars").length).each((ind, starElements) => {
+                    putStars($(".rating").eq(ind + ((currentPage - 1) * 4)).text(), $(starElements));
+                });
+            }, 100);
+        }
 
     });
-});
+})
+;

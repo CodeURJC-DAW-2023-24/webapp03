@@ -8,11 +8,19 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
 public interface UserRepository extends JpaRepository<User, String> {
     User findByUsername(String username);
+
+    @Query("SELECT u FROM User u WHERE " +
+            "u.username LIKE %:searchTerm% OR " +
+                    "u.alias LIKE %:searchTerm% OR " +
+                    "u.description LIKE %:searchTerm% OR " +
+                    "u.email LIKE %:searchTerm%")
+    Page<User> searchUsers(@Param("searchTerm") String searchTerm, Pageable pageable);
 
     @Query("SELECT u.readBooks FROM User u WHERE u.username = :username")
     Page<Book> getReadBooks(String username, Pageable pageable);

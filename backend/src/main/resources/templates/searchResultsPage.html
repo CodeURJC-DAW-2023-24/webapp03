@@ -67,6 +67,12 @@
                         <input type="hidden" name="_csrf" value="{{token}}"/>
                     </form>
                 </li>
+                <li class="bm-nav-item" style="display: flex; align-items: center">
+                    <input type="checkbox" id="search-select" style="display: none; margin-left: 20px">
+                    <label id="search-select-label" for="search-select" style="margin-left: 20px"></label>
+                    <i class="fa-solid fa-book select-color" id="book-icon" style="margin-left: 20px"></i>
+                    <i class="fa-solid fa-user select-color" id="user-icon" style="margin-left: 20px"></i>
+                </li>
             </ul>
             {{#user}}
             <form class="bm-d-flex" action="/logout" method="post">
@@ -105,7 +111,12 @@
 <header class="bg-branding-white py-1">
     <div class="container px-4 px-lg-5 my-5">
         <div class="text-start text-dark">
+            {{#userSearch}}
+            <input type="hidden" id="maxUsers" value="{{maxUsers}}"/>
+            {{/userSearch}}
+            {{^userSearch}}
             <input type="hidden" id="maxBooks" value="{{maxBooks}}"/>
+            {{/userSearch}}
             <h1 class="display-4 fw-bolder id=query">{{searchInputQuery}}</h1>
             <p class="lead fw-normal text-black-50 mb-0">Resultados de búsqueda</p>
         </div>
@@ -114,6 +125,31 @@
 <!-- Section-->
 <section class="py-5">
     <div class="container px-4 px-lg-5 mt-5">
+        {{#userSearch}}
+        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center" id="users">
+            {{#userQueries}}
+            <!-- User card-->
+            <div class="col mb-5 user">
+                <div class="card h-100">
+                    <!-- User image-->
+                    <img class="card-img-top" src="data:image/png;base64,{{profileImageString}}" alt="..."/>
+                    <!-- User details-->
+                    <div class="card-body p-4">
+                        <div class="text-center">
+                            <!-- Username-->
+                            <h5 class="fw-bolder">{{username}}</h5>
+                        </div>
+                    </div>
+                    <!-- Product actions-->
+                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="/profile/{{username}}">Ver perfil</a></div>
+                    </div>
+                </div>
+            </div> <!-- End of book card-->
+            {{/userQueries}}
+        </div>
+        {{/userSearch}}
+        {{^userSearch}}
         <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center" id="books">
             {{#bookQueries}}
             <!-- Book card-->
@@ -151,6 +187,7 @@
             <div style="display:none" class="rating">{{.}}</div>
             {{/ratings}}
         </div>
+        {{/userSearch}}
     </div>
     <div>
         <div id="load-more-spinner" class="loader" role="status"></div>

@@ -63,7 +63,7 @@
                 </li>
                 <!-- Search widget-->
                 <li class="bm-nav-item">
-                    <form class="bm-d-flex position-relative" onsubmit="return false;">
+                    <form class="bm-d-flex position-relative" onSubmit="return false;">
                         <input id="search-bar" class="form-control search-bar" type="search" placeholder="Buscar"
                                aria-label="Search">
                         <a id="magnifier-icon-link">
@@ -72,6 +72,12 @@
                         </a>
                         <input type="hidden" name="_csrf" value="{{token}}"/>
                     </form>
+                </li>
+                <li class="bm-nav-item" style="display: flex; align-items: center">
+                    <input type="checkbox" id="search-select" style="display: none; margin-left: 20px">
+                    <label id="search-select-label" for="search-select" style="margin-left: 20px"></label>
+                    <i class="fa-solid fa-book select-color" id="book-icon" style="margin-left: 20px"></i>
+                    <i class="fa-solid fa-user select-color" id="user-icon" style="margin-left: 20px"></i>
                 </li>
             </ul>
             <form class="bm-d-flex" action="/logout" method="post">
@@ -105,7 +111,7 @@
             <div class="sb-sidenav-menu">
                 <div class="nav">
                     <div class="sb-sidenav-menu-heading">General</div>
-                    <a class="nav-link" href="administratorMainPage.html">
+                    <a class="nav-link" href="/">
                         <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                         Pantalla principal
                     </a>

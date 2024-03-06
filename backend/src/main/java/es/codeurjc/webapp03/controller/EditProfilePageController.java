@@ -88,6 +88,10 @@ public class EditProfilePageController {
                               @RequestParam("description") String newDescription,
                               HttpServletRequest request) throws SQLException {
 
+        if(!checkCorrectProfile(username,request)){
+            return "redirect:/error";
+        }
+
         User user = userRepository.findByUsername(username);
 
         if (user != null) {

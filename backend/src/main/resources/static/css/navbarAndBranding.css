@@ -1294,3 +1294,149 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2) !important;
     transition: all 0.3s ease-in-out !important;
 }
+
+#search-select-label {
+
+    cursor: pointer;
+
+    display: block;
+
+    border: 1px solid var(--branding-brown);
+
+    border-radius: 11px;
+
+    background-color: var(--branding-peach);;
+
+    width: 40px;
+
+    height: 20px;
+
+    position: relative;
+
+    transition: all 0.2s;
+
+}
+
+
+
+#search-select-label:after {
+
+    content: "";
+
+    border: 1px solid var(--branding-brown);
+
+    background-color: var(--branding-brown);
+
+    border-radius: 10px;
+
+    width: 18px;
+
+    height: 18px;
+
+    position: absolute;
+
+    top: 0;
+
+    left: 0;
+
+    transition: all 0.2s;
+
+}
+
+
+
+#search-select:checked + #search-select-label {
+
+    border-color: var(--branding-brown);
+
+}
+
+
+
+#search-select:checked + #search-select-label:after {
+
+    left: 20px;
+
+    border-color: var(--branding-brown);
+
+}
+
+
+
+.select-color {
+
+    padding: 15px;
+
+    border-radius: 50%;
+
+    color: var(--bs-nav-link-color);
+
+}
+
+
+
+#book-icon {
+
+    order: 1;
+
+}
+
+
+
+#search-select-label {
+
+    order: 2;
+
+}
+
+
+
+#user-icon {
+
+    order: 3;
+
+}
+
+
+
+#search-select:not(:checked) ~ #book-icon {
+
+    background-color: var(--branding-brown);
+    -webkit-transition: background-color 500ms linear;
+    -ms-transition: background-color 500ms linear;
+
+    color: var(--branding-peach);
+
+}
+
+#search-select:checked ~ #book-icon {
+
+    background-color: var(--branding-peach);
+    -webkit-transition: background-color 500ms linear;
+    -ms-transition: background-color 500ms linear;
+
+    color: var(--branding-brown);
+
+}
+
+
+
+#search-select:checked ~ #user-icon {
+
+    background-color: var(--branding-brown);
+    -webkit-transition: background-color 500ms linear;
+    -ms-transition: background-color 500ms linear;
+
+    color: var(--branding-peach);
+
+}
+
+#search-select:not(:checked) ~ #user-icon {
+
+    background-color: var(--branding-peach);
+    -webkit-transition: background-color 500ms linear;
+    -ms-transition: background-color 500ms linear;
+
+    color: var(--branding-brown);
+
+}
