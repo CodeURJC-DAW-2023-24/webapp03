@@ -5,8 +5,8 @@ import es.codeurjc.webapp03.entity.Book;
 import es.codeurjc.webapp03.entity.Genre;
 import es.codeurjc.webapp03.entity.User;
 import es.codeurjc.webapp03.repository.AuthorRepository;
-import es.codeurjc.webapp03.repository.BookRepository;
 import es.codeurjc.webapp03.repository.GenreRepository;
+import es.codeurjc.webapp03.service.BookService;
 import es.codeurjc.webapp03.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +34,7 @@ public class LandingPageController {
     private boolean isUser;
 
     @Autowired
-    private BookRepository bookRepository;
+    private BookService bookService;
 
     @Autowired
     private GenreRepository genreRepository;
@@ -75,7 +75,7 @@ public class LandingPageController {
         long totalAuthors = authorRepository.count();
 
         // Get total site books count
-        long totalBooks = bookRepository.count();
+        long totalBooks = bookService.getTotalBooks();
 
         // Get total site users count
         long totalUsers = userService.getTotalUsers();
@@ -121,8 +121,9 @@ public class LandingPageController {
             mostReadGenres = genreRepository.getMostReadGenres();
             mostReadAuthors = authorRepository.getMostReadAuthors();
         }
-        booksFromMostReadGenres = bookRepository.findByGenreIn(mostReadGenres, PageRequest.of(0, 4)).getContent();
-        booksFromMostReadAuthor = bookRepository.findByAuthorString(mostReadAuthors.get(0).getName(), PageRequest.of(0, 5)).getContent();
+        booksFromMostReadGenres = bookService.getBooksByGenreIn(mostReadGenres, PageRequest.of(0, 4));
+        booksFromMostReadAuthor = bookService.getBooksByAuthor(mostReadAuthors.get(0).getName(), PageRequest.of(0, 5));
+
         //Get info of the book recommended in the big card (recommended by author)
 
         long bookID = booksFromMostReadAuthor.get(0).getID();
@@ -180,7 +181,7 @@ public class LandingPageController {
         List<Genre> mostReadGenres = userService.getMostReadGenres(testingCurrentUsername);
 
         // Get books from the most read genres (these will be the recommended books)
-        List<Book> booksFromMostReadGenres = bookRepository.findByGenreIn(mostReadGenres, PageRequest.of(page, size)).getContent();
+        List<Book> booksFromMostReadGenres = bookService.getBooksByGenreIn(mostReadGenres, PageRequest.of(page, size));
 
         for (int i = 0; i < booksFromMostReadGenres.size(); i++) {
             booksFromMostReadGenres.get(i).setImageString(booksFromMostReadGenres.get(i).blobToString(booksFromMostReadGenres.get(i).getImageFile()));

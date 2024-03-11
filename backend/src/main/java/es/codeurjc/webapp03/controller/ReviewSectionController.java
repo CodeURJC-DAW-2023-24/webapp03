@@ -1,8 +1,8 @@
 package es.codeurjc.webapp03.controller;
 
 import es.codeurjc.webapp03.entity.Review;
-import es.codeurjc.webapp03.repository.BookRepository;
-import es.codeurjc.webapp03.repository.ReviewRepository;
+import es.codeurjc.webapp03.service.BookReviewService;
+import es.codeurjc.webapp03.service.BookService;
 import es.codeurjc.webapp03.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,10 +20,10 @@ public class ReviewSectionController {
     private String testingCurrentUsername;
 
     @Autowired
-    private ReviewRepository reviewRepository;
+    private BookService bookService;
 
     @Autowired
-    private BookRepository bookRepository;
+    private BookReviewService reviewService;
 
     @Autowired
     private UserService userService;
@@ -40,8 +40,8 @@ public class ReviewSectionController {
         }
 
         // Add a review to the database
-        Review review = new Review(title, userService.getUser(testingCurrentUsername), rating, comment, bookRepository.findByID(id));
-        reviewRepository.save(review);
+        Review review = new Review(title, userService.getUser(testingCurrentUsername), rating, comment, bookService.getBook(id));
+        reviewService.saveReview(review);
         return "redirect:/book/" + id;
     }
 
@@ -55,9 +55,7 @@ public class ReviewSectionController {
         if (authentication != null) {
             testingCurrentUsername = authentication.getName();
 
-            if (reviewRepository.findByID(reviewID).getUser().getUsername().equals(testingCurrentUsername) || userService.getUser(testingCurrentUsername).getRole().contains("ADMIN")) {
-                reviewRepository.deleteById(reviewID);
-            }
+            reviewService.deleteIfCorrectUser(reviewID, testingCurrentUsername);
         }
 
         return "redirect:/book/" + id;

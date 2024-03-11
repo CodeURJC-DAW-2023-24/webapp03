@@ -2,7 +2,7 @@ package es.codeurjc.webapp03.controller;
 
 import es.codeurjc.webapp03.entity.Book;
 import es.codeurjc.webapp03.entity.User;
-import es.codeurjc.webapp03.repository.BookRepository;
+import es.codeurjc.webapp03.service.BookService;
 import es.codeurjc.webapp03.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +29,7 @@ public class ProfilePageController {
     private UserService userService;
 
     @Autowired
-    private BookRepository bookRepository;
+    private BookService bookService;
 
     @GetMapping("/profile/{username}/**")
     public String loadProfilePage(Model model, @PathVariable String username, HttpServletRequest request) throws SQLException {
@@ -101,7 +101,7 @@ public class ProfilePageController {
 
         List<Double> readBooksRatings = new ArrayList<>();
         readBooksList.forEach((book) -> {
-            List<Double> bookRatings = bookRepository.getRatingsByBookId(book.getID());
+            List<Double> bookRatings = bookService.getRatings(book.getID());
             double averageRating = 0;
             if (bookRatings.size() > 0) {
                 for (Double rating : bookRatings) {
@@ -115,7 +115,7 @@ public class ProfilePageController {
 
         List<Double> readingBooksRatings = new ArrayList<>();
         readingBooksList.forEach((book) -> {
-            List<Double> bookRatings = bookRepository.getRatingsByBookId(book.getID());
+            List<Double> bookRatings = bookService.getRatings(book.getID());
             double averageRating = 0;
             if (bookRatings.size() > 0) {
                 for (Double rating : bookRatings) {
@@ -129,7 +129,7 @@ public class ProfilePageController {
 
         List<Double> wantedBooksRatings = new ArrayList<>();
         wantedBooksList.forEach((book) -> {
-            List<Double> bookRatings = bookRepository.getRatingsByBookId(book.getID());
+            List<Double> bookRatings = bookService.getRatings(book.getID());
             double averageRating = 0;
             if (bookRatings.size() > 0) {
                 for (Double rating : bookRatings) {
@@ -173,7 +173,7 @@ public class ProfilePageController {
 
                 List<Double> readBooksRatings = new ArrayList<>();
                 readBooksList.forEach((book) -> {
-                    List<Double> bookRatings = bookRepository.getRatingsByBookId(book.getID());
+                    List<Double> bookRatings = bookService.getRatings(book.getID());
                     double averageRating = 0;
                     if (bookRatings.size() > 0) {
                         for (Double rating : bookRatings) {
@@ -196,7 +196,7 @@ public class ProfilePageController {
 
                 List<Double> readingBooksRatings = new ArrayList<>();
                 readingBooksList.forEach((book) -> {
-                    List<Double> bookRatings = bookRepository.getRatingsByBookId(book.getID());
+                    List<Double> bookRatings = bookService.getRatings(book.getID());
                     double averageRating = 0;
                     if (bookRatings.size() > 0) {
                         for (Double rating : bookRatings) {
@@ -219,7 +219,7 @@ public class ProfilePageController {
 
                 List<Double> wantedBooksRatings = new ArrayList<>();
                 wantedBooksList.forEach((book) -> {
-                    List<Double> bookRatings = bookRepository.getRatingsByBookId(book.getID());
+                    List<Double> bookRatings = bookService.getRatings(book.getID());
                     double averageRating = 0;
                     if (bookRatings.size() > 0) {
                         for (Double rating : bookRatings) {

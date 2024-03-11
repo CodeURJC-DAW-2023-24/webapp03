@@ -207,4 +207,32 @@ public class UserService {
         userRepository.save(user);
     }
 
+    public void moveBookToList(User user, Book book, String listType){
+        switch (listType) {
+            case "read" -> {
+                user.addReadBook(book);
+                user.removeReadingBook(book);
+                user.removeWantedBook(book);
+            }
+            case "reading" -> {
+                user.addReadingBook(book);
+                user.removeReadBook(book);
+                user.removeWantedBook(book);
+            }
+            case "wanted" -> {
+                user.addWantedBook(book);
+                user.removeReadBook(book);
+                user.removeReadingBook(book);
+            }
+        }
+        userRepository.save(user);
+    }
+
+    public void removeBookFromAllLists(User user, Book book) {
+        user.removeReadBook(book);
+        user.removeReadingBook(book);
+        user.removeWantedBook(book);
+        userRepository.save(user);
+    }
+
 }

@@ -2,7 +2,7 @@ package es.codeurjc.webapp03.controller;
 
 import es.codeurjc.webapp03.entity.Book;
 import es.codeurjc.webapp03.entity.User;
-import es.codeurjc.webapp03.repository.BookRepository;
+import es.codeurjc.webapp03.service.BookService;
 import es.codeurjc.webapp03.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +24,7 @@ public class SearchResultsPageController {
     private List<User> userQueries;
 
     @Autowired
-    private BookRepository bookRepository;
+    private BookService bookService;
 
     @Autowired
     public UserService userService;
@@ -46,7 +46,7 @@ public class SearchResultsPageController {
         }
 
         if (!users) {
-            Page<Book> filteredBooks = bookRepository.searchBooks(query, PageRequest.of(0, 4));
+            Page<Book> filteredBooks = bookService.searchBook(query, PageRequest.of(0, 4));
             bookQueries = filteredBooks.getContent();
 
             for (int i = 0; i < bookQueries.size(); i++) {
@@ -55,7 +55,7 @@ public class SearchResultsPageController {
 
             List<Double> ratings = new ArrayList<>();
             bookQueries.forEach((book) -> {
-                List<Double> bookRatings = bookRepository.getRatingsByBookId(book.getID());
+                List<Double> bookRatings = bookService.getRatings(book.getID());
                 double averageRating = 0;
                 if (bookRatings.size() > 0) {
                     for (Double rating : bookRatings) {
@@ -95,7 +95,7 @@ public class SearchResultsPageController {
     @GetMapping("/search/loadMore")
     public String loadSearchResultsPageBooks(@RequestParam boolean userSearch, @RequestParam String query, @RequestParam int page, Model model) throws SQLException {
         if (!userSearch) {
-            Page<Book> filteredBooks = bookRepository.searchBooks(query, PageRequest.of(page, 4));
+            Page<Book> filteredBooks = bookService.searchBook(query, PageRequest.of(page, 4));
             bookQueries = filteredBooks.getContent();
 
             for (int i = 0; i < bookQueries.size(); i++) {
@@ -104,7 +104,7 @@ public class SearchResultsPageController {
 
             List<Double> ratings = new ArrayList<>();
             bookQueries.forEach((book) -> {
-                List<Double> bookRatings = bookRepository.getRatingsByBookId(book.getID());
+                List<Double> bookRatings = bookService.getRatings(book.getID());
                 double averageRating = 0;
                 if (bookRatings.size() > 0) {
                     for (Double rating : bookRatings) {

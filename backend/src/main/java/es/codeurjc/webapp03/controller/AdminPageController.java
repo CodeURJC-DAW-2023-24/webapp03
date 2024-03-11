@@ -5,8 +5,8 @@ import es.codeurjc.webapp03.entity.Book;
 import es.codeurjc.webapp03.entity.Genre;
 import es.codeurjc.webapp03.entity.User;
 import es.codeurjc.webapp03.repository.AuthorRepository;
-import es.codeurjc.webapp03.repository.BookRepository;
 import es.codeurjc.webapp03.repository.GenreRepository;
+import es.codeurjc.webapp03.service.BookService;
 import es.codeurjc.webapp03.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.hibernate.engine.jdbc.BlobProxy;
@@ -30,9 +30,11 @@ import java.util.List;
 public class AdminPageController {
 
     @Autowired
-    private BookRepository booksBD;
+    private BookService bookService;
+
     @Autowired
     private AuthorRepository authorsBD;
+
     @Autowired
     private GenreRepository genreBD;
 
@@ -80,23 +82,23 @@ public class AdminPageController {
 
     @PostMapping("/admin/newBook/done")
     public String loadIntoBD(Model model, @RequestParam("inputBookName") String inputBookName
-    , @RequestParam("inputBookAuthorName") String inputBookAuthorName, @RequestParam("inputBookISBN") String inputBookISBN
-    , @RequestParam("inputBookPages") int inputBookPages, @RequestParam("inputBookGenre") String inputBookGenre
-    , @RequestParam("inputBookDate") String inputBookDate
-    , @RequestParam("inputBookPublisher") String inputBookPublisher, @RequestParam("inputBookSeries") String inputBookSeries
-    , @RequestParam("inputBookDescription") String inputBookDescription, @RequestParam("inputImageFile") MultipartFile inputImageFile) throws IOException  {
+            , @RequestParam("inputBookAuthorName") String inputBookAuthorName, @RequestParam("inputBookISBN") String inputBookISBN
+            , @RequestParam("inputBookPages") int inputBookPages, @RequestParam("inputBookGenre") String inputBookGenre
+            , @RequestParam("inputBookDate") String inputBookDate
+            , @RequestParam("inputBookPublisher") String inputBookPublisher, @RequestParam("inputBookSeries") String inputBookSeries
+            , @RequestParam("inputBookDescription") String inputBookDescription, @RequestParam("inputImageFile") MultipartFile inputImageFile) throws IOException {
 
         Book newBook = new Book(inputBookName, inputBookDescription, "placeholderImage", inputBookDate
-                            ,inputBookISBN, inputBookSeries, inputBookPages, inputBookPublisher);
+                , inputBookISBN, inputBookSeries, inputBookPages, inputBookPublisher);
 
         //Check if authors exist, they are separated by ","
         String[] authorsSplit = inputBookAuthorName.split(",");
         ArrayList<Author> authorList = new ArrayList<>();
-        for (int i=0; i<authorsSplit.length;i++){
+        for (int i = 0; i < authorsSplit.length; i++) {
             Author found = authorsBD.findByName(authorsSplit[i]);
-            if(found != null){
+            if (found != null) {
                 authorList.add(found);
-            }else{
+            } else {
                 Author newAuthor = new Author(authorsSplit[i]);
                 newAuthor.addBook(newBook); //Add author to DB
                 authorList.add(newAuthor); //Add to list
@@ -108,9 +110,9 @@ public class AdminPageController {
         //Check if Genre exist
 
         Genre genreFound = genreBD.findByName(inputBookGenre);
-        if(genreFound != null){
+        if (genreFound != null) {
             newBook.setGenre(genreFound);
-        }else{
+        } else {
             Genre newGenre = new Genre(inputBookGenre);
             newBook.setGenre(newGenre); //Add genre to Book
             newGenre.addBook(newBook);
@@ -121,13 +123,13 @@ public class AdminPageController {
         //If no picture was added, check for old pic. If there never was a pic, insert placeholder.
         if (inputImageFile.isEmpty()) {
             newBook.setImageFile(newBook.URLtoBlob("https://fissac.com/wp-content/uploads/2020/11/placeholder.png"));
-        }else{
+        } else {
             //URI location = ServletUriComponentsBuilder.fromCurrentRequest().build().toUri();
             //book.setImage(location.toString());
             newBook.setImageFile(BlobProxy.generateProxy(inputImageFile.getInputStream(), inputImageFile.getSize()));
         }
 
-        booksBD.save(newBook);
+        bookService.saveBook(newBook);
         return "redirect:/admin";
     }
 

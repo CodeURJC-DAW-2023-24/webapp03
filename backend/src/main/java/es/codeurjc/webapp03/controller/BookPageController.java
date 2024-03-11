@@ -2,14 +2,13 @@ package es.codeurjc.webapp03.controller;
 
 import es.codeurjc.webapp03.entity.*;
 import es.codeurjc.webapp03.repository.AuthorRepository;
-import es.codeurjc.webapp03.repository.BookRepository;
 import es.codeurjc.webapp03.repository.GenreRepository;
-import es.codeurjc.webapp03.repository.ReviewRepository;
+import es.codeurjc.webapp03.service.BookReviewService;
+import es.codeurjc.webapp03.service.BookService;
 import es.codeurjc.webapp03.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -36,10 +35,10 @@ public class BookPageController {
 
 
     @Autowired
-    private BookRepository bookRepository;
+    private BookService bookService;
 
     @Autowired
-    private ReviewRepository reviewRepository;
+    private BookReviewService reviewService;
 
     @Autowired
     private UserService userService;
@@ -72,7 +71,7 @@ public class BookPageController {
             isUser = true;
             isAdmin = request.isUserInRole("ADMIN");
 
-            String authorUser = bookRepository.findByID(bookID).getAuthorString();
+            String authorUser = bookService.getBook(bookID).getAuthorString();
 
             if(currentUsername.equals(authorUser) && user.getRole().contains("AUTHOR")){
                 model.addAttribute("author",true);
@@ -82,7 +81,7 @@ public class BookPageController {
         }
 
         // Get ratings from the database
-        List<Double> ratings = bookRepository.getRatingsByBookId(bookID);
+        List<Double> ratings = bookService.getRatings(bookID);
 
         // Calculate the average rating
         double averageRating = 0;
@@ -97,7 +96,7 @@ public class BookPageController {
         averageRating = Math.round(averageRating * 100.0) / 100.0;
 
         // Get book from the database
-        this.book = bookRepository.findByID(bookID);
+        this.book = bookService.getBook(bookID);
 
         String bookTitle = book.getTitle();
         String bookAuthor = book.getAuthorString();
@@ -129,7 +128,7 @@ public class BookPageController {
         model.addAttribute("averageRating", averageRating);
 
         // Get reviews from the database
-        List<Review> reviews = reviewRepository.findByBookID(bookID, PageRequest.of(0, 6)).getContent();
+        List<Review> reviews = reviewService.findReviews(bookID, 6);
 
         if (isUser == true) {
             model.addAttribute("user", true);
@@ -139,10 +138,10 @@ public class BookPageController {
                 model.addAttribute("admin", false);
             }
             // Check if the user has already reviewed the book
-            boolean hasReviewed = reviewRepository.existsByBookIDAndAuthorUsername(bookID, currentUsername);
+            boolean hasReviewed = reviewService.existsByBookIDAndAuthorUsername(bookID, currentUsername);
 
             // Get the user's review
-            Review userReview = reviewRepository.findByBookIDAndAuthorUsername(bookID, currentUsername);
+            Review userReview = reviewService.findByBookIDAndAuthorUsername(bookID, currentUsername);
             model.addAttribute("hasReviewed", hasReviewed);
             model.addAttribute("userReview", userReview);
 
@@ -190,7 +189,7 @@ public class BookPageController {
         } else { // if it's an author and the book is not his, redirect to the book page
             if (request.isUserInRole("AUTHOR")) {
 
-                if (!bookRepository.findByID(bookID).getAuthor().contains(authorsBD.findByName(userService.getUser(currentUsername).getUsername()))) {
+                if (!bookService.getAuthors(bookID).contains(authorsBD.findByName(userService.getUser(currentUsername).getUsername()))) {
                     return "redirect:/book/" + bookID;
                 }
             }
@@ -249,10 +248,10 @@ public class BookPageController {
         Authentication authentication = (Authentication) request.getUserPrincipal();
         String currentUsername = authentication.getName();
         User user = userService.getUser(currentUsername);
-        String authorUser = bookRepository.findByID(bookID).getAuthorString();
+        String authorUser = bookService.getAuthorsString(bookID);
 
         if((user.getUsername().equals(authorUser) && user.getRole().contains("AUTHOR")) || user.getRole().contains("ADMIN")){
-            Book book = bookRepository.findByID(bookID);
+            Book book = bookService.getBook(bookID);
             if ("Guardar".equals(accion)) {
                 //Se puede realizar con setter en la clase Book
                 book.setTitle(inputBookName);
@@ -298,7 +297,7 @@ public class BookPageController {
                 } else {
                     book.setImageFile(BlobProxy.generateProxy(InputImageFile.getInputStream(), InputImageFile.getSize()));
                 }
-                bookRepository.save(book);
+                bookService.saveBook(book);
 
             }else if ("Borrar".equals(accion)) {
                 for (User userBD : userService.getAllUsers()) {
@@ -310,13 +309,13 @@ public class BookPageController {
                 }
     
                 
-                for (Review review : reviewRepository.findByBook(book)) {
+                for (Review review : reviewService.findByBook(book)) {
                     book.removeReview(review);                        
                     
-                    reviewRepository.delete(review);
+                    reviewService.deleteReview(review);
                 }
     
-                bookRepository.deleteById(book.getID());
+                bookService.delete(book.getID());
             }
             return "redirect:/";
         }else{
@@ -327,7 +326,7 @@ public class BookPageController {
     @GetMapping("/book/{currentBookID}/loadMoreReviews")
     public String loadMoreReviews(@PathVariable int currentBookID, @RequestParam int page, @RequestParam int pageSize, Model model) {
         // Get reviews from the database
-        List<Review> reviews = reviewRepository.findByBookID(currentBookID, PageRequest.of(page, pageSize)).getContent();
+        List<Review> reviews = reviewService.findByBookID(currentBookID, page, pageSize);
 
         if (isUser == true) {
             if (isAdmin == true) {
