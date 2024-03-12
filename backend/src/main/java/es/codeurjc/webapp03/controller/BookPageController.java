@@ -1,11 +1,7 @@
 package es.codeurjc.webapp03.controller;
 
 import es.codeurjc.webapp03.entity.*;
-import es.codeurjc.webapp03.repository.AuthorRepository;
-import es.codeurjc.webapp03.repository.GenreRepository;
-import es.codeurjc.webapp03.service.BookReviewService;
-import es.codeurjc.webapp03.service.BookService;
-import es.codeurjc.webapp03.service.UserService;
+import es.codeurjc.webapp03.service.*;
 import jakarta.servlet.http.HttpServletRequest;
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,10 +40,10 @@ public class BookPageController {
     private UserService userService;
 
     @Autowired
-    private AuthorRepository authorsBD;
+    private AuthorService authorService;
 
     @Autowired
-    private GenreRepository genreBD;
+    private GenreService genreService;
 
     //delete?? not being used
     //Constructor
@@ -189,7 +185,7 @@ public class BookPageController {
         } else { // if it's an author and the book is not his, redirect to the book page
             if (request.isUserInRole("AUTHOR")) {
 
-                if (!bookService.getAuthors(bookID).contains(authorsBD.findByName(userService.getUser(currentUsername).getUsername()))) {
+                if (!bookService.getAuthors(bookID).contains(authorService.getAuthor(userService.getUser(currentUsername).getUsername()))) {
                     return "redirect:/book/" + bookID;
                 }
             }
@@ -266,27 +262,27 @@ public class BookPageController {
                 String[] authorsSplit = inputBookAuthorName.split(",");
                 ArrayList<Author> authorList = new ArrayList<>();
                 for (int i = 0; i < authorsSplit.length; i++) {
-                    Author found = authorsBD.findByName(authorsSplit[i]);
+                    Author found = authorService.getAuthor(authorsSplit[i]);
                     if (found != null) {
                         authorList.add(found);
                     } else {
                         Author newAuthor = new Author(authorsSplit[i]);
                         newAuthor.addBook(book); //Add author to DB
                         authorList.add(newAuthor); //Add to list
-                        authorsBD.save(newAuthor);
+                        authorService.saveAuthor(newAuthor);
                     }
                 }
                 book.setAuthor(authorList); //Add author/s to list
 
                 //Check if Genre exist
-                Genre genreFound = genreBD.findByName(inputBookGenre);
+                Genre genreFound = genreService.getGenre(inputBookGenre);
                 if (genreFound != null) {
                     book.setGenre(genreFound);
                 } else {
                     Genre newGenre = new Genre(inputBookGenre);
                     book.setGenre(newGenre); //Add genre to Book
                     newGenre.addBook(book);
-                    genreBD.save(newGenre);
+                    genreService.saveGenre(newGenre);
                 }
 
                 //If no picture was added, check for old pic. If there never was a pic, insert placeholder.

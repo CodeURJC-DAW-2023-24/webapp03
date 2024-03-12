@@ -4,9 +4,9 @@ import es.codeurjc.webapp03.entity.Author;
 import es.codeurjc.webapp03.entity.Book;
 import es.codeurjc.webapp03.entity.Genre;
 import es.codeurjc.webapp03.entity.User;
-import es.codeurjc.webapp03.repository.AuthorRepository;
-import es.codeurjc.webapp03.repository.GenreRepository;
+import es.codeurjc.webapp03.service.AuthorService;
 import es.codeurjc.webapp03.service.BookService;
+import es.codeurjc.webapp03.service.GenreService;
 import es.codeurjc.webapp03.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.hibernate.engine.jdbc.BlobProxy;
@@ -33,16 +33,14 @@ public class AdminPageController {
     private BookService bookService;
 
     @Autowired
-    private AuthorRepository authorsBD;
+    private AuthorService authorService;
 
     @Autowired
-    private GenreRepository genreBD;
+    private GenreService genreService;
 
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private AuthorRepository authorRepository;
 
     @GetMapping("/admin/**")
     public String loadAdminPage(Model model, HttpServletRequest request) throws SQLException {
@@ -95,28 +93,28 @@ public class AdminPageController {
         String[] authorsSplit = inputBookAuthorName.split(",");
         ArrayList<Author> authorList = new ArrayList<>();
         for (int i = 0; i < authorsSplit.length; i++) {
-            Author found = authorsBD.findByName(authorsSplit[i]);
+            Author found = authorService.getAuthor(authorsSplit[i]);
             if (found != null) {
                 authorList.add(found);
             } else {
                 Author newAuthor = new Author(authorsSplit[i]);
                 newAuthor.addBook(newBook); //Add author to DB
                 authorList.add(newAuthor); //Add to list
-                authorsBD.save(newAuthor);
+                authorService.saveAuthor(newAuthor);
             }
         }
         newBook.setAuthor(authorList); //Add author/s to list
 
         //Check if Genre exist
 
-        Genre genreFound = genreBD.findByName(inputBookGenre);
+        Genre genreFound = genreService.getGenre(inputBookGenre);
         if (genreFound != null) {
             newBook.setGenre(genreFound);
         } else {
             Genre newGenre = new Genre(inputBookGenre);
             newBook.setGenre(newGenre); //Add genre to Book
             newGenre.addBook(newBook);
-            genreBD.save(newGenre);
+            genreService.saveGenre(newGenre);
         }
 
         //Check for image File
@@ -135,7 +133,7 @@ public class AdminPageController {
 
     @GetMapping("/mostReadAuthorsTotal")
     public ResponseEntity<List<Object[]>> getMostReadAuthorsTotal() {
-        return new ResponseEntity<>(authorRepository.getMostReadAuthorsNameAndCount(), HttpStatus.OK);
+        return new ResponseEntity<>(authorService.getMostReadAuthorsNameAndCount(), HttpStatus.OK);
     }
 
     @GetMapping("/bestReaders")

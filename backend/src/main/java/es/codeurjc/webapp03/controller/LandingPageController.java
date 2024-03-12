@@ -4,9 +4,9 @@ import es.codeurjc.webapp03.entity.Author;
 import es.codeurjc.webapp03.entity.Book;
 import es.codeurjc.webapp03.entity.Genre;
 import es.codeurjc.webapp03.entity.User;
-import es.codeurjc.webapp03.repository.AuthorRepository;
-import es.codeurjc.webapp03.repository.GenreRepository;
+import es.codeurjc.webapp03.service.AuthorService;
 import es.codeurjc.webapp03.service.BookService;
+import es.codeurjc.webapp03.service.GenreService;
 import es.codeurjc.webapp03.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,13 +37,13 @@ public class LandingPageController {
     private BookService bookService;
 
     @Autowired
-    private GenreRepository genreRepository;
+    private GenreService genreService;
 
     @Autowired
     private UserService userService;
 
     @Autowired
-    private AuthorRepository authorRepository;
+    private AuthorService authorService;
 
 
     //Method that will load the landing page
@@ -69,10 +69,10 @@ public class LandingPageController {
         model.addAttribute("username", testingCurrentUsername);
 
         // Get total site genres count
-        long totalGenres = genreRepository.count();
+        long totalGenres = genreService.countGenres();
 
         // Get total site authors count
-        long totalAuthors = authorRepository.count();
+        long totalAuthors = authorService.getTotalAuthors();
 
         // Get total site books count
         long totalBooks = bookService.getTotalBooks();
@@ -109,17 +109,17 @@ public class LandingPageController {
             // check if the user has read any books
             if (mostReadGenres.size() == 0) {
                 // If the user has not read any books, get the most read genres from the database
-                mostReadGenres = genreRepository.getMostReadGenres();
+                mostReadGenres = genreService.getMostReadGenres();
             }
             if (mostReadAuthors.size() == 0) {
                 // If the user has not read any books, get the most read authors from the database
-                mostReadAuthors = authorRepository.getMostReadAuthors();
+                mostReadAuthors = authorService.getMostReadAuthors();
             }
 
         } else {
             // If it is not a registered user, get the most read genres from the database
-            mostReadGenres = genreRepository.getMostReadGenres();
-            mostReadAuthors = authorRepository.getMostReadAuthors();
+            mostReadGenres = genreService.getMostReadGenres();
+            mostReadAuthors = authorService.getMostReadAuthors();
         }
         booksFromMostReadGenres = bookService.getBooksByGenreIn(mostReadGenres, PageRequest.of(0, 4));
         booksFromMostReadAuthor = bookService.getBooksByAuthor(mostReadAuthors.get(0).getName(), PageRequest.of(0, 5));
@@ -195,7 +195,7 @@ public class LandingPageController {
 
     @GetMapping("/mostReadGenres") // should return a json with a list of the most read genres and their count
     public ResponseEntity<List<Object[]>> getMostReadGenres() {
-        return new ResponseEntity<>(genreRepository.getMostReadGenresNameAndCount(), HttpStatus.OK);
+        return new ResponseEntity<>(genreService.getMostReadGenresNameAndCount(), HttpStatus.OK);
     }
 
 }
