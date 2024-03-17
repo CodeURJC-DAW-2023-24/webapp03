@@ -1,6 +1,7 @@
 package es.codeurjc.webapp03.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
 import jakarta.persistence.*;
 
 import javax.sql.rowset.serial.SerialBlob;
@@ -17,26 +18,37 @@ import java.util.List;
 @Entity
 public class User {
 
+    public interface BasicInfo {}
+
+    public interface Reviews {}
+
+    @JsonView(BasicInfo.class)
     @Id
     private String username;
 
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles;
 
+    @JsonView(BasicInfo.class)
     private String alias;
 
+    @JsonView(BasicInfo.class)
     private String description;
 
     @Lob
     @JsonIgnore
     private Blob profileImageFile;
 
+    @JsonView(BasicInfo.class)
     private String profileImageString;
 
+    @JsonView(BasicInfo.class)
     private String email;
 
+    @JsonIgnore
     private String password;
 
+    @JsonView(Reviews.class)
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
     private List<Review> reviews = new ArrayList<>(); // reviews a user has made
 

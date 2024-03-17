@@ -8,6 +8,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BookReviewService {
@@ -17,6 +18,11 @@ public class BookReviewService {
 
     @Autowired
     private UserService userService;
+
+    public Review getReview(long ID) {
+        Optional<Review> review = reviewRepository.findById(ID);
+        return review.orElse(null);
+    }
 
     public List<Review> findReviews(long ID, int size) { return reviewRepository.findByBookID(ID, PageRequest.of(0, size)).getContent(); }
 
@@ -32,14 +38,22 @@ public class BookReviewService {
         reviewRepository.delete(review);
     }
 
-    public void saveReview(Review r) {
-        reviewRepository.save(r);
+    public Review saveReview(Review r) {
+        // Check that the user has not already reviewed the book (if so, do not add the review)
+        if (!existsByBookIDAndAuthorUsername(r.getBook().getID(), r.getUser().getUsername())) {
+            reviewRepository.save(r);
+            return r;
+        } else {
+            return null;
+        }
     }
 
-    public void deleteIfCorrectUser(long reviewID, String authUser) {
+    public boolean deleteIfCorrectUser(long reviewID, String authUser) {
         if (reviewRepository.findByID(reviewID).getUser().getUsername().equals(authUser) || userService.getUser(authUser).getRole().contains("ADMIN")) {
             reviewRepository.deleteById(reviewID);
+            return true;
         }
+        return false;
     }
 
 

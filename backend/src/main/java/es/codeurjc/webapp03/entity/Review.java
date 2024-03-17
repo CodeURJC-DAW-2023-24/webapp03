@@ -1,18 +1,33 @@
 package es.codeurjc.webapp03.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
 import jakarta.persistence.*;
 
 @Entity
 public class Review {
+
+    public interface BasicInfo {}
+
+    @JsonView(BasicInfo.class)
     @Id
     @GeneratedValue(strategy = jakarta.persistence.GenerationType.AUTO)
     private long ID;
+
+    @JsonView(BasicInfo.class)
     private String title;
 
+    @JsonView(BasicInfo.class)
+    private String authorName;
+
+    @JsonIgnore
     @ManyToOne
     private User author;
+
+    @JsonView(BasicInfo.class)
     private int rating;
+
+    @JsonView(BasicInfo.class)
     private String content;
 
     @JsonIgnore
@@ -28,6 +43,7 @@ public class Review {
         this.content = content;
         this.author = author;
         this.book = book;
+        this.authorName = author.getUsername();
     }
 
     public User getUser() {
