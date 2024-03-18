@@ -83,5 +83,17 @@ public class APIReviewController {
         }
     }
 
+    // Get review
+    @JsonView(Review.BasicInfo.class)
+    @GetMapping("/api/review/{reviewID}") // return the review as a JSON
+    public ResponseEntity<?> getReview(@PathVariable long reviewID) {
+        Review review = reviewService.getReview(reviewID);
+        if (review == null) {
+            return new ResponseEntity<>("Review not found", HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>(review, HttpStatus.OK);
+        }
+    }
+
 
 }
