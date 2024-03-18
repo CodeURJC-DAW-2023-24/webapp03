@@ -1,5 +1,6 @@
 package es.codeurjc.webapp03.entity;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -7,12 +8,20 @@ import java.util.List;
 
 @Entity
 public class Author {
+
+    public interface BasicInfo{}
+
+    public interface BooksInfo {}
+
+    @JsonView(BasicInfo.class)
     @Id
     @GeneratedValue(strategy = jakarta.persistence.GenerationType.AUTO)
     private long id;
 
+    @JsonView(BasicInfo.class)
     private String name;
 
+    @JsonView(BooksInfo.class)
     @ManyToMany(mappedBy = "author")
     private List<Book> books = new ArrayList<>();
 

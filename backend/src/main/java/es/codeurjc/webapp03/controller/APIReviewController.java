@@ -44,7 +44,7 @@ public class APIReviewController {
     // Add review
     interface ReviewBasicView extends Review.BasicInfo {}
     @JsonView(ReviewBasicView.class)
-    @PostMapping("/api/book/{id}/addReview") // return the added review as a JSON
+    @PostMapping("/api/review/book/{id}") // return the added review as a JSON
     @ResponseStatus(HttpStatus.CREATED)
     public Review addReview(HttpServletRequest request,
                             @PathVariable int id,
@@ -62,7 +62,7 @@ public class APIReviewController {
     }
 
     // Delete review
-    @DeleteMapping("/api/deleteReview/{reviewID}") // return a message stating that the review was deleted
+    @DeleteMapping("/api/review/{reviewID}") // return a message stating that the review was deleted
     public String deleteReview(@PathVariable long reviewID, HttpServletRequest request) {
 
         Principal principal = request.getUserPrincipal();

@@ -1,5 +1,6 @@
 package es.codeurjc.webapp03.entity;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -10,6 +11,10 @@ import java.util.List;
 
 @Entity
 public class Genre {
+
+    public interface BasicInfo{}
+
+    @JsonView(BasicInfo.class)
     @Id
     private String name;
 

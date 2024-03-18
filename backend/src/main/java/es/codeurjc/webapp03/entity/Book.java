@@ -1,5 +1,6 @@
 package es.codeurjc.webapp03.entity;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import jakarta.persistence.*;
 
 import java.io.ByteArrayOutputStream;
@@ -19,33 +20,58 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 public class Book {
     //Data structure that will store example books (ID, Book title, Author, Description, Image, Date of publication, ISBN, Genre, Series, Page count, Publisher)
+
+    public interface BasicInfo {}
+
+    public interface AuthorInfo {}
+
+    @JsonView(BasicInfo.class)
     @Id
     @GeneratedValue(strategy = jakarta.persistence.GenerationType.AUTO)
     private long ID;
+
+    @JsonView(BasicInfo.class)
     private String title;
 
+    @JsonView(AuthorInfo.class)
     @ManyToMany
     private List<Author> author = new ArrayList<>();
 
+    @JsonView(BasicInfo.class)
     private String authorString;
 
+    @JsonView(BasicInfo.class)
     private String description;
-    
+
+    @JsonView(BasicInfo.class)
     private String releaseDate;
+
+    @JsonView(BasicInfo.class)
     private String ISBN;
 
+    @JsonView(BasicInfo.class)
     @Lob
     @JsonIgnore
     private Blob imageFile;
+
+    @JsonIgnore // we will have to change this to a filter for creation of books
     private String imageString;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "genre_id")
     private Genre genre;
 
+    @JsonView(BasicInfo.class)
     private String series;
+
+    @JsonView(BasicInfo.class)
     private int pageCount;
+
+    @JsonView(BasicInfo.class)
     private String publisher;
+
+    @JsonIgnore
     @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
     private List<Review> reviews = new ArrayList<>();
 
