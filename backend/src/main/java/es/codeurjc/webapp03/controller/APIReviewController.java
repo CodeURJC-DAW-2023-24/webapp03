@@ -30,7 +30,7 @@ public class APIReviewController {
 
     // Get reviews for a book
     @JsonView(Review.BasicInfo.class)
-    @GetMapping("/api/book/{id}/reviews")
+    @GetMapping("/api/reviews/book/{id}")
     // return a list of reviews as a JSON (returns as many reviews as the size parameter)
     public ResponseEntity<?> getReviews(@PathVariable int id, @RequestParam(value = "size", defaultValue = "10") int size) {
         // Check if the book exists

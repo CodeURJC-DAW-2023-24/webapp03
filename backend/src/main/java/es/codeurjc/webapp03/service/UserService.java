@@ -38,6 +38,11 @@ public class UserService {
 
     }
 
+    public boolean checkLoggedIn(HttpServletRequest request) {
+        Authentication authentication = (Authentication) request.getUserPrincipal();
+        return authentication != null;
+    }
+
     public boolean checkCorrectProfile(String username, HttpServletRequest request) {
         Authentication authentication = (Authentication) request.getUserPrincipal();
         User user = userRepository.findByUsername(authentication.getName());

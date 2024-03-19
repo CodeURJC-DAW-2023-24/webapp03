@@ -70,10 +70,13 @@ public class WebSecurityConfiguration {
                         // USER
                         .requestMatchers(HttpMethod.POST, "/api/review/book/*").hasAnyRole("USER")
                         .requestMatchers(HttpMethod.DELETE, "/api/review/*").hasAnyRole("USER")
-                        .requestMatchers(HttpMethod.GET, "/api/mostReadGenres/user").hasAnyRole("USER")
-                        .requestMatchers(HttpMethod.GET, "/api/mostReadGenres/user/books").hasAnyRole("USER")
-                        .requestMatchers(HttpMethod.GET, "/api/mostReadAuthor/user").hasAnyRole("USER")
-                        .requestMatchers(HttpMethod.GET, "/api/mostReadAuthor/user/books").hasAnyRole("USER")
+                        .requestMatchers(HttpMethod.GET, "/api/genres/me").hasAnyRole("USER")
+                        .requestMatchers(HttpMethod.GET, "/api/books/me/recommended").hasAnyRole("USER")
+                        .requestMatchers(HttpMethod.GET, "/api/authors/me").hasAnyRole("USER")
+                        .requestMatchers(HttpMethod.POST, "/api/book/read/*").hasAnyRole("USER")
+                        .requestMatchers(HttpMethod.POST, "/api/book/reading/*").hasAnyRole("USER")
+                        .requestMatchers(HttpMethod.POST, "/api/book/wanted/*").hasAnyRole("USER")
+                        .requestMatchers(HttpMethod.DELETE, "/api/book/lists/*").hasAnyRole("USER")
                         // PUBLIC ENDPOINTS (anything that's not filtered by the above rules, is public. It is not necessary to add anything here)
                         .anyRequest().permitAll()
                 );

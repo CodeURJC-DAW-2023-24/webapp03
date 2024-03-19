@@ -38,28 +38,32 @@ public class APIAlgorithmController {
 
     // GENRE ALGORITHM
     @JsonView(Genre.BasicInfo.class)
-    @GetMapping("/api/mostReadGenres/general")
-    public ResponseEntity<?> getMostReadGenresGeneral() {
+    @GetMapping("/api/genres")
+    public ResponseEntity<?> getMostReadGenresGeneral(@RequestParam("count") boolean count) {
 
         // This can be executed both for a logged user and for a non-logged user
 
-        // Get the most read genres from the database and return them as a JSON (include the genre name and the number of times it has been read)
-        List<Genre> mostReadGenres = genreService.getMostReadGenres();
-
-        //Check if the list is empty
-        if (mostReadGenres.isEmpty()) {
-            return ResponseEntity.noContent().build();
+        if (count) {
+            return getMostReadGenresCount();
         } else {
-            return ResponseEntity.ok(mostReadGenres);
+            // Get the most read genres from the database and return them as a JSON (include the genre name and the number of times it has been read)
+            List<Genre> mostReadGenres = genreService.getMostReadGenres();
+
+            //Check if the list is empty
+            if (mostReadGenres.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            } else {
+                return ResponseEntity.ok(mostReadGenres);
+            }
         }
     }
 
     @JsonView(Genre.BasicInfo.class)
-    @GetMapping("/api/mostReadGenres/user")
-    public ResponseEntity<?> getMostReadGenresUser(HttpServletRequest  request){
+    @GetMapping("/api/genres/me")
+    public ResponseEntity<?> getMostReadGenresUser(HttpServletRequest request) {
         Principal principal = request.getUserPrincipal();
 
-        if(principal == null){
+        if (principal == null) {
             return ResponseEntity.status(401).build();
         } else {
             // Get the most read genres from the database and return them as a JSON (include the genre name and the number of times it has been read)
@@ -76,30 +80,47 @@ public class APIAlgorithmController {
 
 
     @JsonView(Book.BasicInfo.class)
-    @GetMapping("/api/mostReadGenres/user/books")
-    public ResponseEntity<?> getMostReadGenresUserBooks(HttpServletRequest  request,
-                                                        @RequestParam(value = "page", defaultValue = "0") int page,
-                                                        @RequestParam(value = "size", defaultValue = "10") int size){
+    @GetMapping("/api/books/me/recommended")
+    public ResponseEntity<?> recommendedBooks(HttpServletRequest request,
+                                              @RequestParam(value = "page", defaultValue = "0") int page,
+                                              @RequestParam(value = "size", defaultValue = "10") int size,
+                                              @RequestParam(value = "by") String recommendedBy) {
         Principal principal = request.getUserPrincipal();
 
-        if(principal == null){
+        if (principal == null) {
             return ResponseEntity.status(401).build();
         } else {
-            // Get the most read genres from the database and return them as a JSON (include the genre name and the number of times it has been read)
-            List<Genre> mostReadGenres = userService.getMostReadGenres(principal.getName());
 
-            //Check if the list is empty
-            if (mostReadGenres.isEmpty()) {
-                return ResponseEntity.noContent().build();
+            if (recommendedBy.equals("genre")) {
+                // Get the most read genres from the database and return them as a JSON (include the genre name and the number of times it has been read)
+                List<Genre> mostReadGenres = userService.getMostReadGenres(principal.getName());
+
+                //Check if the list is empty
+                if (mostReadGenres.isEmpty()) {
+                    return ResponseEntity.noContent().build();
+                } else {
+                    List<Book> booksFromMostReadGenres = bookService.getBooksByGenreIn(mostReadGenres, PageRequest.of(page, size));
+                    return ResponseEntity.ok(booksFromMostReadGenres);
+                }
+            } else if (recommendedBy.equals("author")) {
+                // Get the most read authors from the database and return them as a JSON (include the author name and the number of times it has been read)
+                List<Author> mostReadAuthors = userService.getMostReadAuthors(principal.getName());
+
+                //Check if the list is empty
+                if (mostReadAuthors.isEmpty()) {
+                    return ResponseEntity.noContent().build();
+                } else {
+                    List<Book> booksFromMostReadAuthors = bookService.getBooksByAuthor(mostReadAuthors.get(0).getName(), PageRequest.of(page, size));
+                    return ResponseEntity.ok(booksFromMostReadAuthors);
+                }
             } else {
-                List<Book> booksFromMostReadGenres = bookService.getBooksByGenreIn(mostReadGenres, PageRequest.of(page, size));
-                return ResponseEntity.ok(booksFromMostReadGenres);
+                return ResponseEntity.badRequest().build();
             }
+
+
         }
     }
 
-    @JsonView(Genre.BasicInfo.class)
-    @GetMapping("/api/mostReadGenres/general/count")
     public ResponseEntity<?> getMostReadGenresCount() { // This is what's used to build the chart
 
         // This can be executed both for a logged user and for a non-logged user
@@ -118,28 +139,34 @@ public class APIAlgorithmController {
     // AUTHOR ALGORITHM
 
     @JsonView(Author.BasicInfo.class)
-    @GetMapping("/api/mostReadAuthors/general")
-    public ResponseEntity<?> getMostReadAuthorsGeneral() {
+    @GetMapping("/api/authors")
+    public ResponseEntity<?> getMostReadAuthorsGeneral(@RequestParam("count") boolean count) {
 
         // This can be executed both for a logged user and for a non-logged user
 
-        // Get the most read authors from the database and return them as a JSON (include the author name and the number of times it has been read)
-        List<Author> mostReadAuthors = authorService.getMostReadAuthors();
-
-        //Check if the list is empty
-        if (mostReadAuthors.isEmpty()) {
-            return ResponseEntity.noContent().build();
+        if (count) {
+            return getMostReadAuthorsCount();
         } else {
-            return ResponseEntity.ok(mostReadAuthors);
+            // Get the most read authors from the database and return them as a JSON (include the author name and the number of times it has been read)
+            List<Author> mostReadAuthors = authorService.getMostReadAuthors();
+
+            //Check if the list is empty
+            if (mostReadAuthors.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            } else {
+                return ResponseEntity.ok(mostReadAuthors);
+            }
         }
+
+
     }
 
     @JsonView(Author.BasicInfo.class)
-    @GetMapping("/api/mostReadAuthor/user")
-    public ResponseEntity<?> getMostReadAuthorsUser(HttpServletRequest  request){
+    @GetMapping("/api/authors/me")
+    public ResponseEntity<?> getMostReadAuthorsUser(HttpServletRequest request) {
         Principal principal = request.getUserPrincipal();
 
-        if(principal == null){
+        if (principal == null) {
             return ResponseEntity.status(401).build();
         } else {
             // Get the most read authors from the database and return them as a JSON (include the author name and the number of times it has been read)
@@ -154,31 +181,6 @@ public class APIAlgorithmController {
         }
     }
 
-    @JsonView(Book.BasicInfo.class)
-    @GetMapping("/api/mostReadAuthor/user/books")
-    public ResponseEntity<?> getMostReadAuthorsUserBooks(HttpServletRequest  request,
-                                                        @RequestParam(value = "page", defaultValue = "0") int page,
-                                                        @RequestParam(value = "size", defaultValue = "10") int size){
-        Principal principal = request.getUserPrincipal();
-
-        if(principal == null){
-            return ResponseEntity.status(401).build();
-        } else {
-            // Get the most read authors from the database and return them as a JSON (include the author name and the number of times it has been read)
-            List<Author> mostReadAuthors = userService.getMostReadAuthors(principal.getName());
-
-            //Check if the list is empty
-            if (mostReadAuthors.isEmpty()) {
-                return ResponseEntity.noContent().build();
-            } else {
-                List<Book> booksFromMostReadAuthors = bookService.getBooksByAuthor(mostReadAuthors.get(0).getName(), PageRequest.of(page, size));
-                return ResponseEntity.ok(booksFromMostReadAuthors);
-            }
-        }
-    }
-
-    @JsonView(Author.BasicInfo.class)
-    @GetMapping("/api/mostReadAuthors/general/count")
     public ResponseEntity<?> getMostReadAuthorsCount() { // This is what's used to build the chart
 
         // This can be executed both for a logged user and for a non-logged user
@@ -193,7 +195,6 @@ public class APIAlgorithmController {
             return ResponseEntity.ok(mostReadAuthors);
         }
     }
-
 
 
 }

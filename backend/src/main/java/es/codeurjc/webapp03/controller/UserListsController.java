@@ -37,9 +37,6 @@ public class UserListsController {
 
         userService.moveBookToList(userService.getUser(currentUsername), bookService.getBook(id), "read");
 
-        // Book to add (treat the optional)
-        userService.moveBookToList(userService.getUser(currentUsername), bookService.getBook(id), "read");
-
         return "redirect:/book/" + id;
     }
 
