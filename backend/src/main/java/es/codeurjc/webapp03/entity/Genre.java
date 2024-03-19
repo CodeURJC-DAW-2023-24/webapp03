@@ -13,11 +13,13 @@ import java.util.List;
 public class Genre {
 
     public interface BasicInfo{}
+    public interface BooksInfo{}
 
     @JsonView(BasicInfo.class)
     @Id
     private String name;
 
+    @JsonView(BooksInfo.class)
     @OneToMany(mappedBy = "genre", cascade = CascadeType.ALL)
     private List<Book> books = new ArrayList<>();
 

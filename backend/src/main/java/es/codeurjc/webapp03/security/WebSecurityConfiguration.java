@@ -68,10 +68,12 @@ public class WebSecurityConfiguration {
                 .authorizeHttpRequests(authorize -> authorize
                         // PRIVATE ENDPOINTS
                         // USER
-                        .requestMatchers(HttpMethod.POST, "/api/*/addReview").hasAnyRole("USER")
-                        .requestMatchers(HttpMethod.DELETE, "/api/book/*/deleteReview/*").hasAnyRole("USER")
+                        .requestMatchers(HttpMethod.POST, "/api/review/book/*").hasAnyRole("USER")
+                        .requestMatchers(HttpMethod.DELETE, "/api/review/*").hasAnyRole("USER")
                         .requestMatchers(HttpMethod.GET, "/api/mostReadGenres/user").hasAnyRole("USER")
                         .requestMatchers(HttpMethod.GET, "/api/mostReadGenres/user/books").hasAnyRole("USER")
+                        .requestMatchers(HttpMethod.GET, "/api/mostReadAuthor/user").hasAnyRole("USER")
+                        .requestMatchers(HttpMethod.GET, "/api/mostReadAuthor/user/books").hasAnyRole("USER")
                         // PUBLIC ENDPOINTS (anything that's not filtered by the above rules, is public. It is not necessary to add anything here)
                         .anyRequest().permitAll()
                 );

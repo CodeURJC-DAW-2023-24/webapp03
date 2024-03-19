@@ -25,6 +25,10 @@ public class Book {
 
     public interface AuthorInfo {}
 
+    public interface GenreInfo {}
+
+    public interface ReviewInfo {}
+
     @JsonView(BasicInfo.class)
     @Id
     @GeneratedValue(strategy = jakarta.persistence.GenerationType.AUTO)
@@ -60,7 +64,7 @@ public class Book {
     @JsonIgnore // we will have to change this to a filter for creation of books
     private String imageString;
 
-    @JsonIgnore
+    @JsonView(GenreInfo.class)
     @ManyToOne
     @JoinColumn(name = "genre_id")
     private Genre genre;
@@ -74,7 +78,7 @@ public class Book {
     @JsonView(BasicInfo.class)
     private String publisher;
 
-    @JsonIgnore
+    @JsonView(ReviewInfo.class)
     @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
     private List<Review> reviews = new ArrayList<>();
 
