@@ -19,6 +19,9 @@ public class BookReviewService {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private BookService bookService;
+
     public Review getReview(long ID) {
         Optional<Review> review = reviewRepository.findById(ID);
         return review.orElse(null);
@@ -38,10 +41,28 @@ public class BookReviewService {
         reviewRepository.delete(review);
     }
 
+    public double getAverageRating(Book book) {
+        List<Double> ratings = bookService.getRatings(book.getID());
+        double averageRating = 0;
+        if (ratings.size() > 0) {
+            for (Double rating : ratings) {
+                averageRating += rating;
+            }
+            averageRating /= ratings.size();
+        }
+        averageRating = Math.round(averageRating * 100.0) / 100.0;
+        return averageRating;
+    }
+
     public Review saveReview(Review r) {
         // Check that the user has not already reviewed the book (if so, do not add the review)
         if (!existsByBookIDAndAuthorUsername(r.getBook().getID(), r.getUser().getUsername())) {
             reviewRepository.save(r);
+
+            double averageRating = getAverageRating(r.getBook());
+            r.getBook().setAverageRating(averageRating);
+            bookService.saveBook(r.getBook());
+
             return r;
         } else {
             return null;

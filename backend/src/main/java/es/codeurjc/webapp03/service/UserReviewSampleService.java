@@ -8,6 +8,8 @@ import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserReviewSampleService {
 
@@ -19,6 +21,12 @@ public class UserReviewSampleService {
 
     @Autowired
     private BookRepository bookRepository;
+
+    @Autowired
+    private BookService bookService;
+
+    @Autowired
+    private BookReviewService bookReviewService;
 
     @PostConstruct
     public void init() {
@@ -59,6 +67,12 @@ public class UserReviewSampleService {
         reviewRepository.save(review13);
         reviewRepository.save(review14);
         reviewRepository.save(review15);
+
+        // Calculate average rating for each book
+        bookRepository.findAll().forEach(book -> {
+            book.setAverageRating(bookReviewService.getAverageRating(book));
+            bookRepository.save(book);
+        });
     }
 
 }

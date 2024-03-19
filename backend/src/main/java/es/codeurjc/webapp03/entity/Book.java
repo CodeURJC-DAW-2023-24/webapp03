@@ -50,6 +50,9 @@ public class Book {
     private String ISBN;
 
     @JsonView(BasicInfo.class)
+    private double averageRating;
+
+    @JsonView(BasicInfo.class)
     @Lob
     @JsonIgnore
     private Blob imageFile;
@@ -87,6 +90,7 @@ public class Book {
         this.series = series;
         this.pageCount = pageCount;
         this.publisher = publisher;
+        this.averageRating = 0;
     }
 
     //ever used??
@@ -171,6 +175,10 @@ public class Book {
         return this.ID;
     }
 
+    public double getAverageRating() {
+        return this.averageRating;
+    }
+
     //Setters
     public void setID(int ID) {
         this.ID = ID;
@@ -250,6 +258,10 @@ public class Book {
 
     public void setReviews(List<Review> reviews) {
         this.reviews = reviews;
+    }
+
+    public void setAverageRating(double review) {
+        this.averageRating = review;
     }
 
     public String getAuthorString() {
