@@ -1,15 +1,18 @@
 package es.codeurjc.webapp03.controller;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import es.codeurjc.webapp03.entity.Book;
+import es.codeurjc.webapp03.entity.Genre;
 import es.codeurjc.webapp03.service.BookService;
 import es.codeurjc.webapp03.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.List;
 
 @RestController
 public class APIUserListsController {
@@ -22,47 +25,108 @@ public class APIUserListsController {
     @Autowired
     private BookService bookService;
 
+    // Book existence checker
+    private boolean bookExists(long id) {
+        return bookService.getBook(id) != null;
+    }
+
     // Add book to read list
+    @JsonView(Book.BasicInfo.class)
     @PostMapping("/api/book/read/{id}")
-    public void addReadBook(@PathVariable long id, HttpServletRequest request) {
+    public ResponseEntity<Book> addReadBook(@PathVariable long id, HttpServletRequest request) {
 
         Principal principal = request.getUserPrincipal();
 
+        // Check if book exists
+        if (!bookExists(id)) {
+            return ResponseEntity.notFound().build();
+        }
+
         if (userService.checkLoggedIn(request)) {
             userService.moveBookToList(userService.getUser(principal.getName()), bookService.getBook(id), "read");
+            return ResponseEntity.ok(bookService.getBook(id));
+        } else {
+            return ResponseEntity.badRequest().build();
         }
     }
 
     // Add book to reading list
+    @JsonView(Book.BasicInfo.class)
     @PostMapping("/api/book/reading/{id}")
-    public void addReadingBook(@PathVariable long id, HttpServletRequest request) {
+    public ResponseEntity<Book> addReadingBook(@PathVariable long id, HttpServletRequest request) {
 
         Principal principal = request.getUserPrincipal();
 
+        // Check if book exists
+        if (!bookExists(id)) {
+            return ResponseEntity.notFound().build();
+        }
+
         if (userService.checkLoggedIn(request)) {
             userService.moveBookToList(userService.getUser(principal.getName()), bookService.getBook(id), "reading");
+            return ResponseEntity.ok(bookService.getBook(id));
+        } else {
+            return ResponseEntity.badRequest().build();
         }
     }
 
     // Add book to wanted list
+    @JsonView(Book.BasicInfo.class)
     @PostMapping("/api/book/wanted/{id}")
-    public void addWantedBook(@PathVariable long id, HttpServletRequest request) {
+    public ResponseEntity<Book> addWantedBook(@PathVariable long id, HttpServletRequest request) {
 
         Principal principal = request.getUserPrincipal();
 
+        // Check if book exists
+        if (!bookExists(id)) {
+            return ResponseEntity.notFound().build();
+        }
+
         if (userService.checkLoggedIn(request)) {
             userService.moveBookToList(userService.getUser(principal.getName()), bookService.getBook(id), "wanted");
+            return ResponseEntity.ok(bookService.getBook(id));
+        } else {
+            return ResponseEntity.badRequest().build();
         }
     }
 
     // Remove book from all lists
+
+    @JsonView(Book.BasicInfo.class)
     @DeleteMapping("/api/book/lists/{id}")
-    public void removeBookFromLists(@PathVariable long id, HttpServletRequest request) {
+    public ResponseEntity<Book> removeBookFromLists(@PathVariable long id, HttpServletRequest request) {
 
         Principal principal = request.getUserPrincipal();
 
+        // Check if book exists
+        if (!bookExists(id)) {
+            return ResponseEntity.notFound().build();
+        }
+
         if (userService.checkLoggedIn(request)) {
             userService.removeBookFromAllLists(userService.getUser(principal.getName()), bookService.getBook(id));
+            return ResponseEntity.ok(bookService.getBook(id));
+        } else {
+            return ResponseEntity.badRequest().build();
         }
+    }
+
+    // Get a user's list
+
+    @JsonView(Book.BasicInfo.class)
+    @GetMapping("/api/books/me")
+    public ResponseEntity<?> getUserLists(HttpServletRequest request,
+                                            @RequestParam("list") String list,
+                                            @RequestParam(value = "page", defaultValue = "0") int page,
+                                            @RequestParam(value = "size", defaultValue = "10") int size){
+
+            Principal principal = request.getUserPrincipal();
+
+            if (principal == null) {
+                return ResponseEntity.status(401).build();
+            } else {
+                List<Book> booksFromList = userService.getListPageable(userService.getUser(principal.getName()), list, PageRequest.of(page, size));
+                return ResponseEntity.ok(booksFromList);
+            }
     }
 }

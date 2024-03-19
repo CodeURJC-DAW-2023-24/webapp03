@@ -77,6 +77,13 @@ public class WebSecurityConfiguration {
                         .requestMatchers(HttpMethod.POST, "/api/book/reading/*").hasAnyRole("USER")
                         .requestMatchers(HttpMethod.POST, "/api/book/wanted/*").hasAnyRole("USER")
                         .requestMatchers(HttpMethod.DELETE, "/api/book/lists/*").hasAnyRole("USER")
+                        .requestMatchers(HttpMethod.POST, "/api/book/read/*").hasAnyRole("USER")
+                        .requestMatchers(HttpMethod.POST, "/api/book/reading/*").hasAnyRole("USER")
+                        .requestMatchers(HttpMethod.POST, "/api/book/wanted/*").hasAnyRole("USER")
+                        .requestMatchers(HttpMethod.DELETE, "/api/book/lists/*").hasAnyRole("USER")
+                        .requestMatchers(HttpMethod.GET, "/api/books/me").hasAnyRole("USER")
+
+
                         // PUBLIC ENDPOINTS (anything that's not filtered by the above rules, is public. It is not necessary to add anything here)
                         .anyRequest().permitAll()
                 );

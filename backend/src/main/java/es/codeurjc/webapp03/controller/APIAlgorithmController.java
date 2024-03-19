@@ -38,7 +38,7 @@ public class APIAlgorithmController {
 
     // GENRE ALGORITHM
     @JsonView(Genre.BasicInfo.class)
-    @GetMapping("/api/genres")
+    @GetMapping("/api/genres") // Most read genres
     public ResponseEntity<?> getMostReadGenresGeneral(@RequestParam("count") boolean count) {
 
         // This can be executed both for a logged user and for a non-logged user
@@ -78,8 +78,9 @@ public class APIAlgorithmController {
         }
     }
 
+    interface GenreBookBasicView extends Book.BasicInfo, Book.GenreInfo, Genre.BasicInfo {}
 
-    @JsonView(Book.BasicInfo.class)
+    @JsonView(GenreBookBasicView.class)
     @GetMapping("/api/books/me/recommended")
     public ResponseEntity<?> recommendedBooks(HttpServletRequest request,
                                               @RequestParam(value = "page", defaultValue = "0") int page,
