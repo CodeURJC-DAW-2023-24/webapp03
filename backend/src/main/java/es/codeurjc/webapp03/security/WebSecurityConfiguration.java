@@ -94,8 +94,8 @@ public class WebSecurityConfiguration {
         // Disable CSRF protection (it is difficult to implement in REST APIs)
         http.csrf(csrf -> csrf.disable());
 
-        // Enable Basic Authentication
-        http.httpBasic(Customizer.withDefaults());
+        // Disable Basic Authentication
+        http.httpBasic(httpBasic -> httpBasic.disable());
 
         // Stateless session
         http.sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS));

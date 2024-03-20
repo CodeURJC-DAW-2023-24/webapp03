@@ -39,7 +39,7 @@ public class ErrorPageController {
 
         model.addAttribute("user", isUser);
         model.addAttribute("errorDetails", "Ha ocurrido un error inesperado. Por favor, inténtelo de nuevo más tarde.");
-        model.addAttribute("errorCode", "000");
+        model.addAttribute("errorCode", "Error desconocido.");
 
         return "errorPage";
     }

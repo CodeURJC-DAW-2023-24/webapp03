@@ -3,6 +3,7 @@ package es.codeurjc.webapp03.controller;
 import com.fasterxml.jackson.annotation.JsonView;
 import es.codeurjc.webapp03.entity.Book;
 import es.codeurjc.webapp03.entity.Genre;
+import es.codeurjc.webapp03.entity.User;
 import es.codeurjc.webapp03.service.BookService;
 import es.codeurjc.webapp03.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -128,5 +129,20 @@ public class APIUserListsController {
                 List<Book> booksFromList = userService.getListPageable(userService.getUser(principal.getName()), list, PageRequest.of(page, size));
                 return ResponseEntity.ok(booksFromList);
             }
+    }
+
+
+    // TODO: Move this to a different controller (this is for testing)
+    @JsonView(User.BasicInfo.class)
+    @GetMapping("/api/user/me")
+    public ResponseEntity<?> getUserInfo(HttpServletRequest request) {
+
+        Principal principal = request.getUserPrincipal();
+
+        if (principal == null) {
+            return ResponseEntity.status(401).build();
+        } else {
+            return ResponseEntity.ok(userService.getUser(principal.getName()));
+        }
     }
 }
