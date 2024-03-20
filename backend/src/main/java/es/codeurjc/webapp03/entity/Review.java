@@ -7,7 +7,8 @@ import jakarta.persistence.*;
 @Entity
 public class Review {
 
-    public interface BasicInfo {}
+    public interface BasicInfo {
+    }
 
     @JsonView(BasicInfo.class)
     @Id
@@ -60,6 +61,7 @@ public class Review {
 
     public void setAuthor(User author) {
         this.author = author;
+        this.authorName = author.getUsername();
     }
 
     public String getContent() {

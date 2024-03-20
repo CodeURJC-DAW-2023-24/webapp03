@@ -37,5 +37,9 @@ public class AuthorService {
         return authorRepository.getMostReadAuthors();
     }
 
+    public List<Author> getAllAuthors() {
+        return authorRepository.findAll();
+    }
+
 
 }

@@ -20,11 +20,15 @@ public class User {
 
     public interface BasicInfo {}
 
+    public interface Username {}
+
     public interface Reviews {}
 
-    @JsonView(BasicInfo.class)
+    @JsonView({BasicInfo.class, Username.class})
     @Id
     private String username;
+
+    @JsonView(BasicInfo.class)
 
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles;

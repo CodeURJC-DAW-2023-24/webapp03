@@ -1,6 +1,7 @@
 package es.codeurjc.webapp03.controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import es.codeurjc.webapp03.entity.Book;
 import es.codeurjc.webapp03.entity.Review;
 import es.codeurjc.webapp03.entity.User;
 import es.codeurjc.webapp03.service.BookReviewService;
@@ -14,7 +15,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.ResponseErrorHandler;
 
+import java.net.URI;
 import java.security.Principal;
+
+import static org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentRequest;
 
 @RestController
 public class APIReviewController {
@@ -46,21 +50,33 @@ public class APIReviewController {
     @JsonView(ReviewBasicView.class)
     @PostMapping("/api/review/book/{id}") // return the added review as a JSON
     @ResponseStatus(HttpStatus.CREATED)
-    public Review addReview(HttpServletRequest request,
-                            @PathVariable int id,
-                            @RequestParam("rating") int rating,
-                            @RequestParam("reviewTitle") String title,
-                            @RequestParam("comment") String comment) {
+    public ResponseEntity<Review> addReview(HttpServletRequest request,
+                                            @PathVariable int id,
+                                            @RequestBody Review review) {
 
         Principal principal = request.getUserPrincipal();
         if (principal == null) {
-            return null;
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         } else {
-            Review review = new Review(title, userService.getUser(principal.getName()), rating, comment, bookService.getBook(id));
-            return reviewService.saveReview(review);
+            User user = userService.getUser(principal.getName());
+            Book book = bookService.getBook(id);
+            if (user == null || book == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            } else {
+                review.setAuthor(user);
+                review.setBook(book);
+                Review savedReview = reviewService.saveReview(review); // This method returns the saved review if successful
+
+                if (savedReview == null) {
+                    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+                }
+
+                URI location = fromCurrentRequest().path("/{id}").buildAndExpand(savedReview.getID()).toUri();
+
+                return ResponseEntity.created(location).body(review);
+            }
         }
     }
-
     // Delete review
     @DeleteMapping("/api/review/{reviewID}") // return a message stating that the review was deleted
     public String deleteReview(@PathVariable long reviewID, HttpServletRequest request) {

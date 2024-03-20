@@ -1,15 +1,17 @@
+// This is used to get data for the algorithm and charts
+
 package es.codeurjc.webapp03.controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import es.codeurjc.webapp03.entity.Author;
 import es.codeurjc.webapp03.entity.Book;
 import es.codeurjc.webapp03.entity.Genre;
+import es.codeurjc.webapp03.entity.User;
 import es.codeurjc.webapp03.service.AuthorService;
 import es.codeurjc.webapp03.service.BookService;
 import es.codeurjc.webapp03.service.GenreService;
 import es.codeurjc.webapp03.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +23,7 @@ import java.security.Principal;
 import java.util.List;
 
 @RestController
-public class APIAlgorithmController {
+public class APIStatisticsController {
 
     @Autowired
     private BookService bookService;
@@ -194,6 +196,89 @@ public class APIAlgorithmController {
             return ResponseEntity.noContent().build();
         } else {
             return ResponseEntity.ok(mostReadAuthors);
+        }
+    }
+
+    // Get users that have read the most books (and the number of books they have read)
+    @JsonView(User.Username.class)
+    @GetMapping("/api/users/readings")
+    public ResponseEntity<?> getUsersTotalReadings() {
+
+        // This can be executed both for a logged user and for a non-logged user
+
+        // Get the users that have read the most books from the database and return them as a JSON (include the username and the number of books they have read)
+        List<Object[]> usersTotalReadings = userService.getUsersTotalReadings();
+
+        //Check if the list is empty
+        if (usersTotalReadings.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.ok(usersTotalReadings);
+        }
+    }
+
+    // Get the total number of users
+    @JsonView(User.BasicInfo.class)
+    @GetMapping("/api/users/all")
+    public ResponseEntity<?> getTotalUsers(@RequestParam("count") boolean count) {
+
+        if(count){
+            long totalUsers = userService.getTotalUsers();
+            return ResponseEntity.ok(totalUsers);
+
+        } else {
+            List <User> allUsers = userService.getAllUsers();
+            return ResponseEntity.ok(allUsers);
+        }
+    }
+
+    // Get the total number of genres
+
+    @JsonView(Genre.BasicInfo.class)
+    @GetMapping("/api/genres/all")
+    public ResponseEntity<?> getTotalGenres(@RequestParam("count") boolean count) {
+
+        if(count){
+            long totalGenres = genreService.countGenres();
+            return ResponseEntity.ok(totalGenres);
+
+        } else {
+            List <Genre> allGenres = genreService.getAllGenres();
+            return ResponseEntity.ok(allGenres);
+        }
+    }
+
+    // Get the total number of authors
+
+    @JsonView(Author.BasicInfo.class)
+    @GetMapping("/api/authors/all")
+    public ResponseEntity<?> getTotalAuthors(@RequestParam("count") boolean count) {
+
+        if(count){
+            long totalAuthors = authorService.getTotalAuthors();
+            return ResponseEntity.ok(totalAuthors);
+
+        } else {
+            List <Author> allAuthors = authorService.getAllAuthors();
+            return ResponseEntity.ok(allAuthors);
+        }
+    }
+
+    // Get the total number of books
+
+    interface SpecificBookInfo extends Book.BasicInfo, Book.GenreInfo, Genre.BasicInfo {}
+    
+    @JsonView(SpecificBookInfo.class)
+    @GetMapping("/api/books/all")
+    public ResponseEntity<?> getTotalBooks(@RequestParam("count") boolean count) {
+
+        if(count){
+            long totalBooks = bookService.getTotalBooks();
+            return ResponseEntity.ok(totalBooks);
+
+        } else {
+            List <Book> allBooks = bookService.getAllBooks();
+            return ResponseEntity.ok(allBooks);
         }
     }
 

@@ -56,4 +56,8 @@ public class BookService {
     public Page<Book> searchBook(String searchQuery, Pageable pageable) {
         return bookRepository.searchBooks(searchQuery, pageable);
     }
+
+    public List<Book> getAllBooks() {
+        return bookRepository.findAll();
+    }
 }

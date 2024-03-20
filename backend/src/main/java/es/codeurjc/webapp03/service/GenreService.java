@@ -32,4 +32,8 @@ public class GenreService {
     public List<Object[]> getMostReadGenresNameAndCount(){
         return genreRepository.getMostReadGenresNameAndCount();
     }
+
+    public List<Genre> getAllGenres(){
+        return genreRepository.findAll();
+    }
 }
