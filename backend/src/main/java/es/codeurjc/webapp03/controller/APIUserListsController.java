@@ -33,7 +33,7 @@ public class APIUserListsController {
 
     // Add book to read list
     @JsonView(Book.BasicInfo.class)
-    @PostMapping("/api/book/read/{id}")
+    @PostMapping("/api/books/read/{id}")
     public ResponseEntity<Book> addReadBook(@PathVariable long id, HttpServletRequest request) {
 
         Principal principal = request.getUserPrincipal();
@@ -53,7 +53,7 @@ public class APIUserListsController {
 
     // Add book to reading list
     @JsonView(Book.BasicInfo.class)
-    @PostMapping("/api/book/reading/{id}")
+    @PostMapping("/api/books/reading/{id}")
     public ResponseEntity<Book> addReadingBook(@PathVariable long id, HttpServletRequest request) {
 
         Principal principal = request.getUserPrincipal();
@@ -73,7 +73,7 @@ public class APIUserListsController {
 
     // Add book to wanted list
     @JsonView(Book.BasicInfo.class)
-    @PostMapping("/api/book/wanted/{id}")
+    @PostMapping("/api/books/wanted/{id}")
     public ResponseEntity<Book> addWantedBook(@PathVariable long id, HttpServletRequest request) {
 
         Principal principal = request.getUserPrincipal();
@@ -94,7 +94,7 @@ public class APIUserListsController {
     // Remove book from all lists
 
     @JsonView(Book.BasicInfo.class)
-    @DeleteMapping("/api/book/lists/{id}")
+    @DeleteMapping("/api/books/lists/{id}")
     public ResponseEntity<Book> removeBookFromLists(@PathVariable long id, HttpServletRequest request) {
 
         Principal principal = request.getUserPrincipal();
@@ -134,7 +134,7 @@ public class APIUserListsController {
 
     // TODO: Move this to a different controller (this is for testing)
     @JsonView(User.BasicInfo.class)
-    @GetMapping("/api/user/me")
+    @GetMapping("/api/users/me")
     public ResponseEntity<?> getUserInfo(HttpServletRequest request) {
 
         Principal principal = request.getUserPrincipal();
