@@ -7,9 +7,11 @@ import es.codeurjc.webapp03.repository.GenreRepository;
 import jakarta.annotation.PostConstruct;
 import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Service;
 
 @Service
+@DependsOn("bookSampleService")
 public class GenreSampleService {
 
     @Autowired

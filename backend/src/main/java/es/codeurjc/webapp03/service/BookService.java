@@ -5,6 +5,7 @@ import es.codeurjc.webapp03.entity.Book;
 import es.codeurjc.webapp03.entity.Genre;
 import es.codeurjc.webapp03.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
+@DependsOn("authorService")
 public class BookService {
 
     @Autowired

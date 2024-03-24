@@ -21,13 +21,17 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class Book {
     //Data structure that will store example books (ID, Book title, Author, Description, Image, Date of publication, ISBN, Genre, Series, Page count, Publisher)
 
-    public interface BasicInfo {}
+    public interface BasicInfo {
+    }
 
-    public interface AuthorInfo {}
+    public interface AuthorInfo {
+    }
 
-    public interface GenreInfo {}
+    public interface GenreInfo {
+    }
 
-    public interface ReviewInfo {}
+    public interface ReviewInfo {
+    }
 
     @JsonView(BasicInfo.class)
     @Id
@@ -233,13 +237,15 @@ public class Book {
 
     public void updateAuthorString() {
         String authorString = "";
-        if (this.author.size() == 1) {
-            authorString = this.author.get(0).getName();
-        } else {
-            for (int i = 0; i < this.author.size(); i++) {
-                authorString += this.author.get(i).getName();
-                if (i < this.author.size() - 1) {
-                    authorString += ", ";
+        if (!this.author.isEmpty()) {
+            if (this.author.size() == 1) {
+                authorString = this.author.get(0).getName();
+            } else {
+                for (int i = 0; i < this.author.size(); i++) {
+                    authorString += this.author.get(i).getName();
+                    if (i < this.author.size() - 1) {
+                        authorString += ", ";
+                    }
                 }
             }
         }
@@ -316,13 +322,13 @@ public class Book {
         this.imageFile = imageFile;
     }
 
-    public String blobToString(Blob blob) throws SQLException{
+    public String blobToString(Blob blob) throws SQLException {
         byte[] bytes = blob.getBytes(1, (int) blob.length());
         String bookImage = Base64.getEncoder().encodeToString(bytes);
         return bookImage;
     }
 
-    public Blob URLtoBlob(String webURL){
+    public Blob URLtoBlob(String webURL) {
         try {
             URL url = new URL(webURL);
             InputStream in = url.openStream();

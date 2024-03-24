@@ -3,11 +3,13 @@ package es.codeurjc.webapp03.service;
 import es.codeurjc.webapp03.entity.Author;
 import es.codeurjc.webapp03.repository.AuthorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@DependsOn("authorSampleService")
 public class AuthorService {
 
     @Autowired

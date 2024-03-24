@@ -75,11 +75,6 @@ public class APISearchResultsPageController {
             userQueries.get(i).setProfileImageString(userQueries.get(i).blobToString(userQueries.get(i).getProfileImageFile()));
         }
 
-        System.out.println("NUMERO");
-        userQueries.forEach((user) -> {
-            System.out.println(user.getUsername());
-        });
-
         return new ResponseEntity<>(userQueries, HttpStatus.OK);
 
     }

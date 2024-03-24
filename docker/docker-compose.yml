@@ -1,0 +1,37 @@
+# In project root:
+# docker pull blasetvrtumi/bookmarks
+# cd docker
+# docker-compose -p bookmarks up --build
+
+version: "3"
+services:
+
+  bookmarks-app:
+
+    container_name: bookmarks-app
+    image: blasetvrtumi/bookmarks
+    ports:
+      - "8443:8443"
+    depends_on:
+      - bookmarks-DB
+    command: ["/bin/sh", "-c", "./wait-for-it.sh bookmarks-DB:3306 -- && java -jar /app/webapp03-0.0.1-SNAPSHOT.jar"]
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://bookmarks-DB:3306/bookmarks
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=password
+    volumes:
+      - ../backend:/backend
+
+  bookmarks-DB:
+    container_name: bookmarks-DB
+    image: mysql:latest
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_DATABASE=bookmarks
+      - MYSQL_ROOT_PASSWORD=password
+    volumes:
+      - /var/lib/mysql
+
+volumes:
+    mysql:

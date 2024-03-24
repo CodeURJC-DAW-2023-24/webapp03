@@ -4,6 +4,7 @@ import es.codeurjc.webapp03.entity.Review;
 import es.codeurjc.webapp03.entity.Book;
 import es.codeurjc.webapp03.repository.ReviewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 

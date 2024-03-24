@@ -6,11 +6,13 @@ import es.codeurjc.webapp03.repository.ReviewRepository;
 import es.codeurjc.webapp03.repository.UserRepository;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@DependsOn("userInitializationSampleService")
 public class UserReviewSampleService {
 
     @Autowired
