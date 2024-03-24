@@ -37,21 +37,21 @@
 
 ## ✅ Tabla de Contenido
 
-- [Autores](https://github.com/CodeURJC-DAW-2023-24/webapp03/tree/Database-Implementation?tab=readme-ov-file#-autores)
-- [Trello](https://github.com/CodeURJC-DAW-2023-24/webapp03/tree/Database-Implementation?tab=readme-ov-file#%EF%B8%8F-trello)
-- [Entidades](https://github.com/CodeURJC-DAW-2023-24/webapp03/tree/Database-Implementation?tab=readme-ov-file#%EF%B8%8F-entidades)
-- [Permisos de los usuarios](https://github.com/CodeURJC-DAW-2023-24/webapp03/tree/Database-Implementation?tab=readme-ov-file#-permisos-de-los-usuarios)
-- [Imágenes](https://github.com/CodeURJC-DAW-2023-24/webapp03/tree/Database-Implementation?tab=readme-ov-file#%EF%B8%8F-im%C3%A1genes)
-- [Gráficos](https://github.com/CodeURJC-DAW-2023-24/webapp03/tree/Database-Implementation?tab=readme-ov-file#-gr%C3%A1ficos)
-- [Tecnología complementaria](https://github.com/CodeURJC-DAW-2023-24/webapp03/tree/Database-Implementation?tab=readme-ov-file#-tecnolog%C3%ADa-complementaria)
-- [Algoritmos o consulta avanzada](https://github.com/CodeURJC-DAW-2023-24/webapp03/tree/Database-Implementation?tab=readme-ov-file#-algoritmos-o-consulta-avanzada)
-- [Pantallas](https://github.com/CodeURJC-DAW-2023-24/webapp03/tree/Database-Implementation?tab=readme-ov-file#-pantallas)
-- [Mapa de navegación](https://github.com/CodeURJC-DAW-2023-24/webapp03/tree/Database-Implementation?tab=readme-ov-file#-mapa-de-navegaci%C3%B3n)
-- [Diagramas](https://github.com/CodeURJC-DAW-2023-24/webapp03/tree/Database-Implementation?tab=readme-ov-file#-diagramas)
-- [Instalación](https://github.com/CodeURJC-DAW-2023-24/webapp03/tree/Database-Implementation?tab=readme-ov-file#%EF%B8%8F-instalaci%C3%B3n)
+- [Autores](https://github.com/CodeURJC-DAW-2023-24/webapp03/tree/API-REST?tab=readme-ov-file#-autores)
+- [Trello](https://github.com/CodeURJC-DAW-2023-24/webapp03/tree/API-REST?tab=readme-ov-file#%EF%B8%8F-trello)
+- [Entidades](https://github.com/CodeURJC-DAW-2023-24/webapp03/tree/API-REST?tab=readme-ov-file#%EF%B8%8F-entidades)
+- [Permisos de los usuarios](https://github.com/CodeURJC-DAW-2023-24/webapp03/tree/API-REST?tab=readme-ov-file#-permisos-de-los-usuarios)
+- [Imágenes](https://github.com/CodeURJC-DAW-2023-24/webapp03/tree/API-REST?tab=readme-ov-file#%EF%B8%8F-im%C3%A1genes)
+- [Gráficos](https://github.com/CodeURJC-DAW-2023-24/webapp03/tree/API-REST?tab=readme-ov-file#-gr%C3%A1ficos)
+- [Tecnología complementaria](https://github.com/CodeURJC-DAW-2023-24/webapp03/tree/API-REST?tab=readme-ov-file#-tecnolog%C3%ADa-complementaria)
+- [Algoritmos o consulta avanzada](https://github.com/CodeURJC-DAW-2023-24/webapp03/tree/API-REST?tab=readme-ov-file#-algoritmos-o-consulta-avanzada)
+- [Pantallas](https://github.com/CodeURJC-DAW-2023-24/webapp03/tree/API-REST?tab=readme-ov-file#-pantallas)
+- [Mapa de navegación](https://github.com/CodeURJC-DAW-2023-24/webapp03/tree/API-REST?tab=readme-ov-file#-mapa-de-navegaci%C3%B3n)
+- [Diagramas](https://github.com/CodeURJC-DAW-2023-24/webapp03/tree/API-REST?tab=readme-ov-file#-diagramas)
+- [Instalación](https://github.com/CodeURJC-DAW-2023-24/webapp03/tree/API-REST?tab=readme-ov-file#%EF%B8%8F-instalaci%C3%B3n)
 - [Creación de imagen de la aplicación](https://github.com/CodeURJC-DAW-2023-24/webapp03/tree/API-REST?tab=readme-ov-file#-Creaci%C3%B3n-de-imagen-de-la-aplicaci%C3%B3n)
-- [Despliegue de la aplicación en una máquina virtual](https://github.com/CodeURJC-DAW-2023-24/webapp03/tree/API-REST?tab=readme-ov-file#-Despliegue-en-m%C3%A1quina-virtual)
-- [Participación](https://github.com/CodeURJC-DAW-2023-24/webapp03/tree/Database-Implementation?tab=readme-ov-file#-participaci%C3%B3n)
+- [Despliegue de la aplicación en una máquina virtual](https://github.com/CodeURJC-DAW-2023-24/webapp03/tree/API-REST?tab=readme-ov-file#-despliegue-de-la-aplicaci%C3%B3n-en-una-m%C3%A1quina-virtual)
+- [Participación](https://github.com/CodeURJC-DAW-2023-24/webapp03/tree/API-REST?tab=readme-ov-file#-participaci%C3%B3n)
 
 ## 💻 Autores:
 | Nombre                            | Correo                              | Cuenta                                          | 
@@ -238,7 +238,7 @@ Se implementará un algoritmo de recomendaciones de libros en la página princip
    O abre en tu navegador de preferencia dicha [dirección](https://localhost:8443).
 
 ## 📦 Creación de imagen de la aplicación
-Para poder crear a imagen de la aplicación es necesario tener docker instalado en tu máquina (ver [requisitos de instalación de aplicación dockerizada]()). Una vez tengas docker instalado, sigue los siguientes pasos:
+Para poder crear a imagen de la aplicación es necesario tener docker instalado en tu máquina (ver [requisitos de instalación de aplicación dockerizada](https://github.com/CodeURJC-DAW-2023-24/webapp03/tree/API-REST?tab=readme-ov-file#requisitos-previos-1)). Una vez tengas docker instalado, sigue los siguientes pasos:
 1. Clona el repositorio a tu ruta deseada:    
     ```
      git clone https://github.com/CodeURJC-DAW-2023-24/webapp03
