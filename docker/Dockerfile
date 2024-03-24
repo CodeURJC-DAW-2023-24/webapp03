@@ -18,7 +18,7 @@ WORKDIR /app
 # Add the project's jar file to the container
 COPY --from=build /app/backend/target/webapp03-0.0.1-SNAPSHOT.jar /app
 
-COPY backend/src /app/backend/src/
+COPY backend/src /backend/src/
 
 # Copia el script wait-for-it.sh al directorio /app en la imagen de Docker
 RUN curl -LJO https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh && chmod +x /app/wait-for-it.sh

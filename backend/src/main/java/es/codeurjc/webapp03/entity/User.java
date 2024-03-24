@@ -185,7 +185,7 @@ public class User {
     }
 
     public Blob LocalImageToBlob(String imagePath) throws IOException, SQLException {
-            imagePath = imagePath.replace("/assets", "backend/src/main/resources/static/assets");
+            imagePath = imagePath.replace("/assets", "/backend/src/main/resources/static/assets");
             File fi = new File(imagePath);
             byte[] byteContent = Files.readAllBytes(fi.toPath());
             Blob imageBlob = new SerialBlob(byteContent);

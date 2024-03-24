@@ -19,8 +19,6 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:mysql://bookmarks-DB:3306/bookmarks
       - SPRING_DATASOURCE_USERNAME=root
       - SPRING_DATASOURCE_PASSWORD=password
-    volumes:
-      - ../backend:/backend
 
   bookmarks-DB:
     container_name: bookmarks-DB
