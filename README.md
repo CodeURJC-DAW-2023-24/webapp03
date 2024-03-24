@@ -28,6 +28,10 @@
    <img src="https://img.shields.io/badge/Postman-FF6C37?style=for-the-badge&logo=postman&logoColor=white"/>
    <img src="https://img.shields.io/badge/chart.js-F5788D.svg?style=for-the-badge&logo=chart.js&logoColor=white"/>
    <img src="https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white"/>
+   <img src="https://img.shields.io/badge/Linux%20Containers-333333.svg?style=for-the-badge&logo=Linux-Containers&logoColor=white"/>
+   <img src="https://img.shields.io/badge/Linux-FCC624.svg?style=for-the-badge&logo=Linux&logoColor=black"/>
+   <img src="https://img.shields.io/badge/YAML-CB171E.svg?style=for-the-badge&logo=YAML&logoColor=white"/>
+   <img src="https://img.shields.io/badge/OpenAPI%20Initiative-6BA539.svg?style=for-the-badge&logo=OpenAPI-Initiative&logoColor=white"/>
 </p>  
 
 
@@ -45,6 +49,8 @@
 - [Mapa de navegación](https://github.com/CodeURJC-DAW-2023-24/webapp03/tree/Database-Implementation?tab=readme-ov-file#-mapa-de-navegaci%C3%B3n)
 - [Diagramas](https://github.com/CodeURJC-DAW-2023-24/webapp03/tree/Database-Implementation?tab=readme-ov-file#-diagramas)
 - [Instalación](https://github.com/CodeURJC-DAW-2023-24/webapp03/tree/Database-Implementation?tab=readme-ov-file#%EF%B8%8F-instalaci%C3%B3n)
+- [Creación de imagen de la aplicación](https://github.com/CodeURJC-DAW-2023-24/webapp03/tree/API-REST?tab=readme-ov-file#-Creaci%C3%B3n-de-imagen-de-la-aplicaci%C3%B3n)
+- [Despliegue de la aplicación en una máquina virtual](https://github.com/CodeURJC-DAW-2023-24/webapp03/tree/API-REST?tab=readme-ov-file#-Despliegue-en-m%C3%A1quina-virtual)
 - [Participación](https://github.com/CodeURJC-DAW-2023-24/webapp03/tree/Database-Implementation?tab=readme-ov-file#-participaci%C3%B3n)
 
 ## 💻 Autores:
@@ -168,23 +174,25 @@ Se implementará un algoritmo de recomendaciones de libros en la página princip
 
 ## 🛠️ Instalación
 
-### Requisitos previos:
-Para poder instalar y ejecutar la aplicación correctamente es necesario:
+### Proyecto Maven en local
 
-- [Java Development Kit versión 17 Amazon corretto](https://docs.aws.amazon.com/corretto/latest/corretto-17-ug/downloads-list.html)
-- [MySQL 8.3.0](https://dev.mysql.com/downloads/mysql/)
-- [Springboot 3.2.2](https://github.com/spring-projects/spring-boot/releases/tag/v3.2.2)
-- [Maven 3.9.6](https://maven.apache.org/download.cgi)
+- #### Requisitos previos:
+   Para poder instalar y ejecutar la aplicación correctamente es necesario:
+
+   - [Java Development Kit versión 17 Amazon corretto](https://docs.aws.amazon.com/corretto/latest/corretto-17-ug/downloads-list.html)
+   - [MySQL 8.3.0](https://dev.mysql.com/downloads/mysql/)
+   - [Springboot 3.2.2](https://github.com/spring-projects/spring-boot/releases/tag/v3.2.2)
+   - [Maven 3.9.6](https://maven.apache.org/download.cgi)
 
 
 - IMPORTANTE: La aplicación hace uso de un fichero que contiene dos variables de entorno (usuario y contraseña de la cuenta de Google utilizada para el envío de correos electrónicos), este fichero no se encuentra publicado en el repositorio por razones de seguridad. El fichero lo proporcionará el equipo de desarrollo a quien lo necesite.
 
 
-### Pasos para la instalación:
+- #### Pasos para la instalación:
 1. Clona el repositorio a tu ruta deseada:    
-   ```
-   git clone https://github.com/CodeURJC-DAW-2023-24/webapp03
-   ```
+     ```
+     git clone https://github.com/CodeURJC-DAW-2023-24/webapp03
+     ```
    
 2. Conectarse a la base de datos:    
    ```
@@ -197,6 +205,65 @@ Para poder instalar y ejecutar la aplicación correctamente es necesario:
    ```
    start https://localhost:8443
    ```
+
+---  
+
+### Aplicación dockerizada
+
+- #### Requisitos previos:
+  Para poder descargar y ejecutar la aplicación dockerizada tan sólo es necesario:
+  - [Docker](https://www.docker.com/products/docker-desktop)
+
+- #### Pasos para la instalación:
+1. Descarga la imagen de la aplicación desde el repositorio de Docker Hub:
+    ```
+    docker pull blasetvrtumi/bookmarks
+    ```
+2. Ubica tu terminal en la carpeta donde tengas el archivo [docker-compose.yml](https://github.com/CodeURJC-DAW-2023-24/webapp03/blob/API-REST/docker/docker-compose.yml), como podría ser, en este caso, la carpeta "docker" del repositorio:
+    ```
+    cd ./docker
+    ```
+3. Ejecuta el archivo docker-compose.yml:
+    ```
+    docker-compose -p bookmarks up --build
+    ```
+   o simplemente
+    ```
+    docker-compose up
+    ```
+4. Una vez haya terminado de ejecutarse, haz:
+    ```
+    start https://localhost:8443
+    ```
+   O abre en tu navegador de preferencia dicha [dirección](https://localhost:8443).
+
+## 📦 Creación de imagen de la aplicación
+Para poder crear a imagen de la aplicación es necesario tener docker instalado en tu máquina (ver [requisitos de instalación de aplicación dockerizada]()). Una vez tengas docker instalado, sigue los siguientes pasos:
+1. Clona el repositorio a tu ruta deseada:    
+    ```
+     git clone https://github.com/CodeURJC-DAW-2023-24/webapp03
+    ```
+2. Inicia sesión en tu cuenta de Docker Hub. Si no tienes una, puedes crearla [aquí](https://hub.docker.com/signup). Se te pedirá introducir tu usuario y contraseña:
+    ```
+    docker login
+    ```    
+3. Ejecuta el ejecutable bash script que creará la imagen de la aplicación:
+    ```
+    ./create_image.sh
+    ```
+   ⚠️<span style="color:lightblue">Ten en cuenta que este script creará la imagen bajo el nombre "blasetvrtumi/bookmarks" y la subirá a tu cuenta de Docker Hub. Si deseas cambiar el nombre de la imagen o el nombre de usuario, puedes hacerlo modificando el script.</span>⚠️
+
+
+4. Una vez haya terminado de ejecutarse, puedes comprobar que la imagen se ha creado correctamente con:
+    ```
+    docker images
+    ```
+   y podrás descargarla en cualquier máquina con:
+    ```
+    docker pull <nombre de usuario>/<nombre de la imagen>
+    ```
+
+## 🛫 Despliegue de la aplicación en una máquina virtual
 
 ## 📋 Participación
 
