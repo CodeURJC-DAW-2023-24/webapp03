@@ -18,11 +18,14 @@ import java.util.List;
 @Entity
 public class User {
 
-    public interface BasicInfo {}
+    public interface BasicInfo {
+    }
 
-    public interface Username {}
+    public interface Username {
+    }
 
-    public interface Reviews {}
+    public interface Reviews {
+    }
 
     @JsonView({BasicInfo.class, Username.class})
     @Id
@@ -49,7 +52,8 @@ public class User {
     @JsonView(BasicInfo.class)
     private String email;
 
-    @JsonIgnore // WE will need to make this a filter with JsonView so this attribute is accessible when creating a new user
+    @JsonIgnore
+    // WE will need to make this a filter with JsonView so this attribute is accessible when creating a new user
     private String password;
 
     @JsonView(Reviews.class)
@@ -110,7 +114,9 @@ public class User {
         return this.description;
     }
 
-    public Blob getProfileImageFile() { return this.profileImageFile; }
+    public Blob getProfileImageFile() {
+        return this.profileImageFile;
+    }
 
     public String getProfileImageString() {
         return this.profileImageString;
@@ -140,7 +146,9 @@ public class User {
         this.description = description;
     }
 
-    public void setProfileImageFile(Blob profileImageFile) { this.profileImageFile = profileImageFile; }
+    public void setProfileImageFile(Blob profileImageFile) {
+        this.profileImageFile = profileImageFile;
+    }
 
     public void setProfileImageString(String profileImageString) {
         this.profileImageString = profileImageString;
@@ -185,15 +193,18 @@ public class User {
     }
 
     public Blob LocalImageToBlob(String imagePath) throws IOException, SQLException {
-            imagePath = imagePath.replace("/assets", "backend/src/main/resources/static/assets");
-            String runningInDocker = System.getenv("RUNNING_IN_DOCKER");
-            if ((runningInDocker) != null && runningInDocker.equals("true")) {
-                imagePath = "/" + imagePath;
-            }
-            File fi = new File(imagePath);
-            byte[] byteContent = Files.readAllBytes(fi.toPath());
-            Blob imageBlob = new SerialBlob(byteContent);
-            return imageBlob;
+        imagePath = imagePath.replace("/assets", "backend/src/main/resources/static/assets");
+        String runningInDocker = System.getenv("RUNNING_IN_DOCKER");
+        if ((runningInDocker) != null && runningInDocker.equals("true")) {
+            imagePath = "/" + imagePath;
+        } else {
+            String baseDir = System.getProperty("user.dir").replace("\\", "/").replace("/backend", "");
+            imagePath = baseDir + "/" + imagePath;
+        }
+        File fi = new File(imagePath);
+        byte[] byteContent = Files.readAllBytes(fi.toPath());
+        Blob imageBlob = new SerialBlob(byteContent);
+        return imageBlob;
     }
 
     public void addReadBook(Book book) {
@@ -205,7 +216,7 @@ public class User {
 
     public void addReadingBook(Book book) {
         // check if the book is already in the reading books list
-        if(!this.readingBooks.contains(book)){
+        if (!this.readingBooks.contains(book)) {
             this.readingBooks.add(book);
         }
     }

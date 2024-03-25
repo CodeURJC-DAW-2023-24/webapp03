@@ -5,6 +5,11 @@ import es.codeurjc.webapp03.entity.Book;
 import es.codeurjc.webapp03.entity.User;
 import es.codeurjc.webapp03.service.BookService;
 import es.codeurjc.webapp03.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -36,6 +41,14 @@ public class APISearchResultsPageController {
 
     public APISearchResultsPageController() {
     }
+
+    @Operation(summary = "Load search results page books")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Search results page books loaded", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = Book.class))
+            }),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
+    })
 
     @JsonView(Book.BasicInfo.class)
     @GetMapping("/api/books")

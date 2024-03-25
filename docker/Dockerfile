@@ -4,9 +4,13 @@ FROM maven:3.8.4-openjdk-17 as build
 # Set the working directory in the container to /webapp03
 WORKDIR /app/backend
 
+ENV RUNNING_IN_DOCKER = true
+
 COPY backend/pom.xml /app/backend/
 
 COPY backend/src /app/backend/src/
+
+COPY api-docs /app/api-docs
 
 RUN mvn clean install -DskipTests
 
@@ -22,9 +26,3 @@ COPY backend/src /backend/src/
 
 # Copia el script wait-for-it.sh al directorio /app en la imagen de Docker
 RUN curl -LJO https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh && chmod +x /app/wait-for-it.sh
-
-# Make port {port} available to the world outside this container
-#EXPOSE 8443
-
-# Run the jar file
-#ENTRYPOINT ["java","-jar","/app/webapp03-0.0.1-SNAPSHOT.jar"]

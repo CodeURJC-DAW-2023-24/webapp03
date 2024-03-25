@@ -120,7 +120,7 @@ public class WebSecurityConfiguration {
                                 "/book/*", "/book/*/loadMoreReviews", "/errorPage/**", "/",
                                 "/landingPage/loadMore", "/landingPage/mostReadGenres",
                                 "/loginError", "/profile/*", "/profile/*/loadMore", "/profile/*/exportLists", "/search/**",
-                                "/login", "/login", "/login/**", "/signup/**", "/signup", "/error/**", "/mostReadGenres/**").permitAll()
+                                "/login", "/login", "/login/**", "/signup/**", "/signup", "/error/**", "/mostReadGenres/**", "/v3/**", "/swagger-ui/**").permitAll()
                         //Private pages
                         //USER
                         .requestMatchers("/profile/*/edit", "/profile/*/upload", "/book/*/addReview",
