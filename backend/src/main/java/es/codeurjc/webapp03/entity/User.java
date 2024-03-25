@@ -185,7 +185,11 @@ public class User {
     }
 
     public Blob LocalImageToBlob(String imagePath) throws IOException, SQLException {
-            imagePath = imagePath.replace("/assets", "/backend/src/main/resources/static/assets");
+            imagePath = imagePath.replace("/assets", "backend/src/main/resources/static/assets");
+            String runningInDocker = System.getenv("RUNNING_IN_DOCKER");
+            if ((runningInDocker) != null && runningInDocker.equals("true")) {
+                imagePath = "/" + imagePath;
+            }
             File fi = new File(imagePath);
             byte[] byteContent = Files.readAllBytes(fi.toPath());
             Blob imageBlob = new SerialBlob(byteContent);
