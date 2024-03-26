@@ -1,28 +1,20 @@
 package es.codeurjc.webapp03.controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
-import es.codeurjc.webapp03.entity.Review;
 import es.codeurjc.webapp03.entity.User;
-import es.codeurjc.webapp03.service.BookReviewService;
-import es.codeurjc.webapp03.service.BookService;
 import es.codeurjc.webapp03.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.ResponseErrorHandler;
-
-import java.security.Principal;
 
 @RestController
-public class APIProfilePageController {
+public class APIProfileController {
 
     @Autowired
     private UserService userService;
