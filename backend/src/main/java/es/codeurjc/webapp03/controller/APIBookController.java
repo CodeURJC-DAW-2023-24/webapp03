@@ -3,6 +3,11 @@ package es.codeurjc.webapp03.controller;
 import com.fasterxml.jackson.annotation.JsonView;
 import es.codeurjc.webapp03.entity.*;
 import es.codeurjc.webapp03.service.*;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.servlet.http.HttpServletRequest;
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +16,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.imageio.ImageIO;
 import java.io.IOException;
+import java.io.InputStream;
 import java.security.Principal;
 import java.util.ArrayList;
 
@@ -34,10 +41,17 @@ public class APIBookController {
     private GenreService genreService;
 
     interface BookBasicView extends Book.BasicInfo {}
+
+    @Operation(summary = "Get book info by ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Book info correctly retrieved", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = Book.class))
+            }),
+            @ApiResponse(responseCode = "404", description = "Book not found", content = @Content) //Not found
+    })
     //Get existing book
     @JsonView(BookBasicView.class)
     @GetMapping("api/books/{id}")
-    //@ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<?> getBook(HttpServletRequest request, @PathVariable int id){
         Book book = bookService.getBook(id);
         // Check if the book exists
@@ -48,6 +62,14 @@ public class APIBookController {
         }
     }
 
+    @Operation(summary = "Create new book")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "User created correctly", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = Book.class))
+            }),
+            @ApiResponse(responseCode = "403", description = "You don't have permission to do this!", content = @Content), //Forbidden
+            @ApiResponse(responseCode = "500", description = "Image not supported. Try different file", content = @Content) //Internal server error
+    })
     //Create book
     @JsonView(BookBasicView.class)
     @PostMapping("api/books")
@@ -62,24 +84,43 @@ public class APIBookController {
                                         @RequestParam(value = "publisher") String newPublisher,
                                         @RequestParam(value = "series") String newSeries,
                                         @RequestParam(value = "description") String newDescription,
-                                        @RequestParam(value = "image") MultipartFile newImage){
+                                        @RequestParam(value = "image", required = false) MultipartFile newImage) throws IOException {
         Principal loggedUser = request.getUserPrincipal();
         User user = userService.getUser(loggedUser.getName());
-        //Check if its logged in as author or as admin
+        //Check if it's logged in as admin
         if (user.getRole().contains("ADMIN")){
-            //Book book = new Book(newName,newDescription,"",newDate,newISBN,newSeries,Integer.parseInt(newPages),newPublisher);
             Book book = new Book();
-            if (insertInfoBook(newName, newAuthor, newISBN, newPages, newGenre, newDate, newPublisher, newSeries, newDescription, newImage, book) != null){
-                return new ResponseEntity<>("Image not supported. Try different file", HttpStatus.INTERNAL_SERVER_ERROR);
+            insertInfoBook(newName, newAuthor, newISBN, newPages, newGenre, newDate, newPublisher, newSeries, newDescription, book);
+            if(newImage != null && !newImage.isEmpty()){ //If image is added...
+                //Check if image file is correct
+                try (InputStream input = newImage.getInputStream()) {
+                    try {
+                        ImageIO.read(input).toString(); //If it doesn't fail, this is an image.
+                        book.setImageFile(BlobProxy.generateProxy(newImage.getInputStream(), newImage.getSize()));
+                    } catch (Exception e) {
+                        // It's not an image.
+                        return new ResponseEntity<>("Image not supported. Try different file", HttpStatus.INTERNAL_SERVER_ERROR);
+                    }
+                }
+            }else{
+                //Add default image
+                book.setImageFile(book.URLtoBlob("https://fissac.com/wp-content/uploads/2020/11/placeholder.png"));
             }
             bookService.saveBook(book); //Save book with all changes
             return new ResponseEntity<>(book, HttpStatus.OK);
         }else{
             return new ResponseEntity<>("You dont have permission to do this!", HttpStatus.FORBIDDEN);
         }
-    }
+    };
 
-    //@JsonView(BookBasicView.class)
+    @Operation(summary = "Delete book")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Book deleted correctly", content = @Content),
+            @ApiResponse(responseCode = "409", description = "Username not available", content = @Content), //Conflict
+            @ApiResponse(responseCode = "404", description = "Book not found", content = @Content) //Internal server error
+
+    })
+    //Delete book
     @DeleteMapping("api/books/{id}")
     public ResponseEntity<?> deleteBook(HttpServletRequest request, @PathVariable int id){
         Book book = bookService.getBook(id);
@@ -114,10 +155,18 @@ public class APIBookController {
         }
     }
 
+    @Operation(summary = "Modify book")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Book modified correctly", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = Book.class))
+            }),
+            @ApiResponse(responseCode = "404", description = "Book not found", content = @Content), //Not Found
+            @ApiResponse(responseCode = "500", description = "Image not supported. Try different file", content = @Content), //Internal server error
+            @ApiResponse(responseCode = "403", description = "You don't have permission to do this!", content = @Content)
+    })
     //Modify existing book
     @JsonView(BookBasicView.class)
     @PutMapping("api/books/{id}")
-    //@ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<?> editBook(HttpServletRequest request, @PathVariable int id,
                                       @RequestParam(value = "name", required = false) String newName,
                                       @RequestParam(value = "author", required = false) String newAuthor,
@@ -128,7 +177,7 @@ public class APIBookController {
                                       @RequestParam(value = "publisher", required = false) String newPublisher,
                                       @RequestParam(value = "series", required = false) String newSeries,
                                       @RequestParam(value = "description", required = false) String newDescription,
-                                      @RequestParam(value = "image", required = false) MultipartFile newImage){
+                                      @RequestParam(value = "image", required = false) MultipartFile newImage) throws IOException {
         Principal loggedUser = request.getUserPrincipal();
         User user = userService.getUser(loggedUser.getName());
         Book book = bookService.getBook(id);
@@ -136,10 +185,21 @@ public class APIBookController {
         if(book == null){
             return new ResponseEntity<>("Book not found", HttpStatus.NOT_FOUND);
         }
-        //Check if its logged in as author or as admin
-        if (book.getAuthor().contains(user.getUsername()) || user.getRole().contains("ADMIN")){
-            if (insertInfoBook(newName, newAuthor, newISBN, newPages, newGenre, newDate, newPublisher, newSeries, newDescription, newImage, book) != null){
-                return new ResponseEntity<>("Image not supported. Try different file", HttpStatus.INTERNAL_SERVER_ERROR);
+        //Check if it's logged in as author or as admin
+        if (user.getRole().contains("ADMIN") || authorService.checkCorrectAuthor(user.getUsername(),book.getAuthor())){
+            insertInfoBook(newName, newAuthor, newISBN, newPages, newGenre, newDate, newPublisher, newSeries, newDescription, book);
+            //If no image is added, keep original.
+            if(newImage != null && !newImage.isEmpty()){
+                //Check if image file is correct
+                try (InputStream input = newImage.getInputStream()) {
+                    try {
+                        ImageIO.read(input).toString(); //If it doesn't fail, this is an image.
+                        book.setImageFile(BlobProxy.generateProxy(newImage.getInputStream(), newImage.getSize()));
+                    } catch (Exception e) {
+                        // It's not an image.
+                        return new ResponseEntity<>("Image not supported. Try different file", HttpStatus.INTERNAL_SERVER_ERROR);
+                    }
+                }
             }
             bookService.saveBook(book); //Save book with all changes
             return new ResponseEntity<>(book, HttpStatus.OK);
@@ -148,7 +208,7 @@ public class APIBookController {
         }
     }
 
-    private ResponseEntity<String> insertInfoBook(String newName, String newAuthor, String newISBN, String newPages, String newGenre, String newDate, String newPublisher, String newSeries, String newDescription, MultipartFile newImage, Book book) {
+    private void insertInfoBook(String newName, String newAuthor, String newISBN, String newPages, String newGenre, String newDate, String newPublisher, String newSeries, String newDescription, Book book) throws IOException {
         if(newName != null) book.setTitle(newName);
         if(newISBN != null) book.setISBN(newISBN);
         if(newDate != null) book.setReleaseDate(newDate);
@@ -174,8 +234,8 @@ public class APIBookController {
                 }
             }
             book.setAuthor(authorList); //Add author/s to list
-        }
-        ;
+        };
+
         //Check for genre
         if(newGenre != null){
             //Check if Genre exist
@@ -189,14 +249,5 @@ public class APIBookController {
                 genreService.saveGenre(auxGenre);
             }
         };
-        //Should add check to only let images upload
-        if(newImage != null){
-            try {
-                book.setImageFile(BlobProxy.generateProxy(newImage.getInputStream(), newImage.getSize()));
-            }catch(IOException e){
-                return new ResponseEntity<>("Image not supported. Try different file", HttpStatus.INTERNAL_SERVER_ERROR);
-            }
-        }
-        return null;
     }
 }

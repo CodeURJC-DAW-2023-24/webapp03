@@ -35,7 +35,7 @@ public class APISignUpController {
     // Add User
     @Operation(summary = "Create a new user")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "User created correctly", content = {
+            @ApiResponse(responseCode = "201", description = "User created correctly", content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = User.class))
             }),
             @ApiResponse(responseCode = "409", description = "Username not available", content = @Content), //Conflict
@@ -52,10 +52,12 @@ public class APISignUpController {
                                      @RequestParam(value = "imageFile", required = false)MultipartFile image) throws SQLException, IOException {
 
         if(!userService.isUsernameAvailable(inputName)) return new ResponseEntity<>("Username not available",HttpStatus.CONFLICT);
+
+        //Should add checker for email
         User newUser = new User(inputName, inputAlias, "Hi, im new!","", inputEmail, passwordEncoder.encode(password), "USER");
 
         //Check if image file is added as param
-        if (image != null) {
+        if (image != null && !image.isEmpty()) {
             //Check if image file is correct
             try (InputStream input = image.getInputStream()) {
                 try {

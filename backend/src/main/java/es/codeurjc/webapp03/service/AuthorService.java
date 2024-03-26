@@ -43,5 +43,10 @@ public class AuthorService {
         return authorRepository.findAll();
     }
 
-
+    public boolean checkCorrectAuthor(String possibleAuthor, List<Author> authors){
+        for (Author author : authors){
+            if (author.getName().equals(possibleAuthor)) return true;
+        }
+        return false;
+    }
 }
