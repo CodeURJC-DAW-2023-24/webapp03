@@ -40,7 +40,7 @@ public class APIEditProfileController {
 
     interface UserBasicView extends User.BasicInfo {}
     @JsonView(UserBasicView.class)
-    @PutMapping("/api/profiles/{username}")
+    @PutMapping("/api/users/{username}")
     @ResponseStatus(HttpStatus.CREATED)
     public User editProfile(HttpServletRequest request, @PathVariable String username,
                             @RequestParam(value = "alias", required = false) String newAlias,

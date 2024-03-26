@@ -241,4 +241,8 @@ public class UserService {
         userRepository.save(user);
     }
 
+    public boolean isUsernameAvailable(String username){
+        return getUser(username) == null;
+    }
+
 }
