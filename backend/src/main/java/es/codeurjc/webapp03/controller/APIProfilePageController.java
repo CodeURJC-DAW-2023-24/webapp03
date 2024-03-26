@@ -22,9 +22,10 @@ public class APIProfilePageController {
     @Autowired
     private UserService userService;
 
+    interface UserBasicView extends User.BasicInfo {}
     // Get information from a user
-    @JsonView(Review.BasicInfo.class)
-    @GetMapping("/api/user/{username}")
+    @JsonView(UserBasicView.class)
+    @GetMapping("/api/users/{username}")
     // return user data as a JSON 
     public ResponseEntity<?> getReviews(@PathVariable String username) {
         User user = userService.getUser(username);
