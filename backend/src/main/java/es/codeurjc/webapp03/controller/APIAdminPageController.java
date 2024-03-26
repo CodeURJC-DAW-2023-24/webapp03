@@ -17,6 +17,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -71,7 +72,25 @@ public class APIAdminPageController {
         }
     }
 
+    @JsonView(APIProfilePageController.UserBasicView.class)
+    //@JsonView(BookBasicView.class)
+    @DeleteMapping("api/users/{username}")
+    public ResponseEntity<?> deleteUser(HttpServletRequest request, @PathVariable String username){
+        User user = userService.getUser(username);
+        // Check if the user exists
+        if (user == null) {
+            return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
+        } else {
+            Principal loggedUser = request.getUserPrincipal();
+            User currentUser = userService.getUser(loggedUser.getName());
+            if(currentUser.getRole().contains("ADMIN")){
+                //Delete from users lists
+                userService.deleteUser(user);
 
-
-
+                return new ResponseEntity<>(user.getUsername()+" has been deleted", HttpStatus.OK);
+            }else{
+                return new ResponseEntity<>("You dont have permission to do this!", HttpStatus.FORBIDDEN);
+            }
+        }
+    }
 }
