@@ -27,40 +27,12 @@ public class APIProfilePageController {
     @GetMapping("/api/user/{username}")
     // return user data as a JSON 
     public ResponseEntity<?> getReviews(@PathVariable String username) {
+        User user = userService.getUser(username);
         // Check if the book exists
-        if (userService.getUser(username) == null) {
+        if (user == null) {
             return new ResponseEntity<>("User nor found", HttpStatus.NOT_FOUND);
         } else {
-            return new ResponseEntity<>(userService.getUser(username), HttpStatus.OK);
-        }
-    }
-
-    // Delete user
-    @DeleteMapping("/api/user/{username}") // return a message stating that the review was deleted
-    public String deleteReview(@PathVariable String username, HttpServletRequest request) {
-
-        boolean isAdmin = false;
-
-        Principal principal = request.getUserPrincipal();
-
-        if (principal == null) {
-            return "You are not logged in";
-        } else {
-            //Check if the user exists
-            if (userService.getUser(username) == null) {
-                return "Review not found";
-            } else {/* 
-                for (String userRole: userService.getUser(username).getRole()) {
-                    if(userRole.equals("ADMIN")){
-                        isAdmin = true;
-                    }
-                }  */
-                if (isAdmin == true) {
-                    return "Review deleted";
-                } else {
-                    return "You lack permissions to perform this action.";
-                }
-            }
+            return new ResponseEntity<>(user, HttpStatus.OK);
         }
     }
 }
