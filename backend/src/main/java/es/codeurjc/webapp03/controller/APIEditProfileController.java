@@ -46,8 +46,9 @@ public class APIEditProfileController {
             @ApiResponse(responseCode = "401", description = "You don't have permission to do this!", content = @Content), //Unauthorized
             @ApiResponse(responseCode = "500", description = "Image not supported. Try different file.", content = @Content), //Internal server error
             @ApiResponse(responseCode = "500", description = "Error changing passwords.", content = @Content), //Internal server error
-            @ApiResponse(responseCode = "500", description = "New email is not valid.", content = @Content), //Internal server error
-            @ApiResponse(responseCode = "500", description = "Password can't be blank!", content = @Content) //Internal server error
+            @ApiResponse(responseCode = "400", description = "New email is not valid.", content = @Content), //Bad request
+            @ApiResponse(responseCode = "400", description = "Password can't be blank!", content = @Content), //Bad request
+            @ApiResponse(responseCode = "400", description = "Alias can't be blank!", content = @Content) //Bad request
     })
     @JsonView(UserBasicView.class)
     @PutMapping("/api/users/{username}")
@@ -67,15 +68,23 @@ public class APIEditProfileController {
         //Check for correct credentials
         if(loggeduser.getRole().contains("ADMIN") || loggeduser.getUsername().equals(username)){
             User user = userService.getUser(username);
-            if (newAlias != null) user.setAlias(newAlias);
-            if (newDescription != null) user.setDescription(newDescription);
+            if (newDescription != null) user.setDescription(newDescription); //Description can be blank
+
+            //Check alias
+            if (newAlias != null) {
+                if(!newAlias.isEmpty()) {
+                    user.setAlias(newAlias);
+                }else{
+                    return new ResponseEntity<>("Alias can't be blank!", HttpStatus.BAD_REQUEST);
+                }
+            }
 
             //Email check
             if (newEmail != null){
-                if(emailService.isCorrectEmail(newEmail)){
+                if(emailService.isCorrectEmail(newEmail)){ //Check email is valid direction
                     user.setEmail(newEmail);
                 }else{
-                    return new ResponseEntity<>("New email is not valid.", HttpStatus.CONFLICT);
+                    return new ResponseEntity<>("New email is not valid.", HttpStatus.BAD_REQUEST);
                 }
             }
 
@@ -96,7 +105,7 @@ public class APIEditProfileController {
             //Password change
             if(newPassword != null){
                 if(newPassword.isEmpty()){
-                    return new ResponseEntity<>("Password can't be blank!", HttpStatus.INTERNAL_SERVER_ERROR);
+                    return new ResponseEntity<>("Password can't be blank!", HttpStatus.BAD_REQUEST);
                 }
                 String encodedNewPassword = passwordEncoder.encode(newPassword);
                 try{
