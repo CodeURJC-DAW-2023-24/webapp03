@@ -11,6 +11,11 @@ import es.codeurjc.webapp03.service.AuthorService;
 import es.codeurjc.webapp03.service.BookService;
 import es.codeurjc.webapp03.service.GenreService;
 import es.codeurjc.webapp03.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -39,6 +44,13 @@ public class APIStatisticsController {
 
 
     // GENRE ALGORITHM
+    @Operation(summary = "Get the most read genres (if count is true, return the count of genres)")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Most read genres found", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = Genre.class))
+            }),
+            @ApiResponse(responseCode = "204", description = "No content")
+    })
     @JsonView(Genre.BasicInfo.class)
     @GetMapping("/api/genres") // Most read genres
     public ResponseEntity<?> getMostReadGenresGeneral(@RequestParam("count") boolean count) {
@@ -60,6 +72,14 @@ public class APIStatisticsController {
         }
     }
 
+    @Operation(summary = "Get the most read genres for the logged user")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Most read genres found", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = Genre.class))
+            }),
+            @ApiResponse(responseCode = "204", description = "No content"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized")
+    })
     @JsonView(Genre.BasicInfo.class)
     @GetMapping("/api/genres/me")
     public ResponseEntity<?> getMostReadGenresUser(HttpServletRequest request) {
@@ -82,6 +102,15 @@ public class APIStatisticsController {
 
     interface GenreBookBasicView extends Book.BasicInfo, Book.GenreInfo, Genre.BasicInfo {}
 
+    @Operation(summary = "Get recommended books for the logged user")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Recommended books found", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = Book.class))
+            }),
+            @ApiResponse(responseCode = "204", description = "No content"),
+            @ApiResponse(responseCode = "400", description = "Bad request"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized")
+    })
     @JsonView(GenreBookBasicView.class)
     @GetMapping("/api/books/me/recommended")
     public ResponseEntity<?> recommendedBooks(HttpServletRequest request,
@@ -141,6 +170,13 @@ public class APIStatisticsController {
 
     // AUTHOR ALGORITHM
 
+    @Operation(summary = "Get the most read authors (if count is true, return the count of authors)")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Most read authors found", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = Author.class))
+            }),
+            @ApiResponse(responseCode = "204", description = "No content")
+    })
     @JsonView(Author.BasicInfo.class)
     @GetMapping("/api/authors")
     public ResponseEntity<?> getMostReadAuthorsGeneral(@RequestParam("count") boolean count) {
@@ -164,6 +200,14 @@ public class APIStatisticsController {
 
     }
 
+    @Operation(summary = "Get the most read authors for the logged user")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Most read authors found", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = Author.class))
+            }),
+            @ApiResponse(responseCode = "204", description = "No content"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized")
+    })
     @JsonView(Author.BasicInfo.class)
     @GetMapping("/api/authors/me")
     public ResponseEntity<?> getMostReadAuthorsUser(HttpServletRequest request) {
@@ -200,6 +244,13 @@ public class APIStatisticsController {
     }
 
     // Get users that have read the most books (and the number of books they have read)
+    @Operation(summary = "Get users that have read the most books")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Users found", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = User.class))
+            }),
+            @ApiResponse(responseCode = "204", description = "No content")
+    })
     @JsonView(User.Username.class)
     @GetMapping("/api/users/readings")
     public ResponseEntity<?> getUsersTotalReadings() {
@@ -218,6 +269,12 @@ public class APIStatisticsController {
     }
 
     // Get the total number of users
+    @Operation(summary = "Get the total number of users")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Total users found", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = Long.class))
+            })
+    })
     @JsonView(User.BasicInfo.class)
     @GetMapping("/api/users/all")
     public ResponseEntity<?> getTotalUsers(@RequestParam("count") boolean count) {
@@ -233,7 +290,12 @@ public class APIStatisticsController {
     }
 
     // Get the total number of genres
-
+    @Operation(summary = "Get the total number of genres")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Total genres found", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = Long.class))
+            })
+    })
     @JsonView(Genre.BasicInfo.class)
     @GetMapping("/api/genres/all")
     public ResponseEntity<?> getTotalGenres(@RequestParam("count") boolean count) {
@@ -249,7 +311,12 @@ public class APIStatisticsController {
     }
 
     // Get the total number of authors
-
+    @Operation(summary = "Get the total number of authors")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Total authors found", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = Long.class))
+            })
+    })
     @JsonView(Author.BasicInfo.class)
     @GetMapping("/api/authors/all")
     public ResponseEntity<?> getTotalAuthors(@RequestParam("count") boolean count) {
@@ -267,7 +334,13 @@ public class APIStatisticsController {
     // Get the total number of books
 
     interface SpecificBookInfo extends Book.BasicInfo, Book.GenreInfo, Genre.BasicInfo {}
-    
+
+    @Operation(summary = "Get the total number of books")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Total books found", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = Long.class))
+            })
+    })
     @JsonView(SpecificBookInfo.class)
     @GetMapping("/api/books/all")
     public ResponseEntity<?> getTotalBooks(@RequestParam("count") boolean count) {

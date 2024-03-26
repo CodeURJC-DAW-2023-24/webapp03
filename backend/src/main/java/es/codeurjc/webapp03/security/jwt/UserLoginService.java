@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -34,7 +35,8 @@ public class UserLoginService {
 
 	public ResponseEntity<AuthResponse> login(LoginRequest loginRequest, String encryptedAccessToken, String 
 			encryptedRefreshToken) {
-		
+
+		try {
 		Authentication authentication = authenticationManager.authenticate(
 				new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
 
@@ -74,6 +76,11 @@ public class UserLoginService {
 		AuthResponse loginResponse = new AuthResponse(AuthResponse.Status.SUCCESS,
 				"Auth successful. Tokens are created in cookie.");
 		return ResponseEntity.ok().headers(responseHeaders).body(loginResponse);
+		} catch (Exception e) {
+			AuthResponse loginResponse = new AuthResponse(AuthResponse.Status.FAILURE,
+					"Invalid credentials !");
+			return ResponseEntity.status(400).body(loginResponse);
+		}
 	}
 
 	public ResponseEntity<AuthResponse> refresh(String encryptedRefreshToken) {
@@ -85,7 +92,7 @@ public class UserLoginService {
 		if (!refreshTokenValid) {
 			AuthResponse loginResponse = new AuthResponse(AuthResponse.Status.FAILURE,
 					"Invalid refresh token !");
-			return ResponseEntity.ok().body(loginResponse);
+			return ResponseEntity.status(400).body(loginResponse);
 		}
 
 		String username = jwtTokenProvider.getUsername(refreshToken);

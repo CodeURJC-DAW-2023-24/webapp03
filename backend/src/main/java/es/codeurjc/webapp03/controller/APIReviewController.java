@@ -7,6 +7,11 @@ import es.codeurjc.webapp03.entity.User;
 import es.codeurjc.webapp03.service.BookReviewService;
 import es.codeurjc.webapp03.service.BookService;
 import es.codeurjc.webapp03.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,6 +26,7 @@ import java.security.Principal;
 import static org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentRequest;
 
 @RestController
+@RequestMapping("/api/reviews")
 public class APIReviewController {
 
     @Autowired
@@ -34,24 +40,49 @@ public class APIReviewController {
 
     // Get reviews for a book
     @JsonView(Review.BasicInfo.class)
-    @GetMapping("/api/reviews/book/{id}")
+    @Operation(summary = "Get reviews for a specific book")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Reviews found", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = Review.class))
+            }),
+            @ApiResponse(responseCode = "404", description = "Book not found"),
+            @ApiResponse(responseCode = "400", description = "Invalid book ID")
+    })
+    @GetMapping("")
     // return a list of reviews as a JSON (returns as many reviews as the size parameter)
-    public ResponseEntity<?> getReviews(@PathVariable int id, @RequestParam(value = "size", defaultValue = "10") int size) {
+    public ResponseEntity<?> getReviews(@RequestParam(value = "page", defaultValue = "0") int page,
+                                        @RequestParam(value = "size", defaultValue = "10") int size,
+                                        @RequestParam("book") int book) {
+        //Check if ID is valid
+        if (book < 0) {
+            return new ResponseEntity<>("Invalid book ID", HttpStatus.BAD_REQUEST);
+        }
+
         // Check if the book exists
-        if (bookService.getBook(id) == null) {
+        if (bookService.getBook(book) == null) {
             return new ResponseEntity<>("Book not found", HttpStatus.NOT_FOUND);
         } else {
-            return new ResponseEntity<>(reviewService.findReviews(id, size), HttpStatus.OK);
+            return new ResponseEntity<>(reviewService.findByBookID(book, page, size), HttpStatus.OK);
         }
     }
 
     // Add review
     interface ReviewBasicView extends Review.BasicInfo {}
+
+    @Operation(summary = "Add a review for a specific book")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Review added", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = Review.class))
+            }),
+            @ApiResponse(responseCode = "404", description = "Book not found"),
+            @ApiResponse(responseCode = "400", description = "Invalid book ID"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized")
+    })
     @JsonView(ReviewBasicView.class)
-    @PostMapping("/api/reviews/book/{id}") // return the added review as a JSON
+    @PostMapping("") // return the added review as a JSON
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Review> addReview(HttpServletRequest request,
-                                            @PathVariable int id,
+                                            @RequestParam("book") int id,
                                             @RequestBody Review review) {
 
         Principal principal = request.getUserPrincipal();
@@ -63,6 +94,12 @@ public class APIReviewController {
             if (user == null || book == null) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
             } else {
+
+                // Check if the book id is valid
+                if (id < 0) {
+                    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+                }
+
                 review.setAuthor(user);
                 review.setBook(book);
                 Review savedReview = reviewService.saveReview(review); // This method returns the saved review if successful
@@ -78,31 +115,56 @@ public class APIReviewController {
         }
     }
     // Delete review
-    @DeleteMapping("/api/reviews/{reviewID}") // return a message stating that the review was deleted
-    public String deleteReview(@PathVariable long reviewID, HttpServletRequest request) {
+    @Operation(summary = "Delete a review")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Review deleted"),
+            @ApiResponse(responseCode = "404", description = "Review not found"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized"),
+            @ApiResponse(responseCode = "400", description = "Invalid review ID")
+    })
+    @DeleteMapping("/{reviewID}") // return a message stating that the review was deleted
+    public ResponseEntity<?> deleteReview(@PathVariable long reviewID, HttpServletRequest request) {
 
         Principal principal = request.getUserPrincipal();
 
         if (principal == null) {
-            return "You are not logged in";
+            return new ResponseEntity<>("You are not logged in", HttpStatus.UNAUTHORIZED);
         } else {
+            // Check if the review id is valid
+            if (reviewID < 0) {
+                return new ResponseEntity<>("Invalid review ID", HttpStatus.BAD_REQUEST);
+            }
+
             //Check if the review exists
             if (reviewService.getReview(reviewID) == null) {
-                return "Review not found";
+                return new ResponseEntity<>("Review not found", HttpStatus.NOT_FOUND);
             } else {
                 if (reviewService.deleteIfCorrectUser(reviewID, principal.getName())) {
-                    return "Review deleted";
+                    return new ResponseEntity<>("Review deleted", HttpStatus.OK);
                 } else {
-                    return "You are not the owner of the review or you lack permissions to perform this action.";
+                    return new ResponseEntity<>("You are not the author of this review or you lack permissions to perform this action", HttpStatus.UNAUTHORIZED);
                 }
             }
         }
     }
 
     // Get review
+    @Operation(summary = "Get a review")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Review found", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = Review.class))
+            }),
+            @ApiResponse(responseCode = "404", description = "Review not found"),
+            @ApiResponse(responseCode = "400", description = "Invalid review ID")
+    })
     @JsonView(Review.BasicInfo.class)
-    @GetMapping("/api/reviews/{reviewID}") // return the review as a JSON
+    @GetMapping("/{reviewID}") // return the review as a JSON
     public ResponseEntity<?> getReview(@PathVariable long reviewID) {
+        //Check if the review id is valid
+        if (reviewID < 0) {
+            return new ResponseEntity<>("Invalid review ID", HttpStatus.BAD_REQUEST);
+        }
+
         Review review = reviewService.getReview(reviewID);
         if (review == null) {
             return new ResponseEntity<>("Review not found", HttpStatus.NOT_FOUND);

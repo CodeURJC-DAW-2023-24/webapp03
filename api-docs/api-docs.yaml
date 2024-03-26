@@ -3,40 +3,40 @@ info:
   title: OpenAPI definition
   version: v0
 servers:
-  - url: https://localhost:8443
-    description: Generated server url
+- url: https://localhost:8443
+  description: Generated server url
 paths:
   /api/profiles/{username}:
     put:
       tags:
-        - api-edit-profile-controller
+      - api-edit-profile-controller
       operationId: editProfile
       parameters:
-        - name: username
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: alias
-          in: query
-          required: false
-          schema:
-            type: string
-        - name: email
-          in: query
-          required: false
-          schema:
-            type: string
-        - name: description
-          in: query
-          required: false
-          schema:
-            type: string
-        - name: password
-          in: query
-          required: false
-          schema:
-            type: string
+      - name: username
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: alias
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: email
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: description
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: password
+        in: query
+        required: false
+        schema:
+          type: string
       requestBody:
         content:
           application/json:
@@ -56,15 +56,15 @@ paths:
   /api/books/{id}:
     get:
       tags:
-        - api-book-controller
+      - api-book-controller
       operationId: getBook
       parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-            format: int32
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
       responses:
         "200":
           description: OK
@@ -74,15 +74,87 @@ paths:
                 type: object
     put:
       tags:
-        - api-book-controller
+      - api-book-controller
       operationId: editBook
       parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-            format: int32
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+      - name: name
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: author
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: ISBN
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: pages
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: genre
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: date
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: publisher
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: series
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: description
+        in: query
+        required: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                image:
+                  type: string
+                  format: binary
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+    delete:
+      tags:
+      - api-book-controller
+      operationId: deleteBook
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
       responses:
         "200":
           description: OK
@@ -93,24 +165,24 @@ paths:
   /email/send:
     post:
       tags:
-        - email-controller
+      - email-controller
       operationId: sendEmail
       parameters:
-        - name: to
-          in: query
-          required: true
-          schema:
-            type: string
-        - name: subject
-          in: query
-          required: true
-          schema:
-            type: string
-        - name: text
-          in: query
-          required: true
-          schema:
-            type: string
+      - name: to
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: subject
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: text
+        in: query
+        required: true
+        schema:
+          type: string
       responses:
         "200":
           description: OK
@@ -118,43 +190,64 @@ paths:
             '*/*':
               schema:
                 type: string
-  /api/reviews/book/{id}:
+  /api/reviews:
     get:
       tags:
-        - api-review-controller
+      - api-review-controller
+      summary: Get reviews for a specific book
       operationId: getReviews
       parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-            format: int32
-        - name: size
-          in: query
-          required: false
-          schema:
-            type: integer
-            format: int32
-            default: 10
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+          format: int32
+          default: 0
+      - name: size
+        in: query
+        required: false
+        schema:
+          type: integer
+          format: int32
+          default: 10
+      - name: book
+        in: query
+        required: true
+        schema:
+          type: integer
+          format: int32
       responses:
+        "400":
+          description: Invalid book ID
+          content:
+            '*/*':
+              schema:
+                type: object
         "200":
-          description: OK
+          description: Reviews found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Review_BasicInfo'
+        "404":
+          description: Book not found
           content:
             '*/*':
               schema:
                 type: object
     post:
       tags:
-        - api-review-controller
+      - api-review-controller
+      summary: Add a review for a specific book
       operationId: addReview
       parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-            format: int32
+      - name: book
+        in: query
+        required: true
+        schema:
+          type: integer
+          format: int32
       requestBody:
         content:
           application/json:
@@ -162,115 +255,262 @@ paths:
               $ref: '#/components/schemas/Review_ReviewBasicView'
         required: true
       responses:
+        "400":
+          description: Invalid book ID
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Review_ReviewBasicView'
+        "201":
+          description: Review added
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Review_ReviewBasicView'
+        "404":
+          description: Book not found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Review_ReviewBasicView'
+        "401":
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Review_ReviewBasicView'
+  /api/books:
+    get:
+      tags:
+      - api-search-results-page-controller
+      summary: Load search results page books
+      operationId: loadSearchResultsPageBooks
+      parameters:
+      - name: query
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: page
+        in: query
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        "500":
+          description: Internal server error
+          content:
+            '*/*':
+              schema:
+                type: object
+        "200":
+          description: Search results page books loaded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Book_BasicInfo'
+    post:
+      tags:
+      - api-book-controller
+      operationId: createBook
+      parameters:
+      - name: name
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: author
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: ISBN
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: pages
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: genre
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: date
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: publisher
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: series
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: description
+        in: query
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+              - image
+              type: object
+              properties:
+                image:
+                  type: string
+                  format: binary
+      responses:
         "201":
           description: Created
           content:
             '*/*':
               schema:
-                $ref: '#/components/schemas/Review_ReviewBasicView'
-  /api/books/wanted/{id}:
+                type: object
+  /api/books/{id}/wanted:
     post:
       tags:
-        - api-user-lists-controller
+      - api-user-lists-controller
+      summary: Add book to wanted list
       operationId: addWantedBook
       parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-            format: int64
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
       responses:
         "200":
-          description: OK
+          description: Book added to wanted list
           content:
-            '*/*':
+            application/json:
               schema:
                 $ref: '#/components/schemas/Book_BasicInfo'
-  /api/books/reading/{id}:
+        "401":
+          description: Unauthorized
+        "400":
+          description: Invalid book ID
+        "404":
+          description: Book not found
+  /api/books/{id}/reading:
     post:
       tags:
-        - api-user-lists-controller
+      - api-user-lists-controller
+      summary: Add book to reading list
       operationId: addReadingBook
       parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-            format: int64
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
       responses:
         "200":
-          description: OK
+          description: Book added to reading list
           content:
-            '*/*':
+            application/json:
               schema:
                 $ref: '#/components/schemas/Book_BasicInfo'
-  /api/books/read/{id}:
+        "401":
+          description: Unauthorized
+        "400":
+          description: Invalid book ID
+        "404":
+          description: Book not found
+  /api/books/{id}/read:
     post:
       tags:
-        - api-user-lists-controller
+      - api-user-lists-controller
+      summary: Add book to read list
       operationId: addReadBook
       parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-            format: int64
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
       responses:
+        "401":
+          description: Unauthorized
         "200":
-          description: OK
+          description: Book added to read list
           content:
-            '*/*':
+            application/json:
               schema:
                 $ref: '#/components/schemas/Book_BasicInfo'
+        "400":
+          description: Invalid book ID
+        "404":
+          description: Book not found
   /api/auth/refresh:
     post:
       tags:
-        - api-login-controller
+      - api-login-controller
+      summary: Refresh token
       operationId: refreshToken
       parameters:
-        - name: refreshToken
-          in: cookie
-          required: false
-          schema:
-            type: string
+      - name: refreshToken
+        in: cookie
+        required: false
+        schema:
+          type: string
       responses:
-        "200":
-          description: OK
+        "400":
+          description: Invalid token
           content:
             '*/*':
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+        "200":
+          description: Token refreshed
+          content:
+            application/json:
               schema:
                 $ref: '#/components/schemas/AuthResponse'
   /api/auth/logout:
     post:
       tags:
-        - api-login-controller
+      - api-login-controller
+      summary: Logout
       operationId: logOut
       responses:
         "200":
-          description: OK
+          description: Logout successful
           content:
-            '*/*':
+            application/json:
               schema:
                 $ref: '#/components/schemas/AuthResponse'
   /api/auth/login:
     post:
       tags:
-        - api-login-controller
+      - api-login-controller
+      summary: Login
       operationId: login
       parameters:
-        - name: accessToken
-          in: cookie
-          required: false
-          schema:
-            type: string
-        - name: refreshToken
-          in: cookie
-          required: false
-          schema:
-            type: string
+      - name: accessToken
+        in: cookie
+        required: false
+        schema:
+          type: string
+      - name: refreshToken
+        in: cookie
+        required: false
+        schema:
+          type: string
       requestBody:
         content:
           application/json:
@@ -279,7 +519,13 @@ paths:
         required: true
       responses:
         "200":
-          description: OK
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+        "400":
+          description: Invalid credentials
           content:
             '*/*':
               schema:
@@ -287,23 +533,73 @@ paths:
   /api/users:
     get:
       tags:
-        - api-search-results-page-controller
+      - api-search-results-page-controller
       operationId: loadSearchResultsPageUsers
       parameters:
-        - name: query
-          in: query
-          required: true
-          schema:
-            type: string
-        - name: page
-          in: query
-          required: true
-          schema:
-            type: integer
-            format: int32
+      - name: query
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: page
+        in: query
+        required: true
+        schema:
+          type: integer
+          format: int32
       responses:
         "200":
           description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+  /api/users/{username}/books:
+    get:
+      tags:
+      - api-user-lists-controller
+      summary: Get a user's specific list
+      operationId: getUserLists
+      parameters:
+      - name: username
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: list
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+          format: int32
+          default: 0
+      - name: size
+        in: query
+        required: false
+        schema:
+          type: integer
+          format: int32
+          default: 10
+      responses:
+        "200":
+          description: List found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Book_BasicInfo'
+        "404":
+          description: User not found
+          content:
+            '*/*':
+              schema:
+                type: object
+        "400":
+          description: Invalid list
           content:
             '*/*':
               schema:
@@ -311,11 +607,18 @@ paths:
   /api/users/readings:
     get:
       tags:
-        - api-statistics-controller
+      - api-statistics-controller
+      summary: Get users that have read the most books
       operationId: getUsersTotalReadings
       responses:
         "200":
-          description: OK
+          description: Users found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User_Username'
+        "204":
+          description: No content
           content:
             '*/*':
               schema:
@@ -323,11 +626,18 @@ paths:
   /api/users/me:
     get:
       tags:
-        - api-user-lists-controller
+      - api-user-lists-controller
+      summary: Get current user's info
       operationId: getUserInfo
       responses:
         "200":
-          description: OK
+          description: User logged in
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User_BasicInfo'
+        "401":
+          description: Unauthorized
           content:
             '*/*':
               schema:
@@ -335,72 +645,113 @@ paths:
   /api/users/all:
     get:
       tags:
-        - api-statistics-controller
+      - api-statistics-controller
+      summary: Get the total number of users
       operationId: getTotalUsers
       parameters:
-        - name: count
-          in: query
-          required: true
-          schema:
-            type: boolean
+      - name: count
+        in: query
+        required: true
+        schema:
+          type: boolean
       responses:
         "200":
-          description: OK
+          description: Total users found
           content:
-            '*/*':
+            application/json:
               schema:
-                type: object
+                type: integer
+                format: int64
   /api/reviews/{reviewID}:
     get:
       tags:
-        - api-review-controller
+      - api-review-controller
+      summary: Get a review
       operationId: getReview
       parameters:
-        - name: reviewID
-          in: path
-          required: true
-          schema:
-            type: integer
-            format: int64
+      - name: reviewID
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
       responses:
-        "200":
-          description: OK
+        "404":
+          description: Review not found
           content:
             '*/*':
               schema:
                 type: object
-    delete:
-      tags:
-        - api-review-controller
-      operationId: deleteReview
-      parameters:
-        - name: reviewID
-          in: path
-          required: true
-          schema:
-            type: integer
-            format: int64
-      responses:
-        "200":
-          description: OK
+        "400":
+          description: Invalid review ID
           content:
             '*/*':
               schema:
-                type: string
+                type: object
+        "200":
+          description: Review found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Review_BasicInfo'
+    delete:
+      tags:
+      - api-review-controller
+      summary: Delete a review
+      operationId: deleteReview
+      parameters:
+      - name: reviewID
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "404":
+          description: Review not found
+          content:
+            '*/*':
+              schema:
+                type: object
+        "200":
+          description: Review deleted
+          content:
+            '*/*':
+              schema:
+                type: object
+        "400":
+          description: Invalid review ID
+          content:
+            '*/*':
+              schema:
+                type: object
+        "401":
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                type: object
   /api/genres:
     get:
       tags:
-        - api-statistics-controller
+      - api-statistics-controller
+      summary: "Get the most read genres (if count is true, return the count of genres)"
       operationId: getMostReadGenresGeneral
       parameters:
-        - name: count
-          in: query
-          required: true
-          schema:
-            type: boolean
+      - name: count
+        in: query
+        required: true
+        schema:
+          type: boolean
       responses:
         "200":
-          description: OK
+          description: Most read genres found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Genre_BasicInfo'
+        "204":
+          description: No content
           content:
             '*/*':
               schema:
@@ -408,11 +759,24 @@ paths:
   /api/genres/me:
     get:
       tags:
-        - api-statistics-controller
+      - api-statistics-controller
+      summary: Get the most read genres for the logged user
       operationId: getMostReadGenresUser
       responses:
         "200":
-          description: OK
+          description: Most read genres found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Genre_BasicInfo'
+        "204":
+          description: No content
+          content:
+            '*/*':
+              schema:
+                type: object
+        "401":
+          description: Unauthorized
           content:
             '*/*':
               schema:
@@ -420,73 +784,64 @@ paths:
   /api/genres/all:
     get:
       tags:
-        - api-statistics-controller
+      - api-statistics-controller
+      summary: Get the total number of genres
       operationId: getTotalGenres
       parameters:
-        - name: count
-          in: query
-          required: true
-          schema:
-            type: boolean
+      - name: count
+        in: query
+        required: true
+        schema:
+          type: boolean
       responses:
         "200":
-          description: OK
+          description: Total genres found
           content:
-            '*/*':
+            application/json:
               schema:
-                type: object
-  /api/books:
-    get:
-      tags:
-        - api-search-results-page-controller
-      operationId: loadSearchResultsPageBooks
-      parameters:
-        - name: query
-          in: query
-          required: true
-          schema:
-            type: string
-        - name: page
-          in: query
-          required: true
-          schema:
-            type: integer
-            format: int32
-      responses:
-        "200":
-          description: OK
-          content:
-            '*/*':
-              schema:
-                type: object
+                type: integer
+                format: int64
   /api/books/me:
     get:
       tags:
-        - api-user-lists-controller
-      operationId: getUserLists
+      - api-user-lists-controller
+      summary: Get current user's specific list
+      operationId: getCurrentUserLists
       parameters:
-        - name: list
-          in: query
-          required: true
-          schema:
-            type: string
-        - name: page
-          in: query
-          required: false
-          schema:
-            type: integer
-            format: int32
-            default: 0
-        - name: size
-          in: query
-          required: false
-          schema:
-            type: integer
-            format: int32
-            default: 10
+      - name: list
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+          format: int32
+          default: 0
+      - name: size
+        in: query
+        required: false
+        schema:
+          type: integer
+          format: int32
+          default: 10
       responses:
         "200":
-          description: OK
+          description: List found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Book_BasicInfo'
+        "400":
+          description: Invalid list
+          content:
+            '*/*':
+              schema:
+                type: object
+        "401":
+          description: Unauthorized
           content:
             '*/*':
               schema:
@@ -494,31 +849,50 @@ paths:
   /api/books/me/recommended:
     get:
       tags:
-        - api-statistics-controller
+      - api-statistics-controller
+      summary: Get recommended books for the logged user
       operationId: recommendedBooks
       parameters:
-        - name: page
-          in: query
-          required: false
-          schema:
-            type: integer
-            format: int32
-            default: 0
-        - name: size
-          in: query
-          required: false
-          schema:
-            type: integer
-            format: int32
-            default: 10
-        - name: by
-          in: query
-          required: true
-          schema:
-            type: string
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+          format: int32
+          default: 0
+      - name: size
+        in: query
+        required: false
+        schema:
+          type: integer
+          format: int32
+          default: 10
+      - name: by
+        in: query
+        required: true
+        schema:
+          type: string
       responses:
         "200":
-          description: OK
+          description: Recommended books found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Book_GenreBookBasicView'
+        "204":
+          description: No content
+          content:
+            '*/*':
+              schema:
+                type: object
+        "400":
+          description: Bad request
+          content:
+            '*/*':
+              schema:
+                type: object
+        "401":
+          description: Unauthorized
           content:
             '*/*':
               schema:
@@ -526,47 +900,69 @@ paths:
   /api/books/all:
     get:
       tags:
-        - api-statistics-controller
+      - api-statistics-controller
+      summary: Get the total number of books
       operationId: getTotalBooks
       parameters:
-        - name: count
-          in: query
-          required: true
-          schema:
-            type: boolean
+      - name: count
+        in: query
+        required: true
+        schema:
+          type: boolean
       responses:
         "200":
-          description: OK
+          description: Total books found
           content:
-            '*/*':
+            application/json:
               schema:
-                type: object
+                type: integer
+                format: int64
   /api/authors:
     get:
       tags:
-        - api-statistics-controller
+      - api-statistics-controller
+      summary: "Get the most read authors (if count is true, return the count of authors)"
       operationId: getMostReadAuthorsGeneral
       parameters:
-        - name: count
-          in: query
-          required: true
-          schema:
-            type: boolean
+      - name: count
+        in: query
+        required: true
+        schema:
+          type: boolean
       responses:
-        "200":
-          description: OK
+        "204":
+          description: No content
           content:
             '*/*':
               schema:
                 type: object
+        "200":
+          description: Most read authors found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Author_BasicInfo'
   /api/authors/me:
     get:
       tags:
-        - api-statistics-controller
+      - api-statistics-controller
+      summary: Get the most read authors for the logged user
       operationId: getMostReadAuthorsUser
       responses:
+        "204":
+          description: No content
+          content:
+            '*/*':
+              schema:
+                type: object
         "200":
-          description: OK
+          description: Most read authors found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Author_BasicInfo'
+        "401":
+          description: Unauthorized
           content:
             '*/*':
               schema:
@@ -574,40 +970,49 @@ paths:
   /api/authors/all:
     get:
       tags:
-        - api-statistics-controller
+      - api-statistics-controller
+      summary: Get the total number of authors
       operationId: getTotalAuthors
       parameters:
-        - name: count
-          in: query
-          required: true
-          schema:
-            type: boolean
+      - name: count
+        in: query
+        required: true
+        schema:
+          type: boolean
       responses:
         "200":
-          description: OK
+          description: Total authors found
           content:
-            '*/*':
+            application/json:
               schema:
-                type: object
-  /api/books/lists/{id}:
+                type: integer
+                format: int64
+  /api/books/{id}/lists:
     delete:
       tags:
-        - api-user-lists-controller
+      - api-user-lists-controller
+      summary: Remove book from all lists
       operationId: removeBookFromLists
       parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-            format: int64
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
       responses:
+        "401":
+          description: Unauthorized
+        "400":
+          description: Invalid book ID
         "200":
-          description: OK
+          description: Book removed from all lists
           content:
-            '*/*':
+            application/json:
               schema:
                 $ref: '#/components/schemas/Book_BasicInfo'
+        "404":
+          description: Book not found
 components:
   schemas:
     Book_UserBasicView:
@@ -735,8 +1140,8 @@ components:
         status:
           type: string
           enum:
-            - SUCCESS
-            - FAILURE
+          - SUCCESS
+          - FAILURE
         message:
           type: string
         error:
@@ -747,4 +1152,123 @@ components:
         username:
           type: string
         password:
+          type: string
+    Book_Username:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        isbn:
+          type: string
+    User_Username:
+      type: object
+      properties:
+        username:
+          type: string
+        readBooks:
+          type: array
+          items:
+            $ref: '#/components/schemas/Book_Username'
+        readingBooks:
+          type: array
+          items:
+            $ref: '#/components/schemas/Book_Username'
+        wantedBooks:
+          type: array
+          items:
+            $ref: '#/components/schemas/Book_Username'
+        role:
+          type: array
+          items:
+            type: string
+    User_BasicInfo:
+      type: object
+      properties:
+        readBooks:
+          type: array
+          items:
+            $ref: '#/components/schemas/Book_BasicInfo'
+        readingBooks:
+          type: array
+          items:
+            $ref: '#/components/schemas/Book_BasicInfo'
+        wantedBooks:
+          type: array
+          items:
+            $ref: '#/components/schemas/Book_BasicInfo'
+        role:
+          type: array
+          items:
+            type: string
+    Review_BasicInfo:
+      type: object
+      properties:
+        ID:
+          type: integer
+          format: int64
+        title:
+          type: string
+        authorName:
+          type: string
+        rating:
+          type: integer
+          format: int32
+        content:
+          type: string
+        id:
+          type: integer
+          format: int64
+        user:
+          $ref: '#/components/schemas/User_BasicInfo'
+    Genre_BasicInfo:
+      type: object
+      properties:
+        name:
+          type: string
+    Book_GenreBookBasicView:
+      type: object
+      properties:
+        ID:
+          type: integer
+          format: int64
+        title:
+          type: string
+        authorString:
+          type: string
+        description:
+          type: string
+        releaseDate:
+          type: string
+        ISBN:
+          type: string
+        averageRating:
+          type: number
+          format: double
+        genre:
+          $ref: '#/components/schemas/Genre_GenreBookBasicView'
+        series:
+          type: string
+        pageCount:
+          type: integer
+          format: int32
+        publisher:
+          type: string
+        id:
+          type: integer
+          format: int64
+        isbn:
+          type: string
+    Genre_GenreBookBasicView:
+      type: object
+      properties:
+        name:
+          type: string
+    Author_BasicInfo:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
           type: string
