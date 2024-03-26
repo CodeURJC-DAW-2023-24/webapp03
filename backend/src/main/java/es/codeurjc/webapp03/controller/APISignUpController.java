@@ -3,7 +3,11 @@ package es.codeurjc.webapp03.controller;
 import com.fasterxml.jackson.annotation.JsonView;
 import es.codeurjc.webapp03.entity.User;
 import es.codeurjc.webapp03.service.UserService;
-import jakarta.activation.MimetypesFileTypeMap;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.SQLException;
@@ -27,8 +30,18 @@ public class APISignUpController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    // Add User
     interface UserBasicView extends User.BasicInfo {}
+
+    // Add User
+    @Operation(summary = "Create a new user")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "User created correctly", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = User.class))
+            }),
+            @ApiResponse(responseCode = "409", description = "Username not available", content = @Content), //Conflict
+            @ApiResponse(responseCode = "500", description = "Image not supported. Try different file", content = @Content) //Internal server error
+
+    })
     @JsonView(APISignUpController.UserBasicView.class)
     @PostMapping("/api/users")
     @ResponseStatus(HttpStatus.CREATED)
