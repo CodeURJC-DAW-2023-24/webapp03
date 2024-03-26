@@ -58,6 +58,12 @@ public class APIAdminController {
         }
     }
 
+    @Operation(summary = "Delete a user")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "User deleted"),
+            @ApiResponse(responseCode = "404", description = "User not found"),
+            @ApiResponse(responseCode = "403", description = "Forbidden"),
+    })
     @JsonView(APIAdminController.UserBasicView.class)
     @DeleteMapping("/api/users/{username}")
     public ResponseEntity<?> deleteUser(HttpServletRequest request, @PathVariable String username){
