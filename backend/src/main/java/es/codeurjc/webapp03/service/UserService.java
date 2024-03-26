@@ -61,9 +61,8 @@ public class UserService {
         return userRepository.findByUsername(username);
     }
 
-    public User saveUser(User user) {
+    public void saveUser(User user) {
         userRepository.save(user);
-        return user;
     }
 
     public void deleteUser(User user) {

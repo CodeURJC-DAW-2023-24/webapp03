@@ -1,5 +1,8 @@
 package es.codeurjc.webapp03.service;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import com.samskivert.mustache.Mustache;
 import com.samskivert.mustache.Template;
 import es.codeurjc.webapp03.repository.UserRepository;
@@ -60,5 +63,17 @@ public class EmailService {
         Template template = mustache.compile(htmlContent);
         return template.execute(values);
 
+    }
+
+    public boolean isCorrectEmail(String email){
+        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\."+
+                "[a-zA-Z0-9_+&*-]+)*@" +
+                "(?:[a-zA-Z0-9-]+\\.)+[a-z" +
+                "A-Z]{2,7}$";
+
+        Pattern pat = Pattern.compile(emailRegex);
+        if (email == null)
+            return false;
+        return pat.matcher(email).matches();
     }
 }
