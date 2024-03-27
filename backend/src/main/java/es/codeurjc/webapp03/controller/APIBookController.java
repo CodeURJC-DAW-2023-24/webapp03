@@ -2,6 +2,7 @@ package es.codeurjc.webapp03.controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import es.codeurjc.webapp03.entity.*;
+import es.codeurjc.webapp03.security.jwt.AuthResponse;
 import es.codeurjc.webapp03.service.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -70,7 +72,9 @@ public class APIBookController {
             @ApiResponse(responseCode = "201", description = "User created correctly", content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = Book.class))
             }),
-            @ApiResponse(responseCode = "403", description = "You don't have permission to do this!", content = @Content), //Forbidden
+            @ApiResponse(responseCode = "400", description = "Parameter missing.", content = @Content), //Bad request
+            @ApiResponse(responseCode = "401", description = "You don't have permission to do this!", content = @Content), //Unauthorized
+            @ApiResponse(responseCode = "409", description = "Invalid parameter.", content = @Content), //Conflict
             @ApiResponse(responseCode = "500", description = "Image not supported. Try different file", content = @Content) //Internal server error
     })
     //Create book
@@ -91,10 +95,17 @@ public class APIBookController {
         Principal loggedUser = request.getUserPrincipal();
         User user = userService.getUser(loggedUser.getName());
         //Check if it's logged in as admin
+        if(user == null){
+            return new ResponseEntity<>("You must log in as admin!", HttpStatus.UNAUTHORIZED);
+        }
         if (user.getRole().contains("ADMIN")){
+            if (newName == null || newName.isBlank()) return new ResponseEntity<>("Book name can't be blank!", HttpStatus.CONFLICT); //Name cant be blank
+            if (newAuthor == null || newAuthor.isBlank()) return new ResponseEntity<>("Author can't be blank!", HttpStatus.CONFLICT); //Author cant be blank
+            if (newISBN == null || newISBN.isBlank()) return new ResponseEntity<>("ISBN can't be blank!", HttpStatus.CONFLICT); //ISBN cant be blank
+
             Book book = new Book();
             insertInfoBook(newName, newAuthor, newISBN, newPages, newGenre, newDate, newPublisher, newSeries, newDescription, book);
-            if(newImage != null && !newImage.isEmpty()){ //If image is added...
+            if(newImage != null){ //If image is added...
                 //Check if image file is correct
                 try (InputStream input = newImage.getInputStream()) {
                     try {
@@ -112,14 +123,14 @@ public class APIBookController {
             bookService.saveBook(book); //Save book with all changes
             return new ResponseEntity<>(book, HttpStatus.OK);
         }else{
-            return new ResponseEntity<>("You dont have permission to do this!", HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("You dont have permission to do this!", HttpStatus.UNAUTHORIZED);
         }
     };
 
     @Operation(summary = "Delete book")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Book deleted correctly", content = @Content),
-            @ApiResponse(responseCode = "409", description = "Username not available", content = @Content), //Conflict
+            @ApiResponse(responseCode = "401", description = "You don't have permission to do this!", content = @Content), //Unauthorized
             @ApiResponse(responseCode = "404", description = "Book not found", content = @Content) //Internal server error
 
     })
@@ -133,6 +144,9 @@ public class APIBookController {
         } else {
             Principal loggedUser = request.getUserPrincipal();
             User user = userService.getUser(loggedUser.getName());
+            if(user == null){
+                return new ResponseEntity<>("You must log in as admin!", HttpStatus.UNAUTHORIZED);
+            }
             if(user.getRole().contains("ADMIN")){
                 //Delete from users lists
                 for (User userBD : userService.getAllUsers()) {
@@ -153,7 +167,7 @@ public class APIBookController {
                 bookService.delete(id);
                 return new ResponseEntity<>(book.getTitle()+" has been deleted", HttpStatus.OK);
             }else{
-                return new ResponseEntity<>("You dont have permission to do this!", HttpStatus.FORBIDDEN);
+                return new ResponseEntity<>("You dont have permission to do this!", HttpStatus.UNAUTHORIZED);
             }
         }
     }
@@ -163,9 +177,11 @@ public class APIBookController {
             @ApiResponse(responseCode = "200", description = "Book modified correctly", content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = Book.class))
             }),
+            @ApiResponse(responseCode = "401", description = "You don't have permission to do this!", content = @Content), //Unauthorized
             @ApiResponse(responseCode = "404", description = "Book not found", content = @Content), //Not Found
-            @ApiResponse(responseCode = "500", description = "Image not supported. Try different file", content = @Content), //Internal server error
-            @ApiResponse(responseCode = "403", description = "You don't have permission to do this!", content = @Content)
+            @ApiResponse(responseCode = "409", description = "Invalid parameter", content = @Content), //Conflict
+            @ApiResponse(responseCode = "500", description = "Image not supported. Try different file", content = @Content) //Internal server error
+
     })
     //Modify existing book
     @JsonView(BookBasicView.class)
@@ -184,15 +200,22 @@ public class APIBookController {
         Principal loggedUser = request.getUserPrincipal();
         User user = userService.getUser(loggedUser.getName());
         Book book = bookService.getBook(id);
+        if(user == null){
+            return new ResponseEntity<>("You must log in as admin or author!", HttpStatus.UNAUTHORIZED);
+        }
         // Check if the book exists
         if(book == null){
             return new ResponseEntity<>("Book not found", HttpStatus.NOT_FOUND);
         }
         //Check if it's logged in as author or as admin
         if (user.getRole().contains("ADMIN") || authorService.checkCorrectAuthor(user.getUsername(),book.getAuthor())){
+            if (newName == null || newName.isBlank()) return new ResponseEntity<>("Book name can't be blank!", HttpStatus.CONFLICT); //Name cant be blank
+            if (newAuthor == null || newAuthor.isBlank()) return new ResponseEntity<>("Author can't be blank!", HttpStatus.CONFLICT); //Author cant be blank
+            if (newISBN == null || newISBN.isBlank()) return new ResponseEntity<>("ISBN can't be blank!", HttpStatus.CONFLICT); //ISBN cant be blank
             insertInfoBook(newName, newAuthor, newISBN, newPages, newGenre, newDate, newPublisher, newSeries, newDescription, book);
+
             //If no image is added, keep original.
-            if(newImage != null && !newImage.isEmpty()){
+            if(newImage != null){
                 //Check if image file is correct
                 try (InputStream input = newImage.getInputStream()) {
                     try {
@@ -204,10 +227,11 @@ public class APIBookController {
                     }
                 }
             }
+
             bookService.saveBook(book); //Save book with all changes
             return new ResponseEntity<>(book, HttpStatus.OK);
         }else{
-            return new ResponseEntity<>("You dont have permission to do this!", HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("You dont have permission to do this!", HttpStatus.UNAUTHORIZED);
         }
     }
 
@@ -246,15 +270,20 @@ public class APIBookController {
             //Check if authors exist, they are separated by ","
             String[] authorsSplit = newAuthor.split(",");
             ArrayList<Author> authorList = new ArrayList<>();
-            for (int i = 0; i < authorsSplit.length; i++) {
-                Author found = authorService.getAuthor(authorsSplit[i]);
-                if (found != null) {
-                    authorList.add(found); //If found, adds the object to the list
-                } else {
-                    Author auxAuthor = new Author(authorsSplit[i]);//If not found, adds object to the list and service
-                    auxAuthor.addBook(book); //Add author to DB
-                    authorList.add(auxAuthor); //Add to list
-                    authorService.saveAuthor(auxAuthor);
+            if (newAuthor.isBlank()){
+                Author auxAuthor = new Author("Not available");
+                authorList.add(auxAuthor);
+            }else{
+                for (int i = 0; i < authorsSplit.length; i++) {
+                    Author found = authorService.getAuthor(authorsSplit[i]);
+                    if (found != null) {
+                        authorList.add(found); //If found, adds the object to the list
+                    } else {
+                        Author auxAuthor = new Author(authorsSplit[i]);//If not found, adds object to the list and service
+                        auxAuthor.addBook(book); //Add author to DB
+                        authorList.add(auxAuthor); //Add to list
+                        authorService.saveAuthor(auxAuthor);
+                    }
                 }
             }
             book.setAuthor(authorList); //Add author/s to list
@@ -263,15 +292,26 @@ public class APIBookController {
         //Check for genre
         if(newGenre != null){
             //Check if Genre exist
-            Genre genreFound = genreService.getGenre(newGenre);
-            if (genreFound != null) {
-                book.setGenre(genreFound);
-            } else {
-                Genre auxGenre = new Genre(newGenre);
-                book.setGenre(auxGenre); //Add genre to Book
-                auxGenre.addBook(book);
-                genreService.saveGenre(auxGenre);
+            if(newGenre.isBlank()){
+                Genre auxGenre = new Genre("Not available");
+                book.setGenre(auxGenre);
+            }else {
+                Genre genreFound = genreService.getGenre(newGenre);
+                if (genreFound != null) {
+                    book.setGenre(genreFound);
+                } else {
+                    Genre auxGenre = new Genre(newGenre);
+                    book.setGenre(auxGenre); //Add genre to Book
+                    auxGenre.addBook(book);
+                    genreService.saveGenre(auxGenre);
+                }
             }
         };
+    }
+
+    @ExceptionHandler(MissingServletRequestParameterException.class)
+    public ResponseEntity<String> handleMissingParams(MissingServletRequestParameterException ex) {
+        String name = ex.getParameterName();
+        return new ResponseEntity<>(name + " parameter is missing", HttpStatus.BAD_REQUEST);
     }
 }

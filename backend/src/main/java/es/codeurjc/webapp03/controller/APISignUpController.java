@@ -64,11 +64,11 @@ public class APISignUpController {
                                      @RequestParam(value = "imageFile", required = false)MultipartFile image) throws SQLException, IOException {
 
         //Check all params.
-        if(inputName == null || inputName.isEmpty()) return new ResponseEntity<>("Username can't be blank!", HttpStatus.CONFLICT);
+        if(inputName == null || inputName.isBlank()) return new ResponseEntity<>("Username can't be blank!", HttpStatus.CONFLICT);
         if(!userService.isUsernameAvailable(inputName)) return new ResponseEntity<>("Username not available.",HttpStatus.CONFLICT); //Available username
         if(!emailService.isCorrectEmail(inputEmail)) return new ResponseEntity<>("Email is not valid.", HttpStatus.CONFLICT); //Valid email
-        if(inputAlias == null || inputAlias.isEmpty()) return new ResponseEntity<>("Alias can't be blank!", HttpStatus.CONFLICT); //Valid alias
-        if(password == null || password.isEmpty()) return new ResponseEntity<>("Password can't be blank", HttpStatus.CONFLICT); //Valid password
+        if(inputAlias == null || inputAlias.isBlank()) return new ResponseEntity<>("Alias can't be blank!", HttpStatus.CONFLICT); //Valid alias
+        if(password == null || password.isBlank()) return new ResponseEntity<>("Password can't be blank", HttpStatus.CONFLICT); //Valid password
 
         //Should add checker for email
         User newUser = new User(inputName, inputAlias, "Hi, im new!","", inputEmail, passwordEncoder.encode(password), "USER");
