@@ -55,6 +55,7 @@ public class ProfilePageController {
             model.addAttribute("user", true);
             String currentUsername = authentication.getName();
             model.addAttribute("currentUsername", currentUsername);
+            model.addAttribute("currentUserRole", userRoles.contains("AUTHOR"));
             if (currentUsername.equals(username)) {
                 isCurrentUser = true;
             } else {
@@ -267,8 +268,26 @@ public class ProfilePageController {
         } else {
             return "redirect:/error";
         }
-        return "redirect:/";
+        return "redirect:/profile/{username}";
     }
+
+    @GetMapping("/profile/{username}/removeAuthor")
+    public String removeAuthorRol(@PathVariable String username, HttpServletRequest request) {
+        Authentication authentication = (Authentication) request.getUserPrincipal();
+        if (authentication != null) {
+            User user = userService.getUser(authentication.getName());
+            if (user.getRole().contains("ADMIN")) {
+                userService.removeAuthor(userService.getUser(username));
+            } else {
+                return "redirect:/error";
+            }
+        } else {
+            return "redirect:/error";
+        }
+        return "redirect:/profile/{username}";
+    }
+
+
 
     @GetMapping("/profile/{username}/exportLists")
     public ResponseEntity<String> exportLists(@PathVariable String username, HttpServletRequest request) throws IOException {

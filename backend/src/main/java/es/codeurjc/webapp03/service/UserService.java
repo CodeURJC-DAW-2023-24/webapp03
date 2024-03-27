@@ -150,6 +150,15 @@ public class UserService {
         }
     }
 
+    public void removeAuthor(User user){
+        if(user != null && user.getRole().contains("AUTHOR")){
+            List<String> newUserRoleList = user.getRole();
+            newUserRoleList.remove("AUTHOR");
+            user.setRole(newUserRoleList);
+            userRepository.save(user);
+        }
+    }
+
     public String convertBooksToCSV(List<Book> books) {
         StringBuilder builder = new StringBuilder();
         builder.append("ID,Title,Author\n"); // CSV header

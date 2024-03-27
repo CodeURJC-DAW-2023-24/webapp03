@@ -172,9 +172,16 @@
                         <i class="fa-solid fa-pen-to-square"></i> Modificar perfil</a>
                     {{/admin}}
                     {{#admin}}
+                    {{^currentUserRole}}
                     <a href="/profile/{{username}}/convertAuthor" class="btn btn-secondary branding-btn-secondary">
                         <i class="fa-solid fa-book"></i> Convertir
                         en autor</a>
+                    {{/currentUserRole}}
+                    {{#currentUserRole}}
+                    <a href="/profile/{{username}}/removeAuthor" class="btn btn-secondary branding-btn-secondary">
+                        <i class="fa-solid fa-book"></i> Eliminar
+                        rol de autor</a>
+                    {{/currentUserRole}}
                     <a href="/profile/{{username}}/delete" class="btn btn-secondary branding-btn-secondary">
                         <i class="fa-solid fa-ban"></i> Banear
                         usuario</a>
