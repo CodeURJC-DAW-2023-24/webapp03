@@ -27,28 +27,31 @@ public class APIAdminController {
 
     interface UserBasicView extends User.BasicInfo {}
 
-    @Operation(summary = "Add author role to user")
+    @Operation(summary = "Add or remove author role to the user")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Role changed", content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = User.class))
             }),
             @ApiResponse(responseCode = "404", description = "User not found", content = @Content),
             @ApiResponse(responseCode = "401", description = "You don't have permission to do this", content = @Content),
-            @ApiResponse(responseCode = "409", description = "User already has this role", content = @Content)
     })
     @JsonView(APIAdminController.UserBasicView.class)
     @PutMapping("/api/authors/{username}")
-    public ResponseEntity<?> setAuthor(HttpServletRequest request, @PathVariable String username){
+    public ResponseEntity<?> changeAuthorRole(HttpServletRequest request, @PathVariable String username){
         //Check if the user exists
         Principal loggedUser = request.getUserPrincipal();
         User user = userService.getUser(loggedUser.getName());
 
         if(user.getRole().contains("ADMIN")){
-            User userToAuthor = userService.getUser(username);
-            if(userToAuthor != null){
-                if(userToAuthor.getRole().contains("AUTHOR")) return new ResponseEntity<>("User already has this role", HttpStatus.CONFLICT);
-                userService.makeAuthor(userToAuthor);
-                return new ResponseEntity<>(userToAuthor, HttpStatus.OK);
+            User userToChangeRole = userService.getUser(username);
+            if(userToChangeRole != null){
+                if(userToChangeRole.getRole().contains("AUTHOR")){
+                    userService.removeAuthor(userToChangeRole);
+                    return new ResponseEntity<>("Author role removed", HttpStatus.OK);
+                } else {
+                    userService.makeAuthor(userToChangeRole);
+                    return new ResponseEntity<>("Author role added", HttpStatus.OK);
+                }
             } else{
                 return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
             }
