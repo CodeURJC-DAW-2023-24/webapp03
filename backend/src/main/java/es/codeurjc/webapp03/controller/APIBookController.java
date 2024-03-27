@@ -12,6 +12,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,6 +21,8 @@ import javax.imageio.ImageIO;
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.Principal;
+import java.sql.Blob;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 @RestController
@@ -205,6 +208,27 @@ public class APIBookController {
             return new ResponseEntity<>(book, HttpStatus.OK);
         }else{
             return new ResponseEntity<>("You dont have permission to do this!", HttpStatus.FORBIDDEN);
+        }
+    }
+
+    // Get book's image by ID from the database
+    @Operation(summary = "Get book image by ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Book image correctly retrieved", content = @Content),
+            @ApiResponse(responseCode = "404", description = "Book not found", content = @Content) //Not found
+    })
+    @GetMapping("api/books/{id}/image")
+    public ResponseEntity<?> getBookImage(HttpServletRequest request, @PathVariable int id) throws SQLException {
+        Book book = bookService.getBook(id);
+        // Check if the book exists
+        if (book == null) {
+            return new ResponseEntity<>("Book not found", HttpStatus.NOT_FOUND);
+        } else {
+            Blob imageBlob = book.getImageFile();
+            int blobLength = (int) imageBlob.length();
+            byte[] imageBytes = imageBlob.getBytes(1, blobLength);
+            return ResponseEntity.ok().contentType(MediaType.IMAGE_PNG).body(imageBytes);
+
         }
     }
 

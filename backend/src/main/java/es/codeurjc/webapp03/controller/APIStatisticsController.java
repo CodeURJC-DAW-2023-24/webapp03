@@ -153,6 +153,47 @@ public class APIStatisticsController {
         }
     }
 
+    @Operation(summary = "Get recommended books for all users")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Recommended books found", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = Book.class))
+            }),
+            @ApiResponse(responseCode = "204", description = "No content"),
+            @ApiResponse(responseCode = "400", description = "Bad request")
+    })
+    @JsonView(GenreBookBasicView.class)
+    @GetMapping("/api/books/recommended") // Recommended books for all users
+    public ResponseEntity<?> recommendedBooksGeneral(@RequestParam(value = "page", defaultValue = "0") int page,
+                                                     @RequestParam(value = "size", defaultValue = "10") int size,
+                                                     @RequestParam(value = "by") String recommendedBy) {
+
+        if (recommendedBy.equals("genre")) {
+            // Get the most read genres from the database and return them as a JSON (include the genre name and the number of times it has been read)
+            List<Genre> mostReadGenres = genreService.getMostReadGenres();
+
+            //Check if the list is empty
+            if (mostReadGenres.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            } else {
+                List<Book> booksFromMostReadGenres = bookService.getBooksByGenreIn(mostReadGenres, PageRequest.of(page, size));
+                return ResponseEntity.ok(booksFromMostReadGenres);
+            }
+        } else if (recommendedBy.equals("author")) {
+            // Get the most read authors from the database and return them as a JSON (include the author name and the number of times it has been read)
+            List<Author> mostReadAuthors = authorService.getMostReadAuthors();
+
+            //Check if the list is empty
+            if (mostReadAuthors.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            } else {
+                List<Book> booksFromMostReadAuthors = bookService.getBooksByAuthor(mostReadAuthors.get(0).getName(), PageRequest.of(page, size));
+                return ResponseEntity.ok(booksFromMostReadAuthors);
+            }
+        } else {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
     public ResponseEntity<?> getMostReadGenresCount() { // This is what's used to build the chart
 
         // This can be executed both for a logged user and for a non-logged user
