@@ -23,7 +23,7 @@ services:
 
   bookmarks-DB:
     container_name: bookmarks-DB
-    image: mysql:latest
+    image: mysql:8.3.0
     ports:
       - "3306:3306"
     environment:
