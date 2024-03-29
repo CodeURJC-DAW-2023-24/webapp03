@@ -56,7 +56,7 @@ public class APIBookController {
     })
     //Get existing book
     @JsonView(BookBasicView.class)
-    @GetMapping("api/books/{id}")
+    @GetMapping("/api/books/{id}")
     public ResponseEntity<?> getBook(HttpServletRequest request, @PathVariable int id){
         Book book = bookService.getBook(id);
         // Check if the book exists
@@ -79,7 +79,7 @@ public class APIBookController {
     })
     //Create book
     @JsonView(BookBasicView.class)
-    @PostMapping("api/books")
+    @PostMapping("/api/books")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<?> createBook(HttpServletRequest request,
                                         @RequestParam(value = "name") String newName,
@@ -135,7 +135,7 @@ public class APIBookController {
 
     })
     //Delete book
-    @DeleteMapping("api/books/{id}")
+    @DeleteMapping("/api/books/{id}")
     public ResponseEntity<?> deleteBook(HttpServletRequest request, @PathVariable int id){
         Book book = bookService.getBook(id);
         // Check if the book exists
@@ -185,7 +185,7 @@ public class APIBookController {
     })
     //Modify existing book
     @JsonView(BookBasicView.class)
-    @PutMapping("api/books/{id}")
+    @PutMapping("/api/books/{id}")
     public ResponseEntity<?> editBook(HttpServletRequest request, @PathVariable int id,
                                       @RequestParam(value = "name", required = false) String newName,
                                       @RequestParam(value = "author", required = false) String newAuthor,
@@ -241,8 +241,8 @@ public class APIBookController {
             @ApiResponse(responseCode = "200", description = "Book image correctly retrieved", content = @Content),
             @ApiResponse(responseCode = "404", description = "Book not found", content = @Content) //Not found
     })
-    @GetMapping("api/books/{id}/image")
-    public ResponseEntity<?> getBookImage(HttpServletRequest request, @PathVariable int id) throws SQLException {
+    @GetMapping("/api/books/{id}/image")
+    public ResponseEntity<Object> getBookImage(HttpServletRequest request, @PathVariable int id) throws SQLException {
         Book book = bookService.getBook(id);
         // Check if the book exists
         if (book == null) {

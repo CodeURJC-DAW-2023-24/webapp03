@@ -68,21 +68,22 @@ public class WebSecurityConfiguration {
                 .authorizeHttpRequests(authorize -> authorize
                         // PRIVATE ENDPOINTS
                         // USER
-                        .requestMatchers(HttpMethod.POST, "/api/review/book/*").hasAnyRole("USER")
-                        .requestMatchers(HttpMethod.DELETE, "/api/review/*").hasAnyRole("USER")
+                        .requestMatchers(HttpMethod.POST, "/api/reviews").hasAnyRole("USER")
+                        .requestMatchers(HttpMethod.DELETE, "/api/reviews/*").hasAnyRole("USER")
                         .requestMatchers(HttpMethod.GET, "/api/genres/me").hasAnyRole("USER")
                         .requestMatchers(HttpMethod.GET, "/api/books/me/recommended").hasAnyRole("USER")
                         .requestMatchers(HttpMethod.GET, "/api/authors/me").hasAnyRole("USER")
-                        .requestMatchers(HttpMethod.POST, "/api/book/read/*").hasAnyRole("USER")
-                        .requestMatchers(HttpMethod.POST, "/api/book/reading/*").hasAnyRole("USER")
-                        .requestMatchers(HttpMethod.POST, "/api/book/wanted/*").hasAnyRole("USER")
-                        .requestMatchers(HttpMethod.DELETE, "/api/book/lists/*").hasAnyRole("USER")
-                        .requestMatchers(HttpMethod.POST, "/api/book/read/*").hasAnyRole("USER")
-                        .requestMatchers(HttpMethod.POST, "/api/book/reading/*").hasAnyRole("USER")
-                        .requestMatchers(HttpMethod.POST, "/api/book/wanted/*").hasAnyRole("USER")
-                        .requestMatchers(HttpMethod.DELETE, "/api/book/lists/*").hasAnyRole("USER")
+                        .requestMatchers(HttpMethod.POST, "/api/books/*/read").hasAnyRole("USER")
+                        .requestMatchers(HttpMethod.POST, "/api/books/*/reading").hasAnyRole("USER")
+                        .requestMatchers(HttpMethod.POST, "/api/books/*/wanted").hasAnyRole("USER")
+                        .requestMatchers(HttpMethod.DELETE, "/api/books/*/lists").hasAnyRole("USER")
                         .requestMatchers(HttpMethod.GET, "/api/books/me").hasAnyRole("USER")
                         .requestMatchers(HttpMethod.PUT, "/api/authors/{username}").hasAnyRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/users/{username}").hasAnyRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/books").hasAnyRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/books/**").hasAnyRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/books/**").hasAnyRole("ADMIN", "AUTHOR")
+                        .requestMatchers(HttpMethod.PUT, "/api/users/**").hasAnyRole("USER")
 
 
                         // PUBLIC ENDPOINTS (anything that's not filtered by the above rules, is public. It is not necessary to add anything here)

@@ -173,5 +173,31 @@ public class APIReviewController {
         }
     }
 
+    //Get reviews by user
+    @Operation(summary = "Get reviews by a specific user (if count = true, return the number of reviews)")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Reviews found", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = Review.class)),
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = Integer.class))
+            }),
+            @ApiResponse(responseCode = "404", description = "User not found")
+    })
+    @JsonView(Review.BasicInfo.class)
+    @GetMapping("/users/{username}") // return a list of reviews as a JSON
+    public ResponseEntity<?> getReviewsByUser(@PathVariable String username,
+                                              @RequestParam("count") boolean count) {
+        User user = userService.getUser(username);
+        //Check if the user exists
+        if (user == null) {
+            return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
+        } else {
+            if (count) {
+                return new ResponseEntity<>(user.getReviews().size(), HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(user.getReviews(), HttpStatus.OK);
+            }
+        }
+    }
+
 
 }

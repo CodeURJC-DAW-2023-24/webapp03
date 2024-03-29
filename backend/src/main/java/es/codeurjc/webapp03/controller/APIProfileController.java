@@ -57,7 +57,7 @@ public class APIProfileController {
             @ApiResponse(responseCode = "404", description = "Profile image not found"),
     })
     @GetMapping("/api/users/{username}/image")
-    public ResponseEntity<?> getProfileImage(@PathVariable String username) throws SQLException {
+    public ResponseEntity<Object> getProfileImage(@PathVariable String username) throws SQLException {
         User user = userService.getUser(username);
         // Check if the user exists
         if (user == null) {
