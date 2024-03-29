@@ -75,21 +75,22 @@ public class APIEditProfileController {
             if (user == null) return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND); //If user is not found
             if (newDescription != null) user.setDescription(newDescription); //Description can be blank
 
+            //Email check
+            if (newEmail != null && !newEmail.equals(user.getEmail())){
+                if(emailService.isCorrectEmail(newEmail)){ //Check email is valid direction
+                    user.setEmail(newEmail);
+                    userService.saveUser(user); //must save beforehand since sending an email checks from db before saving new user state
+                }else{
+                    return new ResponseEntity<>("New email is not valid.", HttpStatus.BAD_REQUEST);
+                }
+            }
+
             //Check alias
             if (newAlias != null) {
                 if(!newAlias.isBlank()) {
                     user.setAlias(newAlias);
                 }else{
                     return new ResponseEntity<>("Alias can't be blank!", HttpStatus.BAD_REQUEST);
-                }
-            }
-
-            //Email check
-            if (newEmail != null){
-                if(emailService.isCorrectEmail(newEmail)){ //Check email is valid direction
-                    user.setEmail(newEmail);
-                }else{
-                    return new ResponseEntity<>("New email is not valid.", HttpStatus.BAD_REQUEST);
                 }
             }
 
