@@ -53,7 +53,6 @@ public class User {
     private String email;
 
     @JsonIgnore
-    // WE will need to make this a filter with JsonView so this attribute is accessible when creating a new user
     private String password;
 
     @JsonView(Reviews.class)

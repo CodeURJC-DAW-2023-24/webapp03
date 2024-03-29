@@ -47,7 +47,7 @@ public class APISearchResultsPageController {
             @ApiResponse(responseCode = "200", description = "Search results page books loaded", content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = Book.class))
             }),
-            @ApiResponse(responseCode = "500", description = "Internal server error")
+            @ApiResponse(responseCode = "404", description = "No books found")
     })
 
     @JsonView(Book.BasicInfo.class)
@@ -56,6 +56,11 @@ public class APISearchResultsPageController {
 
         Page<Book> filteredBooks = bookService.searchBook(query, PageRequest.of(page, 4));
         bookQueries = filteredBooks.getContent();
+
+        // if no books are found, return a 404
+        if (bookQueries.size() == 0) {
+            return new ResponseEntity<>("No books found", HttpStatus.NOT_FOUND);
+        }
 
         for (int i = 0; i < bookQueries.size(); i++) {
             bookQueries.get(i).setImageString(bookQueries.get(i).blobToString(bookQueries.get(i).getImageFile()));
@@ -77,12 +82,24 @@ public class APISearchResultsPageController {
         return new ResponseEntity<>(bookQueries, HttpStatus.OK);
     }
 
+    @Operation(summary = "Load search results page users")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Search results page users loaded", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = User.class))
+            }),
+            @ApiResponse(responseCode = "404", description = "No users found")
+    })
     @JsonView(User.BasicInfo.class)
     @GetMapping("/api/users")
     public ResponseEntity<?> loadSearchResultsPageUsers(@RequestParam String query, @RequestParam int page) throws SQLException {
 
         Page<User> filteredUsers = userService.getUsersPageable(query, PageRequest.of(page, 4));
         userQueries = filteredUsers.getContent();
+
+        // if no users are found, return a 404
+        if (userQueries.size() == 0) {
+            return new ResponseEntity<>("No users found", HttpStatus.NOT_FOUND);
+        }
 
         for (int i = 0; i < userQueries.size(); i++) {
             userQueries.get(i).setProfileImageString(userQueries.get(i).blobToString(userQueries.get(i).getProfileImageFile()));
