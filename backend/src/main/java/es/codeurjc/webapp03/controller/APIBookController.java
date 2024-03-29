@@ -110,10 +110,6 @@ public class APIBookController {
                 try (InputStream input = newImage.getInputStream()) {
                     try {
                         ImageIO.read(input).toString(); //If it doesn't fail, this is an image.
-                        long fileInKB = newImage.getSize() / 1024; //get mb of pic
-                        if(fileInKB > 5){
-                            return new ResponseEntity<>("Image must be smaller than 5 MB!", HttpStatus.BAD_REQUEST);
-                        }
                         book.setImageFile(BlobProxy.generateProxy(newImage.getInputStream(), newImage.getSize()));
                     } catch (Exception e) {
                         // It's not an image.
@@ -224,10 +220,6 @@ public class APIBookController {
                 try (InputStream input = newImage.getInputStream()) {
                     try {
                         ImageIO.read(input).toString(); //If it doesn't fail, this is an image.
-                        long fileInKB = newImage.getSize() / 1024; //get mb of pic
-                        if(fileInKB > 5){
-                            return new ResponseEntity<>("Image must be smaller than 5 MB!", HttpStatus.BAD_REQUEST);
-                        }
                         book.setImageFile(BlobProxy.generateProxy(newImage.getInputStream(), newImage.getSize()));
                     } catch (Exception e) {
                         // It's not an image.

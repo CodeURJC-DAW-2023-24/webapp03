@@ -79,8 +79,8 @@ public class APISignUpController {
             try (InputStream input = image.getInputStream()) {
                 try {
                     ImageIO.read(input).toString(); //If it doesn't fail, this is an image.
-                    long fileInKB = image.getSize() / 1024; //get mb of pic
-                    if(fileInKB > 5){
+                    long fileInKB = image.getSize() / 1024 / 1024; //get mb of pic
+                    if(fileInKB >= 5){
                         return new ResponseEntity<>("Image must be smaller than 5 MB!", HttpStatus.BAD_REQUEST);
                     }
                     newUser.setProfileImageFile(BlobProxy.generateProxy(image.getInputStream(), image.getSize()));

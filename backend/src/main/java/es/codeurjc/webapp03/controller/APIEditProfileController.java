@@ -100,8 +100,8 @@ public class APIEditProfileController {
                 try (InputStream input = newImageFile.getInputStream()) {
                     try {
                         ImageIO.read(input).toString(); //If it doesn't fail, this is an image.
-                        long fileInKB = newImageFile.getSize() / 1024; //get mb of pic
-                        if(fileInKB > 5){
+                        long fileInKB = newImageFile.getSize() / 1024 / 1024; //get mb of pic
+                        if(fileInKB >= 5){
                             return new ResponseEntity<>("Image must be smaller than 5 MB!", HttpStatus.BAD_REQUEST);
                         }
                         user.setProfileImageFile(BlobProxy.generateProxy(newImageFile.getInputStream(), newImageFile.getSize()));

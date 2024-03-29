@@ -20,46 +20,53 @@ $(() => {
     $("#inputProfileImage").on("change", () => {
 
         let file = $("#inputProfileImage")[0].files[0];
-        let fileByteArray = []
-        let reader = new FileReader();
-        reader.readAsArrayBuffer(file);
-        $(reader).on("loadend", (e) => {
-            if (e.target.readyState == FileReader.DONE) {
-                let arrayBuffer = e.target.result,
-                    array = new Uint8Array(arrayBuffer);
-                for (let i = 0; i < array.length; i++) {
-                    fileByteArray.push(array[i]);
-                }
-                let imageString = btoa(fileByteArray.map((v) => {
-                    return String.fromCharCode(v)
-                }).join(""));
-
-                let uploadUrl = "https://" + window.location.host + "/profile/" + $("#username").outerText + "/upload";
-
-                $.ajax({
-                    url: uploadUrl,
-                    type: "POST",
-                    contentType: "application/json",
-                    beforeSend: (xhr) => {
-                        xhr.setRequestHeader("X-CSRF-TOKEN", token);
-                    },
-                    data: JSON.stringify({
-                        image: imageString
-                    }),
-                    success: () => {
-                        setTimeout(() => {
-                            location.reload();
-                        }, 1000);
-
-                        $("#uploadSuccessful").show();
-                        setTimeout(() => {
-                            $("#uploadSuccessful").fadeOut(3000);
-                        }, 5000);
+        let fileSizeInMB = $("#inputProfileImage")[0].files[0].size / 1024 / 1024;
+        if (fileSizeInMB < 5) {
+            let fileByteArray = []
+            let reader = new FileReader();
+            reader.readAsArrayBuffer(file);
+            $(reader).on("loadend", (e) => {
+                if (e.target.readyState == FileReader.DONE) {
+                    let arrayBuffer = e.target.result,
+                        array = new Uint8Array(arrayBuffer);
+                    for (let i = 0; i < array.length; i++) {
+                        fileByteArray.push(array[i]);
                     }
-                });
-            }
-        });
+                    let imageString = btoa(fileByteArray.map((v) => {
+                        return String.fromCharCode(v)
+                    }).join(""));
 
+                    let uploadUrl = "https://" + window.location.host + "/profile/" + $("#username").outerText + "/upload";
+
+                    $.ajax({
+                        url: uploadUrl,
+                        type: "POST",
+                        contentType: "application/json",
+                        beforeSend: (xhr) => {
+                            xhr.setRequestHeader("X-CSRF-TOKEN", token);
+                        },
+                        data: JSON.stringify({
+                            image: imageString
+                        }),
+                        success: () => {
+                            setTimeout(() => {
+                                location.reload();
+                            }, 1000);
+
+                            $("#uploadSuccessful").show();
+                            setTimeout(() => {
+                                $("#uploadSuccessful").fadeOut(3000);
+                            }, 5000);
+                        }
+                    });
+                }
+            });
+        }else{
+            $("#uploadNotSuccesful").show();
+            setTimeout(() => {
+                $("#uploadNotSuccesful").fadeOut(3000);
+            }, 5000);
+        }
     });
 
 
