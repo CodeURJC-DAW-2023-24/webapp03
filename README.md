@@ -354,7 +354,13 @@ He colaborado en la creación de la documentación de la API REST y en la actual
 
 
 #### Blas Vita Ramos:
-
+Ha realizado la implementación API REST de aquellas funcionalidades que le correspondieron también en la fase anterior, como la búsqueda paginada tanto de usuarios como de libros.
+No obstante, su mayor aportación y principal tarea en esta fase ha consistido en la dockerización de la aplicación, desde la creación de la imagen desde cero desde el dockerfile,
+la inclusión y copia de ficheros en dicha imagen, la compilación y generación del fichero ejecutable jar como principal origen de ejecución de la aplicación en la imagen, y su publicación en dockerhub.
+También ha creado el docker-compose.yml para la ejecución de dos servicios (base de datos y aplicación) de manera síncrona en base a dos imágenes (una proporcionada por mysql y la anteriormente mencionada hecha a mano),
+además de poder facilitar el despliegue de la aplicación en una máquina virtual.
+La documentación de los pasos a seguir tanto para la creación de la imagen como para la descarga de la misma y la ejecución de la aplicación únicamente con contenedores docker con compose a partir de dichas imágenes.
+Ha sido además encargado de la creación de la documentación de la API REST, creando una plantilla vacía yml que poder actualizar automáticamente en cada ejecución de tests de la aplicación, y generando así automáticamente toda la interfaz web de la api con swagger.
 
 #### Diego Rodriguez Gallego
 
