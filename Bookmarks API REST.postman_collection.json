@@ -1,0 +1,1544 @@
+{
+	"info": {
+		"_postman_id": "9f45472f-8af4-43f6-b33e-82af744cb546",
+		"name": "Bookmarks API REST",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "32947073",
+		"_collection_link": "https://bookmarks-team.postman.co/workspace/Bookmarks-REST-API~d5d1c0af-0564-4def-b569-0a9104d28090/collection/32947073-9f45472f-8af4-43f6-b33e-82af744cb546?action=share&source=collection_link&creator=32947073"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"FanBook_785\",\r\n    \"password\": \"pass\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LOCALHOST}}/api/auth/login",
+							"host": [
+								"{{LOCALHOST}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Refresh Token",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{LOCALHOST}}/api/auth/refresh",
+							"host": [
+								"{{LOCALHOST}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"refresh"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{LOCALHOST}}/api/auth/logout",
+							"host": [
+								"{{LOCALHOST}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Reviews",
+			"item": [
+				{
+					"name": "Add Review",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"Great book\",\r\n    \"rating\": 5,\r\n    \"content\": \"I really enjoyed reading this book.\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LOCALHOST}}/api/reviews?book=9",
+							"host": [
+								"{{LOCALHOST}}"
+							],
+							"path": [
+								"api",
+								"reviews"
+							],
+							"query": [
+								{
+									"key": "book",
+									"value": "9"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Review",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{LOCALHOST}}/api/reviews/17",
+							"host": [
+								"{{LOCALHOST}}"
+							],
+							"path": [
+								"api",
+								"reviews",
+								"17"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Reviews of a Book",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LOCALHOST}}/api/reviews?page=0&size=10&book=9",
+							"host": [
+								"{{LOCALHOST}}"
+							],
+							"path": [
+								"api",
+								"reviews"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								},
+								{
+									"key": "book",
+									"value": "9"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Specific Review",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LOCALHOST}}/api/reviews/17",
+							"host": [
+								"{{LOCALHOST}}"
+							],
+							"path": [
+								"api",
+								"reviews",
+								"17"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Reviews by User",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LOCALHOST}}/api/reviews/users/FanBook_785?count=false",
+							"host": [
+								"{{LOCALHOST}}"
+							],
+							"path": [
+								"api",
+								"reviews",
+								"users",
+								"FanBook_785"
+							],
+							"query": [
+								{
+									"key": "count",
+									"value": "false"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Reviews by User Count",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LOCALHOST}}/api/reviews/users/FanBook_785?count=true",
+							"host": [
+								"{{LOCALHOST}}"
+							],
+							"path": [
+								"api",
+								"reviews",
+								"users",
+								"FanBook_785"
+							],
+							"query": [
+								{
+									"key": "count",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Algorithms and charts",
+			"item": [
+				{
+					"name": "Get Most Read Genres General",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LOCALHOST}}/api/genres?count=false",
+							"host": [
+								"{{LOCALHOST}}"
+							],
+							"path": [
+								"api",
+								"genres"
+							],
+							"query": [
+								{
+									"key": "count",
+									"value": "false"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Most Read Genres General Count",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LOCALHOST}}/api/genres?count=true",
+							"host": [
+								"{{LOCALHOST}}"
+							],
+							"path": [
+								"api",
+								"genres"
+							],
+							"query": [
+								{
+									"key": "count",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Most Read Genres User",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LOCALHOST}}/api/genres/me",
+							"host": [
+								"{{LOCALHOST}}"
+							],
+							"path": [
+								"api",
+								"genres",
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Most Read Genres Books User Pageable",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LOCALHOST}}/api/books/me/recommended?by=genre&page=0&size=4",
+							"host": [
+								"{{LOCALHOST}}"
+							],
+							"path": [
+								"api",
+								"books",
+								"me",
+								"recommended"
+							],
+							"query": [
+								{
+									"key": "by",
+									"value": "genre"
+								},
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "4"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Most Read Genres Books General Pageable",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LOCALHOST}}/api/books/recommended?by=genre&page=0&size=4",
+							"host": [
+								"{{LOCALHOST}}"
+							],
+							"path": [
+								"api",
+								"books",
+								"recommended"
+							],
+							"query": [
+								{
+									"key": "by",
+									"value": "genre"
+								},
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "4"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Most Read Authors General",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LOCALHOST}}/api/authors?count=false",
+							"host": [
+								"{{LOCALHOST}}"
+							],
+							"path": [
+								"api",
+								"authors"
+							],
+							"query": [
+								{
+									"key": "count",
+									"value": "false"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Most Read Authors General Count",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LOCALHOST}}/api/authors?count=true",
+							"host": [
+								"{{LOCALHOST}}"
+							],
+							"path": [
+								"api",
+								"authors"
+							],
+							"query": [
+								{
+									"key": "count",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Most Read Author User",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LOCALHOST}}/api/authors/me",
+							"host": [
+								"{{LOCALHOST}}"
+							],
+							"path": [
+								"api",
+								"authors",
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Most Read Author Books User Pageable",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LOCALHOST}}/api/books/me/recommended?by=author&page=0&size=5",
+							"host": [
+								"{{LOCALHOST}}"
+							],
+							"path": [
+								"api",
+								"books",
+								"me",
+								"recommended"
+							],
+							"query": [
+								{
+									"key": "by",
+									"value": "author"
+								},
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Most Read Author Books General Pageable",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LOCALHOST}}/api/books/recommended?by=author&page=0&size=5",
+							"host": [
+								"{{LOCALHOST}}"
+							],
+							"path": [
+								"api",
+								"books",
+								"recommended"
+							],
+							"query": [
+								{
+									"key": "by",
+									"value": "author"
+								},
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Best Readers and Number of Books Read",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LOCALHOST}}/api/users/readings",
+							"host": [
+								"{{LOCALHOST}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"readings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Registered Users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LOCALHOST}}/api/users/all?count=false",
+							"host": [
+								"{{LOCALHOST}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"all"
+							],
+							"query": [
+								{
+									"key": "count",
+									"value": "false"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Registered Users Count",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LOCALHOST}}/api/users/all?count=true",
+							"host": [
+								"{{LOCALHOST}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"all"
+							],
+							"query": [
+								{
+									"key": "count",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Authors",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LOCALHOST}}/api/authors/all?count=false",
+							"host": [
+								"{{LOCALHOST}}"
+							],
+							"path": [
+								"api",
+								"authors",
+								"all"
+							],
+							"query": [
+								{
+									"key": "count",
+									"value": "false"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Authors Count",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LOCALHOST}}/api/authors/all?count=true",
+							"host": [
+								"{{LOCALHOST}}"
+							],
+							"path": [
+								"api",
+								"authors",
+								"all"
+							],
+							"query": [
+								{
+									"key": "count",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Genres",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LOCALHOST}}/api/genres/all?count=false",
+							"host": [
+								"{{LOCALHOST}}"
+							],
+							"path": [
+								"api",
+								"genres",
+								"all"
+							],
+							"query": [
+								{
+									"key": "count",
+									"value": "false"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Genres Count",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LOCALHOST}}/api/genres/all?count=true",
+							"host": [
+								"{{LOCALHOST}}"
+							],
+							"path": [
+								"api",
+								"genres",
+								"all"
+							],
+							"query": [
+								{
+									"key": "count",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Books",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LOCALHOST}}/api/books/all?count=false",
+							"host": [
+								"{{LOCALHOST}}"
+							],
+							"path": [
+								"api",
+								"books",
+								"all"
+							],
+							"query": [
+								{
+									"key": "count",
+									"value": "false"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Books Count",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LOCALHOST}}/api/books/all?count=true",
+							"host": [
+								"{{LOCALHOST}}"
+							],
+							"path": [
+								"api",
+								"books",
+								"all"
+							],
+							"query": [
+								{
+									"key": "count",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User Lists",
+			"item": [
+				{
+					"name": "Get Current User's Read Book List",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LOCALHOST}}/api/books/me?list=read&page=0&size=4",
+							"host": [
+								"{{LOCALHOST}}"
+							],
+							"path": [
+								"api",
+								"books",
+								"me"
+							],
+							"query": [
+								{
+									"key": "list",
+									"value": "read"
+								},
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "4"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User's Read Book List Copy",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LOCALHOST}}/api/users/YourReader/books?list=read&page=0&size=4",
+							"host": [
+								"{{LOCALHOST}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"YourReader",
+								"books"
+							],
+							"query": [
+								{
+									"key": "list",
+									"value": "read"
+								},
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "4"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Current User's Reading Book List",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LOCALHOST}}/api/books/me?list=reading&page=0&size=4",
+							"host": [
+								"{{LOCALHOST}}"
+							],
+							"path": [
+								"api",
+								"books",
+								"me"
+							],
+							"query": [
+								{
+									"key": "list",
+									"value": "reading"
+								},
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "4"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User's Reading Book List Copy",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LOCALHOST}}/api/users/YourReader/books?list=reading&page=0&size=4",
+							"host": [
+								"{{LOCALHOST}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"YourReader",
+								"books"
+							],
+							"query": [
+								{
+									"key": "list",
+									"value": "reading"
+								},
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "4"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Current User's Wanted Book List",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LOCALHOST}}/api/books/me?list=wanted&page=0&size=4",
+							"host": [
+								"{{LOCALHOST}}"
+							],
+							"path": [
+								"api",
+								"books",
+								"me"
+							],
+							"query": [
+								{
+									"key": "list",
+									"value": "wanted"
+								},
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "4"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User's Wanted Book List Copy",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LOCALHOST}}/api/users/YourReader/books?list=wanted&page=0&size=4",
+							"host": [
+								"{{LOCALHOST}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"YourReader",
+								"books"
+							],
+							"query": [
+								{
+									"key": "list",
+									"value": "wanted"
+								},
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "4"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add book to read list",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{LOCALHOST}}/api/books/5/read",
+							"host": [
+								"{{LOCALHOST}}"
+							],
+							"path": [
+								"api",
+								"books",
+								"5",
+								"read"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add book to reading list",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{LOCALHOST}}/api/books/5/reading",
+							"host": [
+								"{{LOCALHOST}}"
+							],
+							"path": [
+								"api",
+								"books",
+								"5",
+								"reading"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add book to wanted list",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{LOCALHOST}}/api/books/5/wanted",
+							"host": [
+								"{{LOCALHOST}}"
+							],
+							"path": [
+								"api",
+								"books",
+								"5",
+								"wanted"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove book from lists",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{LOCALHOST}}/api/books/5/lists",
+							"host": [
+								"{{LOCALHOST}}"
+							],
+							"path": [
+								"api",
+								"books",
+								"5",
+								"lists"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Get Profile",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LOCALHOST}}/api/users/YourReader",
+							"host": [
+								"{{LOCALHOST}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"YourReader"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Current User",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LOCALHOST}}/api/users/me",
+							"host": [
+								"{{LOCALHOST}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User Search",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LOCALHOST}}/api/users?query=YourReader&page=0",
+							"host": [
+								"{{LOCALHOST}}"
+							],
+							"path": [
+								"api",
+								"users"
+							],
+							"query": [
+								{
+									"key": "query",
+									"value": "YourReader"
+								},
+								{
+									"key": "page",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit User",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "alias",
+									"value": "changedAlias",
+									"description": "Can't be blank",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "newMail@gmail.com",
+									"description": "Checks for a vallid email",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "password",
+									"value": "newpass",
+									"description": "Can't be blank and sends email when pass changes",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"description": "Checks for image and can't upload blank file.",
+									"type": "file",
+									"src": "/C:/Users/zeroc/OneDrive/Imágenes/Screenshots/Screenshot_20221212_050236.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{LOCALHOST}}/api/users/FanBook_785",
+							"host": [
+								"{{LOCALHOST}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"FanBook_785"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "NewUser",
+									"type": "text"
+								},
+								{
+									"key": "alias",
+									"value": "NewAlias",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "newEmail@Gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "pass",
+									"type": "text"
+								},
+								{
+									"key": "imageFile",
+									"type": "file",
+									"src": "/C:/Users/zeroc/Downloads/DiagramaSemana4Incidencias.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{LOCALHOST}}/api/users",
+							"host": [
+								"{{LOCALHOST}}"
+							],
+							"path": [
+								"api",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ChangeAuthorRole",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{LOCALHOST}}/api/authors/BookReader_14",
+							"host": [
+								"{{LOCALHOST}}"
+							],
+							"path": [
+								"api",
+								"authors",
+								"BookReader_14"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{LOCALHOST}}/api/users/YourReader",
+							"host": [
+								"{{LOCALHOST}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"YourReader"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Download User's Profile Picture",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LOCALHOST}}/api/users/FanBook_785/image",
+							"host": [
+								"{{LOCALHOST}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"FanBook_785",
+								"image"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Book",
+			"item": [
+				{
+					"name": "Book Search",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LOCALHOST}}/api/books?query=Tolkien&page=0",
+							"host": [
+								"{{LOCALHOST}}"
+							],
+							"path": [
+								"api",
+								"books"
+							],
+							"query": [
+								{
+									"key": "query",
+									"value": "Tolkien"
+								},
+								{
+									"key": "page",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Specific Book",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LOCALHOST}}/api/books/5",
+							"host": [
+								"{{LOCALHOST}}"
+							],
+							"path": [
+								"api",
+								"books",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Specific Book",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{LOCALHOST}}/api/books/1",
+							"host": [
+								"{{LOCALHOST}}"
+							],
+							"path": [
+								"api",
+								"books",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Book",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "NewBook1",
+									"description": "This key is required",
+									"type": "text"
+								},
+								{
+									"key": "author",
+									"value": "AuthorsHere",
+									"description": "This key is required",
+									"type": "text"
+								},
+								{
+									"key": "ISBN",
+									"value": "5462344563",
+									"description": "This key is required",
+									"type": "text"
+								},
+								{
+									"key": "pages",
+									"value": "123",
+									"description": "This key is required",
+									"type": "text"
+								},
+								{
+									"key": "genre",
+									"value": "Science Fiction",
+									"description": "This key is required",
+									"type": "text"
+								},
+								{
+									"key": "date",
+									"value": "15-08-2002",
+									"description": "This key is required",
+									"type": "text"
+								},
+								{
+									"key": "publisher",
+									"value": "PublisherHere",
+									"description": "This key is required",
+									"type": "text"
+								},
+								{
+									"key": "series",
+									"value": "SeriesHere",
+									"description": "This key is required",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "Description",
+									"description": "This key is required",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"description": "This key is required",
+									"type": "file",
+									"src": "/C:/Users/zeroc/Downloads/windows8.webp"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{LOCALHOST}}/api/books",
+							"host": [
+								"{{LOCALHOST}}"
+							],
+							"path": [
+								"api",
+								"books"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit Book",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "newName",
+									"type": "text"
+								},
+								{
+									"key": "author",
+									"value": "author1,author2,author3,author4",
+									"type": "text"
+								},
+								{
+									"key": "ISBN",
+									"value": "123",
+									"type": "text"
+								},
+								{
+									"key": "pages",
+									"value": "10",
+									"type": "text"
+								},
+								{
+									"key": "genre",
+									"value": "newGenre",
+									"type": "text"
+								},
+								{
+									"key": "date",
+									"value": "15-08-2002",
+									"type": "text"
+								},
+								{
+									"key": "publisher",
+									"value": "users",
+									"type": "text"
+								},
+								{
+									"key": "series",
+									"value": "newSeries",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "newDesc",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/C:/Users/zeroc/Downloads/codigoDupped.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{LOCALHOST}}/api/books/2",
+							"host": [
+								"{{LOCALHOST}}"
+							],
+							"path": [
+								"api",
+								"books",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Download Book Cover",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LOCALHOST}}/api/books/5/image",
+							"host": [
+								"{{LOCALHOST}}"
+							],
+							"path": [
+								"api",
+								"books",
+								"5",
+								"image"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "LOCALHOST",
+			"value": "https://localhost:8443",
+			"type": "string",
+			"disabled": true
+		},
+		{
+			"key": "LOCALHOST",
+			"value": "https://10.100.139.28:8443",
+			"type": "string"
+		}
+	]
+}
