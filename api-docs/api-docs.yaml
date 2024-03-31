@@ -3,21 +3,21 @@ info:
   title: OpenAPI definition
   version: v0
 servers:
-- url: https://localhost:8443
-  description: Generated server url
+  - url: https://localhost:8443
+    description: Generated server url
 paths:
   /api/users/{username}:
     get:
       tags:
-      - api-profile-controller
+        - api-profile-controller
       summary: Get information for a specific user
       operationId: getReviews
       parameters:
-      - name: username
-        in: path
-        required: true
-        schema:
-          type: string
+        - name: username
+          in: path
+          required: true
+          schema:
+            type: string
       responses:
         "200":
           description: User found
@@ -33,35 +33,35 @@ paths:
                 type: object
     put:
       tags:
-      - api-edit-profile-controller
+        - api-edit-profile-controller
       summary: Modify user info
       operationId: editProfile
       parameters:
-      - name: username
-        in: path
-        required: true
-        schema:
-          type: string
-      - name: alias
-        in: query
-        required: false
-        schema:
-          type: string
-      - name: email
-        in: query
-        required: false
-        schema:
-          type: string
-      - name: description
-        in: query
-        required: false
-        schema:
-          type: string
-      - name: password
-        in: query
-        required: false
-        schema:
-          type: string
+        - name: username
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: alias
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: email
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: description
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: password
+          in: query
+          required: false
+          schema:
+            type: string
       requestBody:
         content:
           application/json:
@@ -72,12 +72,10 @@ paths:
                   type: string
                   format: binary
       responses:
-        "500":
-          description: Error with operation
         "400":
           description: Invalid parameter
-        "404":
-          description: User not found
+        "500":
+          description: Error with operation
         "200":
           description: User modified correctly
           content:
@@ -86,17 +84,19 @@ paths:
                 $ref: '#/components/schemas/User_UserBasicView'
         "401":
           description: You don't have permission to do this!
+        "404":
+          description: User not found
     delete:
       tags:
-      - api-admin-controller
+        - api-admin-controller
       summary: Delete a user
       operationId: deleteUser
       parameters:
-      - name: username
-        in: path
-        required: true
-        schema:
-          type: string
+        - name: username
+          in: path
+          required: true
+          schema:
+            type: string
       responses:
         "403":
           description: Forbidden
@@ -119,16 +119,16 @@ paths:
   /api/books/{id}:
     get:
       tags:
-      - api-book-controller
+        - api-book-controller
       summary: Get book info by ID
       operationId: getBook
       parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: integer
-          format: int32
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
       responses:
         "200":
           description: Book info correctly retrieved
@@ -140,61 +140,61 @@ paths:
           description: Book not found
     put:
       tags:
-      - api-book-controller
+        - api-book-controller
       summary: Modify book
       operationId: editBook
       parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: integer
-          format: int32
-      - name: name
-        in: query
-        required: false
-        schema:
-          type: string
-      - name: author
-        in: query
-        required: false
-        schema:
-          type: string
-      - name: ISBN
-        in: query
-        required: false
-        schema:
-          type: string
-      - name: pages
-        in: query
-        required: false
-        schema:
-          type: string
-      - name: genre
-        in: query
-        required: false
-        schema:
-          type: string
-      - name: date
-        in: query
-        required: false
-        schema:
-          type: string
-      - name: publisher
-        in: query
-        required: false
-        schema:
-          type: string
-      - name: series
-        in: query
-        required: false
-        schema:
-          type: string
-      - name: description
-        in: query
-        required: false
-        schema:
-          type: string
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - name: name
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: author
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: ISBN
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: pages
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: genre
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: date
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: publisher
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: series
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: description
+          in: query
+          required: false
+          schema:
+            type: string
       requestBody:
         content:
           application/json:
@@ -205,51 +205,51 @@ paths:
                   type: string
                   format: binary
       responses:
-        "404":
-          description: Book not found
-        "409":
-          description: Invalid parameter
-        "500":
-          description: Image not supported. Try different file
         "200":
           description: Book modified correctly
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Book_BookBasicView'
+        "404":
+          description: Book not found
+        "409":
+          description: Invalid parameter
+        "500":
+          description: Image not supported. Try different file
         "401":
           description: You don't have permission to do this!
     delete:
       tags:
-      - api-book-controller
+        - api-book-controller
       summary: Delete book
       operationId: deleteBook
       parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: integer
-          format: int32
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
       responses:
         "404":
           description: Book not found
-        "200":
-          description: Book deleted correctly
         "401":
           description: You don't have permission to do this!
+        "200":
+          description: Book deleted correctly
   /api/authors/{username}:
     put:
       tags:
-      - api-admin-controller
+        - api-admin-controller
       summary: Add or remove author role to the user
       operationId: changeAuthorRole
       parameters:
-      - name: username
-        in: path
-        required: true
-        schema:
-          type: string
+        - name: username
+          in: path
+          required: true
+          schema:
+            type: string
       responses:
         "200":
           description: Role changed
@@ -264,34 +264,27 @@ paths:
   /email/send:
     post:
       tags:
-      - email-controller
-      summary: Send an email
+        - email-controller
       operationId: sendEmail
       parameters:
-      - name: to
-        in: query
-        required: true
-        schema:
-          type: string
-      - name: subject
-        in: query
-        required: true
-        schema:
-          type: string
-      - name: text
-        in: query
-        required: true
-        schema:
-          type: string
+        - name: to
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: subject
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: text
+          in: query
+          required: true
+          schema:
+            type: string
       responses:
-        "500":
-          description: Error sending email
-          content:
-            '*/*':
-              schema:
-                type: string
         "200":
-          description: Email sent successfully
+          description: OK
           content:
             '*/*':
               schema:
@@ -299,60 +292,53 @@ paths:
   /api/users:
     get:
       tags:
-      - api-search-results-page-controller
-      summary: Load search results page users
+        - api-search-results-page-controller
       operationId: loadSearchResultsPageUsers
       parameters:
-      - name: query
-        in: query
-        required: true
-        schema:
-          type: string
-      - name: page
-        in: query
-        required: true
-        schema:
-          type: integer
-          format: int32
+        - name: query
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: page
+          in: query
+          required: true
+          schema:
+            type: integer
+            format: int32
       responses:
         "200":
-          description: Search results page users loaded
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/User_BasicInfo'
-        "404":
-          description: No users found
+          description: OK
           content:
             '*/*':
               schema:
                 type: object
     post:
       tags:
-      - api-sign-up-controller
+        - api-sign-up-controller
       summary: Create a new user
       operationId: addUser
       parameters:
-      - name: username
-        in: query
-        required: true
-        schema:
-          type: string
-      - name: alias
-        in: query
-        required: true
-        schema:
-          type: string
-      - name: email
-        in: query
-        required: true
-        schema:
-          type: string
-      - name: password
-        in: query
-        required: true
-        schema:
-          type: string
+        - name: username
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: alias
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: email
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: password
+          in: query
+          required: true
+          schema:
+            type: string
       requestBody:
         content:
           application/json:
@@ -369,52 +355,52 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/User_UserBasicView'
-        "400":
-          description: Parameter missing.
         "409":
           description: Invalid parameter
         "500":
           description: Image not supported. Try different file
+        "400":
+          description: Parameter missing.
   /api/reviews:
     get:
       tags:
-      - api-review-controller
+        - api-review-controller
       summary: Get reviews for a specific book
       operationId: getReviews_1
       parameters:
-      - name: page
-        in: query
-        required: false
-        schema:
-          type: integer
-          format: int32
-          default: 0
-      - name: size
-        in: query
-        required: false
-        schema:
-          type: integer
-          format: int32
-          default: 10
-      - name: book
-        in: query
-        required: true
-        schema:
-          type: integer
-          format: int32
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 0
+        - name: size
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 10
+        - name: book
+          in: query
+          required: true
+          schema:
+            type: integer
+            format: int32
       responses:
-        "400":
-          description: Invalid book ID
-          content:
-            '*/*':
-              schema:
-                type: object
         "200":
           description: Reviews found
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Review_BasicInfo'
+        "400":
+          description: Invalid book ID
+          content:
+            '*/*':
+              schema:
+                type: object
         "404":
           description: Book not found
           content:
@@ -423,16 +409,16 @@ paths:
                 type: object
     post:
       tags:
-      - api-review-controller
+        - api-review-controller
       summary: Add a review for a specific book
       operationId: addReview
       parameters:
-      - name: book
-        in: query
-        required: true
-        schema:
-          type: integer
-          format: int32
+        - name: book
+          in: query
+          required: true
+          schema:
+            type: integer
+            format: int32
       requestBody:
         content:
           application/json:
@@ -440,16 +426,16 @@ paths:
               $ref: '#/components/schemas/Review_ReviewBasicView'
         required: true
       responses:
-        "400":
-          description: Invalid book ID
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/Review_ReviewBasicView'
         "201":
           description: Review added
           content:
             application/json:
+              schema:
+                $ref: '#/components/schemas/Review_ReviewBasicView'
+        "400":
+          description: Invalid book ID
+          content:
+            '*/*':
               schema:
                 $ref: '#/components/schemas/Review_ReviewBasicView'
         "404":
@@ -467,24 +453,24 @@ paths:
   /api/books:
     get:
       tags:
-      - api-search-results-page-controller
+        - api-search-results-page-controller
       summary: Load search results page books
       operationId: loadSearchResultsPageBooks
       parameters:
-      - name: query
-        in: query
-        required: true
-        schema:
-          type: string
-      - name: page
-        in: query
-        required: true
-        schema:
-          type: integer
-          format: int32
+        - name: query
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: page
+          in: query
+          required: true
+          schema:
+            type: integer
+            format: int32
       responses:
-        "404":
-          description: No books found
+        "500":
+          description: Internal server error
           content:
             '*/*':
               schema:
@@ -497,55 +483,55 @@ paths:
                 $ref: '#/components/schemas/Book_BasicInfo'
     post:
       tags:
-      - api-book-controller
+        - api-book-controller
       summary: Create new book
       operationId: createBook
       parameters:
-      - name: name
-        in: query
-        required: true
-        schema:
-          type: string
-      - name: author
-        in: query
-        required: true
-        schema:
-          type: string
-      - name: ISBN
-        in: query
-        required: true
-        schema:
-          type: string
-      - name: pages
-        in: query
-        required: true
-        schema:
-          type: string
-      - name: genre
-        in: query
-        required: true
-        schema:
-          type: string
-      - name: date
-        in: query
-        required: true
-        schema:
-          type: string
-      - name: publisher
-        in: query
-        required: true
-        schema:
-          type: string
-      - name: series
-        in: query
-        required: true
-        schema:
-          type: string
-      - name: description
-        in: query
-        required: true
-        schema:
-          type: string
+        - name: name
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: author
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: ISBN
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: pages
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: genre
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: date
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: publisher
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: series
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: description
+          in: query
+          required: true
+          schema:
+            type: string
       requestBody:
         content:
           application/json:
@@ -556,8 +542,6 @@ paths:
                   type: string
                   format: binary
       responses:
-        "400":
-          description: Parameter missing.
         "409":
           description: Invalid parameter.
         "201":
@@ -568,56 +552,58 @@ paths:
                 $ref: '#/components/schemas/Book_BookBasicView'
         "500":
           description: Image not supported. Try different file
+        "400":
+          description: Parameter missing.
         "401":
           description: You don't have permission to do this!
   /api/books/{id}/wanted:
     post:
       tags:
-      - api-user-lists-controller
+        - api-user-lists-controller
       summary: Add book to wanted list
       operationId: addWantedBook
       parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: integer
-          format: int64
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
       responses:
         "400":
           description: Invalid book ID
+        "404":
+          description: Book not found
         "200":
           description: Book added to wanted list
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Book_BasicInfo'
-        "404":
-          description: Book not found
         "401":
           description: Unauthorized
   /api/books/{id}/reading:
     post:
       tags:
-      - api-user-lists-controller
+        - api-user-lists-controller
       summary: Add book to reading list
       operationId: addReadingBook
       parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: integer
-          format: int64
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
       responses:
-        "400":
-          description: Invalid book ID
         "200":
           description: Book added to reading list
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Book_BasicInfo'
+        "400":
+          description: Invalid book ID
         "404":
           description: Book not found
         "401":
@@ -625,41 +611,41 @@ paths:
   /api/books/{id}/read:
     post:
       tags:
-      - api-user-lists-controller
+        - api-user-lists-controller
       summary: Add book to read list
       operationId: addReadBook
       parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: integer
-          format: int64
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
       responses:
         "400":
           description: Invalid book ID
+        "404":
+          description: Book not found
+        "401":
+          description: Unauthorized
         "200":
           description: Book added to read list
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Book_BasicInfo'
-        "404":
-          description: Book not found
-        "401":
-          description: Unauthorized
   /api/auth/refresh:
     post:
       tags:
-      - api-login-controller
+        - api-login-controller
       summary: Refresh token
       operationId: refreshToken
       parameters:
-      - name: refreshToken
-        in: cookie
-        required: false
-        schema:
-          type: string
+        - name: refreshToken
+          in: cookie
+          required: false
+          schema:
+            type: string
       responses:
         "400":
           description: Invalid token
@@ -676,7 +662,7 @@ paths:
   /api/auth/logout:
     post:
       tags:
-      - api-login-controller
+        - api-login-controller
       summary: Logout
       operationId: logOut
       responses:
@@ -689,20 +675,20 @@ paths:
   /api/auth/login:
     post:
       tags:
-      - api-login-controller
+        - api-login-controller
       summary: Login
       operationId: login
       parameters:
-      - name: accessToken
-        in: cookie
-        required: false
-        schema:
-          type: string
-      - name: refreshToken
-        in: cookie
-        required: false
-        schema:
-          type: string
+        - name: accessToken
+          in: cookie
+          required: false
+          schema:
+            type: string
+        - name: refreshToken
+          in: cookie
+          required: false
+          schema:
+            type: string
       requestBody:
         content:
           application/json:
@@ -725,15 +711,15 @@ paths:
   /api/users/{username}/image:
     get:
       tags:
-      - api-profile-controller
+        - api-profile-controller
       summary: Get the profile image for a specific user
       operationId: getProfileImage
       parameters:
-      - name: username
-        in: path
-        required: true
-        schema:
-          type: string
+        - name: username
+          in: path
+          required: true
+          schema:
+            type: string
       responses:
         "404":
           description: Profile image not found
@@ -750,34 +736,34 @@ paths:
   /api/users/{username}/books:
     get:
       tags:
-      - api-user-lists-controller
+        - api-user-lists-controller
       summary: Get a user's specific list
       operationId: getUserLists
       parameters:
-      - name: username
-        in: path
-        required: true
-        schema:
-          type: string
-      - name: list
-        in: query
-        required: true
-        schema:
-          type: string
-      - name: page
-        in: query
-        required: false
-        schema:
-          type: integer
-          format: int32
-          default: 0
-      - name: size
-        in: query
-        required: false
-        schema:
-          type: integer
-          format: int32
-          default: 10
+        - name: username
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: list
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 0
+        - name: size
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 10
       responses:
         "200":
           description: List found
@@ -800,7 +786,7 @@ paths:
   /api/users/readings:
     get:
       tags:
-      - api-statistics-controller
+        - api-statistics-controller
       summary: Get users that have read the most books
       operationId: getUsersTotalReadings
       responses:
@@ -819,7 +805,7 @@ paths:
   /api/users/me:
     get:
       tags:
-      - api-user-lists-controller
+        - api-user-lists-controller
       summary: Get current user's info
       operationId: getUserInfo
       responses:
@@ -838,15 +824,15 @@ paths:
   /api/users/all:
     get:
       tags:
-      - api-statistics-controller
+        - api-statistics-controller
       summary: Get the total number of users
       operationId: getTotalUsers
       parameters:
-      - name: count
-        in: query
-        required: true
-        schema:
-          type: boolean
+        - name: count
+          in: query
+          required: true
+          schema:
+            type: boolean
       responses:
         "200":
           description: Total users found
@@ -858,16 +844,16 @@ paths:
   /api/reviews/{reviewID}:
     get:
       tags:
-      - api-review-controller
+        - api-review-controller
       summary: Get a review
       operationId: getReview
       parameters:
-      - name: reviewID
-        in: path
-        required: true
-        schema:
-          type: integer
-          format: int64
+        - name: reviewID
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
       responses:
         "404":
           description: Review not found
@@ -889,16 +875,16 @@ paths:
                 type: object
     delete:
       tags:
-      - api-review-controller
+        - api-review-controller
       summary: Delete a review
       operationId: deleteReview
       parameters:
-      - name: reviewID
-        in: path
-        required: true
-        schema:
-          type: integer
-          format: int64
+        - name: reviewID
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
       responses:
         "404":
           description: Review not found
@@ -924,82 +910,50 @@ paths:
             '*/*':
               schema:
                 type: object
-  /api/reviews/users/{username}:
-    get:
-      tags:
-      - api-review-controller
-      summary: "Get reviews by a specific user (if count = true, return the number\
-        \ of reviews)"
-      operationId: getReviewsByUser
-      parameters:
-      - name: username
-        in: path
-        required: true
-        schema:
-          type: string
-      - name: count
-        in: query
-        required: true
-        schema:
-          type: boolean
-      responses:
-        "404":
-          description: User not found
-          content:
-            '*/*':
-              schema:
-                type: object
-        "200":
-          description: Reviews found
-          content:
-            application/json:
-              schema:
-                type: integer
-                format: int32
   /api/genres:
     get:
       tags:
-      - api-statistics-controller
+        - api-statistics-controller
       summary: "Get the most read genres (if count is true, return the count of genres)"
       operationId: getMostReadGenresGeneral
       parameters:
-      - name: count
-        in: query
-        required: true
-        schema:
-          type: boolean
+        - name: count
+          in: query
+          required: true
+          schema:
+            type: boolean
       responses:
-        "204":
-          description: No content
-          content:
-            '*/*':
-              schema:
-                type: object
         "200":
           description: Most read genres found
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Genre_BasicInfo'
+        "204":
+          description: No content
+          content:
+            '*/*':
+              schema:
+                type: object
   /api/genres/me:
     get:
       tags:
-      - api-statistics-controller
+        - api-statistics-controller
       summary: Get the most read genres for the logged user
       operationId: getMostReadGenresUser
       responses:
-        "204":
-          description: No content
-          content:
-            '*/*':
-              schema:
-                type: object
         "200":
           description: Most read genres found
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Genre_BasicInfo'
+        "204":
+          description: No content
+          content:
+            '*/*':
+              schema:
+                type: object
         "401":
           description: Unauthorized
           content:
@@ -1009,15 +963,15 @@ paths:
   /api/genres/all:
     get:
       tags:
-      - api-statistics-controller
+        - api-statistics-controller
       summary: Get the total number of genres
       operationId: getTotalGenres
       parameters:
-      - name: count
-        in: query
-        required: true
-        schema:
-          type: boolean
+        - name: count
+          in: query
+          required: true
+          schema:
+            type: boolean
       responses:
         "200":
           description: Total genres found
@@ -1029,16 +983,16 @@ paths:
   /api/books/{id}/image:
     get:
       tags:
-      - api-book-controller
+        - api-book-controller
       summary: Get book image by ID
       operationId: getBookImage
       parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: integer
-          format: int32
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
       responses:
         "200":
           description: Book image correctly retrieved
@@ -1047,42 +1001,42 @@ paths:
   /api/books/recommended:
     get:
       tags:
-      - api-statistics-controller
+        - api-statistics-controller
       summary: Get recommended books for all users
       operationId: recommendedBooksGeneral
       parameters:
-      - name: page
-        in: query
-        required: false
-        schema:
-          type: integer
-          format: int32
-          default: 0
-      - name: size
-        in: query
-        required: false
-        schema:
-          type: integer
-          format: int32
-          default: 10
-      - name: by
-        in: query
-        required: true
-        schema:
-          type: string
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 0
+        - name: size
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 10
+        - name: by
+          in: query
+          required: true
+          schema:
+            type: string
       responses:
-        "200":
-          description: Recommended books found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Book_GenreBookBasicView'
         "204":
           description: No content
           content:
             '*/*':
               schema:
                 type: object
+        "200":
+          description: Recommended books found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Book_GenreBookBasicView'
         "400":
           description: Bad request
           content:
@@ -1092,29 +1046,29 @@ paths:
   /api/books/me:
     get:
       tags:
-      - api-user-lists-controller
+        - api-user-lists-controller
       summary: Get current user's specific list
       operationId: getCurrentUserLists
       parameters:
-      - name: list
-        in: query
-        required: true
-        schema:
-          type: string
-      - name: page
-        in: query
-        required: false
-        schema:
-          type: integer
-          format: int32
-          default: 0
-      - name: size
-        in: query
-        required: false
-        schema:
-          type: integer
-          format: int32
-          default: 10
+        - name: list
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 0
+        - name: size
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 10
       responses:
         "200":
           description: List found
@@ -1137,42 +1091,42 @@ paths:
   /api/books/me/recommended:
     get:
       tags:
-      - api-statistics-controller
+        - api-statistics-controller
       summary: Get recommended books for the logged user
       operationId: recommendedBooks
       parameters:
-      - name: page
-        in: query
-        required: false
-        schema:
-          type: integer
-          format: int32
-          default: 0
-      - name: size
-        in: query
-        required: false
-        schema:
-          type: integer
-          format: int32
-          default: 10
-      - name: by
-        in: query
-        required: true
-        schema:
-          type: string
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 0
+        - name: size
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 10
+        - name: by
+          in: query
+          required: true
+          schema:
+            type: string
       responses:
-        "200":
-          description: Recommended books found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Book_GenreBookBasicView'
         "204":
           description: No content
           content:
             '*/*':
               schema:
                 type: object
+        "200":
+          description: Recommended books found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Book_GenreBookBasicView'
         "400":
           description: Bad request
           content:
@@ -1188,15 +1142,15 @@ paths:
   /api/books/all:
     get:
       tags:
-      - api-statistics-controller
+        - api-statistics-controller
       summary: Get the total number of books
       operationId: getTotalBooks
       parameters:
-      - name: count
-        in: query
-        required: true
-        schema:
-          type: boolean
+        - name: count
+          in: query
+          required: true
+          schema:
+            type: boolean
       responses:
         "200":
           description: Total books found
@@ -1208,15 +1162,15 @@ paths:
   /api/authors:
     get:
       tags:
-      - api-statistics-controller
+        - api-statistics-controller
       summary: "Get the most read authors (if count is true, return the count of authors)"
       operationId: getMostReadAuthorsGeneral
       parameters:
-      - name: count
-        in: query
-        required: true
-        schema:
-          type: boolean
+        - name: count
+          in: query
+          required: true
+          schema:
+            type: boolean
       responses:
         "204":
           description: No content
@@ -1233,7 +1187,7 @@ paths:
   /api/authors/me:
     get:
       tags:
-      - api-statistics-controller
+        - api-statistics-controller
       summary: Get the most read authors for the logged user
       operationId: getMostReadAuthorsUser
       responses:
@@ -1258,15 +1212,15 @@ paths:
   /api/authors/all:
     get:
       tags:
-      - api-statistics-controller
+        - api-statistics-controller
       summary: Get the total number of authors
       operationId: getTotalAuthors
       parameters:
-      - name: count
-        in: query
-        required: true
-        schema:
-          type: boolean
+        - name: count
+          in: query
+          required: true
+          schema:
+            type: boolean
       responses:
         "200":
           description: Total authors found
@@ -1278,16 +1232,16 @@ paths:
   /api/books/{id}/lists:
     delete:
       tags:
-      - api-user-lists-controller
+        - api-user-lists-controller
       summary: Remove book from all lists
       operationId: removeBookFromLists
       parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: integer
-          format: int64
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
       responses:
         "400":
           description: Invalid book ID
@@ -1459,8 +1413,8 @@ components:
         status:
           type: string
           enum:
-          - SUCCESS
-          - FAILURE
+            - SUCCESS
+            - FAILURE
         message:
           type: string
         error:
@@ -1472,25 +1426,6 @@ components:
           type: string
         password:
           type: string
-    User_BasicInfo:
-      type: object
-      properties:
-        readBooks:
-          type: array
-          items:
-            $ref: '#/components/schemas/Book_BasicInfo'
-        readingBooks:
-          type: array
-          items:
-            $ref: '#/components/schemas/Book_BasicInfo'
-        wantedBooks:
-          type: array
-          items:
-            $ref: '#/components/schemas/Book_BasicInfo'
-        role:
-          type: array
-          items:
-            type: string
     UserBasicView_UserBasicView:
       type: object
     UserBasicView:
@@ -1520,6 +1455,25 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Book_Username'
+        role:
+          type: array
+          items:
+            type: string
+    User_BasicInfo:
+      type: object
+      properties:
+        readBooks:
+          type: array
+          items:
+            $ref: '#/components/schemas/Book_BasicInfo'
+        readingBooks:
+          type: array
+          items:
+            $ref: '#/components/schemas/Book_BasicInfo'
+        wantedBooks:
+          type: array
+          items:
+            $ref: '#/components/schemas/Book_BasicInfo'
         role:
           type: array
           items:
