@@ -52,6 +52,7 @@
 - [Instalación](https://github.com/CodeURJC-DAW-2023-24/webapp03/tree/API-REST?tab=readme-ov-file#%EF%B8%8F-instalaci%C3%B3n)
 - [Creación de imagen de la aplicación](https://github.com/CodeURJC-DAW-2023-24/webapp03/tree/API-REST?tab=readme-ov-file#-Creaci%C3%B3n-de-imagen-de-la-aplicaci%C3%B3n)
 - [Despliegue de la aplicación en una máquina virtual](https://github.com/CodeURJC-DAW-2023-24/webapp03/tree/API-REST?tab=readme-ov-file#-despliegue-de-la-aplicaci%C3%B3n-en-una-m%C3%A1quina-virtual)
+- [Acceso a la aplicación](https://github.com/CodeURJC-DAW-2023-24/webapp03/tree/API-REST?tab=readme-ov-file#-acceso-a-la-aplicaci%C3%B3n)
 - [Documentación OpenAPI](https://github.com/CodeURJC-DAW-2023-24/webapp03/tree/API-REST?tab=readme-ov-file#-documentaci%C3%B3n-openapi)
 - [Participación](https://github.com/CodeURJC-DAW-2023-24/webapp03/tree/API-REST?tab=readme-ov-file#-participaci%C3%B3n)
 
@@ -336,6 +337,16 @@ Una vez ya ha sido detenida, se puede volver a arrancar con:
     ```
 
 Esto debe ejecutarse en la carpeta "docker" del repositorio.
+
+## 🗝️ Acceso a la aplicación
+Una vez inicializada la aplicación en el escritorio remoto y accedido a la [url](https://10.100.139.28:8443) y, con el fin de poder acceder a todas las funcionalidades, es necesario iniciar sesión. Para ello, se pueden usar las siguientes credenciales:
+
+| Usuario       | Contraseña |
+|---------------|------------|
+| BookReader_14 | pass       |
+| FanBook_785   | pass       |
+| YourReader    | pass       |
+| AdminReader   | adminpass  |
 
 ## 🎯 Documentación OpenAPI
 Se puede acceder a la documentación de la API REST [aquí](https://github.com/CodeURJC-DAW-2023-24/webapp03/blob/API-REST/api-docs/api-docs.yaml).
