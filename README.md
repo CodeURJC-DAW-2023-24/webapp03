@@ -52,7 +52,7 @@
 - [Instalación](https://github.com/CodeURJC-DAW-2023-24/webapp03/tree/API-REST?tab=readme-ov-file#%EF%B8%8F-instalaci%C3%B3n)
 - [Creación de imagen de la aplicación](https://github.com/CodeURJC-DAW-2023-24/webapp03/tree/API-REST?tab=readme-ov-file#-Creaci%C3%B3n-de-imagen-de-la-aplicaci%C3%B3n)
 - [Despliegue de la aplicación en una máquina virtual](https://github.com/CodeURJC-DAW-2023-24/webapp03/tree/API-REST?tab=readme-ov-file#-despliegue-de-la-aplicaci%C3%B3n-en-una-m%C3%A1quina-virtual)
-- [Acceso a la aplicación](https://github.com/CodeURJC-DAW-2023-24/webapp03/tree/API-REST?tab=readme-ov-file#-acceso-a-la-aplicaci%C3%B3n)
+- [Acceso a la aplicación](https://github.com/CodeURJC-DAW-2023-24/webapp03/tree/API-REST?tab=readme-ov-file#%EF%B8%8F-acceso-a-la-aplicaci%C3%B3n)
 - [Documentación OpenAPI](https://github.com/CodeURJC-DAW-2023-24/webapp03/tree/API-REST?tab=readme-ov-file#-documentaci%C3%B3n-openapi)
 - [Participación](https://github.com/CodeURJC-DAW-2023-24/webapp03/tree/API-REST?tab=readme-ov-file#-participaci%C3%B3n)
 
