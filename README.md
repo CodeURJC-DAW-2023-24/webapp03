@@ -52,6 +52,7 @@
 - [Instalación](https://github.com/CodeURJC-DAW-2023-24/webapp03/tree/API-REST?tab=readme-ov-file#%EF%B8%8F-instalaci%C3%B3n)
 - [Creación de imagen de la aplicación](https://github.com/CodeURJC-DAW-2023-24/webapp03/tree/API-REST?tab=readme-ov-file#-Creaci%C3%B3n-de-imagen-de-la-aplicaci%C3%B3n)
 - [Despliegue de la aplicación en una máquina virtual](https://github.com/CodeURJC-DAW-2023-24/webapp03/tree/API-REST?tab=readme-ov-file#-despliegue-de-la-aplicaci%C3%B3n-en-una-m%C3%A1quina-virtual)
+- [Documentación OpenAPI](https://github.com/CodeURJC-DAW-2023-24/webapp03/tree/API-REST?tab=readme-ov-file#-documentaci%C3%B3n-openapi)
 - [Participación](https://github.com/CodeURJC-DAW-2023-24/webapp03/tree/API-REST?tab=readme-ov-file#-participaci%C3%B3n)
 
 ## 💻 Autores:
@@ -336,6 +337,10 @@ Una vez ya ha sido detenida, se puede volver a arrancar con:
 
 Esto debe ejecutarse en la carpeta "docker" del repositorio.
 
+## 🎯 Documentación OpenAPI
+Se puede acceder a la documentación de la API REST [aquí](https://github.com/CodeURJC-DAW-2023-24/webapp03/blob/API-REST/api-docs/api-docs.yaml).
+
+Alternativamente, se puede visualizar la interfaz web de la misma [en este enlace](https://rawcdn.githack.com/CodeURJC-DAW-2023-24/webapp03/81f5ac549a954664b2b7c8d3b4cced4e53f14eee/api-docs/api-docs.html).
 
 ## 📋 Participación
 
