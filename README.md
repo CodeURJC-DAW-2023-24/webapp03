@@ -351,7 +351,7 @@ Una vez inicializada la aplicación en el escritorio remoto y accedido a la [url
 ## 🎯 Documentación OpenAPI
 Se puede acceder a la documentación de la API REST [aquí](https://github.com/CodeURJC-DAW-2023-24/webapp03/blob/main/api-docs/api-docs.yaml).
 
-Alternativamente, se puede visualizar la interfaz web de la misma [en este enlace](https://rawcdn.githack.com/CodeURJC-DAW-2023-24/webapp03/81f5ac549a954664b2b7c8d3b4cced4e53f14eee/api-docs/api-docs.html).
+Alternativamente, se puede visualizar la interfaz web de la misma [en este enlace](https://rawcdn.githack.com/CodeURJC-DAW-2023-24/webapp03/947c4bef0b3752269297d5dd9bac76227e95ba83/api-docs/api-docs.html).
 
 ## 📋 Participación
 
