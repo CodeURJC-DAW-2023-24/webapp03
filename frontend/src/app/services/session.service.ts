@@ -17,7 +17,6 @@ export class LoginService {
   user: User | undefined;
 
   constructor(private httpClient: HttpClient) {
-    this.checkLogged();
   }
 
   checkLogged() {

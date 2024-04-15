@@ -5,6 +5,7 @@ import {Book} from "../../models/book.model";
 import {LoginService} from "../../services/session.service";
 import {Review} from "../../models/review.model";
 import {ReviewService} from "../../services/review.service";
+import {AlgorithmsService} from "../../services/algorithms.service";
 
 @Component({
   selector: "app-landing",
@@ -14,9 +15,8 @@ import {ReviewService} from "../../services/review.service";
 export class LandingComponent {
   title = "Bookmarks";
 
-  constructor(private http: HttpClient, public bookService: BookService, public loginService: LoginService, public reviewService: ReviewService) {
+  constructor(private http: HttpClient, public bookService: BookService, public loginService: LoginService, public reviewService: ReviewService, public algorithmService: AlgorithmsService) {
   }
-
 
 
 }
