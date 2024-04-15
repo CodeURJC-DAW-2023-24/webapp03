@@ -1,1 +1,223 @@
-<h1>Prueba A</h1>
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+
+  <title>Bookmarks - Inicio</title>
+
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet"/>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gabarito&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/8f3c0a721b.js" crossorigin="anonymous"></script>
+
+  <!-- Chart.js script -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.js"></script>
+
+  <!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+  <!-- ----------------------------------------------------------------- -->
+</head>
+<body>
+
+<header class="bg-branding-white py-1">
+  <div class="container px-4 px-lg-5 my-5">
+    <div class="text-start text-dark">
+
+      <h1 class="display-4 fw-bolder header-welcome-text">
+        Bienvenido a Bookmarks <!-- TODO: Should write the logged user's name here (if they are logged) -->
+      </h1>
+
+      <p class="lead fw-normal text-white-50 mb-0">"Nuestras vidas se definen por las oportunidades,
+        incluso las
+        que perdemos"<br>- F. Scott Fitzgerald
+        Has iniciado sesión como administrador <!-- TODO: Should write this only if admin -->
+      </p>
+    </div>
+  </div>
+</header>
+
+<!-- Page content-->
+<div class="container">
+  <div class="row">
+    <!-- Blog entries-->
+    <div class="col-lg-8">
+      <!-- Featured book (THE FEATURED BOOK SHOULD BE STATIC AND ALWAYS APPEARS ON THE LANDING PAGE -->
+      <h3 class="fw-semibold mb-4">Más de tu autor más leído - Del autor más
+        leído</h3> <!-- TODO: Control this for logged and not logged users -->
+      <!-- Featured book-->
+      <div class="card mb-4 featured-book">
+        <div class="img-container-featured">
+          <img class="card-img-top" src="TODO: BOOKIMAGEURL" alt="bookImageURL goes here"> <!-- TODO: Add the image URL here of a book-->
+               alt="Libro"/>
+        </div>
+        <div class="card-body">
+          <div class="small text-muted">bookDate</div> <!-- TODO: Book release date goes here -->
+          <!-- Post date goes here, not book release date -->
+          <h2 class="card-title">bookTitle</h2> <!-- TODO: Book title goes here -->
+          <p class="card-text">bookAuthor</p> <!-- TODO: Book author goes here -->
+          <p class="card-text">bookDescription</p> <!-- TODO: Book description goes here -->
+          <a class="btn btn-primary" href="book/bookID">Leer más</a> <!-- TODO: Book ID goes here in the URL -->
+        </div>
+      </div>
+
+      <!-- Nested row for non-featured blog posts. THESE POSTS MUST BE DYNAMICALLY LOADED (AJAX + SPRINGBOOT ,using templates) -->
+      <hr class="my-0"/>
+      <h3 class="fw-semibold mb-4 mt-4">Basado en tus géneros más leídos - Basado en los
+        géneros más leídos</h3> <!-- TODO: Control this for logged and not logged users -->
+      <div class="row" id="post-container">
+        <div class="col-lg-6" id="left-post-column">
+          <!-- Blog post (TODO: These are the posts that apear on the left side) -->
+
+          <div class="card mb-4 blog-post">
+            <div class="img-container">
+              <!-- Image goes here -->
+              <a href="#"><img class="card-img-top"
+                                src="imageString" alt="..."/></a> <!-- TODO: Add the image URL here of a book-->
+
+            </div>
+            <div class="card-body">
+              <!-- Text and buttons go here -->
+              <div class="small text-muted">releaseDate</div> <!-- TODO: Book release date goes here -->
+              <h2 class="card-title h4">title</h2> <!-- TODO: Book title goes here -->
+              <p class="card-text">authorString</p> <!-- TODO: Book author goes here -->
+              <p class="card-text">Género: genre</p> <!-- TODO: Book genre goes here -->
+              <a class="btn btn-primary" href="book/ID">Leer más</a> <!-- TODO: Book ID goes here in the URL -->
+            </div>
+          </div>
+
+        </div>
+
+        <div class="col-lg-6" id="right-post-column">
+          <!-- Blog post (TODO: These are the posts that appear on the right side) -->
+          <div class="card mb-4 blog-post">
+            <div class="img-container">
+              <!-- Image goes here -->
+              <a href="#!"><img class="card-img-top"
+                                src="imageString" alt="..."/></a> <!-- TODO: Add the image URL here of a book-->
+
+            </div>
+            <div class="card-body">
+              <!-- Text and buttons go here -->
+              <div class="small text-muted">releaseDate</div> <!-- TODO: Book release date goes here -->
+              <h2 class="card-title h4">title</h2> <!-- TODO: Book title goes here -->
+              <p class="card-text">authorString</p> <!-- TODO: Book author goes here -->
+              <p class="card-text">Género: genre</p> <!-- TODO: Book genre goes here -->
+              <a class="btn btn-primary" href="book/ID">Leer más</a> <!-- TODO: Book ID goes here in the URL -->
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- LOAD MORE BBUTTON -->
+      <nav aria-label="Pagination">
+        <hr class="my-0"/>
+        <ul class="pagination justify-content-center my-4 load-more-container">
+          <li class="btn btn-secondary" id="load-more-btn">
+            <label id="load-more-label">Cargar más</label>
+            <div id="load-more-spinner" class="loader-in-btn" role="status">
+            </div>
+          </li>
+        </ul>
+      </nav>
+    </div>
+
+
+    <!-- Side widgets-->
+    <div class="col-lg-4">
+      <h3 class="fw-semibold mb-4">Explora más</h3>
+      <!-- Users widget-->
+      <div class="card mb-4">
+        <!-- TODO: Control this for logged and not logged users -->
+        <div class="card-header">Acceso usuarios</div>
+        <div class="card-body">
+          <p>Encuentra nuevos libros, guarda los tuyos, ¡únete a Bookmarks!</p>
+          <div class="input-group">
+            <a href="/login">
+              <button class="btn btn-primary" class="btn btn-primary" type="button">Iniciar sesión</button>
+            </a>
+            <a href="/signup">
+              <button class="btn btn-primary" class="btn btn-primary" type="button">Crear cuenta</button>
+            </a>
+          </div>
+        </div>
+
+        <!-- User profile widget (TODO: This is only for logged users) -->
+        <div class="card-header">Acceso rápido a tu perfil</div>
+        <div class="card-body profile-card">
+          <img class="profile-picture bm-rounded-circle" src="profileImageString" alt="Foto de perfil"/> <!-- TODO: Add the image URL here of the logged user-->
+
+          <img class="profile-picture bm-rounded-circle" src="/assets/defaultProfilePicture.png"
+               alt="Foto de perfil"/>
+          <p class="mt-2">username</p> <!-- TODO: Add the username here -->
+          <div class="input-group">
+            <a href="/profile/username"> <!-- TODO: Add the username here -->
+              <button class="btn btn-primary" class="button-search" type="button">Ver perfil</button>
+            </a>
+
+          </div>
+        </div>
+      </div>
+      <!-- Categories widget-->
+      <div class="card mb-4">
+        <div class="card-header">Top 5 géneros más populares</div>
+        <div class="card-body">
+          <div id="mostReadGenresChartContainer">
+            <div id="mostReadGenresSpinner" class="loader-green" role="status">
+            </div>
+            <canvas id="mostReadGenresChart"></canvas>
+          </div>
+
+        </div>
+      </div>
+      <!-- Side widget-->
+      <div class="card mb-4">
+        <div class="card-header">Más sobre Bookmarks</div>
+        <div class="card-body">
+          <div class="row">
+            <ul class="list-styled mb-0 stats-list">
+              <li>
+                <div class="stats-list-item">
+                  <h6 class="fw-normal">Libros totales: </h6>
+                  <h6 class="fw-bold stats-number">
+                    totalSiteBooks <!-- TODO: Add the total number of books in the site -->
+                  </h6>
+                </div>
+              </li>
+              <li>
+                <div class="stats-list-item">
+                  <h6 class="fw-normal">Géneros totales: </h6>
+                  <h6 class="fw-bold stats-number">
+                    totalSiteGenres <!-- TODO: Add the total number of genres in the site -->
+                  </h6>
+                </div>
+              </li>
+              <li>
+                <div class="stats-list-item">
+                  <h6 class="fw-normal">Autores totales: </h6>
+                  <h6 class="fw-bold stats-number">
+                    totalSiteAuthors <!-- TODO: Add the total number of authors in the site -->
+                  </h6>
+                </div>
+              </li>
+              <li>
+                <div class="stats-list-item">
+                  <h6 class="fw-normal">Usuarios totales: </h6>
+                  <h6 class="fw-bold stats-number">
+                    totalSiteUsers <!-- TODO: Add the total number of users in the site -->
+                  </h6>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>

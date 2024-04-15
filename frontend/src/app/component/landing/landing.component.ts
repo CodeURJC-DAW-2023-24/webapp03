@@ -10,7 +10,7 @@ import {AlgorithmsService} from "../../services/algorithms.service";
 @Component({
   selector: "app-landing",
   templateUrl: "./landing.component.html",
-  styleUrls: ["./landing.component.css"]
+  styleUrls: ["./landing.component.css", "../../../animations.css"]
 })
 export class LandingComponent {
   title = "Bookmarks";
