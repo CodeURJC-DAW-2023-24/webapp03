@@ -69,9 +69,9 @@
                    src="/assets/defaultProfilePicture.png" alt="Perfil"/>
               <!-- {{/user}} -->
             </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown" style="cursor: pointer">
               <!-- {{#user}} -->
-              <li><a class="dropdown-item" href="">Mi perfil</a></li> <!-- href="/profile/{{username}}" -->
+              <li  (click)="goToProfile()"><a class="dropdown-item">Mi perfil</a></li> <!-- href="/profile/{{username}}" -->
               <!-- {{/user}} -->
               <li>
                 <hr class="dropdown-divider"/>

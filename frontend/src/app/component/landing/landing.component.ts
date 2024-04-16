@@ -6,16 +6,17 @@ import {LoginService} from "../../services/session.service";
 import {Review} from "../../models/review.model";
 import {ReviewService} from "../../services/review.service";
 import {AlgorithmsService} from "../../services/algorithms.service";
+import {UserService} from "../../services/user.service";
 
 @Component({
   selector: "app-landing",
   templateUrl: "./landing.component.html",
   styleUrls: ["./landing.component.css", "../../../animations.css"]
 })
-export class LandingComponent {
+export class LandingComponent{
   title = "Bookmarks";
 
-  constructor(private http: HttpClient, public bookService: BookService, public loginService: LoginService, public reviewService: ReviewService, public algorithmService: AlgorithmsService) {
+  constructor(private http: HttpClient, public bookService: BookService, public loginService: LoginService, public reviewService: ReviewService, public algorithmService: AlgorithmsService, public profileService: UserService) {
   }
 
 
