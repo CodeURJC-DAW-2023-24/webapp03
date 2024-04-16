@@ -14,12 +14,20 @@ import { UserService } from "../../services/user.service";
 export class ProfileComponent {
   title = "Bookmarks";
 
+  role = "";
+  description = "";
+  alias = "";
+  email = "";
+
   constructor(
     private http: HttpClient, public bookService: BookService, public loginService: LoginService, public reviewService: ReviewService, public algorithmService: AlgorithmsService, public userService: UserService
   ) {
     this.userService.getUser("admin").subscribe({
       next: n => {
-        console.log(n);
+        this.role = n.roles[0];
+        this.description = n.description;
+        this.alias = n.alias;
+        this.email = n.email;
       },
       error: e => {
         console.log(e);
