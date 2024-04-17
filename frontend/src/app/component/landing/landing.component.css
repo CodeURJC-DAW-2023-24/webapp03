@@ -12513,21 +12513,21 @@ header {
 }
 
 .btn-primary:hover {
-  background-color: var(--branding-dark-green) !important;
-  border-color: var(--branding-dark-green) !important;
-  color: var(--branding-white) !important;
+  background-color: #3C7969FF !important;
+  border-color: #3C7969FF !important;
+  color: #FFFFFCFF !important;
 }
 
 .btn-primary:focus {
-  background-color: var(--branding-dark-green) !important;
-  border-color: var(--branding-dark-green) !important;
-  color: var(--branding-white) !important;
+  background-color: #3C7969FF !important;
+  border-color: #3C7969FF !important;
+  color: #FFFFFCFF !important;
 }
 
 .btn-primary:active {
-  background-color: var(--branding-dark-green) !important;
-  border-color: var(--branding-dark-green) !important;
-  color: var(--branding-white) !important;
+  background-color: #3C7969FF !important;
+  border-color: #3C7969FF !important;
+  color: #FFFFFCFF !important;
 }
 
 .btn-primary:disabled {
@@ -12575,4 +12575,12 @@ header {
 
 .input-group{
   gap: 10px !important;
+}
+
+.landing-hero{
+  display: flex;
+}
+
+.list-styled{
+  padding-left: 12px !important;
 }

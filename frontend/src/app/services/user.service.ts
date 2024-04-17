@@ -35,4 +35,8 @@ export class UserService {
     ) as Observable<User[]>;
   }
 
+  downloadProfilePicture(username: string) {
+    return '/api/users/' + username + '/image';
+  }
+
 }

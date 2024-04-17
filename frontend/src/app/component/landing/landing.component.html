@@ -28,15 +28,15 @@
   <div class="container px-4 px-lg-5 my-5">
     <div class="text-start text-dark">
 
-      <h1 class="display-4 fw-bolder header-welcome-text">
-        Bienvenido a Bookmarks <!-- TODO: Should write the logged user's name here (if they are logged) -->
+      <h1 class="display-4 fw-bolder header-welcome-text landing-hero">
+        <p>Bienvenido a Bookmarks</p>
+        <p *ngIf="heroNameVisible">,&nbsp;{{ loggedUsername }}</p>
       </h1>
 
       <p class="lead fw-normal text-white-50 mb-0">"Nuestras vidas se definen por las oportunidades,
         incluso las
         que perdemos"<br>- F. Scott Fitzgerald
-        Has iniciado sesión como administrador <!-- TODO: Should write this only if admin -->
-      </p>
+      <p *ngIf="isAdmin">Has iniciado sesión como administrador</p>
     </div>
   </div>
 </header>
@@ -47,67 +47,72 @@
     <!-- Blog entries-->
     <div class="col-lg-8">
       <!-- Featured book (THE FEATURED BOOK SHOULD BE STATIC AND ALWAYS APPEARS ON THE LANDING PAGE -->
-      <h3 class="fw-semibold mb-4">Más de tu autor más leído - Del autor más
-        leído</h3> <!-- TODO: Control this for logged and not logged users -->
+      <h3 class="fw-semibold mb-4">
+        <p *ngIf="loggedIn; else notLoggedRecommendedAuthor">Más de tu autor más leído</p>
+        <ng-template #notLoggedRecommendedAuthor>
+          <p>Del autor más leído</p>
+        </ng-template>
+      </h3>
       <!-- Featured book-->
-      <div class="card mb-4 featured-book">
+      <div class="card mb-4 featured-book" *ngFor="let book of recommendedBooksAuthor">
         <div class="img-container-featured">
-          <img class="card-img-top" src="TODO: BOOKIMAGEURL" alt="bookImageURL goes here"> <!-- TODO: Add the image URL here of a book-->
-               alt="Libro"/>
+          <img class="card-img-top" [src]="bookImage(book.ID)" alt="bookImageURL goes here">
         </div>
         <div class="card-body">
-          <div class="small text-muted">bookDate</div> <!-- TODO: Book release date goes here -->
-          <!-- Post date goes here, not book release date -->
-          <h2 class="card-title">bookTitle</h2> <!-- TODO: Book title goes here -->
-          <p class="card-text">bookAuthor</p> <!-- TODO: Book author goes here -->
-          <p class="card-text">bookDescription</p> <!-- TODO: Book description goes here -->
-          <a class="btn btn-primary" href="book/bookID">Leer más</a> <!-- TODO: Book ID goes here in the URL -->
+          <!-- The ngFor is to iterate over the recommended books of the author (so if the list is empty, it won't give any errors, since it takes a bit for the REST API to respond to the request) -->
+          <div class="small text-muted">{{ book.releaseDate }}</div>
+          <h2 class="card-title">{{ book.title }}</h2>
+          <p class="card-text">{{ book.authorString }}</p>
+          <p class="card-text">{{ book.description }}</p>
+          <a class="btn btn-primary" href="book/bookID">Leer más</a>
         </div>
       </div>
 
       <!-- Nested row for non-featured blog posts. THESE POSTS MUST BE DYNAMICALLY LOADED (AJAX + SPRINGBOOT ,using templates) -->
       <hr class="my-0"/>
-      <h3 class="fw-semibold mb-4 mt-4">Basado en tus géneros más leídos - Basado en los
-        géneros más leídos</h3> <!-- TODO: Control this for logged and not logged users -->
+      <h3 class="fw-semibold mb-4 mt-4">
+        <p *ngIf="loggedIn; else notLoggedRecommendedGenre">Basado en tus géneros más leídos</p>
+        <ng-template #notLoggedRecommendedGenre>
+          <p>Basado en los géneros más leídos</p>
+        </ng-template>
+      </h3>
       <div class="row" id="post-container">
         <div class="col-lg-6" id="left-post-column">
-          <!-- Blog post (TODO: These are the posts that apear on the left side) -->
-
-          <div class="card mb-4 blog-post">
+          <!-- Blog post LEFT SIDE -->
+          <div class="card mb-4 blog-post" *ngFor="let genreLeftBook of recommendedBooksGenreLeft">
             <div class="img-container">
               <!-- Image goes here -->
               <a href="#"><img class="card-img-top"
-                                src="imageString" alt="..."/></a> <!-- TODO: Add the image URL here of a book-->
-
+                               [src]="bookImage(genreLeftBook.ID)" alt="..."/></a>
             </div>
             <div class="card-body">
               <!-- Text and buttons go here -->
-              <div class="small text-muted">releaseDate</div> <!-- TODO: Book release date goes here -->
-              <h2 class="card-title h4">title</h2> <!-- TODO: Book title goes here -->
-              <p class="card-text">authorString</p> <!-- TODO: Book author goes here -->
-              <p class="card-text">Género: genre</p> <!-- TODO: Book genre goes here -->
-              <a class="btn btn-primary" href="book/ID">Leer más</a> <!-- TODO: Book ID goes here in the URL -->
+              <div class="small text-muted">{{ genreLeftBook.releaseDate }}</div>
+              <h2 class="card-title h4">{{ genreLeftBook.title }}</h2>
+              <p class="card-text">{{ genreLeftBook.authorString }}</p>
+              <p class="card-text">Género: {{ genreLeftBook.genre?.name }}</p>
+              <a class="btn btn-primary" href="book/ID">Leer más</a>
             </div>
           </div>
 
         </div>
 
         <div class="col-lg-6" id="right-post-column">
-          <!-- Blog post (TODO: These are the posts that appear on the right side) -->
-          <div class="card mb-4 blog-post">
+          <!-- Blog post RIGHT SIDE -->
+          <div class="card mb-4 blog-post" *ngFor="let genreRightBook of recommendedBooksGenreRight">
             <div class="img-container">
               <!-- Image goes here -->
               <a href="#!"><img class="card-img-top"
-                                src="imageString" alt="..."/></a> <!-- TODO: Add the image URL here of a book-->
+                                [src]="bookImage(genreRightBook.ID)" alt="..."/></a>
 
             </div>
             <div class="card-body">
               <!-- Text and buttons go here -->
-              <div class="small text-muted">releaseDate</div> <!-- TODO: Book release date goes here -->
-              <h2 class="card-title h4">title</h2> <!-- TODO: Book title goes here -->
-              <p class="card-text">authorString</p> <!-- TODO: Book author goes here -->
-              <p class="card-text">Género: genre</p> <!-- TODO: Book genre goes here -->
-              <a class="btn btn-primary" href="book/ID">Leer más</a> <!-- TODO: Book ID goes here in the URL -->
+              <div class="small text-muted">{{ genreRightBook.releaseDate }}</div>
+              <h2 class="card-title h4">{{ genreRightBook.title }}</h2>
+              <p class="card-text">{{ genreRightBook.authorString }}</p>
+              <p class="card-text">Género: {{ genreRightBook.genre?.name }}</p>
+              <a class="btn btn-primary" href="book/ID">Leer más</a>
             </div>
           </div>
 
@@ -133,36 +138,38 @@
       <h3 class="fw-semibold mb-4">Explora más</h3>
       <!-- Users widget-->
       <div class="card mb-4">
-        <!-- TODO: Control this for logged and not logged users -->
-        <div class="card-header">Acceso usuarios</div>
-        <div class="card-body">
-          <p>Encuentra nuevos libros, guarda los tuyos, ¡únete a Bookmarks!</p>
-          <div class="input-group">
-            <a href="/login">
-              <button class="btn btn-primary" class="btn btn-primary" type="button">Iniciar sesión</button>
-            </a>
-            <a href="/signup">
-              <button class="btn btn-primary" class="btn btn-primary" type="button">Crear cuenta</button>
-            </a>
+        <ng-container *ngIf="!loggedIn; else loggedUserActionsPanel">
+          <div class="card-header">Acceso usuarios</div>
+          <div class="card-body">
+            <p>Encuentra nuevos libros, guarda los tuyos, ¡únete a Bookmarks!</p>
+            <div class="input-group">
+              <a href="/login">
+                <button class="btn btn-primary" class="btn btn-primary" type="button">Iniciar sesión</button>
+              </a>
+              <a href="/signup">
+                <button class="btn btn-primary" class="btn btn-primary" type="button">Crear cuenta</button>
+              </a>
+            </div>
           </div>
-        </div>
+        </ng-container>
 
-        <!-- User profile widget (TODO: This is only for logged users) -->
-        <div class="card-header">Acceso rápido a tu perfil</div>
-        <div class="card-body profile-card">
-          <img class="profile-picture bm-rounded-circle" src="profileImageString" alt="Foto de perfil"/> <!-- TODO: Add the image URL here of the logged user-->
 
-          <img class="profile-picture bm-rounded-circle" src="/assets/defaultProfilePicture.png"
-               alt="Foto de perfil"/>
-          <p class="mt-2">username</p> <!-- TODO: Add the username here -->
-          <div class="input-group">
-            <a href="/profile/username"> <!-- TODO: Add the username here -->
-              <button class="btn btn-primary" class="button-search" type="button">Ver perfil</button>
-            </a>
+        <!-- User profile widget -->
+        <ng-template #loggedUserActionsPanel>
+          <div class="card-header">Acceso rápido a tu perfil</div>
+          <div class="card-body profile-card">
+            <img class="profile-picture bm-rounded-circle" [src]="profilePicture(loggedUsername)" alt="Foto de perfil"/>
+            <p class="mt-2">{{ loggedUsername }}</p>
+            <div class="input-group">
+              <a href="/profile/{{loggedUsername}}">
+                <button class="btn btn-primary" class="button-search" type="button">Ver perfil</button>
+              </a>
 
+            </div>
           </div>
-        </div>
+        </ng-template>
       </div>
+
       <!-- Categories widget-->
       <div class="card mb-4">
         <div class="card-header">Top 5 géneros más populares</div>
@@ -185,7 +192,7 @@
                 <div class="stats-list-item">
                   <h6 class="fw-normal">Libros totales: </h6>
                   <h6 class="fw-bold stats-number">
-                    totalSiteBooks <!-- TODO: Add the total number of books in the site -->
+                    {{ totalSiteBooks }}
                   </h6>
                 </div>
               </li>
@@ -193,7 +200,7 @@
                 <div class="stats-list-item">
                   <h6 class="fw-normal">Géneros totales: </h6>
                   <h6 class="fw-bold stats-number">
-                    totalSiteGenres <!-- TODO: Add the total number of genres in the site -->
+                    {{ totalSiteGenres }}
                   </h6>
                 </div>
               </li>
@@ -201,7 +208,7 @@
                 <div class="stats-list-item">
                   <h6 class="fw-normal">Autores totales: </h6>
                   <h6 class="fw-bold stats-number">
-                    totalSiteAuthors <!-- TODO: Add the total number of authors in the site -->
+                    {{ totalSiteAuthors }}
                   </h6>
                 </div>
               </li>
@@ -209,7 +216,7 @@
                 <div class="stats-list-item">
                   <h6 class="fw-normal">Usuarios totales: </h6>
                   <h6 class="fw-bold stats-number">
-                    totalSiteUsers <!-- TODO: Add the total number of users in the site -->
+                    {{ totalSiteUsers }}
                   </h6>
                 </div>
               </li>

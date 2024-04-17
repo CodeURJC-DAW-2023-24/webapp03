@@ -1,8 +1,7 @@
 import {Injectable} from "@angular/core";
 import {HttpClient, HttpParams} from "@angular/common/http";
-import {Observable} from "rxjs";
+import {Observable, throwError} from "rxjs";
 import {catchError} from "rxjs/operators";
-import {throwError} from "rxjs";
 import {Book} from "../models/book.model";
 
 @Injectable({
@@ -65,8 +64,8 @@ export class BookService {
     ) as Observable<any>;
   }
 
-  //Download book cover image
-  downloadCover(id: number): Observable<Blob> {
+  //Get book cover image as blob
+  getCover(id: number): Observable<Blob> {
     return this.httpClient.get(this.baseUrl + id + "/image", {responseType: "blob"}).pipe(
       catchError(error => this.handleError(error))
     ) as Observable<Blob>;
@@ -76,6 +75,11 @@ export class BookService {
     console.log("ERROR: ");
     console.error(error);
     return throwError(() => new Error("Server error (" + error.status + "): " + error.statusText + ")"));
+  }
+
+  // Download cover image to assets folder
+  downloadCover(id: number) {
+    return '/api/books/' + id + '/image';
   }
 
 }

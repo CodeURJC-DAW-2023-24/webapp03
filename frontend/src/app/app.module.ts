@@ -8,6 +8,7 @@ import {LandingComponent} from "./component/landing/landing.component";
 import {FooterComponent} from "./component/footer/footer.component";
 import {NavbarComponent} from "./component/navbar/navbar.component";
 import {ProfileComponent} from "./component/profile/profile.component";
+import {NgOptimizedImage} from "@angular/common";
 
 @NgModule({
   declarations: [
@@ -17,11 +18,12 @@ import {ProfileComponent} from "./component/profile/profile.component";
     ProfileComponent,
     FooterComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        HttpClientModule,
+        NgOptimizedImage
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })
