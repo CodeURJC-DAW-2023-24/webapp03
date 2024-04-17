@@ -47,10 +47,10 @@
         </div>
       </div>
       <div class="col-lg-6">
-        <!--TODO: Add buttons
         <div class="about-avatar">
-          <img class="avatar-image" src="data:image/png;base64, {{profileImageString}}" title alt>
+          <img class="avatar-image" [src]="profileImage()" title alt>
         </div>
+        <!--TODO: Add buttons
         <div class="buttons-container">
           {{#currentUser}}
           {{^admin}}
@@ -217,11 +217,11 @@
             -->
               <div class="single_advisor_profile wow fadeInUp" data-wow-delay="0.3s"
                    style="visibility: visible; animation-delay: 0.3s; animation-name: fadeInUp;">
-                <!--TODO: Add imageString
+
                 <div class="in-card-book-cover-image"><img
-                  src="data:image/png;base64,{{imageString}}" alt>
+                   alt>
                 </div>
-                -->
+
                 <div class="single_advisor_details_info">
                   <h6>{{title}}</h6>
                   <!--TODO: Add AuthorString

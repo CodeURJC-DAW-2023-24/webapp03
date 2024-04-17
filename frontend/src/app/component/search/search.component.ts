@@ -2,7 +2,7 @@ import {Component, OnInit} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {UserService} from "../../services/user.service";
 import {BookService} from "../../services/book.service";
-import {SearchService} from "../../services/search.service";
+import {NavbarService} from "../../services/navbar.service";
 import {User} from "../../models/user.model";
 import {Book} from "../../models/book.model";
 import {Router} from "@angular/router";
@@ -19,12 +19,11 @@ export class SearchComponent implements OnInit {
   searchQuery = "";
 
   constructor(
-    private http: HttpClient, public userService: UserService, public bookService: BookService, private searchService: SearchService, private router: Router
+    private http: HttpClient, public userService: UserService, public bookService: BookService, private navbarService: NavbarService, private router: Router
   ) {
 
-    this.userSearch = this.searchService.getUserSearch();
-
-    this.searchService.getEvent().subscribe((event) => {
+    this.navbarService.getEvent().subscribe((event) => {
+      this.userSearch = this.navbarService.getUserSearch();
       this.searchQuery = event.query;
 
       if (this.userSearch) {
@@ -56,13 +55,19 @@ export class SearchComponent implements OnInit {
   showUser(username: string) {
     this.userService.getUser(username).subscribe({
       next: n => {
-        this.router.navigate(["/profile"]);
+        this.router.navigate(["/profile"]).then(() => {
+          this.navbarService.emitEvent(username);
+        });
       },
       error: e => {
         console.log(e);
       }
     });
 
+  }
+
+  userImage(username: string) {
+    return this.userService.downloadProfilePicture(username);
   }
 
   showBook(ID: number) {
@@ -76,8 +81,12 @@ export class SearchComponent implements OnInit {
     });
   }
 
+  bookImage(ID: number) {
+    return this.bookService.downloadCover(ID);
+  }
+
   ngOnInit() {
-    this.userSearch = this.searchService.getUserSearch();
+    this.userSearch = this.navbarService.getUserSearch();
   }
 
 }

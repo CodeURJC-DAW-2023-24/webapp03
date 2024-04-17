@@ -4,7 +4,7 @@ import { Subject } from "rxjs";
 @Injectable({
   providedIn: 'root'
 })
-export class SearchService {
+export class NavbarService {
 
   private userSearch = false;
   private eventSubject = new Subject<any>();

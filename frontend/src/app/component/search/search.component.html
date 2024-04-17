@@ -21,7 +21,7 @@
       <div class="col mb-5 user">
         <div class="card h-100">
           <!-- User image-->
-          <!--<img class="card-img-top" src="data:image/png;base64,{{profileImageString}}" alt="..." style="height: 15rem"/>-->
+          <img class="card-img-top" [src]="userImage(user.username)" alt="..." style="height: 15rem"/>
           <!-- User details-->
           <div class="card-body p-4">
             <div class="text-center">
@@ -44,7 +44,7 @@
         <div class="col mb-5 book">
           <div class="card h-100">
             <!-- Book cover image-->
-            <!--TODO: Images <img class="card-img-top" src="data:image/png;base64,{{imageString}}" alt="..."/>-->
+            <img class="card-img-top" [src]="bookImage(book.ID)" alt="..."/>
             <!-- Product details-->
             <div class="card-body p-4">
               <div class="text-center">

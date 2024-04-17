@@ -23,7 +23,7 @@ export class UserService {
   }
 
   searchUsers(username: string, page: number): Observable<User[]> {
-    let params = new HttpParams().set("query", username).set("page", page.toString());
+    let params = new HttpParams().set("query", username).set("page", page);
     return this.http.get<User[]>(API_URL, { params: params }).pipe(
       catchError((error) => throwError(error))
     ) as Observable<User[]>;

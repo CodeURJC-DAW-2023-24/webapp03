@@ -1,0 +1,496 @@
+@charset "UTF-8";
+
+:root {
+  /* BOOKMARKS BRANDING COLORS */
+  --branding-grey: #808F85;
+  --branding-brown: #583E23;
+  --branding-orange: #F9A03F;
+  --branding-peach: #F8DDA4;
+  --branding-green: #519E8A;
+  --branding-dark-green: #3a6d5e;
+  --branding-light-green: #9be6d2;
+  --branding-white: #FFFFFC;
+  --branding-light-grey: #efefef;
+  --branding-sepia: #F8F4E8;
+  --branding-darkish-grey: #494a50;
+  --branding-dark-grey: #2a2b2e;
+  /* -------- */
+}
+
+body {
+  color: #6F8BA4;
+  margin-top: 20px;
+  background-color: var(--branding-sepia) !important;
+}
+
+.section {
+  padding: 100px 0;
+  position: relative;
+}
+
+.gray-bg {
+  background-color: var(--branding-sepia);
+}
+
+img {
+  max-width: 100%;
+}
+
+img {
+  vertical-align: middle;
+  border-style: none;
+}
+
+/* About Me
+---------------------*/
+.about-text h3 {
+  font-size: 45px;
+  font-weight: 700;
+  margin: 0 0 6px;
+}
+
+@media (max-width: 767px) {
+  .about-text h3 {
+    font-size: 35px;
+  }
+}
+
+.about-text h6 {
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+@media (max-width: 767px) {
+  .about-text h6 {
+    font-size: 18px;
+  }
+}
+
+.about-text p {
+  font-size: 18px;
+  max-width: 450px;
+}
+
+.about-text p mark {
+  font-weight: 600;
+  color: #20247b;
+}
+
+.about-list {
+  padding-top: 10px;
+}
+
+.about-list .media {
+  padding: 5px 0;
+}
+
+.about-list label {
+  color: var(--branding-green);
+  font-weight: 600;
+  width: 88px;
+  margin: 0;
+  position: relative;
+}
+
+.about-list p {
+  margin: 0;
+  font-size: 15px;
+}
+
+@media (max-width: 991px) {
+  .about-avatar {
+    margin-top: 30px;
+  }
+}
+
+.about-section .counter {
+  padding: 22px 20px;
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 0 30px rgba(31, 45, 61, 0.125);
+}
+
+.about-section .counter .count-data {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.about-section .counter .count {
+  font-weight: 700;
+  color: var(--branding-orange);
+  margin: 0 0 5px;
+}
+
+.about-section .counter p {
+  font-weight: 600;
+  margin: 0;
+}
+
+mark {
+  background-image: linear-gradient(rgba(252, 83, 86, 0.6), rgba(252, 83, 86, 0.6));
+  background-size: 100% 3px;
+  background-repeat: no-repeat;
+  background-position: 0 bottom;
+  background-color: transparent;
+  padding: 0;
+  color: currentColor;
+}
+
+.theme-color {
+  color: var(--branding-orange);
+}
+
+.dark-color {
+  color: var(--branding-dark-grey);
+}
+
+.buttons-container {
+  margin-top: 10px;
+  margin-left: 10px;
+  display: flex;
+  gap: 10px;
+}
+
+.btn-primary {
+  background-color: #F8DDA4;
+  border-color: #583E23;
+  color: #583E23;
+}
+
+.btn-primary:hover {
+  background-color: #F9A03F;
+  border-color: #583E23;
+}
+
+.btn-secondary {
+  background-color: #F8DDA4;
+  border-color: #583E23;
+  color: #583E23;
+}
+
+.btn-secondary:hover {
+  background-color: #F9A03F;
+  border-color: #583E23;
+}
+
+/*Booklist styles*/
+.single_advisor_profile {
+  position: relative;
+  margin-bottom: 50px;
+  z-index: 1;
+  border-radius: 15px;
+  -webkit-box-shadow: 0 0.25rem 1rem 0 rgba(47, 91, 234, 0.125);
+  box-shadow: 0 0.25rem 1rem 0 rgba(47, 91, 234, 0.125);
+}
+
+.single_advisor_profile .advisor_thumb {
+  position: relative;
+  z-index: 1;
+  border-radius: 15px 15px 0 0;
+  margin: 0 auto;
+  padding: 30px 30px 0 30px;
+  background-color: #3f43fd;
+  overflow: hidden;
+}
+
+.single_advisor_profile .advisor_thumb::after {
+  position: absolute;
+  width: 150%;
+  height: 80px;
+  bottom: -45px;
+  left: -25%;
+  content: "";
+  background-color: #ffffff;
+  -webkit-transform: rotate(-15deg);
+  transform: rotate(-15deg);
+}
+
+@media only screen and (max-width: 575px) {
+  .single_advisor_profile .advisor_thumb::after {
+    height: 160px;
+    bottom: -90px;
+  }
+}
+
+.single_advisor_profile .advisor_thumb .social-info {
+  position: absolute;
+  z-index: 1;
+  width: 100%;
+  bottom: 0;
+  right: 30px;
+  text-align: right;
+}
+
+.single_advisor_profile .advisor_thumb .social-info a {
+  font-size: 14px;
+  color: #020710;
+  padding: 0 5px;
+}
+
+.single_advisor_profile .advisor_thumb .social-info a:hover,
+.single_advisor_profile .advisor_thumb .social-info a:focus {
+  color: #3f43fd;
+}
+
+.single_advisor_profile .advisor_thumb .social-info a:last-child {
+  padding-right: 0;
+}
+
+.single_advisor_profile .single_advisor_details_info {
+  position: relative;
+  z-index: 1;
+  padding: 30px;
+  text-align: right;
+  border-radius: 0 12px 12px 0;
+}
+
+.single_advisor_profile .single_advisor_details_info::after {
+  position: absolute;
+  z-index: 1;
+  width: 50px;
+  height: 3px;
+  background-color: var(--branding-green);
+  content: "";
+  top: 12px;
+  right: 10px;
+}
+
+.single_advisor_profile .single_advisor_details_info h6 {
+  margin-bottom: 0.25rem;
+}
+
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+  .single_advisor_profile .single_advisor_details_info h6 {
+    font-size: 14px;
+  }
+}
+
+.single_advisor_profile .single_advisor_details_info p {
+  margin-bottom: 0;
+  font-size: 14px;
+}
+
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+  .single_advisor_profile .single_advisor_details_info p {
+    font-size: 12px;
+  }
+}
+
+.booklist-container {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.col-12 {
+  display: flex;
+  gap: 10px;
+  border: solid;
+}
+
+.list-title {
+  text-align: center;
+}
+
+.col-book {
+  display: flex;
+  gap: 10px;
+  margin: 10px;
+}
+
+.bg-branding-white {
+  background-color: var(--branding-white);
+}
+
+.branding-btn-primary {
+  background-color: var(--branding-green) !important;
+  border-color: var(--branding-green) !important;
+  color: var(--branding-white) !important;
+}
+
+.branding-btn-primary:hover {
+  background-color: var(--branding-dark-green) !important;
+  border-color: var(--branding-dark-green) !important;
+  color: var(--branding-white) !important;
+}
+
+/* halo effect when clicked */
+
+.branding-btn-primary:focus {
+  box-shadow: 0 0 0 0.2rem rgba(81, 158, 138, 0.5) !important;
+}
+
+.branding-btn-secondary:focus {
+  box-shadow: 0 0 0 0.2rem rgba(128, 143, 133, 0.5) !important;
+}
+
+.profile-info-box {
+  padding: 2rem;
+  border-radius: 12px !important;
+  box-shadow: 0 0 30px rgba(31, 45, 61, 0.125);
+  background-color: var(--branding-white) !important;
+}
+
+.no-gutters {
+  margin-right: 0 !important;
+  margin-left: 0 !important;
+}
+
+.avatar-image {
+  width: 315px; /* adjust as needed */
+  height: 315px; /* adjust as needed */
+  border-radius: 12px; /* this will make the image round */
+  object-fit: cover; /* this will prevent the image from being distorted */
+}
+
+.single_advisor_profile {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 20px; /* adjust as needed */
+  background-color: var(--branding-white);
+}
+
+.single_advisor_profile .advisor_thumb {
+  width: 30%; /* adjust as needed */
+  margin-right: 20px; /* adjust as needed */
+}
+
+.single_advisor_profile .single_advisor_details_info {
+  width: 70%; /* adjust as needed */
+}
+
+@media only screen and (max-width: 575px) {
+  .single_advisor_profile {
+    flex-direction: column;
+  }
+
+  .single_advisor_profile .advisor_thumb,
+  .single_advisor_profile .single_advisor_details_info {
+    width: 100%;
+  }
+}
+
+.in-card-book-cover-image {
+  height: 150px; /* adjust as needed */
+  overflow: hidden; /* hide the parts of the image that don't fit in the container */
+  border-radius: 12px 0 0 12px; /* this will make the image round */
+}
+
+.in-card-book-cover-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* maintain aspect ratio while filling container */
+}
+
+.counter {
+  background-color: var(--branding-white) !important;
+}
+
+.single_advisor_profile{ /* has small border */
+  background-color: #fff !important;
+  border-radius: 12px;
+  box-shadow: 0 0 30px rgba(61, 53, 31, 0.12) !important;
+  max-width: none !important;
+  width: 100% !important;
+}
+
+/* background turns green when hovered */
+
+.single_advisor_profile:hover {
+  background-color: var(--branding-green) !important;
+  color: var(--branding-white) !important;
+}
+
+/* single_advisor_details_info::after turns white when hovered */
+
+.single_advisor_profile:hover .single_advisor_details_info::after {
+  background-color: var(--branding-white) !important;
+}
+
+.booklist-container{
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 1rem !important;
+}
+
+.book-list-card{
+  border-radius: 12px !important;
+  box-shadow: 0 0 30px rgba(31, 45, 61, 0.125) !important;
+  background-color: var(--branding-white) !important;
+  flex: 1 !important;
+
+}
+
+.single_advisor_details_info{
+  padding: 30px !important;
+  text-align: right !important;
+  border-radius: 0 12px 12px 0 !important;
+  padding-right: 10px !important;
+}
+
+.book-link-disabled-decorations{
+  color: var(--branding-dark-grey) !important;
+  text-decoration: none !important;
+}
+
+.card-body{
+  background-color: var(--branding-white) !important;
+  border-radius: 0 0 12px 12px !important;
+  padding: 1rem !important;
+  padding-top: 2rem !important;
+}
+
+.card-header{
+  margin-bottom: 0 !important;
+  background-color: rgba(107, 83, 38, 0.048) !important;
+  border-bottom: 1px solid rgba(33, 40, 50, 0.125) !important;
+  display:flex !important;
+  justify-content: center !important;
+  align-content: center;
+  border-radius: 12px 12px 0 0 !important;
+}
+
+.logout{
+  float:right;
+}
+
+.logout-btn{ /* has to be grey */
+  background-color: var(--branding-grey) !important;
+  border-color: var(--branding-grey) !important;
+  color: var(--branding-white) !important;
+}
+
+.logout-btn:hover{ /* turns dark grey when hovered */
+  background-color: var(--branding-dark-grey) !important;
+  border-color: var(--branding-dark-grey) !important;
+}
+
+#exportImport{
+  visibility: hidden;
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin-top: 1.5rem !important;
+  margin-right: 2rem !important;
+}
+
+#csvExportButton{ /* outlined and must be in the top right corner */
+  background-color: var(--branding-white) !important;
+  border-color: var(--branding-grey) !important;
+  color: var(--branding-grey) !important;
+}
+
+#csvExportButton:hover{ /* turns dark grey when hovered */
+  background-color: var(--branding-dark-grey) !important;
+  border-color: var(--branding-dark-grey) !important;
+  color: var(--branding-white) !important;
+}
+
+.buttons-container{
+  margin-left: 0 !important;
+
+}
+
+

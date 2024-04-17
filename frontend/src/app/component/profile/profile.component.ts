@@ -5,6 +5,7 @@ import { LoginService } from "../../services/session.service";
 import { BookService } from "../../services/book.service";
 import { HttpClient } from "@angular/common/http";
 import { UserService } from "../../services/user.service";
+import { NavbarService } from "../../services/navbar.service";
 
 @Component({
   selector: "app-profile",
@@ -14,24 +15,35 @@ import { UserService } from "../../services/user.service";
 export class ProfileComponent {
   title = "Bookmarks";
 
+  username = "";
   role = "";
   description = "";
   alias = "";
   email = "";
 
   constructor(
-    private http: HttpClient, public bookService: BookService, public loginService: LoginService, public reviewService: ReviewService, public algorithmService: AlgorithmsService, public userService: UserService
+    private http: HttpClient, public bookService: BookService, public loginService: LoginService, public reviewService: ReviewService, public algorithmService: AlgorithmsService, public userService: UserService, private navbarService: NavbarService
   ) {
-    this.userService.getUser("admin").subscribe({
-      next: n => {
-        this.role = n.roles[0];
-        this.description = n.description;
-        this.alias = n.alias;
-        this.email = n.email;
-      },
-      error: e => {
-        console.log(e);
-      }
+
+    this.navbarService.getEvent().subscribe((user) => {
+      this.userService.getUser(user).subscribe({
+        next: n => {
+          this.username = n.username;
+          this.role = n.roles[0];
+          this.description = n.description;
+          this.alias = n.alias;
+          this.email = n.email;
+        },
+        error: e => {
+          console.log(e);
+        }
+      });
     });
+
   }
+
+  profileImage() {
+    return this.userService.downloadProfilePicture(this.username);
+  }
+
 }

@@ -1,7 +1,8 @@
 import {Component} from "@angular/core";
 import {Router} from "@angular/router";
 import {UserService} from "../../services/user.service";
-import {SearchService} from "../../services/search.service";
+import {NavbarService} from "../../services/navbar.service";
+import {LoginService} from "../../services/session.service";
 
 @Component({
   selector: "app-navbar",
@@ -12,11 +13,13 @@ export class NavbarComponent {
   page = 0;
   userSearch = false;
 
-  constructor(private router: Router, public userService: UserService, private searchService: SearchService) {
+  constructor(private router: Router, public userService: UserService, private navbarService: NavbarService, private sessionService: LoginService) {
   }
 
   goToProfile() {
-    this.router.navigate(["/profile"]);
+    this.router.navigate(["/profile"]).then(() => {
+      this.navbarService.emitEvent(this.sessionService.getLoggedUsername());
+    });
   }
 
   onKeyDown(event: any) {
@@ -26,10 +29,9 @@ export class NavbarComponent {
   }
 
   search(query: string) {
-    this.searchService.setUserSearch(this.userSearch);
+    this.navbarService.setUserSearch(this.userSearch);
       this.router.navigate(["/search"]).then(() => {
-        this.searchService.emitEvent({query: query, page: this.page});
-        this.page++;
+        this.navbarService.emitEvent({query: query, page: this.page});
       });
     }
 }
