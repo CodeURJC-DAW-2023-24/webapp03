@@ -3,12 +3,16 @@ import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
 import { LandingComponent } from './component/landing/landing.component';
 import { ProfileComponent } from './component/profile/profile.component';
+import { BookComponent } from './component/book/book.component';
+import { SearchComponent } from "./component/search/search.component";
 
 
 const routes: Routes = [
   { path: '', component: LandingComponent },
   { path: 'app', component: AppComponent },
-  { path: 'profile', component: ProfileComponent }
+  { path: 'profile', component: ProfileComponent },
+  { path: 'book', component: BookComponent },
+  { path: 'search', component: SearchComponent }
 ];
 
 @NgModule({

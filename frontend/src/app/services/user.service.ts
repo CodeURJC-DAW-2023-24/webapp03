@@ -4,6 +4,7 @@ import { Observable } from "rxjs";
 import { catchError } from "rxjs/operators";
 import { throwError } from "rxjs";
 import { User } from "../models/user.model";
+import { BehaviorSubject } from "rxjs";
 
 const API_URL = "/api/users";
 
@@ -22,7 +23,7 @@ export class UserService {
   }
 
   searchUsers(username: string, page: number): Observable<User[]> {
-    let params = new HttpParams().set("username", username).set("page", page.toString());
+    let params = new HttpParams().set("query", username).set("page", page.toString());
     return this.http.get<User[]>(API_URL, { params: params }).pipe(
       catchError((error) => throwError(error))
     ) as Observable<User[]>;
