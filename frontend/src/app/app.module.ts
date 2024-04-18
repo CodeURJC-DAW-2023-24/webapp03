@@ -13,6 +13,7 @@ import {NgOptimizedImage} from "@angular/common";
 import {BookComponent} from "./component/book/book.component";
 import {SearchComponent} from "./component/search/search.component";
 import {UserService} from "./services/user.service";
+import {AdminComponent} from "./component/admin/admin.component";
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import {UserService} from "./services/user.service";
     SearchComponent,
     ProfileComponent,
     BookComponent,
+    AdminComponent,
     FooterComponent
   ],
     imports: [
