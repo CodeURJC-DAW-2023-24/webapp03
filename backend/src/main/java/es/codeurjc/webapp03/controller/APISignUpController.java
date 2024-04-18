@@ -9,20 +9,16 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import org.apache.coyote.Response;
-import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import javax.imageio.ImageIO;
 import java.io.IOException;
-import java.io.InputStream;
 import java.sql.SQLException;
+import java.util.Map;
 
 @RestController
 public class APISignUpController {
@@ -45,19 +41,39 @@ public class APISignUpController {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = User.class))
             }),
             @ApiResponse(responseCode = "409", description = "Invalid parameter", content = @Content), //Conflict
-            //@ApiResponse(responseCode = "409", description = "Username can't be blank", content = @Content), //Conflict
-            //@ApiResponse(responseCode = "409", description = "Username not available.", content = @Content), //Conflict
-            //@ApiResponse(responseCode = "409", description = "Email is not valid.", content = @Content), //Conflict
-            //@ApiResponse(responseCode = "409", description = "Alias can't be blank!", content = @Content), //Conflict
-            //@ApiResponse(responseCode = "409", description = "Password can't be blank!", content = @Content), //Conflict
-            @ApiResponse(responseCode = "400", description = "Parameter missing.", content = @Content), //Bad request
-            @ApiResponse(responseCode = "500", description = "Image not supported. Try different file", content = @Content) //Internal server error
+            @ApiResponse(responseCode = "400", description = "Parameter missing.", content = @Content) //Bad request
+            //@ApiResponse(responseCode = "500", description = "Image not supported. Try different file", content = @Content) //Internal server error
 
     })
     @JsonView(APISignUpController.UserBasicView.class)
     @PostMapping("/api/users")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<?> addUser(@RequestParam("username") String inputName,
+    public ResponseEntity<?> addUser(@RequestBody Map<String, String> userInfo) throws SQLException, IOException {
+
+        if (userInfo == null || userInfo.isEmpty()){
+            return new ResponseEntity<>("User info incomplete. Try again",HttpStatus.BAD_REQUEST);
+        }
+
+        String inputName = userInfo.get("username");
+        String inputEmail = userInfo.get("email");
+        String inputAlias = userInfo.get("alias");
+        String password = userInfo.get("password");
+
+        //Check all params.
+        if(inputName == null || inputName.isBlank()) return new ResponseEntity<>("Username can't be blank!", HttpStatus.CONFLICT);
+        if(!userService.isUsernameAvailable(inputName)) return new ResponseEntity<>("Username not available.",HttpStatus.CONFLICT); //Available username
+        if(!emailService.isCorrectEmail(inputEmail)) return new ResponseEntity<>("Email is not valid.", HttpStatus.CONFLICT); //Valid email
+        if(inputAlias == null || inputAlias.isBlank()) return new ResponseEntity<>("Alias can't be blank!", HttpStatus.CONFLICT); //Valid alias
+        if(password == null || password.isBlank()) return new ResponseEntity<>("Password can't be blank", HttpStatus.CONFLICT); //Valid password
+
+        //Should add checker for email
+        User newUser = new User(inputName, inputAlias, "Hi, im new!","", inputEmail, passwordEncoder.encode(password), "USER");
+        userService.saveUser(newUser);
+        return new ResponseEntity<>(newUser,HttpStatus.OK);
+    }
+
+    //AddUser with RequestParams
+    /*public ResponseEntity<?> addUser(@RequestParam("username") String inputName,
                                      @RequestParam("alias") String inputAlias,
                                      @RequestParam("email") String inputEmail,
                                      @RequestParam("password") String password,
@@ -92,7 +108,7 @@ public class APISignUpController {
         }
         userService.saveUser(newUser);
         return new ResponseEntity<>(newUser,HttpStatus.OK);
-    }
+    }*/
 
     @ExceptionHandler(MissingServletRequestParameterException.class)
     public ResponseEntity<String> handleMissingParams(MissingServletRequestParameterException ex) {
