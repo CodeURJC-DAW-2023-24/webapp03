@@ -5,6 +5,7 @@ import { LandingComponent } from './component/landing/landing.component';
 import { ProfileComponent } from './component/profile/profile.component';
 import { BookComponent } from './component/book/book.component';
 import { SearchComponent } from "./component/search/search.component";
+import {AdminComponent} from "./component/admin/admin.component";
 
 
 const routes: Routes = [
@@ -12,7 +13,8 @@ const routes: Routes = [
   { path: 'app', component: AppComponent },
   { path: 'profile', component: ProfileComponent },
   { path: 'book', component: BookComponent },
-  { path: 'search', component: SearchComponent }
+  { path: 'search', component: SearchComponent },
+  { path: 'admin', component: AdminComponent}
 ];
 
 @NgModule({
