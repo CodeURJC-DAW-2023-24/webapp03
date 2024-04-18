@@ -2,7 +2,6 @@ package es.codeurjc.webapp03.controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import es.codeurjc.webapp03.entity.*;
-import es.codeurjc.webapp03.security.jwt.AuthResponse;
 import es.codeurjc.webapp03.service.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -57,7 +56,7 @@ public class APIBookController {
     //Get existing book
     @JsonView(BookBasicView.class)
     @GetMapping("/api/books/{id}")
-    public ResponseEntity<?> getBook(HttpServletRequest request, @PathVariable int id){
+    public ResponseEntity<?> getBook(@PathVariable int id){
         Book book = bookService.getBook(id);
         // Check if the book exists
         if (book == null) {
@@ -75,23 +74,13 @@ public class APIBookController {
             @ApiResponse(responseCode = "400", description = "Parameter missing.", content = @Content), //Bad request
             @ApiResponse(responseCode = "401", description = "You don't have permission to do this!", content = @Content), //Unauthorized
             @ApiResponse(responseCode = "409", description = "Invalid parameter.", content = @Content), //Conflict
-            @ApiResponse(responseCode = "500", description = "Image not supported. Try different file", content = @Content) //Internal server error
     })
     //Create book
     @JsonView(BookBasicView.class)
     @PostMapping("/api/books")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<?> createBook(HttpServletRequest request,
-                                        @RequestParam(value = "name") String newName,
-                                        @RequestParam(value = "author") String newAuthor,
-                                        @RequestParam(value = "ISBN") String newISBN,
-                                        @RequestParam(value = "pages") String newPages,
-                                        @RequestParam(value = "genre") String newGenre,
-                                        @RequestParam(value = "date") String newDate,
-                                        @RequestParam(value = "publisher") String newPublisher,
-                                        @RequestParam(value = "series") String newSeries,
-                                        @RequestParam(value = "description") String newDescription,
-                                        @RequestParam(value = "image", required = false) MultipartFile newImage) throws IOException {
+                                        @RequestBody Book book) throws IOException {
         Principal loggedUser = request.getUserPrincipal();
         User user = userService.getUser(loggedUser.getName());
         //Check if it's logged in as admin
@@ -99,33 +88,19 @@ public class APIBookController {
             return new ResponseEntity<>("You must log in as admin!", HttpStatus.UNAUTHORIZED);
         }
         if (user.getRole().contains("ADMIN")){
-            if (newName == null || newName.isBlank()) return new ResponseEntity<>("Book name can't be blank!", HttpStatus.CONFLICT); //Name cant be blank
-            if (newAuthor == null || newAuthor.isBlank()) return new ResponseEntity<>("Author can't be blank!", HttpStatus.CONFLICT); //Author cant be blank
-            if (newISBN == null || newISBN.isBlank()) return new ResponseEntity<>("ISBN can't be blank!", HttpStatus.CONFLICT); //ISBN cant be blank
-
-            Book book = new Book();
-            insertInfoBook(newName, newAuthor, newISBN, newPages, newGenre, newDate, newPublisher, newSeries, newDescription, book);
-            if(newImage != null){ //If image is added...
-                //Check if image file is correct
-                try (InputStream input = newImage.getInputStream()) {
-                    try {
-                        ImageIO.read(input).toString(); //If it doesn't fail, this is an image.
-                        book.setImageFile(BlobProxy.generateProxy(newImage.getInputStream(), newImage.getSize()));
-                    } catch (Exception e) {
-                        // It's not an image.
-                        return new ResponseEntity<>("Image not supported. Try different file", HttpStatus.INTERNAL_SERVER_ERROR);
-                    }
-                }
-            }else{
-                //Add default image
-                book.setImageFile(book.URLtoBlob("https://fissac.com/wp-content/uploads/2020/11/placeholder.png"));
-            }
-            bookService.saveBook(book); //Save book with all changes
+            if (book.getTitle() == null || book.getTitle().isBlank()) return new ResponseEntity<>("Book name can't be blank!", HttpStatus.CONFLICT); //Name cant be blank
+            if (book.getAuthor() == null || book.getAuthor().toString().isEmpty()) return new ResponseEntity<>("Author can't be blank!", HttpStatus.CONFLICT); //Author cant be blank
+            if (book.getISBN() == null || book.getISBN().isBlank()) return new ResponseEntity<>("ISBN can't be blank!", HttpStatus.CONFLICT); //ISBN cant be blank
+            //Book newBook = new Book();
+            insertInfoBook(book.getTitle(), book.getAuthorString(), book.getISBN(), String.valueOf(book.getPageCount()), book.getGenre().toString(), book.getReleaseDate(), book.getPublisher(), book.getSeries(), book.getDescription(), book);
+            //Add default image
+            book.setImageFile(book.URLtoBlob("https://fissac.com/wp-content/uploads/2020/11/placeholder.png"));
+            bookService.saveBook(book); //Save book
             return new ResponseEntity<>(book, HttpStatus.OK);
         }else{
             return new ResponseEntity<>("You dont have permission to do this!", HttpStatus.UNAUTHORIZED);
         }
-    };
+    }
 
     @Operation(summary = "Delete book")
     @ApiResponses(value = {
@@ -187,51 +162,58 @@ public class APIBookController {
     @JsonView(BookBasicView.class)
     @PutMapping("/api/books/{id}")
     public ResponseEntity<?> editBook(HttpServletRequest request, @PathVariable int id,
-                                      @RequestParam(value = "name", required = false) String newName,
-                                      @RequestParam(value = "author", required = false) String newAuthor,
-                                      @RequestParam(value = "ISBN", required = false) String newISBN,
-                                      @RequestParam(value = "pages", required = false) String newPages,
-                                      @RequestParam(value = "genre", required = false) String newGenre,
-                                      @RequestParam(value = "date", required = false) String newDate,
-                                      @RequestParam(value = "publisher", required = false) String newPublisher,
-                                      @RequestParam(value = "series", required = false) String newSeries,
-                                      @RequestParam(value = "description", required = false) String newDescription,
-                                      @RequestParam(value = "image", required = false) MultipartFile newImage) throws IOException {
+                                      @RequestBody Book book) throws IOException {
         Principal loggedUser = request.getUserPrincipal();
         User user = userService.getUser(loggedUser.getName());
-        Book book = bookService.getBook(id);
+        Book bookFound = bookService.getBook(id);
         if(user == null){
             return new ResponseEntity<>("You must log in as admin or author!", HttpStatus.UNAUTHORIZED);
         }
         // Check if the book exists
-        if(book == null){
+        if(bookFound == null){
             return new ResponseEntity<>("Book not found", HttpStatus.NOT_FOUND);
         }
         //Check if it's logged in as author or as admin
-        if (user.getRole().contains("ADMIN") || authorService.checkCorrectAuthor(user.getUsername(),book.getAuthor())){
-            if (newName == null || newName.isBlank()) return new ResponseEntity<>("Book name can't be blank!", HttpStatus.CONFLICT); //Name cant be blank
-            if (newAuthor == null || newAuthor.isBlank()) return new ResponseEntity<>("Author can't be blank!", HttpStatus.CONFLICT); //Author cant be blank
-            if (newISBN == null || newISBN.isBlank()) return new ResponseEntity<>("ISBN can't be blank!", HttpStatus.CONFLICT); //ISBN cant be blank
-            insertInfoBook(newName, newAuthor, newISBN, newPages, newGenre, newDate, newPublisher, newSeries, newDescription, book);
-
-            //If no image is added, keep original.
-            if(newImage != null){
-                //Check if image file is correct
-                try (InputStream input = newImage.getInputStream()) {
-                    try {
-                        ImageIO.read(input).toString(); //If it doesn't fail, this is an image.
-                        book.setImageFile(BlobProxy.generateProxy(newImage.getInputStream(), newImage.getSize()));
-                    } catch (Exception e) {
-                        // It's not an image.
-                        return new ResponseEntity<>("Image not supported. Try different file", HttpStatus.INTERNAL_SERVER_ERROR);
-                    }
-                }
-            }
-
-            bookService.saveBook(book); //Save book with all changes
+        if (user.getRole().contains("ADMIN") || authorService.checkCorrectAuthor(user.getUsername(),bookFound.getAuthor())){
+            if (book.getTitle() == null || book.getTitle().isBlank()) return new ResponseEntity<>("Book name can't be blank!", HttpStatus.CONFLICT); //Name cant be blank
+            if (book.getAuthor() == null || book.getAuthorString().isBlank()) return new ResponseEntity<>("Author can't be blank!", HttpStatus.CONFLICT); //Author cant be blank
+            if (book.getISBN() == null || book.getISBN().isBlank()) return new ResponseEntity<>("ISBN can't be blank!", HttpStatus.CONFLICT); //ISBN cant be blank
+            insertInfoBook(book.getTitle(), book.getAuthorString(), book.getISBN(), String.valueOf(book.getPageCount()), book.getGenre().toString(), book.getReleaseDate(), book.getPublisher(), book.getSeries(), book.getDescription(), bookFound);
+            bookService.saveBook(bookFound); //Save book with all changes
             return new ResponseEntity<>(book, HttpStatus.OK);
         }else{
             return new ResponseEntity<>("You dont have permission to do this!", HttpStatus.UNAUTHORIZED);
+        }
+    }
+
+    @PutMapping("/api/books/{id}/image")
+    public ResponseEntity<Object> updateBookImage(HttpServletRequest request, @PathVariable int id, @RequestParam MultipartFile image) throws IOException {
+        Book book = bookService.getBook(id);
+        Principal loggedUser = request.getUserPrincipal();
+        User user = userService.getUser(loggedUser.getName());
+        // Check if the book exists
+        if (book == null) {
+            return new ResponseEntity<>("Book not found", HttpStatus.NOT_FOUND);
+        }
+        if (!user.getRole().contains("ADMIN") && !book.getAuthorString().equals(user.getUsername())){
+            return new ResponseEntity<>("You don't have permission to do this!", HttpStatus.UNAUTHORIZED);
+        }
+        //If no image is added, keep original.
+        if(image != null) {
+            //Check if image file is correct
+            try (InputStream input = image.getInputStream()) {
+                try {
+                    ImageIO.read(input).toString(); //If it doesn't fail, this is an image.
+                    book.setImageFile(BlobProxy.generateProxy(image.getInputStream(), image.getSize()));
+                    bookService.saveBook(book);
+                    return new ResponseEntity<>("Image uploaded successfully.", HttpStatus.OK);
+                } catch (Exception e) {
+                    // It's not an image.
+                    return new ResponseEntity<>("Image not supported. Try different file", HttpStatus.INTERNAL_SERVER_ERROR);
+                }
+            }
+        }else{
+            return new ResponseEntity<>("File could not be uploaded. Try again", HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -242,7 +224,7 @@ public class APIBookController {
             @ApiResponse(responseCode = "404", description = "Book not found", content = @Content) //Not found
     })
     @GetMapping("/api/books/{id}/image")
-    public ResponseEntity<Object> getBookImage(HttpServletRequest request, @PathVariable int id) throws SQLException {
+    public ResponseEntity<Object> getBookImage(@PathVariable int id) throws SQLException {
         Book book = bookService.getBook(id);
         // Check if the book exists
         if (book == null) {
@@ -256,7 +238,7 @@ public class APIBookController {
         }
     }
 
-    private void insertInfoBook(String newName, String newAuthor, String newISBN, String newPages, String newGenre, String newDate, String newPublisher, String newSeries, String newDescription, Book book) throws IOException {
+    private void insertInfoBook(String newName, String newAuthor, String newISBN, String newPages, String newGenre, String newDate, String newPublisher, String newSeries, String newDescription, Book book){
         if(newName != null) book.setTitle(newName);
         if(newISBN != null) book.setISBN(newISBN);
         if(newDate != null) book.setReleaseDate(newDate);
@@ -287,8 +269,7 @@ public class APIBookController {
                 }
             }
             book.setAuthor(authorList); //Add author/s to list
-        };
-
+        }
         //Check for genre
         if(newGenre != null){
             //Check if Genre exist
@@ -306,7 +287,7 @@ public class APIBookController {
                     genreService.saveGenre(auxGenre);
                 }
             }
-        };
+        }
     }
 
     @ExceptionHandler(MissingServletRequestParameterException.class)
