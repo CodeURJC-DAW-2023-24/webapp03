@@ -12584,3 +12584,21 @@ header {
 .list-styled{
   padding-left: 12px !important;
 }
+
+#mostReadGenresSpinner{
+  z-index: 9 !important;
+  position: absolute !important;
+
+}
+
+#mostReadGenresChartContainer{
+  position: relative !important;
+}
+
+.btn{
+  cursor: pointer !important;
+}
+
+#load-more-label{
+  cursor: pointer !important;
+}

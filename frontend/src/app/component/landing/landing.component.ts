@@ -10,11 +10,14 @@ import {UserService} from "../../services/user.service";
 import {error} from "@angular/compiler-cli/src/transformers/util";
 import {User} from "../../models/user.model";
 import {Observable} from "rxjs";
+import {Chart, registerables} from "chart.js";
+
+Chart.register(...registerables);
 
 @Component({
   selector: "app-landing",
   templateUrl: "./landing.component.html",
-  styleUrls: ["./landing.component.css", "../../../animations.css"]
+  styleUrls: ["./landing.component.css", "../../../animations.css"],
 })
 export class LandingComponent implements OnInit {
   title = "Bookmarks";
@@ -29,9 +32,17 @@ export class LandingComponent implements OnInit {
   loggedIn: boolean = false;
   isAdmin: boolean = false;
 
+  loadingMoreBooks = false;
+  noMoreBooks = false;
+  page: number = 0;
+  size: number = 4;
+
   recommendedBooksGenreLeft: Book[] = [];
   recommendedBooksGenreRight: Book[] = [];
   recommendedBooksAuthor: Book[] = [];
+
+  loadingChart = true;
+  public chart: any;
 
   constructor(private http: HttpClient, public bookService: BookService, public loginService: LoginService, public reviewService: ReviewService, public algorithmService: AlgorithmsService, public profileService: UserService) {
 
@@ -75,10 +86,11 @@ export class LandingComponent implements OnInit {
       });
 
       //Recommended books by genre
-      this.algorithmService.getRecommendedBooksGeneral(0, 4).subscribe({
+      this.algorithmService.getRecommendedBooksGeneral(this.page, this.size).subscribe({
         next: books => {
           this.recommendedBooksGenreLeft = books.slice(0, 2);
           this.recommendedBooksGenreRight = books.slice(2, 4);
+          this.page += 1;
         },
         error: r => {
           console.error("Error getting recommended books by genre: " + JSON.stringify(r));
@@ -98,10 +110,11 @@ export class LandingComponent implements OnInit {
       });
 
       //Recommended books by genre
-      this.algorithmService.getRecommendedBooksForUser(0, 4).subscribe({
+      this.algorithmService.getRecommendedBooksForUser(this.page, this.size).subscribe({
         next: books => {
           this.recommendedBooksGenreLeft = books.slice(0, 2);
           this.recommendedBooksGenreRight = books.slice(2, 4);
+          this.page += 1;
         },
         error: r => {
           console.error("Error getting recommended books by genre: " + JSON.stringify(r));
@@ -109,6 +122,7 @@ export class LandingComponent implements OnInit {
       });
 
     }
+
   }
 
   ngOnInit(): void {
@@ -119,6 +133,8 @@ export class LandingComponent implements OnInit {
     }, 1000);
 
      */
+
+    this.loadChart();
 
 
   }
@@ -145,6 +161,101 @@ export class LandingComponent implements OnInit {
   // Get user profile picture
   profilePicture(username: string) {
     return this.profileService.downloadProfilePicture(username);
+  }
+
+  loadMoreBooks() {
+    this.loadingMoreBooks = true;
+    if (!this.loggedIn) {
+      this.algorithmService.getRecommendedBooksGeneral(this.page, this.size).subscribe({
+        next: books => {
+          // add new books to the lists
+          this.recommendedBooksGenreLeft = this.recommendedBooksGenreLeft.concat(books.slice(0, 2));
+          this.recommendedBooksGenreRight = this.recommendedBooksGenreRight.concat(books.slice(2, 4));
+          this.page += 1;
+          this.loadingMoreBooks = false;
+
+          //if no books books are returned, hide the button and show a message
+          if (books.length == 0) {
+            this.noMoreBooks = true;
+          }
+        },
+        error: r => {
+          console.error("Error getting recommended books by genre: " + JSON.stringify(r));
+        }
+      });
+    } else {
+      this.algorithmService.getRecommendedBooksForUser(this.page, this.size).subscribe({
+        next: books => {
+          // add new books to the lists
+          this.recommendedBooksGenreLeft = this.recommendedBooksGenreLeft.concat(books.slice(0, 2));
+          this.recommendedBooksGenreRight = this.recommendedBooksGenreRight.concat(books.slice(2, 4));
+          this.page += 1;
+          this.loadingMoreBooks = false;
+        },
+        error: r => {
+          console.error("Error getting recommended books by genre: " + JSON.stringify(r));
+        }
+      });
+    }
+  }
+
+
+  // Load chart
+  loadChart() {
+
+    // Get the chart data
+
+    let genreNames: string[] = []; // list for the genre names
+    let genreCounts: number[] = []; // list for the genre counts
+    // Build the chart for the most read genres (using getMostReadGenresGeneralCount())
+    this.algorithmService.getMostReadGenresGeneralCount().subscribe({
+      next: genres => {
+        genres.forEach(g => {
+          genreNames.push(g[0]); // the genre names is the first element of the tuple
+          genreCounts.push(g[1]); // the genre count is the second element of the tuple
+
+        });
+        // Create the chart
+
+        new Chart("mostReadGenresChart", {
+          type: 'bar',
+          data: {
+            labels: genreNames,
+            datasets: [{
+              label: 'Número de libros leídos',
+              data: genreCounts,
+              backgroundColor: '#519E8A',
+              borderWidth: 1
+            }]
+          },
+          options: {
+            scales: {
+              y: {
+                beginAtZero: true,
+                ticks: {
+                  callback: function (value, index, values) {
+                    return Math.round(value as number);
+                  }
+                },
+                grid: {
+                  display: false
+                }
+              },
+              x: {
+                grid: {
+                  display: false
+                }
+              }
+            }
+          }
+        });
+
+        this.loadingChart = false;
+      },
+      error: r => {
+        console.error("Error getting most read genres: " + JSON.stringify(r));
+      }
+    });
   }
 
 
