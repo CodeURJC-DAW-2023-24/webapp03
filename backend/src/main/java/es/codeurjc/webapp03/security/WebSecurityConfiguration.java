@@ -84,8 +84,6 @@ public class WebSecurityConfiguration {
                         .requestMatchers(HttpMethod.DELETE, "/api/books/**").hasAnyRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/api/books/**").hasAnyRole("ADMIN", "AUTHOR")
                         .requestMatchers(HttpMethod.PUT, "/api/users/**").hasAnyRole("USER")
-                        //SPA Controller for frontend
-                        .requestMatchers("/new/**").permitAll()
 
 
                         // PUBLIC ENDPOINTS (anything that's not filtered by the above rules, is public. It is not necessary to add anything here)
@@ -125,6 +123,8 @@ public class WebSecurityConfiguration {
                                 "/landingPage/loadMore", "/landingPage/mostReadGenres",
                                 "/loginError", "/profile/*", "/profile/*/loadMore", "/profile/*/exportLists", "/search/**",
                                 "/login", "/login", "/login/**", "/signup/**", "/signup", "/error/**", "/mostReadGenres/**", "/v3/**", "/swagger-ui/**").permitAll()
+                        //SPA Controller for frontend
+                        .requestMatchers("/new/**").permitAll()
                         //Private pages
                         //USER
                         .requestMatchers("/profile/*/edit", "/profile/*/upload", "/book/*/addReview",

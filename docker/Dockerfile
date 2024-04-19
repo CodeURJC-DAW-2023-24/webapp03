@@ -29,10 +29,6 @@ COPY backend/src/ /app/src
 #Copy production files to resources
 COPY --from=frontend /frontend/dist/new /app/src/main/resources/public/new
 
-# Print the contents of the directory to ensure files are copied
-RUN ls -la /app/src/main/resources/public/new
-RUN ls -la /app/src/main/resources/static/assets/data
-
 COPY api-docs /api-docs
 
 RUN mvn clean install -DskipTests
