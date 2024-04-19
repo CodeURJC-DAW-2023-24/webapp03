@@ -33,3 +33,4 @@ build/
 .vscode/
 backend/src/main/resources/env.properties
 backend/src/main/java/es/codeurjc/webapp03/controller/APIBookController.java
+/backend/src/main/resources/public/new/

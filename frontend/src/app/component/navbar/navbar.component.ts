@@ -12,8 +12,14 @@ import {LoginService} from "../../services/session.service";
 export class NavbarComponent {
   page = 0;
   userSearch = false;
+  loggedIn = false;
+  username = "";
 
   constructor(private router: Router, public userService: UserService, private navbarService: NavbarService, private sessionService: LoginService) {
+    this.loggedIn = sessionService.isUserLogged();
+    if (this.loggedIn) {
+      this.username = sessionService.getLoggedUsername();
+    }
   }
 
   goToProfile() {
@@ -33,5 +39,13 @@ export class NavbarComponent {
       this.router.navigate(["/search"]).then(() => {
         this.navbarService.emitEvent({query: query, page: this.page});
       });
-    }
+  }
+
+  profileImage(username: string) {
+    return this.userService.downloadProfilePicture(username);
+  }
+
+  defaultImage() {
+    return "../../../../../backend/src/main/resources/static/assets/defaultProfilePicture.png";
+  }
 }

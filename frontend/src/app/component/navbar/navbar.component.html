@@ -60,19 +60,15 @@
           <li class="bm-nav-item dropdown">
             <a class="bm-nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
                data-bs-toggle="dropdown" aria-expanded="false">
-              <!-- {{#user}}
-              <img class="bm-navbar-profile-picture bm-rounded-circle"
-                   src="" alt="Perfil"/> NOTE: src="data:image/png;base64, {{profileImageString}}"
-             {{/user}} -->
-              <!-- {{^user}} -->
-              <img class="bm-navbar-profile-picture bm-rounded-circle"
-                   src="/assets/defaultProfilePicture.png" alt="Perfil"/>
-              <!-- {{/user}} -->
+
+              <img *ngIf="loggedIn; else elseLoggedPicture" class="bm-navbar-profile-picture bm-rounded-circle"
+                  [src]="profileImage(username)" alt="Perfil"/>
+              <ng-template #elseLoggedPicture>
+                <img class="bm-navbar-profile-picture bm-rounded-circle" [src]="defaultImage()" alt="Perfil"/>
+              </ng-template>
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown" style="cursor: pointer">
-              <!-- {{#user}} -->
-              <li  (click)="goToProfile()"><a class="dropdown-item">Mi perfil</a></li> <!-- href="/profile/{{username}}" -->
-              <!-- {{/user}} -->
+              <li *ngIf="loggedIn" (click)="goToProfile()"><a class="dropdown-item">Mi perfil</a></li>
               <li>
                 <hr class="dropdown-divider"/>
               </li>

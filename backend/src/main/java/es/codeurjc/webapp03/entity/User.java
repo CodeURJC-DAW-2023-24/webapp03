@@ -8,6 +8,7 @@ import javax.sql.rowset.serial.SerialBlob;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.sql.Blob;
 import java.sql.SQLException;
@@ -194,15 +195,25 @@ public class User {
     public Blob LocalImageToBlob(String imagePath) throws IOException, SQLException {
         imagePath = imagePath.replace("/assets", "backend/src/main/resources/static/assets");
         String runningInDocker = System.getenv("RUNNING_IN_DOCKER");
+        Blob imageBlob = null;
+
         if ((runningInDocker) != null && runningInDocker.equals("true")) {
-            imagePath = "/" + imagePath;
+            try (InputStream is = getClass().getClassLoader().getResourceAsStream(imagePath.replace("backend/src/main/resources/", ""))) {
+                if (is == null) {
+                    throw new IOException("Cannot find resource");
+                }
+
+                byte[] byteContent = is.readAllBytes();
+                imageBlob = new SerialBlob(byteContent);
+            }
         } else {
             String baseDir = System.getProperty("user.dir").replace("\\", "/").replace("/backend", "");
             imagePath = baseDir + "/" + imagePath;
+
+            File fi = new File(imagePath);
+            byte[] byteContent = Files.readAllBytes(fi.toPath());
+            imageBlob = new SerialBlob(byteContent);
         }
-        File fi = new File(imagePath);
-        byte[] byteContent = Files.readAllBytes(fi.toPath());
-        Blob imageBlob = new SerialBlob(byteContent);
         return imageBlob;
     }
 
