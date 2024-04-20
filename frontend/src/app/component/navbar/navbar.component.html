@@ -20,7 +20,7 @@
       <!-- Has to be centered -->
       <ul class="bm-navbar-nav bm-me-auto bm-mb-lg-0 bm-ms-auto">
         <!-- Main page option (has little house icon on the left)-->
-        <li class="bm-nav-item"><a class="bm-nav-link" href="/">
+        <li class="bm-nav-item" style="cursor: pointer"><a class="bm-nav-link" (click)="goHome()">
           <i class="bi-house-door-fill"></i>
           Inicio
         </a>
@@ -39,7 +39,7 @@
           <form class="bm-d-flex position-relative" onSubmit="return false;">
             <input #searchInput id="search-bar" class="form-control search-bar" type="search" placeholder="Buscar"
                    aria-label="Search" (keydown)="onKeyDown($event)">
-            <a id="magnifier-icon-link" (click)="search(searchInput.value)">
+            <a id="magnifier-icon-link" (click)="search(searchInput.value)" style="cursor: pointer">
               <i id="magnifier-icon"
                  class="fa-solid fa-magnifying-glass position-absolute top-50 end-0 translate-middle-y me-2"></i>
             </a>
@@ -49,8 +49,8 @@
         <li class="bm-nav-item" style="display: flex; align-items: center">
           <input type="checkbox" id="search-select" style="display: none; margin-left: 20px" [(ngModel)]="userSearch">
           <label id="search-select-label" for="search-select" style="margin-left: 20px"></label>
-          <i class="fa-solid fa-book select-color" id="book-icon" style="margin-left: 20px"></i>
-          <i class="fa-solid fa-user select-color" id="user-icon" style="margin-left: 20px"></i>
+          <i (click)="toggleSearch('books')" class="fa-solid fa-book select-color" id="book-icon" style="margin-left: 20px; cursor: pointer"></i>
+          <i (click)="toggleSearch('users')" class="fa-solid fa-user select-color" id="user-icon" style="margin-left: 20px; cursor: pointer"></i>
         </li>
       </ul>
       <!-- {{#user}} -->
@@ -62,7 +62,7 @@
                data-bs-toggle="dropdown" aria-expanded="false">
 
               <img *ngIf="loggedIn; else elseLoggedPicture" class="bm-navbar-profile-picture bm-rounded-circle"
-                  [src]="profileImage(username)" alt="Perfil"/>
+                   [src]="profileImage(username)" alt="Perfil"/>
               <ng-template #elseLoggedPicture>
                 <img class="bm-navbar-profile-picture bm-rounded-circle" [src]="defaultImage()" alt="Perfil"/>
               </ng-template>

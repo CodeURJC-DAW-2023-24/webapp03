@@ -36,9 +36,9 @@ export class NavbarComponent {
 
   search(query: string) {
     this.navbarService.setUserSearch(this.userSearch);
-      this.router.navigate(["/search"]).then(() => {
-        this.navbarService.emitEvent({query: query, page: this.page, newSearch: true});
-      });
+    this.router.navigate(["/search"]).then(() => {
+      this.navbarService.emitEvent({query: query, page: this.page, newSearch: true});
+    });
   }
 
   profileImage(username: string) {
@@ -46,6 +46,18 @@ export class NavbarComponent {
   }
 
   defaultImage() {
-    return "new/assets/defaultProfilePicture.png";
+    return "assets/defaultProfilePicture.png";
+  }
+
+  goHome() {
+    this.router.navigate(["/"]);
+  }
+
+  toggleSearch(type: string) {
+    let checkbox = document.getElementById("search-select");
+    if (checkbox) {
+      this.userSearch = type === "users";
+      checkbox.setAttribute("checked", this.userSearch ? "true" : "false");
+    }
   }
 }

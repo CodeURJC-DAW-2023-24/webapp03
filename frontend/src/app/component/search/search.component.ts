@@ -27,18 +27,21 @@ export class SearchComponent implements OnInit {
     private http: HttpClient, public userService: UserService, public bookService: BookService, private navbarService: NavbarService, private router: Router
   ) {
 
+    this.getMaxElems(true);
+
     this.navbarService.getEvent().subscribe((event) => {
       if (event.newSearch) {
         this.bookQueries = [];
         this.userQueries = [];
       }
 
-      console.log((this.page + 1) * SIZE >= this.maxBooks)
-
       this.userSearch = this.navbarService.getUserSearch();
       this.searchQuery = event.query;
       localStorage.setItem("userSearch", this.userSearch ? "true" : "false");
       localStorage.setItem("searchQuery", this.searchQuery);
+
+      this.maxBooks = parseInt(localStorage.getItem("maxBooks")!);
+      this.maxUsers = parseInt(localStorage.getItem("maxUsers")!);
 
       if (this.userSearch) {
 
@@ -50,6 +53,8 @@ export class SearchComponent implements OnInit {
 
         this.userService.searchUsers(event.query, event.page).subscribe({
           next: users => {
+            localStorage.setItem("maxUsers", this.maxUsers.toString());
+
             if (users.length > 0) {
               document.getElementById("noResults")!.style.display = "none";
               this.userQueries = this.userQueries.concat(users);
@@ -70,6 +75,8 @@ export class SearchComponent implements OnInit {
 
         this.bookService.searchBooks(event.query, event.page).subscribe({
           next: books => {
+            localStorage.setItem("maxBooks", this.maxBooks.toString());
+
             if (books.length > 0) {
               document.getElementById("noResults")!.style.display = "none";
               this.bookQueries = this.bookQueries.concat(books);
@@ -125,23 +132,6 @@ export class SearchComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.bookService.getBooksWithCount().subscribe({
-      next: count => {
-        this.maxBooks = count;
-      },
-      error: e => {
-        console.log(e);
-      }
-    });
-
-    this.userService.getUserCount().subscribe({
-      next: count => {
-        this.maxUsers = count;
-      },
-      error: e => {
-        console.log(e);
-      }
-    });
 
     window.onload = () => {
       const storedQuery = localStorage.getItem('searchQuery');
@@ -154,8 +144,35 @@ export class SearchComponent implements OnInit {
         // Searches with the stored data
         this.navbarService.setUserSearch(this.userSearch);
         this.navbarService.emitEvent({query: this.searchQuery, page: this.page});
+
       }
+    };
+  }
+
+  getMaxElems(updated: boolean) {
+    if (updated) {
+      this.bookService.getBooksWithCount().subscribe({
+        next: count => {
+          this.maxBooks = count;
+        },
+        error: e => {
+          console.log(e);
+        }
+      });
+
+      this.userService.getUserCount().subscribe({
+        next: count => {
+          this.maxUsers = count;
+        },
+        error: e => {
+          console.log(e);
+        }
+      });
+    } else {
+      this.maxBooks = localStorage.getItem("maxBooks") ? parseInt(localStorage.getItem("maxBooks")!) : 0;
+      this.maxUsers = localStorage.getItem("maxUsers") ? parseInt(localStorage.getItem("maxUsers")!) : 0;
     }
   }
+
 }
 
