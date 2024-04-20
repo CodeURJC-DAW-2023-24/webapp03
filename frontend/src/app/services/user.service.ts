@@ -40,4 +40,11 @@ export class UserService {
     return '/api/users/' + username + '/image';
   }
 
+  getUserCount(): Observable<number> {
+    let params = new HttpParams().set("count", "true");
+    return this.http.get<number>(API_URL + "/all", { params: params }).pipe(
+      catchError((error) => throwError(error))
+    ) as Observable<number>;
+  }
+
 }

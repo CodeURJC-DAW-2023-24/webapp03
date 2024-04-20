@@ -37,7 +37,7 @@ export class NavbarComponent {
   search(query: string) {
     this.navbarService.setUserSearch(this.userSearch);
       this.router.navigate(["/search"]).then(() => {
-        this.navbarService.emitEvent({query: query, page: this.page});
+        this.navbarService.emitEvent({query: query, page: this.page, newSearch: true});
       });
   }
 
@@ -46,6 +46,6 @@ export class NavbarComponent {
   }
 
   defaultImage() {
-    return "../../../../../backend/src/main/resources/static/assets/defaultProfilePicture.png";
+    return "new/assets/defaultProfilePicture.png";
   }
 }
