@@ -14,6 +14,8 @@ import {BookComponent} from "./component/book/book.component";
 import {SearchComponent} from "./component/search/search.component";
 import {UserService} from "./services/user.service";
 import {AdminComponent} from "./component/admin/admin.component";
+import {LoginComponent} from "./component/login/login.component";
+import {SignupComponent} from "./component/signUp/signup.component";
 
 @NgModule({
   declarations: [
@@ -24,6 +26,8 @@ import {AdminComponent} from "./component/admin/admin.component";
     ProfileComponent,
     BookComponent,
     AdminComponent,
+    LoginComponent,
+    SignupComponent,
     FooterComponent
   ],
     imports: [
