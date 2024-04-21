@@ -73,6 +73,7 @@ export class NavbarComponent {
 
     //This event listens on each window load end (router) and sets the search checkbox to the last state
     this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe(() => {
+
       let checkbox = localStorage.getItem("userSearch") === "true" ? document.getElementById("search-select") : null;
       if (checkbox && !this.userSearch) {
         checkbox.click();

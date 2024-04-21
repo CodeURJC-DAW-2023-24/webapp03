@@ -32,6 +32,7 @@ export class SearchComponent implements OnInit {
   page = 0;
   maxUsers = 0;
   maxBooks = 0;
+  newSearch = false;
 
 
   constructor(
@@ -63,6 +64,7 @@ export class SearchComponent implements OnInit {
           complete(): void {
           },
           next: (response: UserResponse) => {
+            this.newSearch = event.newSearch;
             let users = response["users"] as User[];
             this.maxUsers = response["total"] as number;
 
@@ -72,12 +74,9 @@ export class SearchComponent implements OnInit {
             if (users.length > 0) {
               document.getElementById("noResults")!.style.display = "none";
 
-              if (event.newSearch) {
-                this.userQueries = [];
-              } else {
-                this.userQueries = this.userQueries.concat(users);
+              this.userQueries = this.userQueries.concat(users);
 
-              }
+
             }
           },
           error: e => {
@@ -91,6 +90,7 @@ export class SearchComponent implements OnInit {
           complete(): void {
           },
           next: (response: BookResponse) => {
+            this.newSearch = event.newSearch;
             let books = response["books"] as Book[];
             this.maxBooks = response["total"] as number;
 
@@ -105,7 +105,7 @@ export class SearchComponent implements OnInit {
                 let observer = new MutationObserver((mutations) => {
                   mutations.forEach((mutation) => {
                     if (mutation.type === 'childList') {
-                      for(let i = 0; i < mutation.addedNodes.length; i++) {
+                      for (let i = 0; i < mutation.addedNodes.length; i++) {
                         let newNode = mutation.addedNodes[i];
                         let book = books[pos];
                         this.putStars(book.averageRating, newNode);
@@ -116,19 +116,14 @@ export class SearchComponent implements OnInit {
                   pos = 0;
                 });
 
-                let config = { childList: true };
+                let config = {childList: true};
 
                 observer.observe(booksDiv, config);
               }
 
               document.getElementById("noResults")!.style.display = "none";
 
-              if (event.newSearch) {
-                this.bookQueries = []
-              } else {
-                this.bookQueries = this.bookQueries.concat(books);
-              }
-
+              this.bookQueries = this.bookQueries.concat(books);
             }
           },
           error: e => {
@@ -177,7 +172,7 @@ export class SearchComponent implements OnInit {
 
   loadMoreBooks() {
     this.page++;
-    this.navbarService.emitEvent({query: this.searchQuery, page: this.page});
+    this.navbarService.emitEvent({query: this.searchQuery, page: this.page, newSearch: false});
   }
 
   ngOnInit() {
@@ -191,7 +186,10 @@ export class SearchComponent implements OnInit {
 
       // Searches with the stored data
       this.navbarService.setUserSearch(this.userSearch);
-      this.navbarService.emitEvent({query: this.searchQuery, page: this.page});
+
+      window.onload = () => {
+        this.navbarService.emitEvent({query: this.searchQuery, page: this.page, newSearch: false});
+      }
 
     }
   }
