@@ -1,22 +1,20 @@
 <header class="bg-branding-white py-1">
   <div class="container px-4 px-lg-5 my-5">
     <div class="text-start text-dark">
-      <!--THIS IS A TEMPORAL CHANGE, check if is the user-->
-      <!--TODO: Add conditions
-      {{^currentUser}}
-      <p class="lead fw-normal text-black-50 mb-0">Estás viendo el perfil de</p>
-      {{/currentUser}}
-      <h1 class="display-4 fw-bolder" id="userName-header">{{username}}</h1>
-      {{#currentUser}}
-      <p class="lead fw-normal text-black-50 mb-0">Este es tu perfil</p>
-      <form action="/logout" method="post" class="logout">
-        <button type="submit" class="btn logout-btn">
-          <i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión
-        </button>
-        <input type="hidden" name="_csrf" value="{{token}}"/>
-      </form>
-      {{/currentUser}}
-      -->
+      <!--Check if it's the user-->
+      <div *ngIf="isCurrentUser; else elseUser">
+        <p class="lead fw-normal text-black-50 mb-0">Este es tu perfil</p>
+        <form action="/logout" method="post" class="logout">
+          <button type="submit" class="btn logout-btn">
+            <i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión
+          </button>
+        </form>
+      </div>
+      <ng-template #elseUser>
+        <p class="lead fw-normal text-black-50 mb-0">Estás viendo el perfil de</p>
+      </ng-template>
+
+      <h1 class="display-4 fw-bolder" id="userName-header">{{ username }}</h1>
 
     </div>
   </div>
@@ -28,19 +26,19 @@
       <div class="col-lg-6">
         <div class="about-text go-to">
           <h3 class="dark-color">Sobre mi</h3>
-          <h6 class="theme-color lead" id="role">{{role}}</h6>
-          <p id="description">{{description}}</p>
+          <h6 class="theme-color lead" id="role">{{ role }}</h6>
+          <p id="description">{{ description }}</p>
           <div class="row about-list">
             <div class="col-md-6">
               <div class="media">
                 <label>Alias</label>
-                <p id="alias">{{alias}}</p>
+                <p id="alias">{{ alias }}</p>
               </div>
             </div>
             <div class="col-md-6">
               <div class="media">
                 <label>Correo</label>
-                <p id="email">{{email}}</p>
+                <p id="email">{{ email }}</p>
               </div>
             </div>
           </div>
@@ -50,35 +48,31 @@
         <div class="about-avatar">
           <img class="avatar-image" [src]="profileImage()" title alt>
         </div>
-        <!--TODO: Add buttons
         <div class="buttons-container">
-          {{#currentUser}}
-          {{^admin}}
-          <a class="btn btn-primary branding-btn-primary" id="editProfileBut">
-            <i class="fa-solid fa-pen-to-square"></i> Modificar perfil</a>
-          {{/admin}}
-          {{/currentUser}}
-          {{#admin}}
-          <a class="btn btn-primary branding-btn-primary" id="editProfileBut">
-            <i class="fa-solid fa-pen-to-square"></i> Modificar perfil</a>
-          {{/admin}}
-          {{#admin}}
-          {{^currentUserRole}}
-          <a href="/profile/{{username}}/convertAuthor" class="btn btn-secondary branding-btn-secondary">
-            <i class="fa-solid fa-book"></i> Convertir
-            en autor</a>
-          {{/currentUserRole}}
-          {{#currentUserRole}}
-          <a href="/profile/{{username}}/removeAuthor" class="btn btn-secondary branding-btn-secondary">
-            <i class="fa-solid fa-book"></i> Eliminar
-            rol de autor</a>
-          {{/currentUserRole}}
-          <a href="/profile/{{username}}/delete" class="btn btn-secondary branding-btn-secondary">
-            <i class="fa-solid fa-ban"></i> Banear
-            usuario</a>
-          {{/admin}}
+          <div *ngIf="isCurrentUser && !isAdministrator">
+            <a class="btn btn-primary branding-btn-primary" id="editProfileBut">
+              <i class="fa-solid fa-pen-to-square"></i> Modificar perfil</a>
+          </div>
+          <div *ngIf="isAdministrator">
+            <a class="btn btn-primary branding-btn-primary" id="editProfileBut">
+              <i class="fa-solid fa-pen-to-square"></i> Modificar perfil</a>
+          </div>
+          <div *ngIf="isAdministrator">
+            <div *ngIf="!isAuthor; else elseAuthor">
+              <a href="/profile/{{username}}/convertAuthor" class="btn btn-secondary branding-btn-secondary">
+                <i class="fa-solid fa-book"></i> Convertir en autor
+              </a>
+            </div>
+            <ng-template #elseAuthor>
+              <a href="/profile/{{username}}/removeAuthor" class="btn btn-secondary branding-btn-secondary">
+                <i class="fa-solid fa-book"></i> Eliminar
+                rol de autor</a>
+            </ng-template>
+            <a href="/profile/{{username}}/delete" class="btn btn-secondary branding-btn-secondary">
+              <i class="fa-solid fa-ban"></i> Banear
+              usuario</a>
+            </div>
         </div>
-        -->
       </div>
     </div>
     <!--TODO: Add counters
@@ -221,7 +215,7 @@
               </div>
 
               <div class="single_advisor_details_info">
-                <h6>{{title}}</h6>
+                <h6>{{ title }}</h6>
                 <!--TODO: Add AuthorString
                 <p class="designation">{{authorString}}</p>
                 -->
@@ -252,7 +246,7 @@
         </div>
       </div>
     </div>
-    </div>
+  </div>
 
 
 </section>

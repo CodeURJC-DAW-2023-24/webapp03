@@ -1,4 +1,4 @@
-import {Component, OnInit} from "@angular/core";
+import {AfterViewChecked, Component, OnInit} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {UserService} from "../../services/user.service";
 import {BookService} from "../../services/book.service";
@@ -9,10 +9,20 @@ import {Router} from "@angular/router";
 
 const SIZE = 4;
 
+interface BookResponse {
+  books: Book[];
+  total: number;
+}
+
+interface UserResponse {
+  users: User[];
+  total: number;
+}
+
 @Component({
   selector: "app-search",
   templateUrl: "./search.component.html",
-  styleUrls: ["./search.component.css"]
+  styleUrls: ["./search.component.css", "../../app.component.css"]
 })
 export class SearchComponent implements OnInit {
   userQueries: User[] = [];
@@ -22,6 +32,7 @@ export class SearchComponent implements OnInit {
   page = 0;
   maxUsers = 0;
   maxBooks = 0;
+
 
   constructor(
     private http: HttpClient, public userService: UserService, public bookService: BookService, private navbarService: NavbarService, private router: Router
@@ -33,6 +44,8 @@ export class SearchComponent implements OnInit {
       if (event.newSearch) {
         this.bookQueries = [];
         this.userQueries = [];
+
+        this.toggleLoadMore(this.userSearch, []);
       }
 
       this.userSearch = this.navbarService.getUserSearch();
@@ -45,41 +58,77 @@ export class SearchComponent implements OnInit {
 
       if (this.userSearch) {
 
-        if ((this.page + 1) * SIZE >= this.maxUsers) {
-          document.getElementById("loadMoreBut")!.style.display = "none";
-        } else {
-          document.getElementById("loadMoreBut")!.style.display = "block";
-        }
-
+        // @ts-ignore
         this.userService.searchUsers(event.query, event.page).subscribe({
-          next: users => {
+          complete(): void {
+          },
+          next: (response: UserResponse) => {
+            let users = response["users"] as User[];
+            this.maxUsers = response["total"] as number;
+
+            this.toggleLoadMore(this.userSearch, users);
             localStorage.setItem("maxUsers", this.maxUsers.toString());
 
             if (users.length > 0) {
               document.getElementById("noResults")!.style.display = "none";
-              this.userQueries = this.userQueries.concat(users);
+
+              if (event.newSearch) {
+                this.userQueries = [];
+              } else {
+                this.userQueries = this.userQueries.concat(users);
+
+              }
             }
           },
           error: e => {
             document.getElementById("noResults")!.style.display = "block";
-            console.log(e);
           }
         });
       } else {
 
-        if ((this.page + 1) * SIZE >= this.maxBooks) {
-          document.getElementById("loadMoreBut")!.style.display = "none";
-        } else {
-          document.getElementById("loadMoreBut")!.style.display = "block";
-        }
-
+        // @ts-ignore
         this.bookService.searchBooks(event.query, event.page).subscribe({
-          next: books => {
+          complete(): void {
+          },
+          next: (response: BookResponse) => {
+            let books = response["books"] as Book[];
+            this.maxBooks = response["total"] as number;
+
+            this.toggleLoadMore(this.userSearch, books);
+
+            let pos = 0;
             localStorage.setItem("maxBooks", this.maxBooks.toString());
 
             if (books.length > 0) {
+              let booksDiv = document.getElementById("books");
+              if (booksDiv) {
+                let observer = new MutationObserver((mutations) => {
+                  mutations.forEach((mutation) => {
+                    if (mutation.type === 'childList') {
+                      for(let i = 0; i < mutation.addedNodes.length; i++) {
+                        let newNode = mutation.addedNodes[i];
+                        let book = books[pos];
+                        this.putStars(book.averageRating, newNode);
+                        pos++;
+                      }
+                    }
+                  });
+                  pos = 0;
+                });
+
+                let config = { childList: true };
+
+                observer.observe(booksDiv, config);
+              }
+
               document.getElementById("noResults")!.style.display = "none";
-              this.bookQueries = this.bookQueries.concat(books);
+
+              if (event.newSearch) {
+                this.bookQueries = []
+              } else {
+                this.bookQueries = this.bookQueries.concat(books);
+              }
+
             }
           },
           error: e => {
@@ -133,20 +182,18 @@ export class SearchComponent implements OnInit {
 
   ngOnInit() {
 
-    window.onload = () => {
-      const storedQuery = localStorage.getItem('searchQuery');
-      const storedUserSearch = localStorage.getItem('userSearch');
+    const storedQuery = localStorage.getItem('searchQuery');
+    const storedUserSearch = localStorage.getItem('userSearch');
 
-      if (storedQuery && storedUserSearch) {
-        this.searchQuery = storedQuery;
-        this.userSearch = JSON.parse(storedUserSearch);
+    if (storedQuery && storedUserSearch) {
+      this.searchQuery = storedQuery;
+      this.userSearch = JSON.parse(storedUserSearch);
 
-        // Searches with the stored data
-        this.navbarService.setUserSearch(this.userSearch);
-        this.navbarService.emitEvent({query: this.searchQuery, page: this.page});
+      // Searches with the stored data
+      this.navbarService.setUserSearch(this.userSearch);
+      this.navbarService.emitEvent({query: this.searchQuery, page: this.page});
 
-      }
-    };
+    }
   }
 
   getMaxElems(updated: boolean) {
@@ -172,6 +219,97 @@ export class SearchComponent implements OnInit {
       this.maxBooks = localStorage.getItem("maxBooks") ? parseInt(localStorage.getItem("maxBooks")!) : 0;
       this.maxUsers = localStorage.getItem("maxUsers") ? parseInt(localStorage.getItem("maxUsers")!) : 0;
     }
+  }
+
+  toggleLoadMore(userSearch: boolean, elems: any) {
+
+    if (userSearch) {
+      if (((this.page + 1) * SIZE >= this.maxUsers) || elems.length < 4) {
+        document.getElementById("loadMoreBut")!.style.display = "none";
+      } else {
+        document.getElementById("loadMoreBut")!.style.display = "block";
+      }
+    } else {
+      if (((this.page + 1) * SIZE >= this.maxBooks) || elems.length < 4) {
+        document.getElementById("loadMoreBut")!.style.display = "none";
+      } else {
+        document.getElementById("loadMoreBut")!.style.display = "block";
+      }
+    }
+
+  }
+
+  putStars(rating: number, book: any) {
+    //This will find every star div of the rating container
+    let bookStars = book.querySelectorAll("div")[4].children;
+    if (rating >= 5.0) {
+      bookStars[0].classList.add("bi-star-fill");
+      bookStars[1].classList.add("bi-star-fill");
+      bookStars[2].classList.add("bi-star-fill");
+      bookStars[3].classList.add("bi-star-fill");
+      bookStars[4].classList.add("bi-star-fill");
+    } else if (rating >= 4.5) {
+      bookStars[0].classList.add("bi-star-fill");
+      bookStars[1].classList.add("bi-star-fill");
+      bookStars[2].classList.add("bi-star-fill");
+      bookStars[3].classList.add("bi-star-fill");
+      bookStars[4].classList.add("bi-star-half");
+    } else if (rating >= 4.0) {
+      bookStars[0].classList.add("bi-star-fill");
+      bookStars[1].classList.add("bi-star-fill");
+      bookStars[2].classList.add("bi-star-fill");
+      bookStars[3].classList.add("bi-star-fill");
+      bookStars[4].classList.add("bi-star");
+    } else if (rating >= 3.5) {
+      bookStars[0].classList.add("bi-star-fill");
+      bookStars[1].classList.add("bi-star-fill");
+      bookStars[2].classList.add("bi-star-fill");
+      bookStars[3].classList.add("bi-star-half");
+      bookStars[4].classList.add("bi-star");
+    } else if (rating >= 3.0) {
+      bookStars[0].classList.add("bi-star-fill");
+      bookStars[1].classList.add("bi-star-fill");
+      bookStars[2].classList.add("bi-star-fill");
+      bookStars[3].classList.add("bi-star");
+      bookStars[4].classList.add("bi-star");
+    } else if (rating >= 2.5) {
+      bookStars[0].classList.add("bi-star-fill");
+      bookStars[1].classList.add("bi-star-fill");
+      bookStars[2].classList.add("bi-star-half");
+      bookStars[3].classList.add("bi-star");
+      bookStars[4].classList.add("bi-star");
+    } else if (rating >= 2.0) {
+      bookStars[0].classList.add("bi-star-fill");
+      bookStars[1].classList.add("bi-star-fill");
+      bookStars[2].classList.add("bi-star");
+      bookStars[3].classList.add("bi-star");
+      bookStars[4].classList.add("bi-star");
+    } else if (rating >= 1.5) {
+      bookStars[0].classList.add("bi-star-fill");
+      bookStars[1].classList.add("bi-star-half");
+      bookStars[2].classList.add("bi-star");
+      bookStars[3].classList.add("bi-star");
+      bookStars[4].classList.add("bi-star");
+    } else if (rating >= 1.0) {
+      bookStars[0].classList.add("bi-star-fill");
+      bookStars[1].classList.add("bi-star");
+      bookStars[2].classList.add("bi-star");
+      bookStars[3].classList.add("bi-star");
+      bookStars[4].classList.add("bi-star");
+    } else if (rating >= 0.5) {
+      bookStars[0].classList.add("bi-star-half");
+      bookStars[1].classList.add("bi-star");
+      bookStars[2].classList.add("bi-star");
+      bookStars[3].classList.add("bi-star");
+      bookStars[4].classList.add("bi-star");
+    } else {
+      bookStars[0].classList.add("bi-star");
+      bookStars[1].classList.add("bi-star");
+      bookStars[2].classList.add("bi-star");
+      bookStars[3].classList.add("bi-star");
+      bookStars[4].classList.add("bi-star");
+    }
+
   }
 
 }

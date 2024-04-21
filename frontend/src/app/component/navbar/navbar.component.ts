@@ -1,8 +1,9 @@
 import {Component} from "@angular/core";
-import {Router} from "@angular/router";
+import {NavigationEnd, Router} from "@angular/router";
 import {UserService} from "../../services/user.service";
 import {NavbarService} from "../../services/navbar.service";
 import {LoginService} from "../../services/session.service";
+import {filter} from "rxjs/operators";
 
 @Component({
   selector: "app-navbar",
@@ -59,5 +60,24 @@ export class NavbarComponent {
       this.userSearch = type === "users";
       checkbox.setAttribute("checked", this.userSearch ? "true" : "false");
     }
+  }
+
+  ngOnInit() {
+    let checkbox = document.getElementById("search-select");
+    if (checkbox) {
+
+      checkbox.onchange = () => {
+        localStorage.setItem("userSearch", this.userSearch ? "true" : "false");
+      }
+    }
+
+    //This event listens on each window load end (router) and sets the search checkbox to the last state
+    this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe(() => {
+      let checkbox = localStorage.getItem("userSearch") === "true" ? document.getElementById("search-select") : null;
+      if (checkbox && !this.userSearch) {
+        checkbox.click();
+      }
+    });
+
   }
 }

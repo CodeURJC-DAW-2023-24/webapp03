@@ -1,6 +1,7 @@
 package es.codeurjc.webapp03.controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import com.sun.tools.jconsole.JConsoleContext;
 import es.codeurjc.webapp03.entity.Book;
 import es.codeurjc.webapp03.entity.User;
 import es.codeurjc.webapp03.service.BookService;
@@ -14,6 +15,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -24,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -79,7 +82,11 @@ public class APISearchResultsPageController {
             ratings.add(averageRating);
         });
 
-        return new ResponseEntity<>(bookQueries, HttpStatus.OK);
+        HashMap<String, Object> response = new HashMap<>();
+        response.put("books", bookQueries);
+        response.put("total", filteredBooks.getTotalElements());
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @Operation(summary = "Load search results page users")
@@ -105,7 +112,11 @@ public class APISearchResultsPageController {
             userQueries.get(i).setProfileImageString(userQueries.get(i).blobToString(userQueries.get(i).getProfileImageFile()));
         }
 
-        return new ResponseEntity<>(userQueries, HttpStatus.OK);
+        HashMap<String, Object> response = new HashMap<>();
+        response.put("users", userQueries);
+        response.put("total", filteredUsers.getTotalElements());
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
 
     }
 

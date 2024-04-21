@@ -49,26 +49,25 @@
         <li class="bm-nav-item" style="display: flex; align-items: center">
           <input type="checkbox" id="search-select" style="display: none; margin-left: 20px" [(ngModel)]="userSearch">
           <label id="search-select-label" for="search-select" style="margin-left: 20px"></label>
-          <i (click)="toggleSearch('books')" class="fa-solid fa-book select-color" id="book-icon" style="margin-left: 20px; cursor: pointer"></i>
-          <i (click)="toggleSearch('users')" class="fa-solid fa-user select-color" id="user-icon" style="margin-left: 20px; cursor: pointer"></i>
+          <i (click)="toggleSearch('books')" class="fa-solid fa-book select-color" id="book-icon"
+             style="margin-left: 20px; cursor: pointer"></i>
+          <i (click)="toggleSearch('users')" class="fa-solid fa-user select-color" id="user-icon"
+             style="margin-left: 20px; cursor: pointer"></i>
         </li>
       </ul>
       <!-- {{#user}} -->
       <form class="bm-d-flex" action="/logout" method="post">
         <ul class="bm-navbar-nav bm-me-auto bm-mb-lg-0 bm-ms-lg-4">
           <!-- Profile dropdown -->
-          <li class="bm-nav-item dropdown">
+          <li *ngIf="loggedIn" class="bm-nav-item dropdown">
             <a class="bm-nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
                data-bs-toggle="dropdown" aria-expanded="false">
 
-              <img *ngIf="loggedIn; else elseLoggedPicture" class="bm-navbar-profile-picture bm-rounded-circle"
+              <img class="bm-navbar-profile-picture bm-rounded-circle"
                    [src]="profileImage(username)" alt="Perfil"/>
-              <ng-template #elseLoggedPicture>
-                <img class="bm-navbar-profile-picture bm-rounded-circle" [src]="defaultImage()" alt="Perfil"/>
-              </ng-template>
             </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdown" style="cursor: pointer">
-              <li *ngIf="loggedIn" (click)="goToProfile()"><a class="dropdown-item">Mi perfil</a></li>
+            <ul  class="dropdown-menu" aria-labelledby="navbarDropdown" style="cursor: pointer">
+              <li (click)="goToProfile()"><a class="dropdown-item">Mi perfil</a></li>
               <li>
                 <hr class="dropdown-divider"/>
               </li>

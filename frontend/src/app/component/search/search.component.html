@@ -2,10 +2,6 @@
 <header class="bg-branding-white py-1">
   <div class="container px-4 px-lg-5 my-5">
     <div class="text-start text-dark">
-      <input *ngIf="userSearch; else elseMax" type="hidden" id="maxUsers"/> <!--value="{{maxUsers}}"/>-->
-      <ng-template #elseMax>
-        <input type="hidden" id="maxBooks"/> <!--value="{{maxBooks}}"/>-->
-      </ng-template>
       <h1 class="display-4 fw-bolder id=query">{{ searchQuery }}</h1>
       <p class="lead fw-normal text-black-50 mb-0">Resultados de búsqueda</p>
     </div>
@@ -51,7 +47,7 @@
       <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center" id="books">
         <span *ngFor="let book of bookQueries">
         <!-- Book card-->
-        <div class="col mb-5 book">
+        <div class="col mb-5 book" id="book{{book.ID}}">
           <div class="card h-100">
             <!-- Book cover image-->
             <img class="card-img-top" [src]="bookImage(book.ID)" alt="..."/>
@@ -90,7 +86,7 @@
   <div id="loadMoreDiv">
     <div id="load-more-spinner" class="loader" role="status"></div>
     <div id="noResults" style="display:none">No hay ningún resultado que coincida con su búsqueda.</div>
-    <a id="loadMoreBut" (click)="loadMoreBooks()" class="btn btn-secondary-light flex-shrink-0 action-button">
+    <a id="loadMoreBut" (click)="loadMoreBooks()" class="btn btn-secondary flex-shrink-0 action-button">
       <i class="fa-solid fa-arrows-rotate" style="margin-right: 10px;" aria-hidden="true"></i>
       Cargar más
     </a>

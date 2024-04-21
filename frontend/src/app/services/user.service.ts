@@ -22,11 +22,11 @@ export class UserService {
     ) as Observable<User>;
   }
 
-  searchUsers(username: string, page: number): Observable<User[]> {
+  searchUsers(username: string, page: number): Observable<Map<string, Object>> {
     let params = new HttpParams().set("query", username).set("page", page);
-    return this.http.get<User[]>(API_URL, { params: params }).pipe(
+    return this.http.get<Map<string, Object>>(API_URL, { params: params }).pipe(
       catchError((error) => throwError(error))
-    ) as Observable<User[]>;
+    ) as Observable<Map<string, Object>>;
   }
 
   getUsers(): Observable<User[]> {

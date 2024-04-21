@@ -21,6 +21,15 @@ export class ProfileComponent {
   alias = "";
   email = "";
 
+  loggedUser = this.loginService.getLoggedUsername();
+  isCurrentUser = false;
+  isAdministrator = this.loginService.isAdmin();
+  isAuthor = this.loginService.isAuthor();
+
+  readBooksCount = 0;
+  readingBooksCount = 0;
+  wantedBooksCount = 0;
+
   constructor(
     private http: HttpClient, public bookService: BookService, public loginService: LoginService, public reviewService: ReviewService, public algorithmService: AlgorithmsService, public userService: UserService, private navbarService: NavbarService
   ) {
@@ -33,6 +42,10 @@ export class ProfileComponent {
           this.description = n.description;
           this.alias = n.alias;
           this.email = n.email;
+
+          this
+
+          this.isCurrentUser = this.loggedUser === this.username;
         },
         error: e => {
           console.log(e);

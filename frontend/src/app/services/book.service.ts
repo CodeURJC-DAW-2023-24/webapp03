@@ -23,15 +23,15 @@ export class BookService {
   }
 
   // Search books
-  searchBooks(query: string, page: number): Observable<Book[]> {
+  searchBooks(query: string, page: number): Observable<Map<string, Object>> {
 
     let params = new HttpParams(); // los parametros se pasan así mejor (los RequestParams)
     params = params.append("query", query);
     params = params.append("page", page.toString());
 
-    return this.httpClient.get<Book[]>(this.baseUrl2, {params: params}).pipe(
+    return this.httpClient.get<Map<string, Object>>(this.baseUrl2, {params: params}).pipe(
       catchError(error => this.handleError(error))
-    ) as Observable<Book[]>;
+    ) as Observable<Map<string, Object>>;
   }
 
   // Get all books

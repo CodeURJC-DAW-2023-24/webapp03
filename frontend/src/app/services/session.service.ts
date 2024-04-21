@@ -77,6 +77,13 @@ export class LoginService {
     return false;
   }
 
+  isAuthor(): boolean {
+    if (this.user) {
+      return this.user.roles.includes("AUTHOR");
+    }
+    return false;
+  }
+
 
   //Custom error handlers
 
