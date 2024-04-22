@@ -1,10 +1,391 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <title>Title</title>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+  <meta name="description" content=""/>
+  <meta name="author" content=""/>
+  <title>Bookmarks - Información sobre el libro</title>
+  <link href="/css/animations.css" rel="stylesheet"/>
+
+
+  <!-- NEEDED FOR THE NAVBAR AND FOOTER BRANDING -->
+  <link href="/css/navbarAndBranding.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet"/>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gabarito&display=swap" rel="stylesheet">
+  <!-- ----------------------------------------------------------------- -->
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+  <script src="https://kit.fontawesome.com/8f3c0a721b.js" crossorigin="anonymous"></script>
+
+  <!-- Favicon-->
+  <link rel="icon" type="image/x-icon" href="/assets/favicon.ico"/>
+  <!-- Bootstrap icons-->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet"/>
+  <!-- Core theme CSS (includes Bootstrap)-->
+  <link href="/css/infoBookPageStyles.css" rel="stylesheet"/>
+
+  <!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
 </head>
+
 <body>
+<!-- Navigation (this is the navbar)-->
+<nav class="bm-navbar bm-navbar-expand-lg bm-navbar-light bm-bg-white">
+  <div class="bm-container bm-navbar-px-4 bm-navbar-px-lg-5">
+    <!-- Navbar brand (is an image) and has alternative text for when the image does not load-->
+    <a class="bm-navbar-brand" href="/">
+      <img src="../assets/imagotipo.svg" alt="Bookmarks"/>
+    </a>
+    <button class="bm-navbar-toggler" type="button" data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+            aria-label="Toggle navigation"><span class="bm-navbar-toggler-icon"></span></button>
+    <div class="bm-collapse bm-navbar-collapse bm-navbar-menu" id="navbarSupportedContent">
+      <!-- Has to be centered -->
+      <ul class="bm-navbar-nav bm-me-auto bm-mb-lg-0 bm-ms-auto">
+        <!-- Main page option (has little house icon on the left)-->
+        <li class="bm-nav-item"><a class="bm-nav-link" href="/">
+          <i class="bi-house-door-fill"></i>
+          Inicio
+        </a>
+        </li>
+        {{#admin}}
+        <!-- Administrator menu option -->
+        <li class="bm-nav-item"><a class="bm-nav-link" href="/admin">
+          <i class="bi-gear-fill"></i>
+          Administrador
+        </a>
+        </li>
+        {{/admin}}
+        <!-- Search widget-->
+        <li class="bm-nav-item">
+          <form class="bm-d-flex position-relative" onSubmit="return false;">
+            <input id="search-bar" class="form-control search-bar" type="search" placeholder="Buscar"
+                   aria-label="Search">
+            <a id="magnifier-icon-link">
+              <i id="magnifier-icon"
+                 class="fa-solid fa-magnifying-glass position-absolute top-50 end-0 translate-middle-y me-2"></i>
+            </a>
+            <input type="hidden" name="_csrf" value="{{token}}"/>
+          </form>
+        </li>
+        <li class="bm-nav-item" style="display: flex; align-items: center">
+          <input type="checkbox" id="search-select" style="display: none; margin-left: 20px">
+          <label id="search-select-label" for="search-select" style="margin-left: 20px"></label>
+          <i class="fa-solid fa-book select-color" id="book-icon" style="margin-left: 20px"></i>
+          <i class="fa-solid fa-user select-color" id="user-icon" style="margin-left: 20px"></i>
+        </li>
+
+      </ul>
+      {{#user}}
+      <form class="bm-d-flex" action="/logout" method="post">
+        <ul class="bm-navbar-nav bm-me-auto bm-mb-lg-0 bm-ms-lg-4">
+          <!-- Profile dropdown -->
+          <li class="bm-nav-item dropdown">
+            <a class="bm-nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
+               data-bs-toggle="dropdown" aria-expanded="false">
+              {{#user}}
+              <img class="bm-navbar-profile-picture bm-rounded-circle"
+                   src="data:image/png;base64, {{profileImageString}}" alt="Perfil"/>
+              {{/user}}
+              {{^user}}
+              <img class="bm-navbar-profile-picture bm-rounded-circle"
+                   src="/assets/defaultProfilePicture.png" alt="Perfil"/>
+              {{/user}}
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="/profile/{{username}}">Mi perfil</a></li>
+              <li>
+                <hr class="dropdown-divider"/>
+              </li>
+              <li><input type="submit" value="Cerrar sesión" class="dropdown-item"/></li>
+            </ul>
+          </li>
+        </ul>
+        <input type="hidden" name="_csrf" value="{{token}}"/>
+      </form>
+      {{/user}}
+    </div>
+  </div>
+</nav>
+<!-- Navbar ENDS HERE -->
+
+<!-- Product section-->
+<section class="py-5">
+  <div class="container px-4 px-lg-5 my-5">
+    <div class="row gx-4 gx-lg-5 align-items-center">
+      <div class="col-md-5"><img class="card-img-top mb-5 mb-md-0"
+                                 src="data:image/png;base64,{{bookImage}} " alt="..."/></div>
+      <div class="col-md-6 book-info-area">
+        <div class="small mb-1" id="bookIDContainer">ID: <p id="bookID">{{id}}</p></div>
+        <div class="small mb-1" id="inputBookPublisher">Editorial: {{bookPublisher}}</div>
+        <div class="small mb-1" id="inputBookISBN">ISBN: {{bookISBN}}</div>
+        <h1 class="display-5 fw-bolder" id="inputBookName">{{bookTitle}}</h1>
+        <div class="fs-5 mb-5" id="inputBookAuthorName">Autor: {{bookAuthor}}</div>
+        <div class="sub-container mb-5" id="description-container">
+          <h3 class="fw-bolder mb-2" id="description-header">Descripción</h3>
+          <div id="inputBookDescription">
+            <p class="lead">{{bookDescription}}</p>
+          </div>
+        </div>
+        <div class="sub-container mb-5" id="gender-series-container">
+          <h3 class="fw-bolder mb-2" id="more-info-header">Más información</h3>
+          <div id="inputBookGenre">Género: {{bookGenre}}</div>
+          <div id="inputBookSeries">Saga: {{bookSeries}}</div>
+          <div id="inputBookISBN">Fecha de publicación: {{bookDate}}</div>
+          <div id="inputBookPages">Número de páginas: {{bookPageCount}}</div>
+        </div>
+        <div></div>
+        <h5 class="fw-bold mb-3">
+          <i class="fa-solid fa-circle-plus"></i>
+          Añádelo a tus listas:
+        </h5>
+        {{#user}}
+        <div class="d-flex action-buttons-flex">
+          <p id="bookStatus" style="display: none;">{{bookState}}</p>
+
+          <form class="list-button" action="/book/{{id}}/add/read" method="POST">
+            <input type="hidden" name="bookId" value="{{id}}">
+            <button type="submit" id="readButton" class="btn btn-outline-dark flex-shrink-0 action-button">
+              <i class="fa-solid fa-check"></i>
+              Leído
+            </button>
+            <input type="hidden" name="_csrf" value="{{token}}"/>
+          </form>
+
+          <form class="list-button" action="/book/{{id}}/add/reading" method="POST">
+            <input type="hidden" name="bookId" value="{{id}}">
+            <button type="submit" id="readingButton" class="btn btn-outline-dark flex-shrink-0 action-button">
+              <i class="fa-solid fa-clock"></i>
+              Leyendo
+            </button>
+            <input type="hidden" name="_csrf" value="{{token}}"/>
+          </form>
+
+          <form class="list-button" action="/book/{{id}}/add/wanted" method="POST">
+            <input type="hidden" name="bookId" value="{{id}}">
+            <button type="submit" id="toReadButton" class="btn btn-outline-dark flex-shrink-0 action-button">
+              <i class="fa-solid fa-bookmark"></i>
+              Por leer
+            </button>
+            <input type="hidden" name="_csrf" value="{{token}}"/>
+          </form>
+
+          <!-- vertical separator -->
+          <div class="vertical-separator"></div>
+
+          <form class="list-button" action="/book/{{id}}/removeFromLists" method="POST">
+            <input type="hidden" name="bookId" value="{{id}}">
+            <button type="submit" id="removeButton" class="btn btn-outline-dark flex-shrink-0 action-button">
+              <i class="fa-solid fa-xmark"></i>
+              Nada
+            </button>
+            <input type="hidden" name="_csrf" value="{{token}}"/>
+          </form>
+          {{#author}}
+          <a href="/book/{{id}}/edit" class="btn btn-secondary-light flex-shrink-0 action-button"
+             class="boton">
+            <i class="fa-solid fa-pencil"></i>
+            Modificar
+          </a>
+          {{/author}}
+          {{#admin}}
+          <a href="/book/{{id}}/edit" class="btn btn-secondary-light flex-shrink-0 action-button"
+             class="boton">
+            <i class="fa-solid fa-pencil"></i>
+            Modificar
+          </a>
+          {{/admin}}
+        </div>
+        {{/user}}
+        {{^user}}
+        <h6 class=" mb-4 mt-4" style='text-align: center;'>Inicia sesión para poder añadir el libro a tus listas.</h6>
+        {{/user}}
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Reviews section-->
+<section class="py-5 bg-light reviews-section">
+  <div class="container px-4 px-lg-5 mt-5">
+    <h2 class="fw-bolder mb-5">Reseñas</h2>
+    <div class="sub-container mb-4" id="averageReviewsMark">
+      <h4 class="fw-semibold mb-2" id="avg-rating-text">Valoración media:</h4>
+      <div class="rating">
+        <h2 class="fw-semibold">
+          <i class="fas fa-star"></i>
+          {{averageRating}}
+        </h2>
+      </div>
+    </div>
+    <hr class="my-0">
+    <div class="sub-container mb-5" id="review-form-area">
+      <div class="row justify-content-center">
+        <div class="col">
+          {{#user}}
+          {{^hasReviewed}}
+          <form class="mb-3 mt-3 review-form" action="/book/{{id}}/addReview" method="post">
+            <label class="small mb-3" for="inputBookDescription"><h6>¡Añade tu reseña!</h6></label>
+            <div class="rating mb-3">
+              <input type="radio" name="rating" value="1" id="star1" name="reviewStarRating" required>
+              <label for="star1"><i class="fa-regular fa-star"></i></label>
+              <input type="radio" name="rating" value="2" id="star2" name="reviewStarRating" required>
+              <label for="star2"><i class="fa-regular fa-star"></i></label>
+              <input type="radio" name="rating" value="3" id="star3" name="reviewStarRating" required>
+              <label for="star3"><i class="fa-regular fa-star"></i></label>
+              <input type="radio" name="rating" value="4" id="star4" name="reviewStarRating" required>
+              <label for="star4"><i class="fa-regular fa-star"></i></label>
+              <input type="radio" name="rating" value="5" id="star5" name="reviewStarRating" required>
+              <label for="star5"><i class="fa-regular fa-star"></i></label>
+            </div>
+            <input name="reviewTitle" type="text" class="form-control review-title" id="inputReviewTitle"
+                   placeholder="Título de la reseña" required>
+            <textarea name="comment" class="form-control review-text-area mt-3" id="inputReviewForm"
+                      rows="4"
+                      cols="50" placeholder="Escribe aqui su reseña" required></textarea>
+            <input class="btn btn-primary-light save-button mt-3 mb-4" type="submit" value="Publicar"
+                   id="post-review-btn">
+            <p id="error-message" style="display: none; color: red;">Rellena todos los campos.</p>
+            <input type="hidden" name="_csrf" value="{{token}}"/>
+          </form>
+          {{/hasReviewed}}
+          {{#hasReviewed}}
+          <h6 class="mb-4 mt-4">Ya has dejado tu reseña:</h6>
+          {{#userReview}}
+          <div class="card mb-5 review-post">
+            <!-- Product details-->
+            <div class="card-body p-4">
+              <div class="text-left">
+                <!-- Product name-->
+                <h5 class="fw-bolder" id="inputReviewAuthor">{{author}}</h5>
+                <h6>{{title}}</h6>
+                <div class="rating">
+                  <p class="fw-semibold rating-number">
+                    {{rating}}
+                  </p>
+                  <i class="fa-star fa-regular"></i>
+                  <i class="fa-star fa-regular"></i>
+                  <i class="fa-star fa-regular"></i>
+                  <i class="fa-star fa-regular"></i>
+                  <i class="fa-star fa-regular"></i>
+                </div>
+                <!-- Product price-->
+                <div id="inputReviewContent">{{content}}</div>
+              </div>
+            </div>
+            <!-- button for deleting reviews -->
+            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+              <div class="text-center">
+                <form action="/book/{{bookID}}/deleteReview/{{ID}}" method="post">
+                  <input type="hidden" name="_method" value="DELETE">
+                  <button type="submit" class="btn btn-outline-dark mt-3">Eliminar reseña</button>
+                  <input type="hidden" name="_csrf" value="{{token}}"/>
+                </form>
+              </div>
+            </div>
+          </div>
+          {{/userReview}}
+
+          {{/hasReviewed}}
+          {{/user}}
+          {{^user}}
+          <h6 class=" mb-4 mt-4" style='text-align: center;'>Inicia sesión para poder dejar tu reseña.</h6>
+          {{/user}}
+        </div>
+      </div>
+      <hr class="my-0">
+    </div>
+    <div class="row gx-4 gx-lg-5 row-cols-md-3 justify-content-left" id="reviewsArea">
+      {{#reviews}}
+      <div class="col mb-5 review-post">
+        <p style="display: none;">{{ID}}</p>
+        <div class="card h-100">
+          <!-- Product details-->
+          <div class="card-body p-4 review-card">
+            <div class="text-left">
+              <!-- Product name-->
+              <h5 class="fw-bolder" id="inputReviewAuthor">{{author}}</h5>
+              <h6>{{title}}</h6>
+              <div class="rating">
+                <p class="fw-semibold rating-number">
+                  {{rating}}
+                </p>
+                <i class="fa-star fa-regular"></i>
+                <i class="fa-star fa-regular"></i>
+                <i class="fa-star fa-regular"></i>
+                <i class="fa-star fa-regular"></i>
+                <i class="fa-star fa-regular"></i>
+              </div>
+              <!-- Product price-->
+              <div id="inputReviewContent">{{content}}</div>
+            </div>
+          </div>
+          <!-- button for deleting reviews -->
+          {{#admin}}
+          <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+            <div class="text-center">
+              <form action="/book/{{id}}/deleteReview/{{ID}}" method="post">
+                <input type="hidden" name="_method" value="DELETE">
+                <button type="submit" class="btn btn-outline-dark mt-3">Eliminar
+                  reseña
+                </button>
+                <input type="hidden" name="_csrf" value="{{token}}"/>
+              </form>
+            </div>
+          </div>
+          {{/admin}}
+        </div>
+      </div>
+      {{/reviews}}
+    </div>
+    <!-- Load more button-->
+    <div class="text-center justify-content-center load-more-section">
+      <div id="load-more-spinner" class="loader" role="status">
+      </div>
+      <a class="btn btn-outline-dark mt-3" id="load-more-btn">Cargar más</a>
+      <p id="no-reviews">No hay reseñas para este libro aún...</p>
+      <p id="no-more-reviews">No hay más reseñas</p>
+    </div>
+  </div>
+</section>
+
+<!-- Footer STARTS HERE (the footer goes right before the end of the BODY, before the scripts are declared, if there are any)-->
+<footer class="bm-py-5 bm-bg-footer">
+  <div class="bm-container bm-footer-container">
+    <!-- Bookmarks logo at the start of the footer, Copyright text at the end of the footer-->
+    <a class="bm-d-flex bm-align-items-start" href="/">
+      <img class="bm-footer-logo" src="../assets/logoDark.svg" alt="Bookmarks"/>
+    </a>
+
+    <p class="bm-text-footer">Copyright &copy; Bookmarks 2024</p>
+  </div>
+</footer>
+<!-- Footer ENDS HERE -->
+
+<!-- SearchBar script -->
+<script src="/js/searchBar.js"></script>
+
+<script src="/js/infoBookPage.js"></script>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/3.1.0/mustache.min.js"></script>
+
+
+<!-- CORE BOOTSTRAP JS (THIS GOES RIGHT AFTER THE FOOTER, IT HAS THE NAVBAR DROPDOWN TOGGLE FUNCTIONALITY)-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- ----------------------------------------------------------------- -->
+
+<!-- Core theme JS-->
+<script src="/js/scripts.js"></script>
+
+<script src="/js/navbarScript.js"></script>
+
 
 </body>
+
 </html>
