@@ -20,7 +20,7 @@
       <!-- Has to be centered -->
       <ul class="bm-navbar-nav bm-me-auto bm-mb-lg-0 bm-ms-auto">
         <!-- Main page option (has little house icon on the left)-->
-        <li class="bm-nav-item" style="cursor: pointer"><a class="bm-nav-link" (click)="goHome()">
+        <li class="bm-nav-item" style="cursor: pointer"><a class="bm-nav-link" [routerLink]="['/']">
           <i class="bi-house-door-fill"></i>
           Inicio
         </a>
@@ -64,10 +64,10 @@
                data-bs-toggle="dropdown" aria-expanded="false">
 
               <img class="bm-navbar-profile-picture bm-rounded-circle"
-                   [src]="profileImage(username)" alt="Perfil"/>
+                   [src]="defaultImage()" [src]="profileImage(username)" alt="Perfil"/>
             </a>
             <ul  class="dropdown-menu" aria-labelledby="navbarDropdown" style="cursor: pointer">
-              <li (click)="goToProfile()"><a class="dropdown-item">Mi perfil</a></li>
+              <li [routerLink]="['/profile', username]"><a class="dropdown-item">Mi perfil</a></li>
               <li>
                 <hr class="dropdown-divider"/>
               </li>
@@ -75,7 +75,6 @@
             </ul>
           </li>
         </ul>
-        <input type="hidden" name="_csrf" value=""/> <!-- value="{{token}}"-->
       </form>
       <!-- {{/user}} -->
     </div>

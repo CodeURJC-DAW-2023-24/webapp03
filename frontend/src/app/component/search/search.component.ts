@@ -5,7 +5,7 @@ import {BookService} from "../../services/book.service";
 import {NavbarService} from "../../services/navbar.service";
 import {User} from "../../models/user.model";
 import {Book} from "../../models/book.model";
-import {Router} from "@angular/router";
+import {Router, ActivatedRoute} from "@angular/router";
 
 const SIZE = 4;
 
@@ -22,7 +22,7 @@ interface UserResponse {
 @Component({
   selector: "app-search",
   templateUrl: "./search.component.html",
-  styleUrls: ["./search.component.css", "../../app.component.css"]
+  styleUrls: ["./search.component.css"]
 })
 export class SearchComponent implements OnInit {
   userQueries: User[] = [];
@@ -36,7 +36,8 @@ export class SearchComponent implements OnInit {
 
 
   constructor(
-    private http: HttpClient, public userService: UserService, public bookService: BookService, private navbarService: NavbarService, private router: Router
+    private http: HttpClient, public userService: UserService, public bookService: BookService, private navbarService: NavbarService, private router: Router, private activatedRoute: ActivatedRoute
+
   ) {
 
     this.getMaxElems(true);
@@ -140,7 +141,7 @@ export class SearchComponent implements OnInit {
   showUser(username: string) {
     this.userService.getUser(username).subscribe({
       next: n => {
-        this.router.navigate(["/profile"]).then(() => {
+        this.router.navigate(["/profile", username]).then(() => {
           this.navbarService.emitEvent(username);
         });
       },
@@ -158,7 +159,7 @@ export class SearchComponent implements OnInit {
   showBook(ID: number) {
     this.bookService.getBook(ID).subscribe({
       next: n => {
-        this.router.navigate(["/book"]);
+        this.router.navigate(["/book", ID]);
       },
       error: e => {
         console.log(e);
@@ -177,8 +178,11 @@ export class SearchComponent implements OnInit {
 
   ngOnInit() {
 
-    const storedQuery = localStorage.getItem('searchQuery');
-    const storedUserSearch = localStorage.getItem('userSearch');
+    const storedQuery = this.activatedRoute.snapshot.queryParams['query'];
+    const storedUserSearch = this.activatedRoute.snapshot.queryParams['users'];
+
+    localStorage.setItem("userSearch", storedUserSearch ? "true" : "false");
+    localStorage.setItem("searchQuery", storedQuery);
 
     if (storedQuery && storedUserSearch) {
       this.searchQuery = storedQuery;

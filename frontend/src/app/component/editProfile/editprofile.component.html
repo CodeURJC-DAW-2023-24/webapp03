@@ -1,0 +1,104 @@
+<header class="bg-branding-white py-1">
+  <div class="container px-4 px-lg-5 my-5">
+    <div class="text-start text-dark">
+      <h1 class="display-4 fw-bolder" id="username">{{username}}</h1>
+      <p class="lead fw-normal text-black-50 mb-0">Ajustes del perfil</p>
+
+    </div>
+  </div>
+</header>
+
+<div class="container-xl px-4 mt-5 mb-5 main-container">
+  <div class="row">
+    <div class="col-xl-4">
+
+      <div class="card mb-4 mb-xl-0">
+        <div class="card-header">Foto de perfil</div>
+        <div class="card-body text-center">
+          <!-- Profile picture -->
+          <img class="img-account-profile rounded-circle mb-2"
+               [src]="profileImage()" alt>
+
+          <div class="small font-italic text-muted mb-4">JPG o PNG de no más de 5 MB</div>
+          <input type="file" id="inputProfileImage" accept=",.jpg,.jpeg,.png" style="display: none">
+          <button class="btn btn-primary" type="button" id="uploadImage">Subir imagen</button>
+          <div id="uploadSuccessful" style="display: none; background-color: darkgreen; color: white; text-align: center; width: 100%; height: 25px; align-content: center; border-radius: 10px; margin-top: 7px">La imagen se actualizó correcamente.</div>
+          <div id="uploadNotSuccesful" style="display: none; background-color: darkred; color: white; text-align: center; width: 100%; height: 25px; align-content: center; border-radius: 10px; margin-top: 7px">La imagen no puede ser mayor de 5MB.</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-8">
+
+      <div class="card mb-4">
+        <div class="card-header">Detalles de tu cuenta</div>
+        <div class="card-body">
+          <form>
+            <div id="correctPassword" style="display: none; background-color: darkgreen; color: white; text-align: center; width: 100%; height: 25px; align-content: center; border-radius: 10px; margin-bottom: 7px">La contraseña se actualizó correctamente.</div>
+            <div style="margin-bottom: 7px">
+              <button  [routerLink]="['/profile']" class="btn btn-secondary-light" id="returnBut" type="button" style="border: 1px solid dimgrey">
+                <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
+                Volver
+              </button>
+            </div>
+
+            <div class="row gx-3 mb-3">
+
+              <div class="col-md-6">
+                <label class="small mb-1" for="inputAlias">Alias</label>
+                <input class="form-control" id="inputAlias" type="text"
+                       placeholder="Escribe tu nombre de usuario" value="{{alias}}">
+              </div>
+
+              <div class="col-md-6">
+                <label class="small mb-1" for="inputEmailAddress">Correo electrónico</label>
+                <input class="form-control" id="inputEmailAddress" type="email"
+                       placeholder="Escribe tu dirección de correo electrónico"
+                       value="{{email}}">
+              </div>
+            </div>
+
+            <div class="mb-3 description-form">
+              <label class="small mb-1" for="inputProfileDescription">Descripción</label>
+              <textarea class="form-control description-text-area" id="inputProfileDescription"
+                        rows="4" cols="50"
+                        placeholder="Escribe una descripción para tu perfil">{{description}}</textarea>
+            </div>
+
+            <div class="row gx-3 mb-3">
+
+              <div style="display: flex; justify-content: space-between;" class="new-password-flex">
+                <div style="flex: 1; margin-right: 10px;" class="col-md-6">
+                  <label class="small mb-1" for="inputOldPassword">Contraseña actual</label>
+                  <input class="form-control" id="inputOldPassword" type="password"
+                         placeholder="Escribe tu contraseña actual" value="">
+                  <div id="wrongPassword" style="display: none; background-color: darkred; color: white; text-align: center; width: 100%; height: 25px; align-content: center; border-radius: 10px; margin-top: 7px">La contraseña no es correcta.</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row gx-3 mb-3">
+
+              <div style="display: flex; justify-content: space-between;" class="new-password-flex">
+                <div style="flex: 1; margin-right: 10px;" class="col-md-6">
+                  <label class="small mb-1" for="inputPassword">Nueva contraseña</label>
+                  <input class="form-control" id="inputPassword" type="password"
+                         placeholder="Escribe tu contraseña nueva" value="">
+                </div>
+                <div style="flex: 1; margin-right: 10px;" class="col-md-6">
+                  <label class="small mb-1" for="inputConfirmPassword">Confirma tu
+                    contraseña</label>
+                  <input class="form-control" id="inputConfirmPassword" type="password"
+                         placeholder="Escribe tu contraseña de nuevo" value="">
+                </div>
+              </div>
+              <a id="passwordsNotMatching" style="display: none; color:darkred; align-content: center">Las contraseñas no coinciden</a>
+              <a id="passwordRequirements" style="display: none; color:darkred; align-content: center">La contraseña debe incluir al menos 8 caracteres y un número</a>
+            </div>
+
+            <button class="btn btn-primary" id="saveChangesBut" type="button">Guardar</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

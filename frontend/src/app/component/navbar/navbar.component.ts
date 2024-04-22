@@ -23,12 +23,6 @@ export class NavbarComponent {
     }
   }
 
-  goToProfile() {
-    this.router.navigate(["/profile"]).then(() => {
-      this.navbarService.emitEvent(this.sessionService.getLoggedUsername());
-    });
-  }
-
   onKeyDown(event: any) {
     if (event.key === "Enter") {
       this.search(event.target.value)
@@ -37,7 +31,7 @@ export class NavbarComponent {
 
   search(query: string) {
     this.navbarService.setUserSearch(this.userSearch);
-    this.router.navigate(["/search"]).then(() => {
+    this.router.navigate(["/search"], { queryParams: {query: query, users: this.userSearch} }).then(() => {
       this.navbarService.emitEvent({query: query, page: this.page, newSearch: true});
     });
   }
@@ -48,10 +42,6 @@ export class NavbarComponent {
 
   defaultImage() {
     return "assets/defaultProfilePicture.png";
-  }
-
-  goHome() {
-    this.router.navigate(["/"]);
   }
 
   toggleSearch(type: string) {

@@ -54,7 +54,7 @@ export class ReviewService {
     let params = new HttpParams(); // los parametros se pasan así mejor (los RequestParams)
     params = params.append("count", "true");
 
-    return this.httpClient.get<number>(this.baseUrl + username, {params: params}).pipe(
+    return this.httpClient.get<number>(this.baseUrl + "/users/" +username, {params: params}).pipe(
       catchError(error => this.handleError(error))
     ) as Observable<number>;
   }

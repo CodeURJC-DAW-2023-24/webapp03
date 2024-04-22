@@ -29,6 +29,7 @@ export class ProfileComponent {
   readBooksCount = 0;
   readingBooksCount = 0;
   wantedBooksCount = 0;
+  reviewCount = 0;
 
   constructor(
     private http: HttpClient, public bookService: BookService, public loginService: LoginService, public reviewService: ReviewService, public algorithmService: AlgorithmsService, public userService: UserService, private navbarService: NavbarService
@@ -51,6 +52,43 @@ export class ProfileComponent {
           console.log(e);
         }
       });
+
+      this.userService.getReadBooksCount(user).subscribe({
+        next: n => {
+          this.readBooksCount = n;
+        },
+        error: e => {
+          console.log(e);
+        }
+      });
+
+      this.userService.getReadingBooksCount(user).subscribe({
+        next: n => {
+          this.readingBooksCount = n;
+        },
+        error: e => {
+          console.log(e);
+        }
+      });
+
+      this.userService.getWantedBooksCount(user).subscribe({
+        next: n => {
+          this.wantedBooksCount = n;
+        },
+        error: e => {
+          console.log(e);
+        }
+      });
+
+      this.reviewService.getReviewCountByUser(user).subscribe({
+        next: n => {
+          this.reviewCount = n;
+        },
+        error: e => {
+          console.log(e);
+        }
+      });
+
     });
 
   }

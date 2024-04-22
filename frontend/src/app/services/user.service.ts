@@ -47,4 +47,27 @@ export class UserService {
     ) as Observable<number>;
   }
 
+  getReadBooksCount(username: string): Observable<number> {
+    let params = new HttpParams().set("list", "read");
+    return this.http.get<number>(API_URL + "/" + username + "/books/count", { params: params }).pipe(
+      catchError((error) => throwError(error))
+    ) as Observable<number>;
+  }
+
+  getReadingBooksCount(username: string): Observable<number> {
+    let params = new HttpParams().set("list", "reading");
+
+    return this.http.get<number>(API_URL + "/" + username + "/books/count", { params: params }).pipe(
+      catchError((error) => throwError(error))
+    ) as Observable<number>;
+  }
+
+  getWantedBooksCount(username: string): Observable<number> {
+    let params = new HttpParams().set("list", "wanted");
+
+    return this.http.get<number>(API_URL + "/" + username + "/books/count", { params: params }).pipe(
+      catchError((error) => throwError(error))
+    ) as Observable<number>;
+  }
+
 }
