@@ -1430,3 +1430,7 @@ body {
   color: var(--branding-brown-greyed-out);
 
 }
+
+html{
+  scroll-behavior: auto !important;
+}

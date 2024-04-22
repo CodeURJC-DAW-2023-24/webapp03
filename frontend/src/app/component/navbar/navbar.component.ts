@@ -15,6 +15,7 @@ export class NavbarComponent {
   userSearch = false;
   loggedIn = false;
   username = "";
+  query: string = "";
 
   constructor(private router: Router, public userService: UserService, private navbarService: NavbarService, private sessionService: LoginService) {
     this.loggedIn = sessionService.isUserLogged();
@@ -30,8 +31,14 @@ export class NavbarComponent {
   }
 
   search(query: string) {
+    this.query = query;
     this.navbarService.setUserSearch(this.userSearch);
-    this.router.navigate(["/search"], { queryParams: {query: query, users: this.userSearch} }).then(() => {
+    this.router.navigate(["/search", {
+
+      users: this.userSearch,
+      query: this.query
+
+    }]).then(() => {
       this.navbarService.emitEvent({query: query, page: this.page, newSearch: true});
     });
   }

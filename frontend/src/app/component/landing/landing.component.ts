@@ -72,7 +72,18 @@ export class LandingComponent implements OnInit {
         this.totalSiteUsers = next;
       },
     );
+  }
 
+  ngOnInit(): void {
+
+    this.loadChart();
+
+    // Check if user is logged in
+    this.checkIfLoggedIn();
+
+  }
+
+  loadLists(){
     // If user is not logged in
     if (!this.loggedIn) {
       //Recommended book by author
@@ -125,32 +136,44 @@ export class LandingComponent implements OnInit {
 
   }
 
-  ngOnInit(): void {
-
-    /* wait for login
-    setTimeout(() => {
-      this.checkIfLoggedIn();
-    }, 1000);
-
-     */
-
-    this.loadChart();
-
-
+  loadUserData(user: User) {
+    this.user = user;
+    this.loggedUsername = user.username;
+    this.isAdmin = user.roles.includes("ADMIN");
   }
 
   checkIfLoggedIn() {
-    this.loginService.checkLogged();
-    this.loggedIn = this.loginService.isUserLogged();
-    console.log("Logged in: " + this.loggedIn);
-    if (this.loggedIn) {
-      this.user = this.loginService.getLoggedUser();
-      this.loggedUsername = this.loginService.getLoggedUsername();
+    this.loginService.checkLogged().subscribe({
+      next: bool => {
+        this.loggedIn = bool; // set loggedIn to the value returned by the service
+        if (bool) { // if user is logged in
+          this.loginService.getLoggedUser().subscribe({ // get the logged user
+            next: user => {
+              this.loadUserData(user); // load the user data
+              this.loadLists(); // then load the lists of books for the user
 
-      // Check if user is admin
-      this.isAdmin = this.loginService.isAdmin();
+            },
+            error: r => {
+              console.error("Error getting logged user: " + JSON.stringify(r));
+            }
+          });
 
-    }
+        } else { // if user is not logged in
+          this.loggedUsername = ""; // set the logged username to empty
+          this.user = undefined;
+          this.isAdmin = false;
+          this.loadLists(); // then load the lists of books globally
+        }
+
+      },
+      error: r => {
+
+        // if error is 401, user is not logged in, do not print error
+        if (r.status != 401) {
+          console.error("Error checking if user is logged in: " + JSON.stringify(r));
+        }
+      }
+    });
   }
 
   // Get book cover image
@@ -174,7 +197,7 @@ export class LandingComponent implements OnInit {
           this.page += 1;
           this.loadingMoreBooks = false;
 
-          //if no books books are returned, hide the button and show a message
+          //if no books are returned, hide the button and show a message
           if (books.length == 0) {
             this.noMoreBooks = true;
           }
@@ -185,12 +208,17 @@ export class LandingComponent implements OnInit {
       });
     } else {
       this.algorithmService.getRecommendedBooksForUser(this.page, this.size).subscribe({
-        next: books => {
+        next: userBooks => {
           // add new books to the lists
-          this.recommendedBooksGenreLeft = this.recommendedBooksGenreLeft.concat(books.slice(0, 2));
-          this.recommendedBooksGenreRight = this.recommendedBooksGenreRight.concat(books.slice(2, 4));
+          this.recommendedBooksGenreLeft = this.recommendedBooksGenreLeft.concat(userBooks.slice(0, 2));
+          this.recommendedBooksGenreRight = this.recommendedBooksGenreRight.concat(userBooks.slice(2, 4));
           this.page += 1;
           this.loadingMoreBooks = false;
+
+          //if no books are returned, hide the button and show a message
+          if (userBooks.length == 0) {
+            this.noMoreBooks = true;
+          }
         },
         error: r => {
           console.error("Error getting recommended books by genre: " + JSON.stringify(r));
@@ -254,6 +282,31 @@ export class LandingComponent implements OnInit {
       },
       error: r => {
         console.error("Error getting most read genres: " + JSON.stringify(r));
+      }
+    });
+  }
+
+  login() {
+    this.loginService.login({username: "YourReader", password: "pass"}).subscribe({
+      next: r => {
+        // reload the page
+        window.location.reload();
+      },
+      error: r => {
+        console.error("Login failed: " + JSON.stringify(r));
+      }
+    });
+  }
+
+  logout() {
+    this.loginService.logout().subscribe({
+      next: r => {
+        console.log("Logout successful");
+        // reload the page
+        window.location.reload();
+      },
+      error: r => {
+        console.error("Logout failed: " + JSON.stringify(r));
       }
     });
   }
