@@ -1,16 +1,7 @@
 import {Component, OnInit} from "@angular/core";
-import {HttpClient} from "@angular/common/http";
-import {BookService} from "../../services/book.service";
-import {Book} from "../../models/book.model";
 import {LoginService} from "../../services/session.service";
-import {Review} from "../../models/review.model";
-import {ReviewService} from "../../services/review.service";
-import {AlgorithmsService} from "../../services/algorithms.service";
-import {UserService} from "../../services/user.service";
-import {error} from "@angular/compiler-cli/src/transformers/util";
-import {User} from "../../models/user.model";
-import {Observable} from "rxjs";
 import {Chart, registerables} from "chart.js";
+import {Router} from "@angular/router";
 
 Chart.register(...registerables);
 
@@ -19,11 +10,24 @@ Chart.register(...registerables);
   templateUrl: "./login.component.html",
   styleUrls: ["./login.component.css", "../../../animations.css"],
 })
+
 export class LoginComponent implements OnInit {
   title = "Bookmarks";
 
-  ngOnInit() {
-
+  constructor(public loginService:LoginService, private router:Router) {
   }
 
+  ngOnInit() {
+  }
+
+  logIn(userName:string, userPassword:string){
+    this.loginService.login({username:userName, password:userPassword}).subscribe({
+      next: r => {
+        this.router.navigate(['/'])
+      },
+      error: r => {
+        console.error("Login failed: " + JSON.stringify(r));
+      }
+    });
+  }
 }
