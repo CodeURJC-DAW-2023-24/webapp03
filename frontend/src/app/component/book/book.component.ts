@@ -4,14 +4,14 @@ import {BookService} from "../../services/book.service";
 import {Book} from "../../models/book.model";
 import {ReviewService} from "../../services/review.service";
 import {UserService} from "../../services/user.service";
-import {error} from "@angular/compiler-cli/src/transformers/util";
 import {User} from "../../models/user.model";
 import {Observable} from "rxjs";
-import {Chart, registerables} from "chart.js";
 import {Genre} from "../../models/genre.model";
 import {LoginService} from "../../services/session.service";
 import {AlgorithmsService} from "../../services/algorithms.service";
 import {NavbarService} from "../../services/navbar.service";
+import {ListsService} from "../../services/lists.service";
+import {Router, ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: "app-book",
@@ -20,12 +20,23 @@ import {NavbarService} from "../../services/navbar.service";
 })
 
 export class BookComponent implements OnInit{
+  username = "";
+  role = "";
+  description = "";
+  alias = "";
+  email = "";
+
+  loggedUser = this.loginService.getLoggedUsername();
+  isCurrentUser = false;
+  isAdministrator = this.loginService.isAdmin();
+  isAuthor = this.loginService.isAuthor();
+
   book: Book | undefined; // Declara una variable para almacenar el libro
   ID: number = 0;
   genre: Genre | undefined;
   title = "";
   authorString = "";
-  description = "";
+  bookDescription = "";
   releaseDate = "";
   ISBN = "";
   averageRating = 0;
@@ -33,7 +44,7 @@ export class BookComponent implements OnInit{
   pageCount = 0;
   publisher = "";
 
-  constructor(private http: HttpClient, public bookService: BookService, public loginService: LoginService, public reviewService: ReviewService, public userService: UserService, private navbarService: NavbarService, private route: ActivatedRoute) {
+  constructor(private http: HttpClient, public bookService: BookService, public loginService: LoginService, public reviewService: ReviewService, public algorithmService: AlgorithmsService, public userService: UserService, private navbarService: NavbarService, private listsService: ListsService, private route: ActivatedRoute) {
   }
 
   ngOnInit(): void {
@@ -49,7 +60,7 @@ export class BookComponent implements OnInit{
         this.genre = this.book.genre;
         this.title = this.book.title;
         this.authorString = this.book.authorString;
-        this.description = this.book.description;
+        this.bookDescription = this.book.description;
         this.releaseDate = this.book.releaseDate;
         this.ISBN = this.book.ISBN;
         this.averageRating = this.book.averageRating;
