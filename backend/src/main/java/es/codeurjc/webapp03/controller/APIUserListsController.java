@@ -236,8 +236,35 @@ public class APIUserListsController {
             }
     }
 
+    // Get number of books in a user's list
+    @Operation(summary = "Get number of books in a user's list")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Number of books found", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = Integer.class))
+            }),
+            @ApiResponse(responseCode = "404", description = "User not found"),
+            @ApiResponse(responseCode = "400", description = "Invalid list")
 
-    // TODO: Move this to a different controller (this is for testing)
+    })
+    @GetMapping("/api/users/{username}/books/count")
+    public ResponseEntity<?> getNumberOfBooksInList(@PathVariable String username,
+                                                    @RequestParam("list") String list) {
+
+        // Check if the user exists
+        if (userService.getUser(username) == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        //Check if the list is valid
+        if (!list.equals("read") && !list.equals("reading") && !list.equals("wanted")) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        int numberOfBooks = userService.getNumberOfBooksInList(userService.getUser(username), list);
+        return ResponseEntity.ok(numberOfBooks);
+    }
+
+
     // Get current user's info
     @Operation(summary = "Get current user's info")
     @ApiResponses(value = {

@@ -46,6 +46,18 @@ public interface UserRepository extends JpaRepository<User, String> {
     @Query("SELECT u.username, COUNT(b) FROM User u JOIN u.readBooks b GROUP BY u.username ORDER BY COUNT(b) DESC")
     List<Object[]> getUsersAndNumberOfBooksRead();
 
+    // get number of books in the wanted list of a user
+    @Query("SELECT COUNT(b) FROM User u JOIN u.wantedBooks b WHERE u.username = :username")
+    int getNumberOfWantedBooks(String username);
+
+    // get number of books in the read list of a user
+    @Query("SELECT COUNT(b) FROM User u JOIN u.readBooks b WHERE u.username = :username")
+    int getNumberOfReadBooks(String username);
+
+    // get number of books in the reading list of a user
+    @Query("SELECT COUNT(b) FROM User u JOIN u.readingBooks b WHERE u.username = :username")
+    int getNumberOfReadingBooks(String username);
+
     // get username by email
     User findByEmail(String email);
 

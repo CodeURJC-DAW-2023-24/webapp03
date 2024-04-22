@@ -249,6 +249,16 @@ public class UserService {
         userRepository.save(user);
     }
 
+    // Get number of books in a specific list
+    public int getNumberOfBooksInList(User user, String listType) {
+        return switch (listType) {
+            case "read" -> userRepository.getNumberOfReadBooks(user.getUsername());
+            case "reading" -> userRepository.getNumberOfReadingBooks(user.getUsername());
+            case "wanted" -> userRepository.getNumberOfWantedBooks(user.getUsername());
+            default -> 0;
+        };
+    }
+
     public boolean isUsernameAvailable(String username){
         return getUser(username) == null;
     }
