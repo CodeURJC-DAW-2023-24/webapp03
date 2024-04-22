@@ -90,6 +90,7 @@ export class LandingComponent implements OnInit {
       this.algorithmService.getRecommendedBooksGeneralByAuthor(0, 1).subscribe({
         next: books => {
           this.recommendedBooksAuthor = books;
+
         },
         error: r => {
           console.error("Error getting recommended books by author: " + JSON.stringify(r));
@@ -147,6 +148,7 @@ export class LandingComponent implements OnInit {
       next: bool => {
         this.loggedIn = bool; // set loggedIn to the value returned by the service
         if (bool) { // if user is logged in
+          this.heroNameVisible = true;
           this.loginService.getLoggedUser().subscribe({ // get the logged user
             next: user => {
               this.loadUserData(user); // load the user data

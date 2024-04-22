@@ -117,21 +117,19 @@
       <div class="list-col card book-list-card">
         <div class="card-header"><h5>Libros leídos</h5></div>
         <div class="card-body">
-          <div id="read" class="row-book">
-            <!--TODO: Add ReadBooks and ratings
-            {{ReadBooks}}
-            {{#ReadBooks}}
-            <a href="/book/{{ID}}" class="book-link-disabled-decorations">
+
+          <div id="read" class="row-book"  *ngFor="let readBook of readBooks">
+            <a [routerLink]="['book', readBook.ID]" class="book-link-disabled-decorations"> <!-- TODO: Add BookID -->
               <div class="single_advisor_profile wow fadeInUp" data-wow-delay="0.3s"
                    style="visibility: visible; animation-delay: 0.3s; animation-name: fadeInUp;">
                 <div class="in-card-book-cover-image"><img
-                  src="data:image/png;base64,{{imageString}}" alt>
+                  [src]="bookImage(readBook.ID)"> <!-- TODO: Add ImageString -->
                 </div>
                 <div class="single_advisor_details_info">
-                  <h6>{{title}}</h6>
-                  <p class="designation">{{authorString}}</p>
+                  <h6>{{ readBook.title }}</h6> <!-- TODO: Add Title -->
+                  <p class="designation">{{ readBook.authorString }}</p> <!-- TODO: Add AuthorString -->
                   <div class="">
-                    <div class="d-flex justify-content-end small text-warning mb-2 stars">
+                    <div class="d-flex justify-content-end small text-warning mb-2 stars"> <!-- TODO: Add Rating -->
                       <div class=""></div>
                       <div class=""></div>
                       <div class=""></div>
@@ -142,12 +140,10 @@
                 </div>
               </div>
             </a>
-            {{/ReadBooks}}
-            {{#ratingsRead}}
-            <div style="display:none" class="rating">{{.}}</div>
-            {{/ratingsRead}}
-            -->
+            <div style="display:none" class="rating">{{ readBook.averageRating }}</div> <!-- TODO: Add AverageRating -->
           </div>
+
+
           <a id="load-more-btn-read" class="btn btn-secondary-light flex-shrink-0 action-button"
              style="border: 1px solid dimgrey">
             <i class="fa-solid fa-arrows-rotate" aria-hidden="true"></i>
@@ -160,20 +156,19 @@
       <div class="list-col card book-list-card">
         <div class="card-header"><h5>Libros leyendo</h5></div>
         <div class="card-body">
-          <div id="reading" class="row-book">
-            <!--TODO: Add ReadingBooks and ratings
-            {{#ReadingBooks}}
-            <a href="/book/{{ID}}" class="book-link-disabled-decorations">
+
+          <div id="reading" class="row-book"  *ngFor="let readingBook of readingBooks">
+            <a [routerLink]="['book', readingBook.ID]" class="book-link-disabled-decorations"> <!-- TODO: Add BookID -->
               <div class="single_advisor_profile wow fadeInUp" data-wow-delay="0.3s"
                    style="visibility: visible; animation-delay: 0.3s; animation-name: fadeInUp;">
                 <div class="in-card-book-cover-image"><img
-                  src="data:image/png;base64,{{imageString}}" alt>
+                  [src]="bookImage(readingBook.ID)"> <!-- TODO: Add ImageString -->
                 </div>
                 <div class="single_advisor_details_info">
-                  <h6>{{title}}</h6>
-                  <p class="designation">{{authorString}}</p>
+                  <h6>{{ readingBook.title }}</h6> <!-- TODO: Add Title -->
+                  <p class="designation">{{ readingBook.authorString }}</p> <!-- TODO: Add AuthorString -->
                   <div class="">
-                    <div class="d-flex justify-content-end small text-warning mb-2 stars">
+                    <div class="d-flex justify-content-end small text-warning mb-2 stars"> <!-- TODO: Add Rating -->
                       <div class=""></div>
                       <div class=""></div>
                       <div class=""></div>
@@ -184,12 +179,9 @@
                 </div>
               </div>
             </a>
-            {{/ReadingBooks}}
-            {{#ratingsReading}}
-            <div style="display:none" class="rating">{{.}}</div>
-            {{/ratingsReading}}
-            -->
+            <div style="display:none" class="rating">{{ readingBook.averageRating }}</div> <!-- TODO: Add AverageRating -->
           </div>
+
           <a id="load-more-btn-reading" class="btn btn-secondary-light flex-shrink-0 action-button"
              style="border: 1px solid dimgrey">
             <i class="fa-solid fa-arrows-rotate" aria-hidden="true"></i>
@@ -201,43 +193,32 @@
       <div class="list-col card book-list-card">
         <div class="card-header"><h5>Libros que quiero leer</h5></div>
         <div class="card-body">
-          <div id="wanted" class="row-book">
-            <!--TODO: Add WantedBooks
-            {{WantedBooks}}
-            {{#WantedBooks}}
-            <a href="/book/{{ID}}" class="book-link-disabled-decorations">
-            -->
-            <div class="single_advisor_profile wow fadeInUp" data-wow-delay="0.3s"
-                 style="visibility: visible; animation-delay: 0.3s; animation-name: fadeInUp;">
 
-              <div class="in-card-book-cover-image"><img
-                alt>
-              </div>
-
-              <div class="single_advisor_details_info">
-                <h6>{{ title }}</h6>
-                <!--TODO: Add AuthorString
-                <p class="designation">{{authorString}}</p>
-                -->
-                <div class="">
-                  <div class="d-flex justify-content-end small text-warning mb-2 stars">
-                    <div class=""></div>
-                    <div class=""></div>
-                    <div class=""></div>
-                    <div class=""></div>
-                    <div class=""></div>
+          <div id="wanted" class="row-book"  *ngFor="let wantedBook of wantedBooks">
+            <a [routerLink]="['book', wantedBook.ID]" class="book-link-disabled-decorations"> <!-- TODO: Add BookID -->
+              <div class="single_advisor_profile wow fadeInUp" data-wow-delay="0.3s"
+                   style="visibility: visible; animation-delay: 0.3s; animation-name: fadeInUp;">
+                <div class="in-card-book-cover-image"><img
+                  [src]="bookImage(wantedBook.ID)"> <!-- TODO: Add ImageString -->
+                </div>
+                <div class="single_advisor_details_info">
+                  <h6>{{ wantedBook.title }}</h6> <!-- TODO: Add Title -->
+                  <p class="designation">{{ wantedBook.authorString }}</p> <!-- TODO: Add AuthorString -->
+                  <div class="">
+                    <div class="d-flex justify-content-end small text-warning mb-2 stars"> <!-- TODO: Add Rating -->
+                      <div class=""></div>
+                      <div class=""></div>
+                      <div class=""></div>
+                      <div class=""></div>
+                      <div class=""></div>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-            <!--TODO: Add WantedBooks
-            {{WantedBooks}}
-            -->
-            <!--TODO: Add ratings
-            {{ratingsWanted}}
-            <div style="display:none" class="rating">{{.}}</div>
-            {{ratingsWanted}}-->
+            </a>
+            <div style="display:none" class="rating">{{ wantedBook.averageRating }}</div> <!-- TODO: Add AverageRating -->
           </div>
+
           <a id="load-more-btn-wanted" class="btn btn-secondary-light flex-shrink-0 action-button"
              style="border: 1px solid dimgrey">
             <i class="fa-solid fa-arrows-rotate" aria-hidden="true"></i>

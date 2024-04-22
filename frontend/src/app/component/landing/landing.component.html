@@ -97,7 +97,7 @@
               <h2 class="card-title h4">{{ genreLeftBook.title }}</h2>
               <p class="card-text">{{ genreLeftBook.authorString }}</p>
               <p class="card-text">Género: {{ genreLeftBook.genre?.name }}</p>
-              <a class="btn btn-primary" href="book/ID">Leer más</a>
+              <a class="btn btn-primary" [routerLink]="['book', genreLeftBook.ID]">Leer más</a>
             </div>
           </div>
 
@@ -118,7 +118,7 @@
               <h2 class="card-title h4">{{ genreRightBook.title }}</h2>
               <p class="card-text">{{ genreRightBook.authorString }}</p>
               <p class="card-text">Género: {{ genreRightBook.genre?.name }}</p>
-              <a class="btn btn-primary" href="book/ID">Leer más</a>
+              <a class="btn btn-primary" [routerLink]="['book', genreRightBook.ID]">Leer más</a>
             </div>
           </div>
 
