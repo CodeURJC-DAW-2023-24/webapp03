@@ -38,6 +38,14 @@ export class ProfileComponent implements OnInit {
   readingBooks: Book[] = [];
   wantedBooks: Book[] = [];
 
+  readBooksListPage = 0;
+  readingBooksListPage = 0;
+  wantedBooksListPage = 0;
+
+  noMoreReadBooks = false;
+  noMoreReadingBooks = false;
+  noMoreWantedBooks = false;
+
   constructor(
     private http: HttpClient, public bookService: BookService, public loginService: LoginService, public reviewService: ReviewService, public algorithmService: AlgorithmsService, public userService: UserService, private navbarService: NavbarService, private listsService: ListsService
   ) {
@@ -109,9 +117,10 @@ export class ProfileComponent implements OnInit {
   }
 
   loadReadList(loggedUsername:string) {
-    this.listsService.getReadBooks(loggedUsername, 0, 4).subscribe({
+    this.listsService.getReadBooks(loggedUsername, this.readBooksListPage, 4).subscribe({
       next: books => {
         this.readBooks = books;
+        this.readBooksListPage += 1;
       },
       error: r => {
         console.error("Error getting read books: " + JSON.stringify(r));
@@ -120,9 +129,10 @@ export class ProfileComponent implements OnInit {
   }
 
   loadReadingList(loggedUsername:string) {
-    this.listsService.getReadingBooks(loggedUsername, 0, 4).subscribe({
+    this.listsService.getReadingBooks(loggedUsername, this.readingBooksListPage, 4).subscribe({
       next: books => {
         this.readingBooks = books;
+        this.readingBooksListPage += 1;
       },
       error: r => {
         console.error("Error getting reading books: " + JSON.stringify(r));
@@ -131,9 +141,10 @@ export class ProfileComponent implements OnInit {
   }
 
   loadWantedList(loggedUsername:string) {
-    this.listsService.getWantedBooks(loggedUsername, 0, 4).subscribe({
+    this.listsService.getWantedBooks(loggedUsername, this.wantedBooksListPage, 4).subscribe({
       next: books => {
         this.wantedBooks = books;
+        this.wantedBooksListPage += 1;
       },
       error: r => {
         console.error("Error getting wanted books: " + JSON.stringify(r));
@@ -142,9 +153,74 @@ export class ProfileComponent implements OnInit {
   }
 
   loadAllLists() {
-    this.loadReadList(this.loggedUser);
-    this.loadReadingList(this.loggedUser);
-    this.loadWantedList(this.loggedUser);
+    this.loadReadList(this.username);
+    this.loadReadingList(this.username);
+    this.loadWantedList(this.username);
+  }
+
+  loadMore(list: string) {
+    if (list === "read") {
+
+      let loadIcon = document.querySelector(".read-list-load-icon");
+      loadIcon?.classList.add("fa-spin");
+
+
+      this.listsService.getReadBooks(this.username, this.readBooksListPage, 4).subscribe({
+        next: books => {
+          this.readBooks = this.readBooks.concat(books);
+          this.readBooksListPage += 1;
+
+          loadIcon?.classList.remove("fa-spin");
+
+          if(books.length === 0) {
+            this.noMoreReadBooks = true;
+          }
+        },
+        error: r => {
+          console.error("Error getting read books: " + JSON.stringify(r));
+        }
+      });
+    } else if (list === "reading") {
+
+      let loadIcon = document.querySelector(".reading-list-load-icon");
+      loadIcon?.classList.add("fa-spin");
+
+      this.listsService.getReadingBooks(this.username, this.readingBooksListPage, 4).subscribe({
+        next: books => {
+          this.readingBooks = this.readingBooks.concat(books);
+          this.readingBooksListPage += 1;
+
+          loadIcon?.classList.remove("fa-spin");
+
+          if(books.length === 0) {
+            this.noMoreReadingBooks = true;
+          }
+        },
+        error: r => {
+          this.noMoreReadingBooks = true;
+        }
+      });
+    } else if (list === "wanted") {
+
+      let loadIcon = document.querySelector(".wanted-list-load-icon");
+      loadIcon?.classList.add("fa-spin");
+
+      this.listsService.getWantedBooks(this.username, this.wantedBooksListPage, 4).subscribe({
+        next: books => {
+          this.wantedBooks = this.wantedBooks.concat(books);
+          this.wantedBooksListPage += 1;
+
+          loadIcon?.classList.remove("fa-spin");
+
+          if(books.length === 0) {
+            this.noMoreWantedBooks = true;
+          }
+        },
+        error: r => {
+          this.noMoreWantedBooks = true;
+        }
+      });
+    }
   }
 
   // Get book cover image
