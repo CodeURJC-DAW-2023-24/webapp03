@@ -40,21 +40,21 @@
       <div class="col-md-6 col-lg-4">
         <div class="login-wrap p-0">
           <h3 class="mb-4 text-center login-greeting-text">Crea una cuenta</h3>
-          <form action="/signup/done" class="signin-form" method="post">
+          <form action="/signup/done" class="signin-form" method="post"> <!--TODO: Borrar el action de la api-->
             <div class="form-group">
-              <input id="inputUsername" name="inputUsername" type="text" class="form-control" placeholder="Username" required>
+              <input #userName id="inputUsername" name="inputUsername" type="text" class="form-control" placeholder="Username" required>
               <a id="userError" style="color:darkred">That username is not available!</a>
             </div>
             <div class="form-group">
-              <input name="inputAlias" type="text" class="form-control" placeholder="Alias" required>
+              <input #userAlias name="inputAlias" type="text" class="form-control" placeholder="Alias" required>
             </div>
             <div class="form-group">
-              <input name="inputEmail"type="email" class="form-control" placeholder="Email" required>
+              <input #userEmail name="inputEmail"type="email" class="form-control" placeholder="Email" required>
             </div>
 
             <div>
               <div class="form-group">
-                <input id="inputPassword" name="password-field" type="password" class="form-control" placeholder="Contraseña"
+                <input #userPassword id="inputPassword" name="password-field" type="password" class="form-control" placeholder="Contraseña"
                        required>
                 <span toggle="#password-field"
                       class="fa fa-fw fa-eye field-icon toggle-password"></span>
@@ -73,7 +73,7 @@
 
             <div class="form-group">
               <button type="submit" id="submit"
-                      class="form-control btn btn-primary submit px-3 pill-button">Registrarse</button>
+                      class="form-control btn btn-primary submit px-3 pill-button" (click)="signUp(userName.value, userAlias.value, userEmail.value, userPassword.value)">Registrarse</button>
             </div>
             <!-- <div class="form-group d-md-flex">
               <div class="w-50">
@@ -89,9 +89,9 @@
             <input type="hidden" name="_csrf" value="token"/> <!-- TODO: Add CSRF token here -->
           </form>
           <div class="form-group">
-            <a href="/login">
+            <a>
               <button type="button"
-                      class="form-control btn btn-secondary submit px-3 pill-button">Volver</button>
+                      class="form-control btn btn-secondary submit px-3 pill-button" [routerLink]="['/login']">Volver</button>
             </a>
           </div>
         </div>

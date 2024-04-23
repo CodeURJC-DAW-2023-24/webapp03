@@ -1,16 +1,7 @@
 import {Component, OnInit} from "@angular/core";
-import {HttpClient} from "@angular/common/http";
-import {BookService} from "../../services/book.service";
-import {Book} from "../../models/book.model";
-import {LoginService} from "../../services/session.service";
-import {Review} from "../../models/review.model";
-import {ReviewService} from "../../services/review.service";
-import {AlgorithmsService} from "../../services/algorithms.service";
 import {UserService} from "../../services/user.service";
-import {error} from "@angular/compiler-cli/src/transformers/util";
-import {User} from "../../models/user.model";
-import {Observable} from "rxjs";
 import {Chart, registerables} from "chart.js";
+import {Router} from "@angular/router";
 
 Chart.register(...registerables);
 
@@ -22,8 +13,23 @@ Chart.register(...registerables);
 export class SignupComponent implements OnInit {
   title = "Bookmarks";
 
+  constructor(public userService:UserService, private router:Router) {
+
+  }
+
   ngOnInit() {
 
+  }
+
+  signUp(userName:string, userAlias:string, userEmail:string, userPassword:string) {
+    this.userService.singup({username:userName, email:userEmail, alias:userAlias, password:userPassword}).subscribe({
+      next: r => {
+        this.router.navigate(["/login"])
+      },
+      error: r => {
+        console.error("Singup failed: " + JSON.stringify(r));
+      }
+    });
   }
 
 }

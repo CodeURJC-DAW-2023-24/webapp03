@@ -70,4 +70,9 @@ export class UserService {
     ) as Observable<number>;
   }
 
+  singup(userData :{username:string, email:string, alias:string, password:string}):Observable<User>{
+    return this.http.post<User>(API_URL, userData).pipe(
+      catchError((error) => throwError(error))
+    );
+  }
 }
