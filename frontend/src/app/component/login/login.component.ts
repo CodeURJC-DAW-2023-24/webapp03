@@ -27,6 +27,7 @@ export class LoginComponent implements OnInit {
       },
       error: r => {
         console.error("Login failed: " + JSON.stringify(r));
+        this.router.navigate(['/loginError']);
       }
     });
   }
