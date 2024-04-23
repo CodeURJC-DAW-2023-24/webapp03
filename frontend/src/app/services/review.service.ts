@@ -84,6 +84,13 @@ export class ReviewService {
     ) as Observable<Review>;
   }
 
+  // Has user reviewed?
+  hasUserReviewed(username: string, bookID: number): Observable<number> {
+    return this.httpClient.get<number>(this.baseUrl2 + "/users/" + username + "/books/" + bookID).pipe(
+      catchError(error => this.handleError(error))
+    ) as Observable<number>;
+  }
+
   //Error handling
   private handleError(error: any) {
     console.error("Error in ReviewService: " + error);

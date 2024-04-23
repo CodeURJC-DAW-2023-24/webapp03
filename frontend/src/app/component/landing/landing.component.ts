@@ -143,6 +143,24 @@ export class LandingComponent implements OnInit {
     this.isAdmin = user.roles.includes("ADMIN");
   }
 
+  /*
+  checkBookReviewed(username: string, bookID: number) {
+    this.reviewService.hasUserReviewed(username, bookID).subscribe({
+      next: r => { // r = response, it is a number
+        if (r == -1) { // if the response is -1, the user has not reviewed the book
+          console.log("User has not reviewed book");
+        } else { // else, the user has reviewed the book
+          console.log("User has reviewed book. Review ID: " + r);
+        }
+      },
+      error: err => {
+        console.error("Error checking if user has reviewed book: " + JSON.stringify(err));
+      }
+    });
+  }
+  */
+
+
   checkIfLoggedIn() {
     this.loginService.checkLogged().subscribe({
       next: bool => {
@@ -153,7 +171,7 @@ export class LandingComponent implements OnInit {
             next: user => {
               this.loadUserData(user); // load the user data
               this.loadLists(); // then load the lists of books for the user
-
+              // this.checkBookReviewed(user.username, 4);
             },
             error: r => {
               console.error("Error getting logged user: " + JSON.stringify(r));

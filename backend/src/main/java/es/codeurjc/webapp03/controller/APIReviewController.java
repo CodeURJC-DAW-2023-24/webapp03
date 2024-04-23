@@ -67,7 +67,8 @@ public class APIReviewController {
     }
 
     // Add review
-    interface ReviewBasicView extends Review.BasicInfo {}
+    interface ReviewBasicView extends Review.BasicInfo {
+    }
 
     @Operation(summary = "Add a review for a specific book")
     @ApiResponses(value = {
@@ -114,6 +115,7 @@ public class APIReviewController {
             }
         }
     }
+
     // Delete review
     @Operation(summary = "Delete a review")
     @ApiResponses(value = {
@@ -195,6 +197,37 @@ public class APIReviewController {
                 return new ResponseEntity<>(user.getReviews().size(), HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(user.getReviews(), HttpStatus.OK);
+            }
+        }
+    }
+
+    // Check if given user has reviewed a book specified by its ID
+    // This returns the ID of the review if the user has reviewed the book, -1 otherwise
+    @Operation(summary = "Check if a user has reviewed a specific book")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Review found", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = Long.class))
+            }),
+            @ApiResponse(responseCode = "404", description = "User or book not found"),
+            @ApiResponse(responseCode = "400", description = "Invalid book ID")
+    })
+    @GetMapping("/users/{username}/books/{bookID}")
+    public ResponseEntity<?> checkIfUserReviewedBook(@PathVariable String username, @PathVariable int bookID) {
+        User user = userService.getUser(username);
+        Book book = bookService.getBook(bookID);
+        //Check if the user exists
+        if (user == null || book == null) {
+            return new ResponseEntity<>("User or book not found", HttpStatus.NOT_FOUND);
+        } else {
+            // Check if the book id is valid
+            if (bookID < 0) {
+                return new ResponseEntity<>("Invalid book ID", HttpStatus.BAD_REQUEST);
+            }
+
+            if (reviewService.existsByBookIDAndAuthorUsername(bookID, username)) {
+                return new ResponseEntity<>(reviewService.findByBookIDAndAuthorUsername(bookID, username).getID(), HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(-1, HttpStatus.OK);
             }
         }
     }
