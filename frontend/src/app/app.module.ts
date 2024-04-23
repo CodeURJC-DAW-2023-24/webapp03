@@ -17,6 +17,7 @@ import {AdminComponent} from "./component/admin/admin.component";
 import {LoginComponent} from "./component/login/login.component";
 import {SignupComponent} from "./component/signUp/signup.component";
 import {EditProfileComponent} from "./component/editProfile/editprofile.component";
+import {ErrorComponent} from "./component/error/error.component";
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import {EditProfileComponent} from "./component/editProfile/editprofile.componen
     AdminComponent,
     LoginComponent,
     SignupComponent,
+    ErrorComponent,
     FooterComponent
   ],
     imports: [

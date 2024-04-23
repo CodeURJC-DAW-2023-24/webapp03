@@ -9,6 +9,7 @@ import {AdminComponent} from "./component/admin/admin.component";
 import {LoginComponent} from "./component/login/login.component";
 import {SignupComponent} from "./component/signUp/signup.component";
 import {EditProfileComponent} from "./component/editProfile/editprofile.component";
+import {ErrorComponent} from "./component/error/error.component";
 
 
 const routes: Routes = [
@@ -20,7 +21,8 @@ const routes: Routes = [
   { path: 'search', component: SearchComponent },
   { path: 'admin', component: AdminComponent },
   { path: 'login', component: LoginComponent},
-  { path: 'signup', component: SignupComponent}
+  { path: 'signup', component: SignupComponent},
+  { path: 'error', component: ErrorComponent}
 ];
 
 @NgModule({
