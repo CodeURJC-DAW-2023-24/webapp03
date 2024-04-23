@@ -1,5 +1,5 @@
-import {Component} from "@angular/core";
-import {NavigationEnd, Router} from "@angular/router";
+import {Component, OnInit} from "@angular/core";
+import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
 import {UserService} from "../../services/user.service";
 import {NavbarService} from "../../services/navbar.service";
 import {LoginService} from "../../services/session.service";
@@ -10,14 +10,20 @@ import {filter} from "rxjs/operators";
   templateUrl: "./navbar.component.html",
   styleUrls: ["./navbar.component.css"]
 })
-export class NavbarComponent {
+export class NavbarComponent implements OnInit {
   page = 0;
   userSearch = false;
   loggedIn = false;
   username = "";
   query: string = "";
 
-  constructor(private router: Router, public userService: UserService, private navbarService: NavbarService, private sessionService: LoginService) {
+  constructor(private router: Router, public userService: UserService, private navbarService: NavbarService, private sessionService: LoginService, private activatedRoute: ActivatedRoute) {
+    this.activatedRoute.params.subscribe(params => {
+      if (this.router.url.includes("search")) {
+        localStorage.setItem("userSearch", params['users'] === "true" ? "true" : "false");
+      }
+    });
+
     this.loggedIn = sessionService.isUserLogged();
     if (this.loggedIn) {
       this.username = sessionService.getLoggedUsername();
@@ -33,14 +39,16 @@ export class NavbarComponent {
   search(query: string) {
     this.query = query;
     this.navbarService.setUserSearch(this.userSearch);
-    this.router.navigate(["/search", {
+    let url = this.router.url;
 
-      users: this.userSearch,
-      query: this.query
+      this.router.navigate(["/search", {
 
-    }]).then(() => {
-      this.navbarService.emitEvent({query: query, page: this.page, newSearch: true});
-    });
+        users: this.userSearch,
+        query: this.query
+
+      }]).then(() => {
+        this.navbarService.emitEvent({query: query, page: this.page, newSearch: true});
+      });
   }
 
   profileImage(username: string) {
@@ -62,20 +70,17 @@ export class NavbarComponent {
   ngOnInit() {
     let checkbox = document.getElementById("search-select");
     if (checkbox) {
+      setTimeout(() => {
+        let currentState = checkbox.getAttribute("ng-reflect-model");
+
+        if (currentState != localStorage.getItem("userSearch")) {
+          checkbox.click();
+        }
+      }, 1);
 
       checkbox.onchange = () => {
         localStorage.setItem("userSearch", this.userSearch ? "true" : "false");
       }
     }
-
-    //This event listens on each window load end (router) and sets the search checkbox to the last state
-    this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe(() => {
-
-      let checkbox = localStorage.getItem("userSearch") === "true" ? document.getElementById("search-select") : null;
-      if (checkbox && !this.userSearch) {
-        checkbox.click();
-      }
-    });
-
   }
 }

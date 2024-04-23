@@ -33,12 +33,16 @@ export class SearchComponent implements OnInit {
   maxUsers = 0;
   maxBooks = 0;
   newSearch = false;
+  arrows: any;
 
 
   constructor(
     private http: HttpClient, public userService: UserService, public bookService: BookService, private navbarService: NavbarService, private router: Router, private activatedRoute: ActivatedRoute
 
   ) {
+    activatedRoute.params.subscribe(params => {
+      this.navbarService.emitEvent({query: params['query'], page: 0, newSearch: true});
+    });
 
     this.getMaxElems(true);
 
@@ -48,12 +52,14 @@ export class SearchComponent implements OnInit {
         this.userQueries = [];
 
         this.toggleLoadMore(this.userSearch, []);
+      } else {
+        setTimeout(() => {
+          this.arrows.classList.remove("fa-spin");
+        }, 500);
       }
 
-      this.userSearch = this.navbarService.getUserSearch();
+      this.userSearch = localStorage.getItem("userSearch") === "true";
       this.searchQuery = event.query;
-      localStorage.setItem("userSearch", this.userSearch ? "true" : "false");
-      localStorage.setItem("searchQuery", this.searchQuery);
 
       this.maxBooks = parseInt(localStorage.getItem("maxBooks")!);
       this.maxUsers = parseInt(localStorage.getItem("maxUsers")!);
@@ -65,6 +71,8 @@ export class SearchComponent implements OnInit {
           complete(): void {
           },
           next: (response: UserResponse) => {
+            this.arrows?.removeClass("fa-spin");
+
             this.newSearch = event.newSearch;
             let users = response["users"] as User[];
             this.maxUsers = response["total"] as number;
@@ -91,6 +99,11 @@ export class SearchComponent implements OnInit {
           complete(): void {
           },
           next: (response: BookResponse) => {
+            if (this.newSearch) {
+              this.bookQueries = [];
+              this.userQueries = [];
+            }
+
             this.newSearch = event.newSearch;
             let books = response["books"] as Book[];
             this.maxBooks = response["total"] as number;
@@ -121,8 +134,6 @@ export class SearchComponent implements OnInit {
 
                 observer.observe(booksDiv, config);
               }
-
-              document.getElementById("noResults")!.style.display = "none";
 
               this.bookQueries = this.bookQueries.concat(books);
             }
@@ -172,17 +183,20 @@ export class SearchComponent implements OnInit {
   }
 
   loadMoreBooks() {
-    this.page++;
-    this.navbarService.emitEvent({query: this.searchQuery, page: this.page, newSearch: false});
+    this.arrows = document.querySelector(".fa-arrows-rotate")
+    this.arrows?.classList.add("fa-spin");
+    setTimeout(() => {
+
+      this.page++;
+      this.newSearch = false;
+      this.navbarService.emitEvent({query: this.searchQuery, page: this.page, newSearch: false});
+    }, 300);
   }
 
   ngOnInit() {
 
-    const storedQuery = this.activatedRoute.snapshot.queryParams['query'];
-    const storedUserSearch = this.activatedRoute.snapshot.queryParams['users'];
-
-    localStorage.setItem("userSearch", storedUserSearch ? "true" : "false");
-    localStorage.setItem("searchQuery", storedQuery);
+    const storedQuery = this.activatedRoute.snapshot.params['query'];
+    const storedUserSearch = this.activatedRoute.snapshot.params['users'];
 
     if (storedQuery && storedUserSearch) {
       this.searchQuery = storedQuery;
@@ -224,20 +238,22 @@ export class SearchComponent implements OnInit {
   }
 
   toggleLoadMore(userSearch: boolean, elems: any) {
+    setTimeout(() => {
 
-    if (userSearch) {
-      if (((this.page + 1) * SIZE >= this.maxUsers) || elems.length < 4) {
-        document.getElementById("loadMoreBut")!.style.display = "none";
+      if (userSearch) {
+        if (((this.page + 1) * SIZE >= this.maxUsers) || elems.length < 4) {
+          document.getElementById("loadMoreBut")!.style.display = "none";
+        } else {
+          document.getElementById("loadMoreBut")!.style.display = "block";
+        }
       } else {
-        document.getElementById("loadMoreBut")!.style.display = "block";
+        if (((this.page + 1) * SIZE >= this.maxBooks) || elems.length < 4) {
+          document.getElementById("loadMoreBut")!.style.display = "none";
+        } else {
+          document.getElementById("loadMoreBut")!.style.display = "block";
+        }
       }
-    } else {
-      if (((this.page + 1) * SIZE >= this.maxBooks) || elems.length < 4) {
-        document.getElementById("loadMoreBut")!.style.display = "none";
-      } else {
-        document.getElementById("loadMoreBut")!.style.display = "block";
-      }
-    }
+    }, 1);
 
   }
 

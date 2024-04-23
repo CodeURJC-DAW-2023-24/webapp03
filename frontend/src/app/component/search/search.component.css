@@ -12660,7 +12660,7 @@ fieldset:disabled .btn {
   object-fit: cover;
 }
 
-#book-title, #user-text {
+#book-title, #user-text, #book-author {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
