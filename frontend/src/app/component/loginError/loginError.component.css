@@ -1,0 +1,56 @@
+:root {
+  /* BOOKMARKS BRANDING COLORS */
+  --branding-grey: #808F85;
+  --branding-brown: #583E23;
+  --branding-orange: #F9A03F;
+  --branding-peach: #F8DDA4;
+  --branding-green: #519E8A;
+  --branding-dark-green: #3c7969;
+  --branding-light-green: #9be6d2;
+  --branding-white: #FFFFFC;
+  --branding-light-grey: #efefef;
+  --branding-sepia: #F8F4E8;
+  /* -------- */
+}
+
+.py-5 {
+  height: 100vh !important;
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: center !important;
+}
+
+.container {
+  margin-top: auto !important;
+  margin-bottom: auto !important;
+}
+
+.buttons-container {
+  margin-top: 10px;
+  margin-left: 10px;
+  display: flex;
+  gap: 10px;
+}
+
+.try-again {
+  background-color: var(--branding-green) !important;
+  border-color: var(--branding-green) !important;
+  color: var(--branding-white) !important;
+}
+
+.landing-btn{
+  background-color: var(--branding-green) !important;
+  border-color: var(--branding-green) !important;
+  color: var(--branding-white) !important;
+}
+
+.btn {
+  background-color: #F8DDA4;
+  border-color: #583E23;
+  color: #583E23;
+}
+
+.btn:hover {
+  background-color: #F9A03F;
+  border-color: #583E23;
+}
