@@ -90,7 +90,16 @@ export class BookService {
     return this.httpClient.post<Book>(this.baseUrl2, bookData).pipe(
       catchError((error) =>
         throwError(error))
-    );
+    ) as Observable<Book>
+  }
+
+  //Upload image
+  uploadImage(id:number, file: File):Observable<string>{
+    const formData = new FormData();
+    formData.append("image",file)
+    return this.httpClient.put(this.baseUrl + id + "/image",formData, {responseType: "text"}).pipe(
+      catchError((error) => throwError(error))
+    ) as Observable<string>
   }
 
 }

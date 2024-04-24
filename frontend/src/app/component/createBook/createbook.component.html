@@ -48,12 +48,14 @@
             <div class="mb-3">
               <label class="small mb-1">Título del libro</label>
               <input #title class="form-control" name="inputBookName" type="text" required>
+              <p *ngIf="repeatTitle" style="color:red">Este campo es obligatorio</p>
             </div>
 
             <div class="mb-3">
               <label class="small mb-1">Nombre completo del autor/a del
                 libro</label>
               <input #authorString class="form-control" name="inputBookAuthorName" type="text" required>
+              <p *ngIf="repeatAuthor" style="color:red">Este campo es obligatorio</p>
 
             </div>
 
@@ -61,6 +63,7 @@
               <div class="col-md-6">
                 <label class="small mb-1">ISBN</label>
                 <input #isbn class="form-control" name="inputBookISBN" type="text">
+                <p *ngIf="repeatISBN" style="color:red">Este campo es obligatorio</p>
               </div>
 
 
@@ -76,6 +79,7 @@
               <div class="col-md-6">
                 <label class="small mb-1">Género</label>
                 <input #genre class="form-control" name="inputBookGenre" type="text" required>
+                <p *ngIf="repeatGenre" style="color:red">Este campo es obligatorio</p>
               </div>
 
               <div class="col-md-6">
@@ -96,14 +100,12 @@
                 <input #series class="form-control" name="inputBookSeries" type="text">
               </div>
 
-              <!-- TODO: Should I be able to add image? -->
-              <!--
+
               <div class="col-md-6">
                 <label class="small mb-1">Image</label>
-                <input type="file" name ="inputImageFile" accept="image/*"/>
+                <input #image type="file" id="inputImageFile" accept="image/*"/>
               </div>
-            </div>
-            -->
+
 
             <div class="mb-3 description-form">
               <label class="small mb-1">Descripción del libro</label>

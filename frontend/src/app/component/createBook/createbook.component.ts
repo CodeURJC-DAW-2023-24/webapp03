@@ -1,18 +1,9 @@
-import {Component, OnInit} from "@angular/core";
-import {HttpClient} from "@angular/common/http";
+import {Component} from "@angular/core";
 import {BookService} from "../../services/book.service";
-import {Book} from "../../models/book.model";
-import {LoginService} from "../../services/session.service";
-import {Review} from "../../models/review.model";
-import {ReviewService} from "../../services/review.service";
-import {AlgorithmsService} from "../../services/algorithms.service";
-import {UserService} from "../../services/user.service";
-import {error} from "@angular/compiler-cli/src/transformers/util";
-import {User} from "../../models/user.model";
-import {Observable} from "rxjs";
 import {Chart, registerables} from "chart.js";
 import {Router} from "@angular/router";
-import {toNumbers} from "@angular/compiler-cli/src/version_helpers";
+import {Book} from "../../models/book.model";
+
 
 Chart.register(...registerables);
 
@@ -24,8 +15,11 @@ Chart.register(...registerables);
 
 export class CreateBookComponent {
   title = "Bookmarks"
-  isAdmin = false;
-
+  //isAdmin = false;
+  repeatTitle = false;
+  repeatAuthor = false;
+  repeatISBN = false;
+  repeatGenre = false;
   constructor(public bookService:BookService, private router:Router) {
   }
 
@@ -35,17 +29,48 @@ export class CreateBookComponent {
   createBook(newTitle: string, newAuthor: string, newDescription: string, newDate: string,
              newRating: number, newSeries: string, newPageCount: string, newPublisher: string,
              newISBN: string, newGenre: string) {
-    this.bookService.createBook({title: newTitle, authorString: newAuthor, description: newDescription, releaseDate: newDate,
-                                        averageRating: newRating, series: newSeries, pageCount: +newPageCount, publisher: newPublisher,
-                                        isbn: newISBN, genre: newGenre}).subscribe({
-      next: r => {
-        //Should get the book id and then redirect to that page
-        this.router.navigate(["/"])
-      },
-      error: r => {
-        console.error("Error creating book: " + JSON.stringify(r));
-      }
-    });
+    //Check required inputs
+    this.repeatTitle = !newTitle
+    this.repeatAuthor = !newAuthor
+    this.repeatISBN = !newISBN
+    this.repeatGenre = !newGenre
+
+    //If all minimum requirements are met
+    if (newTitle && newAuthor && newISBN && newGenre) {
+      this.bookService.createBook({
+        title: newTitle, authorString: newAuthor, description: newDescription, releaseDate: newDate,
+        averageRating: newRating, series: newSeries, pageCount: +newPageCount, publisher: newPublisher,
+        isbn: newISBN, genre: newGenre
+        }).subscribe({
+        next: r => { //After successful creation
+          let inputBut = document.getElementById("inputImageFile") as HTMLInputElement; //Get image
+          if (inputBut.files && inputBut.files.length > 0) { //Check if image is available to upload
+            let file = inputBut.files[0]; //send file
+            this.uploadImage(file,r)
+          }else{ //if no image was added, go to book page
+            this.router.navigate(["/book/"+r.ID])
+          }
+        },
+        error: r => {
+          console.log("error creando libro");
+        }
+      });
+    }
   }
 
+  uploadImage(newImage:File, book:Book){
+    let fileSizeInMB = newImage.size / 1024 / 1024; //Checks image size
+    if (fileSizeInMB < 5) {
+      this.bookService.uploadImage(book.ID,newImage).subscribe({
+        error: n =>{ //If error
+          console.log(n);
+        },
+        complete: () => { //When image is finished uploading...
+          this.router.navigate(["/book/"+book.ID])
+        }
+      })
+    } else {
+      console.error("Error uploading image!") //If there was an error uploading the image...
+    }
+  }
 }
