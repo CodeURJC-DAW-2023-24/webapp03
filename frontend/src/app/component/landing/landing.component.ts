@@ -85,53 +85,74 @@ export class LandingComponent implements OnInit {
 
   }
 
+  algorithmGeneral(){
+    //Recommended book by author
+    this.algorithmService.getRecommendedBooksGeneralByAuthor(0, 1).subscribe({
+      next: books => {
+        this.recommendedBooksAuthor = books;
+
+      },
+      error: r => {
+        console.error("Error getting recommended books by author: " + JSON.stringify(r));
+      }
+    });
+
+    //Recommended books by genre
+    this.algorithmService.getRecommendedBooksGeneral(this.page, this.size).subscribe({
+      next: books => {
+        this.recommendedBooksGenreLeft = books.slice(0, 2);
+        this.recommendedBooksGenreRight = books.slice(2, 4);
+        this.page += 1;
+      },
+      error: r => {
+        console.error("Error getting recommended books by genre: " + JSON.stringify(r));
+      }
+
+    });
+  }
+
+  algorithmUser(){
+    //Recommended book by author
+    this.algorithmService.getRecommendedBooksForUserByAuthor(0, 1).subscribe({
+      next: books => {
+        this.recommendedBooksAuthor = books;
+      },
+      error: r => {
+        console.error("Error getting recommended books by author: " + JSON.stringify(r));
+      }
+    });
+
+    //Recommended books by genre
+    this.algorithmService.getRecommendedBooksForUser(this.page, this.size).subscribe({
+      next: books => {
+        this.recommendedBooksGenreLeft = books.slice(0, 2);
+        this.recommendedBooksGenreRight = books.slice(2, 4);
+        this.page += 1;
+      },
+      error: r => {
+        console.error("Error getting recommended books by genre: " + JSON.stringify(r));
+      }
+    });
+  }
+
   loadLists(){
     // If user is not logged in
     if (!this.loggedIn) {
-      //Recommended book by author
-      this.algorithmService.getRecommendedBooksGeneralByAuthor(0, 1).subscribe({
-        next: books => {
-          this.recommendedBooksAuthor = books;
-
-        },
-        error: r => {
-          console.error("Error getting recommended books by author: " + JSON.stringify(r));
-        }
-      });
-
-      //Recommended books by genre
-      this.algorithmService.getRecommendedBooksGeneral(this.page, this.size).subscribe({
-        next: books => {
-          this.recommendedBooksGenreLeft = books.slice(0, 2);
-          this.recommendedBooksGenreRight = books.slice(2, 4);
-          this.page += 1;
-        },
-        error: r => {
-          console.error("Error getting recommended books by genre: " + JSON.stringify(r));
-        }
-
-      });
+      this.algorithmGeneral();
 
     } else { // If user is logged in
-      //Recommended book by author
-      this.algorithmService.getRecommendedBooksForUserByAuthor(0, 1).subscribe({
-        next: books => {
-          this.recommendedBooksAuthor = books;
-        },
-        error: r => {
-          console.error("Error getting recommended books by author: " + JSON.stringify(r));
-        }
-      });
 
-      //Recommended books by genre
-      this.algorithmService.getRecommendedBooksForUser(this.page, this.size).subscribe({
+      //Check if the user has read any book
+      this.algorithmService.getRecommendedBooksForUser(0, 1).subscribe({
         next: books => {
-          this.recommendedBooksGenreLeft = books.slice(0, 2);
-          this.recommendedBooksGenreRight = books.slice(2, 4);
-          this.page += 1;
+          if (books == null || books.length == 0){
+            this.algorithmGeneral();
+          } else {
+            this.algorithmUser();
+          }
         },
         error: r => {
-          console.error("Error getting recommended books by genre: " + JSON.stringify(r));
+          console.error("Error getting recommended books for user: " + JSON.stringify(r));
         }
       });
 
@@ -209,42 +230,65 @@ export class LandingComponent implements OnInit {
     return this.profileService.downloadProfilePicture(username);
   }
 
+  loadMoreBooksGeneral(){
+    this.algorithmService.getRecommendedBooksGeneral(this.page, this.size).subscribe({
+      next: books => {
+        // add new books to the lists
+        this.recommendedBooksGenreLeft = this.recommendedBooksGenreLeft.concat(books.slice(0, 2));
+        this.recommendedBooksGenreRight = this.recommendedBooksGenreRight.concat(books.slice(2, 4));
+        this.page += 1;
+        this.loadingMoreBooks = false;
+
+        //if no books are returned, hide the button and show a message
+        if (books.length == 0) {
+          this.noMoreBooks = true;
+        }
+      },
+      error: r => {
+        console.error("Error getting recommended books by genre: " + JSON.stringify(r));
+      }
+    });
+  }
+
+  loadMoreBooksUser(){
+    this.algorithmService.getRecommendedBooksForUser(this.page, this.size).subscribe({
+      next: userBooks => {
+        // add new books to the lists
+        this.recommendedBooksGenreLeft = this.recommendedBooksGenreLeft.concat(userBooks.slice(0, 2));
+        this.recommendedBooksGenreRight = this.recommendedBooksGenreRight.concat(userBooks.slice(2, 4));
+        this.page += 1;
+        this.loadingMoreBooks = false;
+
+        //if no books are returned, hide the button and show a message
+        if (userBooks.length == 0) {
+          this.noMoreBooks = true;
+        }
+      },
+      error: r => {
+        console.error("Error getting recommended books by genre: " + JSON.stringify(r));
+      }
+    });
+  }
+
   loadMoreBooks() {
     this.loadingMoreBooks = true;
     if (!this.loggedIn) {
-      this.algorithmService.getRecommendedBooksGeneral(this.page, this.size).subscribe({
-        next: books => {
-          // add new books to the lists
-          this.recommendedBooksGenreLeft = this.recommendedBooksGenreLeft.concat(books.slice(0, 2));
-          this.recommendedBooksGenreRight = this.recommendedBooksGenreRight.concat(books.slice(2, 4));
-          this.page += 1;
-          this.loadingMoreBooks = false;
 
-          //if no books are returned, hide the button and show a message
-          if (books.length == 0) {
-            this.noMoreBooks = true;
-          }
-        },
-        error: r => {
-          console.error("Error getting recommended books by genre: " + JSON.stringify(r));
-        }
-      });
+      this.loadMoreBooksGeneral();
+
     } else {
-      this.algorithmService.getRecommendedBooksForUser(this.page, this.size).subscribe({
-        next: userBooks => {
-          // add new books to the lists
-          this.recommendedBooksGenreLeft = this.recommendedBooksGenreLeft.concat(userBooks.slice(0, 2));
-          this.recommendedBooksGenreRight = this.recommendedBooksGenreRight.concat(userBooks.slice(2, 4));
-          this.page += 1;
-          this.loadingMoreBooks = false;
 
-          //if no books are returned, hide the button and show a message
-          if (userBooks.length == 0) {
-            this.noMoreBooks = true;
+      // check if the user has read any book
+      this.algorithmService.getRecommendedBooksForUser(0, 1).subscribe({
+        next: books => {
+          if (books == null || books.length == 0){
+            this.loadMoreBooksGeneral();
+          } else {
+            this.loadMoreBooksUser();
           }
         },
         error: r => {
-          console.error("Error getting recommended books by genre: " + JSON.stringify(r));
+          console.error("Error getting recommended books for user: " + JSON.stringify(r));
         }
       });
     }
