@@ -508,9 +508,9 @@ mark {
 }
 
 #csvExportButton:hover{ /* turns dark grey when hovered */
-  background-color: var(--branding-dark-grey) !important;
-  border-color: var(--branding-dark-grey) !important;
-  color: var(--branding-white) !important;
+  background-color: #2A2B2EFF !important;
+  border-color: #2A2B2EFF !important;
+  color: #fff !important;
 }
 
 .buttons-container{

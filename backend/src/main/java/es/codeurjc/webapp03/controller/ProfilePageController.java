@@ -291,15 +291,7 @@ public class ProfilePageController {
 
     @GetMapping("/profile/{username}/exportLists")
     public ResponseEntity<String> exportLists(@PathVariable String username, HttpServletRequest request) throws IOException {
-        //How to convert each list of books to a CSV file and download it to the browser?
-        User user = userService.getUser(username);
-
-        String readBooksCSV = userService.convertBooksToCSV(userService.getList(user, "read"));
-        String readingBooksCSV = userService.convertBooksToCSV(userService.getList(user, "reading"));
-        String wantedBooksCSV = userService.convertBooksToCSV(userService.getList(user, "wanted"));
-
-        String allBooksCSV = "Read Books:\n" + readBooksCSV + "\nReading Books:\n" + readingBooksCSV + "\nWanted Books:\n" + wantedBooksCSV;
-
+        String allBooksCSV = userService.exportUserListsToCSV(username);
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_TYPE, "text/csv; charset=UTF-8")
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + username + "Lists.csv\"")

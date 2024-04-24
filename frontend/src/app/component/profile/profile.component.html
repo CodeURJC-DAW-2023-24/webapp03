@@ -87,7 +87,7 @@
 
       </div>
     </div>
-    <div class="counter card">
+    <div class="counter card" id="counter-card" (mouseover)="showExport()" (mouseleave)="hideExport()">
       <div class="row">
         <div class="col-6 col-lg-3">
           <div class="count-data text-center">
@@ -116,7 +116,7 @@
       </div>
       <div class="row" id="exportImport" style="text-align: center; justify-content: center; margin-top: 20px">
         <div class="col-6 col-lg-3">
-          <a id="csvExportButton" title="Exportar como CSV"
+          <a (click)="exportLists()" id="csvExportButton" title="Exportar como CSV"
              class="btn btn-secondary branding-btn-secondary action-button"
              style="border: 1px solid dimgrey">
             <i class="fa-solid fa-file-export" aria-hidden="true"></i>

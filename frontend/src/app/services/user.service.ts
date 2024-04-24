@@ -89,4 +89,16 @@ export class UserService {
       catchError((error) => throwError(error))
     );
   }
+
+  editProfile(username: string, userData: {email: string, alias: string, description: string}): Observable<any> {
+    return this.http.put(API_URL + "/" + username + "/edit", userData).pipe(
+      catchError((error) => throwError(error))
+    );
+  }
+
+  changePassword(username: string, userPassword: {password: string}): Observable<any> {
+    return this.http.put(API_URL + "/" + username + "/password", userPassword).pipe(
+      catchError((error) => throwError(error))
+    );
+  }
 }

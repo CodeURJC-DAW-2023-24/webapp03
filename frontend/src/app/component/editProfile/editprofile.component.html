@@ -81,13 +81,13 @@
               <div style="display: flex; justify-content: space-between;" class="new-password-flex">
                 <div style="flex: 1; margin-right: 10px;" class="col-md-6">
                   <label class="small mb-1" for="inputPassword">Nueva contraseña</label>
-                  <input class="form-control" id="inputPassword" type="password"
+                  <input (keyup)="checkPasswords()" class="form-control" id="inputPassword" type="password"
                          placeholder="Escribe tu contraseña nueva" value="">
                 </div>
                 <div style="flex: 1; margin-right: 10px;" class="col-md-6">
                   <label class="small mb-1" for="inputConfirmPassword">Confirma tu
                     contraseña</label>
-                  <input class="form-control" id="inputConfirmPassword" type="password"
+                  <input (keyup)="checkPasswords()" class="form-control" id="inputConfirmPassword" type="password"
                          placeholder="Escribe tu contraseña de nuevo" value="">
                 </div>
               </div>
@@ -95,7 +95,7 @@
               <a id="passwordRequirements" style="display: none; color:darkred; align-content: center">La contraseña debe incluir al menos 8 caracteres y un número</a>
             </div>
 
-            <button class="btn btn-primary" id="saveChangesBut" type="button">Guardar</button>
+            <button class="btn btn-primary" id="saveChangesBut" type="button" (click)="saveChanges()">Guardar</button>
           </form>
         </div>
       </div>

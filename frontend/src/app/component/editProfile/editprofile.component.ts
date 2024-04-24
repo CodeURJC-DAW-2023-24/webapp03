@@ -256,18 +256,56 @@ export class EditProfileComponent implements OnInit {
         });
       });
 
-      document.querySelectorAll("#inputPassword, #inputConfirmPassword").forEach((element) => {
-        element.addEventListener("keyup", () => {
-          let password = this.passwordMeetsRequirements((document.getElementById("inputPassword") as HTMLInputElement).value);
-          let confirmPassword = this.passwordMeetsRequirements((document.getElementById("inputConfirmPassword") as HTMLInputElement).value);
-          if (this.passwordsDoMatch() && password && confirmPassword) {
-            (document.getElementById("saveChangesBut") as HTMLButtonElement).disabled = false;
-          } else {
-            (document.getElementById("saveChangesBut") as HTMLButtonElement).disabled = true;
-          }
-        });
-      });
+    }
+  }
 
+  checkPasswords() {
+    let password = this.passwordMeetsRequirements((document.getElementById("inputPassword") as HTMLInputElement).value);
+    let confirmPassword = this.passwordMeetsRequirements((document.getElementById("inputConfirmPassword") as HTMLInputElement).value);
+    if (this.passwordsDoMatch() && password && confirmPassword) {
+      (document.getElementById("saveChangesBut") as HTMLButtonElement).disabled = false;
+    } else {
+      (document.getElementById("saveChangesBut") as HTMLButtonElement).disabled = true;
+    }
+  }
+
+  saveChanges() {
+    let newPassword;
+    let url = "https://" + window.location.host + "/profile/" + this.username + "/editPassword";
+    let correctPassword = false;
+    let noPasswordChange = true;
+
+    //If password is to be changed...
+    if ((document.getElementById("inputOldPassword") as HTMLInputElement).value !== "" && (document.getElementById("inputPassword") as HTMLInputElement).value !== "") {
+      noPasswordChange = false;
+      newPassword = (document.getElementById("inputPassword") as HTMLInputElement).value;
+      this.userService.changePassword(this.username, {password: newPassword}).subscribe({
+        next: () => {
+          let correctPasswordDiv = document.getElementById("correctPassword");
+          if (correctPasswordDiv) {
+            correctPasswordDiv.style.display = "block";
+            setTimeout(() => {
+              this.router.navigate(['/profile/' + this.username]);
+            }, 3000);
+          }
+        },
+        error: () => {
+          correctPassword = false;
+          localStorage.setItem("wrongPassword", "true");
+          location.reload();
+        }
+      });
+    }
+
+    if (correctPassword || noPasswordChange) {
+      this.alias = (document.getElementById("inputAlias") as HTMLInputElement).value;
+      this.email = (document.getElementById("inputEmailAddress") as HTMLInputElement).value;
+      this.description = (document.getElementById("inputProfileDescription") as HTMLInputElement).value;
+      this.userService.editProfile(this.username, {alias: this.alias, email: this.email, description: this.description}).subscribe({
+        next: () => {
+          this.router.navigate(['/profile/' + this.username]);
+        }
+      });
     }
   }
 }

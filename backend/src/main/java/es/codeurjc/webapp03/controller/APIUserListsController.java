@@ -14,6 +14,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -285,5 +286,28 @@ public class APIUserListsController {
         } else {
             return ResponseEntity.ok(userService.getUser(principal.getName()));
         }
+    }
+
+    //Export user's lists
+    @Operation(summary = "Export user's lists")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Lists exported", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = APIProfileController.UserBasicView.class))
+            }),
+            @ApiResponse(responseCode = "404", description = "User not found"),
+    })
+    @GetMapping("/api/users/{username}/export")
+    public ResponseEntity<?> exportUserLists(@PathVariable String username) {
+
+        // Check if the user exists
+        if (userService.getUser(username) == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        String allBooksCSV = userService.exportUserListsToCSV(username);
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_TYPE, "text/csv; charset=UTF-8")
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + username + "Lists.csv\"")
+                .body(allBooksCSV);
     }
 }

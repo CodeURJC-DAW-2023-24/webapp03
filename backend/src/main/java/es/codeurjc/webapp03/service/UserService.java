@@ -11,6 +11,7 @@ import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -261,6 +262,17 @@ public class UserService {
 
     public boolean isUsernameAvailable(String username){
         return getUser(username) == null;
+    }
+
+    // Export user lists to CSV
+    public String exportUserListsToCSV(String username) {
+        User user = this.getUser(username);
+
+        String readBooksCSV = this.convertBooksToCSV(this.getList(user, "read"));
+        String readingBooksCSV = this.convertBooksToCSV(this.getList(user, "reading"));
+        String wantedBooksCSV = this.convertBooksToCSV(this.getList(user, "wanted"));
+
+        return "Read Books:\n" + readBooksCSV + "\nReading Books:\n" + readingBooksCSV + "\nWanted Books:\n" + wantedBooksCSV;
     }
 
 }

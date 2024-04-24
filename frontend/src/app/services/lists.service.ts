@@ -42,6 +42,13 @@ export class ListsService {
     ) as Observable<Book[]>;
   }
 
+  // Get all user's lists as CSV
+  getAllLists(username: string): Observable<string> {
+    return this.httpClient.get('/api/users/' + username + '/export', {responseType: 'text'}).pipe(
+      catchError(error => this.handleError(error))
+    ) as Observable<string>;
+  }
+
 
   private handleError(error: any) {
     console.log("ERROR: ");
