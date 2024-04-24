@@ -756,24 +756,7 @@ progress {
   }
 }
 
-.row {
-  --bs-gutter-x: 1.5rem;
-  --bs-gutter-y: 0;
-  display: flex;
-  flex-wrap: wrap;
-  margin-top: calc(-1 * var(--bs-gutter-y));
-  margin-right: calc(-0.5 * var(--bs-gutter-x));
-  margin-left: calc(-0.5 * var(--bs-gutter-x));
-}
 
-.row > * {
-  flex-shrink: 0;
-  width: 100%;
-  max-width: 100%;
-  padding-right: calc(var(--bs-gutter-x) * 0.5);
-  padding-left: calc(var(--bs-gutter-x) * 0.5);
-  margin-top: var(--bs-gutter-y);
-}
 
 .col {
   flex: 1 0 0%;
@@ -3317,21 +3300,57 @@ fieldset:disabled .btn {
 }
 
 .btn-primary {
-  --bs-btn-color: #fff;
-  --bs-btn-bg: #0d6efd;
-  --bs-btn-border-color: #0d6efd;
-  --bs-btn-hover-color: #fff;
-  --bs-btn-hover-bg: #0b5ed7;
-  --bs-btn-hover-border-color: #0a58ca;
+  --bs-btn-color: #583E23;
+  --bs-btn-bg: #F8DDA4;
+  --bs-btn-border-color: #583E23;
+  --bs-btn-hover-color: #583E23;
+  --bs-btn-hover-bg: #F9A03F;
+  --bs-btn-hover-border-color: #583E23;
   --bs-btn-focus-shadow-rgb: 49, 132, 253;
-  --bs-btn-active-color: #fff;
-  --bs-btn-active-bg: #0a58ca;
-  --bs-btn-active-border-color: #0a53be;
+  --bs-btn-active-color: #583E23;
+  --bs-btn-active-bg: #583E23;
+  --bs-btn-active-border-color: #583E23;
   --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
-  --bs-btn-disabled-color: #fff;
-  --bs-btn-disabled-bg: #0d6efd;
-  --bs-btn-disabled-border-color: #0d6efd;
+  --bs-btn-disabled-color: #583E23;
+  --bs-btn-disabled-bg: #583E23;
+  --bs-btn-disabled-border-color: #583E23;
 }
+
+.btn-primary {
+  background-color: var(--branding-green) !important;
+  border-color: var(--branding-green) !important;
+  color: var(--branding-white) !important;
+}
+
+.btn-primary:hover {
+  background-color: #3C7969FF !important;
+  border-color: #3C7969FF !important;
+  color: #FFFFFCFF !important;
+}
+
+.btn-primary:focus {
+  background-color: #3C7969FF !important;
+  border-color: #3C7969FF !important;
+  color: #FFFFFCFF !important;
+}
+
+.btn-primary:active {
+  background-color: #3C7969FF !important;
+  border-color: #3C7969FF !important;
+  color: #FFFFFCFF !important;
+}
+
+.btn-primary:disabled {
+  background-color: var(--branding-green) !important;
+  border-color: var(--branding-green) !important;
+  color: var(--branding-white) !important;
+}
+
+/*button halo effect*/
+.btn-primary:focus {
+  box-shadow: 0 0 0 0.2rem rgba(81, 158, 138, 0.5) !important;
+}
+
 
 .btn-secondary {
   --bs-btn-color: #fff;

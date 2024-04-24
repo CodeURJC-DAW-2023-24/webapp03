@@ -17,9 +17,9 @@ import {toNumbers} from "@angular/compiler-cli/src/version_helpers";
 Chart.register(...registerables);
 
 @Component({
-  selector: "app-createBook",
-  templateUrl: "./createBook.component.html",
-  styleUrls: ["./createBook.component.css", "../../../animations.css"]
+  selector: "app-createbook",
+  templateUrl: "./createbook.component.html",
+  styleUrls: ["./createbook.component.css", "../../../animations.css"]
 })
 
 export class CreateBookComponent {
