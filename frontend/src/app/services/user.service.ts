@@ -75,4 +75,18 @@ export class UserService {
       catchError((error) => throwError(error))
     );
   }
+
+  updateUser(username: string, userData: { email: string, alias: string, description: string, password: string}): Observable<User> {
+    return this.http.put<User>(API_URL + "/" + username, userData).pipe(
+      catchError((error) => throwError(error))
+    );
+  }
+
+  uploadProfilePicture(username: string, file: File): Observable<any> {
+    const formData = new FormData();
+    formData.append("image", file);
+    return this.http.put(API_URL + "/" + username + "/image", formData, {responseType: "text"}).pipe(
+      catchError((error) => throwError(error))
+    );
+  }
 }

@@ -11,6 +11,7 @@ import {SignupComponent} from "./component/signUp/signup.component";
 import {EditProfileComponent} from "./component/editProfile/editprofile.component";
 import {ErrorComponent} from "./component/error/error.component";
 import {LoginErrorComponent} from "./component/loginError/loginError.component";
+import {CreateBookComponent} from "./component/createBook/createbook.component";
 
 
 const routes: Routes = [
@@ -24,7 +25,8 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent},
   { path: 'signup', component: SignupComponent},
   { path: 'error', component: ErrorComponent},
-  { path: 'loginError', component: LoginErrorComponent}
+  { path: 'loginError', component: LoginErrorComponent},
+  { path: 'admin/createBook', component: CreateBookComponent}
 ];
 
 @NgModule({

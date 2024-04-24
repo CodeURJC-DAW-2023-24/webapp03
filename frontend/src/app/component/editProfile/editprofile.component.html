@@ -16,14 +16,14 @@
         <div class="card-header">Foto de perfil</div>
         <div class="card-body text-center">
           <!-- Profile picture -->
-          <img class="img-account-profile rounded-circle mb-2"
+          <img *ngIf="userLoaded" class="img-account-profile rounded-circle mb-2"
                [src]="profileImage()" alt>
 
           <div class="small font-italic text-muted mb-4">JPG o PNG de no más de 5 MB</div>
           <input type="file" id="inputProfileImage" accept=",.jpg,.jpeg,.png" style="display: none">
-          <button class="btn btn-primary" type="button" id="uploadImage">Subir imagen</button>
-          <div id="uploadSuccessful" style="display: none; background-color: darkgreen; color: white; text-align: center; width: 100%; height: 25px; align-content: center; border-radius: 10px; margin-top: 7px">La imagen se actualizó correcamente.</div>
-          <div id="uploadNotSuccesful" style="display: none; background-color: darkred; color: white; text-align: center; width: 100%; height: 25px; align-content: center; border-radius: 10px; margin-top: 7px">La imagen no puede ser mayor de 5MB.</div>
+          <button class="btn btn-primary" type="button" id="uploadImage" (click)="uploadImage()">Subir imagen</button>
+          <div id="uploadSuccessful" style="display: none; background-color: darkgreen; color: white; text-align: center; width: 100%; height: 25px; align-content: center; border-radius: 10px; margin-top: 7px">La imagen se actualizó correctamente.</div>
+          <div id="uploadNotSuccessful" style="display: none; background-color: darkred; color: white; text-align: center; width: 100%; height: 25px; align-content: center; border-radius: 10px; margin-top: 7px">La imagen no puede ser mayor de 5MB.</div>
         </div>
       </div>
     </div>
@@ -35,7 +35,7 @@
           <form>
             <div id="correctPassword" style="display: none; background-color: darkgreen; color: white; text-align: center; width: 100%; height: 25px; align-content: center; border-radius: 10px; margin-bottom: 7px">La contraseña se actualizó correctamente.</div>
             <div style="margin-bottom: 7px">
-              <button  [routerLink]="['/profile']" class="btn btn-secondary-light" id="returnBut" type="button" style="border: 1px solid dimgrey">
+              <button  [routerLink]="['/profile', username]" class="btn btn-secondary-light" id="returnBut" type="button" style="border: 1px solid dimgrey">
                 <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
                 Volver
               </button>

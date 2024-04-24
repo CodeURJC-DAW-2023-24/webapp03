@@ -107,32 +107,32 @@ body {
 
 .btn-primary:hover {
   color: #fff;
-  background-color: var(--branding-dark-green);
-  border-color: var(--branding-dark-green);
+  background-color: #3A6D5EFF !important;
+  border-color: #3A6D5EFF !important;
 }
 
 .btn-primary:focus {
   color: #fff;
-  background-color: var(--branding-dark-green);
-  border-color: var(--branding-dark-green);
+  background-color: #3A6D5EFF !important;
+  border-color: #3A6D5EFF !important;
 }
 
 .btn-primary:active {
   color: #fff;
-  background-color: var(--branding-dark-green);
-  border-color: var(--branding-dark-green);
+  background-color: #3A6D5EFF !important;
+  border-color: #3A6D5EFF !important;
 }
 
 .btn-primary:active:focus {
   color: #fff;
-  background-color: var(--branding-dark-green);
-  border-color: var(--branding-dark-green);
+  background-color: #3A6D5EFF !important;
+  border-color: #3A6D5EFF !important;
 }
 
 .btn-primary:active:hover {
   color: #fff;
-  background-color: var(--branding-dark-green);
-  border-color: var(--branding-dark-green);
+  background-color: #3A6D5EFF !important;
+  border-color: #3A6D5EFF !important;
 }
 
 .description-text-area { /* fixed size for the description form */
