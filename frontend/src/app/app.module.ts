@@ -19,6 +19,7 @@ import {SignupComponent} from "./component/signUp/signup.component";
 import {EditProfileComponent} from "./component/editProfile/editprofile.component";
 import {ErrorComponent} from "./component/error/error.component";
 import {LoginErrorComponent} from "./component/loginError/loginError.component";
+import {CreateBookComponent} from "./component/createBook/createbook.component";
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import {LoginErrorComponent} from "./component/loginError/loginError.component";
     SignupComponent,
     ErrorComponent,
     FooterComponent,
-    LoginErrorComponent
+    LoginErrorComponent,
+    CreateBookComponent
   ],
     imports: [
         BrowserModule,

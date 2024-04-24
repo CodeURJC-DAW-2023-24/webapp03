@@ -3,6 +3,7 @@ import {HttpClient, HttpParams} from "@angular/common/http";
 import {Observable, throwError} from "rxjs";
 import {catchError} from "rxjs/operators";
 import {Book} from "../models/book.model";
+import {User} from "../models/user.model";
 
 @Injectable({
   providedIn: "root"
@@ -80,6 +81,16 @@ export class BookService {
   // Download cover image to assets folder
   downloadCover(id: number) {
     return '/api/books/' + id + '/image';
+  }
+
+  //upload book
+  createBook(bookData :{title: string, authorString: string, description: string, releaseDate: string,
+                          averageRating: number, series: string, pageCount: number, publisher: string,
+                          isbn: string, genre:string}):Observable<Book>{
+    return this.httpClient.post<Book>(this.baseUrl2, bookData).pipe(
+      catchError((error) =>
+        throwError(error))
+    );
   }
 
 }

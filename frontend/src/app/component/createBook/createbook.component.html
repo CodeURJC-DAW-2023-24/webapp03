@@ -1,0 +1,140 @@
+<head>
+  <meta charset="utf-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+  <meta name="description" content=""/>
+  <meta name="author" content=""/>
+  <title>Bookmarks - Panel de administración</title>
+
+  <!-- NEEDED FOR THE NAVBAR AND FOOTER BRANDING -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet"/>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gabarito&display=swap" rel="stylesheet">
+  <!-- ----------------------------------------------------------------- -->
+
+  <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet"/>
+  <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+  <script src="https://kit.fontawesome.com/8f3c0a721b.js" crossorigin="anonymous"></script>
+
+  <!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+  <!-- Chart.js script -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.js"></script>
+
+</head>
+
+<body>
+<!-- Titulo de la pagina -->
+<header class="bg-branding-white py-1">
+  <div class="container px-4 px-lg-5 my-5">
+    <div class="text-start text-dark">
+      <h1 class="display-4 fw-bolder">Creando nuevo libro</h1>
+      <p class="lead fw-normal text-black-50 mb-0">Añade la informacion</p>
+    </div>
+  </div>
+</header>
+
+<section class="py-5">
+  <div class="container px-4 px-lg-5 my-5">
+    <div class="row gx-4 gx-lg-5 align-items-center">
+      <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0"
+                                 src="https://fissac.com/wp-content/uploads/2020/11/placeholder.png" alt="..."/>
+      </div>
+      <div class="col-md-6">
+          <form action="/admin/newBook/done" method="post" enctype="multipart/form-data"> <!-- TODO: Hay que borrar el action -->
+            <div class="mb-3">
+              <label class="small mb-1">Título del libro</label>
+              <input #title class="form-control" name="inputBookName" type="text" required>
+            </div>
+
+            <div class="mb-3">
+              <label class="small mb-1">Nombre completo del autor/a del
+                libro</label>
+              <input #authorString class="form-control" name="inputBookAuthorName" type="text" required>
+
+            </div>
+
+            <div class="row gx-3 mb-3">
+              <div class="col-md-6">
+                <label class="small mb-1">ISBN</label>
+                <input #isbn class="form-control" name="inputBookISBN" type="text">
+              </div>
+
+
+              <div class="col-md-6">
+                <label class="small mb-1">Número de páginas</label>
+                <input #pageCount class="form-control" name="inputBookPages" type="number">
+              </div>
+
+            </div>
+
+            <div class="row gx-3 mb-3">
+
+              <div class="col-md-6">
+                <label class="small mb-1">Género</label>
+                <input #genre class="form-control" name="inputBookGenre" type="text" required>
+              </div>
+
+              <div class="col-md-6">
+                <label class="small mb-1">Fecha de publicación</label>
+                <input #releaseDate class="form-control" name="inputBookDate" type="date">
+              </div>
+            </div>
+
+            <div class="row gx-3 mb-3">
+
+              <div class="col-md-6">
+                <label class="small mb-1">Editorial</label>
+                <input #publisher class="form-control" name="inputBookPublisher" type="text">
+              </div>
+
+              <div class="col-md-6">
+                <label class="small mb-1">Saga</label>
+                <input #series class="form-control" name="inputBookSeries" type="text">
+              </div>
+
+              <!-- TODO: Should I be able to add image? -->
+              <!--
+              <div class="col-md-6">
+                <label class="small mb-1">Image</label>
+                <input type="file" name ="inputImageFile" accept="image/*"/>
+              </div>
+            </div>
+            -->
+
+            <div class="mb-3 description-form">
+              <label class="small mb-1">Descripción del libro</label>
+              <textarea #description class="form-control description-text-area" name="inputBookDescription" rows="4"
+
+                        cols="50"></textarea>
+            </div>
+
+              <div class="form-group">
+                <button type="submit" id="submit"
+                        class="form-control btn btn-primary submit px-3 pill-button" (click)="createBook(title.value,authorString.value,description.value,releaseDate.value,0,series.value,pageCount.value,publisher.value,isbn.value,genre.value)">Guardar</button>
+              </div>
+            <input type="hidden" name="_csrf" value="token"/> <!-- TODO: Should add token here -->
+            </div>
+          </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- CORE BOOTSTRAP JS (THIS GOES RIGHT AFTER THE FOOTER, IT HAS THE NAVBAR DROPDOWN TOGGLE FUNCTIONALITY)-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- ----------------------------------------------------------------- -->
+
+<!-- SearchBar script -->
+<script src="/js/searchBar.js"></script>
+
+<!-- Core theme JS-->
+<script src="/js/scripts.js"></script>
+
+<script src="/js/navbarScript.js"></script>
+
+</body>
