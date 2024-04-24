@@ -193,6 +193,12 @@ export class ProfileComponent implements OnInit {
 
   }
 
+  checkIfListsDone() {
+    this.noMoreReadBooks = this.readBooksCount === this.readBooks.length;
+    this.noMoreReadingBooks = this.readingBooksCount === this.readingBooks.length;
+    this.noMoreWantedBooks = this.wantedBooksCount === this.wantedBooks.length;
+  }
+
 
   ngOnInit() {
 
@@ -209,6 +215,8 @@ export class ProfileComponent implements OnInit {
       next: books => {
         this.readBooks = books;
         this.readBooksListPage += 1;
+
+        this.checkIfListsDone();
       },
       error: r => {
         console.error("Error getting read books: " + JSON.stringify(r));
@@ -219,8 +227,11 @@ export class ProfileComponent implements OnInit {
   loadReadingList(loggedUsername: string) {
     this.listsService.getReadingBooks(loggedUsername, this.readingBooksListPage, 4).subscribe({
       next: books => {
+
         this.readingBooks = books;
         this.readingBooksListPage += 1;
+
+        this.checkIfListsDone();
       },
       error: r => {
         console.error("Error getting reading books: " + JSON.stringify(r));
@@ -231,8 +242,11 @@ export class ProfileComponent implements OnInit {
   loadWantedList(loggedUsername: string) {
     this.listsService.getWantedBooks(loggedUsername, this.wantedBooksListPage, 4).subscribe({
       next: books => {
+
         this.wantedBooks = books;
         this.wantedBooksListPage += 1;
+
+        this.checkIfListsDone();
       },
       error: r => {
         console.error("Error getting wanted books: " + JSON.stringify(r));
@@ -260,6 +274,8 @@ export class ProfileComponent implements OnInit {
 
           loadIcon?.classList.remove("fa-spin");
 
+          this.checkIfListsDone();
+
           if (books.length === 0) {
             this.noMoreReadBooks = true;
           }
@@ -280,6 +296,8 @@ export class ProfileComponent implements OnInit {
 
           loadIcon?.classList.remove("fa-spin");
 
+          this.checkIfListsDone();
+
           if (books.length === 0) {
             this.noMoreReadingBooks = true;
           }
@@ -299,6 +317,8 @@ export class ProfileComponent implements OnInit {
           this.wantedBooksListPage += 1;
 
           loadIcon?.classList.remove("fa-spin");
+
+          this.checkIfListsDone();
 
           if (books.length === 0) {
             this.noMoreWantedBooks = true;

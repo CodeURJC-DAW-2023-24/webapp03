@@ -12602,3 +12602,10 @@ header {
 #load-more-label{
   cursor: pointer !important;
 }
+
+.isAdminText{
+  font-weight: bold;
+  position: absolute;
+  margin-top: 10px;
+  color: var(--branding-light-grey) !important;
+}

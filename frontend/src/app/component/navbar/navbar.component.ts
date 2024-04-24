@@ -19,6 +19,8 @@ export class NavbarComponent implements OnInit {
 
   loadedUser = false;
 
+  isAdmin = false;
+
   constructor(private router: Router, public userService: UserService, private navbarService: NavbarService, private sessionService: LoginService, private activatedRoute: ActivatedRoute) {
     this.activatedRoute.params.subscribe(params => {
       if (this.router.url.includes("search")) {
@@ -74,6 +76,10 @@ export class NavbarComponent implements OnInit {
             next: r => {
               this.loadedUser = true;
               this.username = r.username;
+
+              if (r.roles.includes("ADMIN")) {
+                this.isAdmin = true;
+              }
             },
             error: r => {
               console.error("Error: " + JSON.stringify(r));
