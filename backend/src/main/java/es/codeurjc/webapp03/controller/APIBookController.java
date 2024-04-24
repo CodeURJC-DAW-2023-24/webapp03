@@ -46,6 +46,9 @@ public class APIBookController {
 
     interface BookBasicView extends Book.BasicInfo {}
 
+    interface GenreBookBasicView extends Book.BasicInfo, Book.GenreInfo, Genre.BasicInfo {}
+
+
     @Operation(summary = "Get book info by ID")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Book info correctly retrieved", content = {
@@ -54,7 +57,7 @@ public class APIBookController {
             @ApiResponse(responseCode = "404", description = "Book not found", content = @Content) //Not found
     })
     //Get existing book
-    @JsonView(BookBasicView.class)
+    @JsonView(GenreBookBasicView.class)
     @GetMapping("/api/books/{id}")
     public ResponseEntity<?> getBook(@PathVariable int id){
         Book book = bookService.getBook(id);
@@ -159,7 +162,7 @@ public class APIBookController {
 
     })
     //Modify existing book
-    @JsonView(BookBasicView.class)
+    @JsonView(GenreBookBasicView.class)
     @PutMapping("/api/books/{id}")
     public ResponseEntity<?> editBook(HttpServletRequest request, @PathVariable int id,
                                       @RequestBody Book book) throws IOException {
