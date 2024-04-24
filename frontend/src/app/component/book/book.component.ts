@@ -4,14 +4,13 @@ import {BookService} from "../../services/book.service";
 import {Book} from "../../models/book.model";
 import {ReviewService} from "../../services/review.service";
 import {UserService} from "../../services/user.service";
-import {User} from "../../models/user.model";
-import {Observable} from "rxjs";
 import {Genre} from "../../models/genre.model";
 import {LoginService} from "../../services/session.service";
 import {AlgorithmsService} from "../../services/algorithms.service";
 import {NavbarService} from "../../services/navbar.service";
 import {ListsService} from "../../services/lists.service";
 import {Router, ActivatedRoute} from "@angular/router";
+import {User} from "../../models/user.model";
 
 @Component({
   selector: "app-book",
@@ -20,11 +19,11 @@ import {Router, ActivatedRoute} from "@angular/router";
 })
 
 export class BookComponent implements OnInit{
-  username = "";
-  role = "";
-  description = "";
-  alias = "";
-  email = "";
+  reviewID: number = 0;
+  reviewTitle = "";
+  reviewAuthor: string = "";
+  reviewRating: number = 0;
+  content = "";
 
   loggedUser = this.loginService.getLoggedUsername();
   isCurrentUser = false;
@@ -44,12 +43,17 @@ export class BookComponent implements OnInit{
   pageCount = 0;
   publisher = "";
 
-  constructor(private http: HttpClient, public bookService: BookService, public loginService: LoginService, public reviewService: ReviewService, public algorithmService: AlgorithmsService, public userService: UserService, private navbarService: NavbarService, private listsService: ListsService, private route: ActivatedRoute) {
+  constructor(private http: HttpClient, public bookService: BookService, public loginService: LoginService, public reviewService: ReviewService, public userService: UserService, private route: ActivatedRoute) {
   }
 
   ngOnInit(): void {
     this.ID = Number(this.route.snapshot.paramMap.get('id')); // Obtiene el ID del libro desde la URL
     this.getBookInfo();
+    this.getReviewInfo();
+  }
+
+  getReviewInfo() {
+        return this.reviewService.getReviews(1, 3, this.ID)
   }
 
   getBookInfo(): void {
@@ -69,5 +73,13 @@ export class BookComponent implements OnInit{
         this.publisher = this.book.publisher;
       }
     });
+  }
+
+  bookImage() {
+    return this.bookService.downloadCover(this.ID);
+  }
+
+  checkUserStatus() {
+    return this.loginService.checkLogged();
   }
 }
