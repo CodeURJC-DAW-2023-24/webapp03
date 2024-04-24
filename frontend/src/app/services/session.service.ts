@@ -74,11 +74,47 @@ export class LoginService {
     return false;
   }
 
+  checkAdmin(): Observable<boolean> {
+    return this.httpClient.get<User>(this.userUrl + "me", {withCredentials: true}).pipe(
+      map((user) => {
+        this.user = user;
+        return user.roles.includes("ADMIN");
+      }),
+      catchError(error => {
+        if (error.status === 401) {
+          this.isLogged = false;
+          this.user = undefined;
+          return of(false);
+        } else {
+          return throwError(() => new Error("Server error (" + error.status + "): " + error.statusText + ")"));
+        }
+      })
+    );
+  }
+
   isAuthor(): boolean {
     if (this.user) {
       return this.user.roles.includes("AUTHOR");
     }
     return false;
+  }
+
+  checkAuthor(): Observable<boolean> {
+    return this.httpClient.get<User>(this.userUrl + "me", {withCredentials: true}).pipe(
+      map((user) => {
+        this.user = user;
+        return user.roles.includes("AUTHOR");
+      }),
+      catchError(error => {
+        if (error.status === 401) {
+          this.isLogged = false;
+          this.user = undefined;
+          return of(false);
+        } else {
+          return throwError(() => new Error("Server error (" + error.status + "): " + error.statusText + ")"));
+        }
+      })
+    );
   }
 
 

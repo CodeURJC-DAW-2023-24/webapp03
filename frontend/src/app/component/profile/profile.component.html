@@ -44,17 +44,17 @@
           </div>
         </div>
       </div>
-      <div class="col-lg-6">
+      <div class="col-lg-6" id="pfpDiv">
         <div class="about-avatar" *ngIf="userLoaded">
           <img class="avatar-image" [src]="profileImage()" title alt>
         </div>
         <div class="buttons-container">
-          <div *ngIf="isCurrentUser">
-            <a class="btn btn-primary branding-btn-primary" [routerLink]="['/profile/edit']" id="editProfileBut">
+          <div *ngIf="isCurrentUser && !isAdministrator">
+            <a class="btn btn-primary branding-btn-primary" [routerLink]="['/profile/', username, 'edit']" id="editProfileBut">
               <i class="fa-solid fa-pen-to-square"></i> Modificar perfil</a>
           </div>
           <div *ngIf="isAdministrator">
-            <a class="btn btn-primary branding-btn-primary" [routerLink]="['/profile/edit']" id="editProfileBut">
+            <a class="btn btn-primary branding-btn-primary" [routerLink]="['/profile/', username, 'edit']" id="editProfileBut">
               <i class="fa-solid fa-pen-to-square"></i> Modificar perfil</a>
           </div>
           <div *ngIf="isAdministrator">

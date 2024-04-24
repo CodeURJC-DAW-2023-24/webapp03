@@ -26,10 +26,9 @@ export class ProfileComponent implements OnInit {
   alias = "";
   email = "";
 
-  loggedUser = this.loginService.getLoggedUsername();
   isCurrentUser = false;
-  isAdministrator = this.loginService.isAdmin();
-  isAuthor = this.loginService.isAuthor();
+  isAdministrator = false;
+  isAuthor = false;
 
   readBooksCount = 0;
   readingBooksCount = 0;
@@ -52,6 +51,9 @@ export class ProfileComponent implements OnInit {
   constructor(
     private http: HttpClient, public bookService: BookService, public loginService: LoginService, public reviewService: ReviewService, public algorithmService: AlgorithmsService, public userService: UserService, private navbarService: NavbarService, private listsService: ListsService, private activatedRoute: ActivatedRoute, private router: Router
   ) {
+    this.activatedRoute.params.subscribe(params => {
+      this.initialize(params["username"]);
+    });
 
     /*
     this.navbarService.getEvent().subscribe((user) => {
@@ -188,6 +190,18 @@ export class ProfileComponent implements OnInit {
       error: e => {
         // route to error page
         this.router.navigate(['/error']);
+      }
+    });
+
+    this.loginService.checkAdmin().subscribe({
+      next: r => {
+        this.isAdministrator = r;
+      }
+    });
+
+    this.loginService.checkAuthor().subscribe({
+      next: r => {
+        this.isAuthor = r;
       }
     });
 

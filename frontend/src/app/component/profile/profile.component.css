@@ -309,8 +309,8 @@ mark {
 }
 
 .branding-btn-primary:hover {
-  background-color: var(--branding-dark-green) !important;
-  border-color: var(--branding-dark-green) !important;
+  background-color: #3A6D5EFF !important;
+  border-color: #3A6D5EFF !important;
   color: var(--branding-white) !important;
 }
 
@@ -341,6 +341,7 @@ mark {
   height: 315px; /* adjust as needed */
   border-radius: 12px; /* this will make the image round */
   object-fit: cover; /* this will prevent the image from being distorted */
+  position: relative;
 }
 
 .single_advisor_profile {
@@ -499,6 +500,8 @@ mark {
   border-color: #2A2B2EFF !important;
 }
 
-
-
-
+/*#pfpDiv {*/
+/*  display: flex;*/
+/*  align-items: center;*/
+/*  flex-direction: column;*/
+/*}*/
