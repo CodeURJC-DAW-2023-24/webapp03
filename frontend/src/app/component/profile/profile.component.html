@@ -4,7 +4,7 @@
       <!--Check if it's the user-->
       <div *ngIf="isCurrentUser; else elseUser">
         <p class="lead fw-normal text-black-50 mb-0">Este es tu perfil</p>
-        <form action="/logout" method="post" class="logout">
+        <form action="/logout" method="post" class="logout" (submit)="logout()">
           <button type="submit" class="btn logout-btn">
             <i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión
           </button>
@@ -45,11 +45,11 @@
         </div>
       </div>
       <div class="col-lg-6">
-        <div class="about-avatar">
+        <div class="about-avatar" *ngIf="userLoaded">
           <img class="avatar-image" [src]="profileImage()" title alt>
         </div>
         <div class="buttons-container">
-          <div>
+          <div *ngIf="isCurrentUser">
             <a class="btn btn-primary branding-btn-primary" [routerLink]="['/profile/edit']" id="editProfileBut">
               <i class="fa-solid fa-pen-to-square"></i> Modificar perfil</a>
           </div>

@@ -27,6 +27,8 @@ export class LandingComponent implements OnInit {
   totalSiteUsers: number | undefined;
   heroNameVisible = false;
 
+  userLoaded = false;
+
   user: User | undefined;
   loggedUsername: string = "";
   loggedIn: boolean = false;
@@ -169,6 +171,7 @@ export class LandingComponent implements OnInit {
           this.heroNameVisible = true;
           this.loginService.getLoggedUser().subscribe({ // get the logged user
             next: user => {
+              this.userLoaded = true;
               this.loadUserData(user); // load the user data
               this.loadLists(); // then load the lists of books for the user
               // this.checkBookReviewed(user.username, 4);

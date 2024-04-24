@@ -494,3 +494,11 @@ mark {
 }
 
 
+.logout-btn:hover{
+  background-color: #2A2B2EFF !important;
+  border-color: #2A2B2EFF !important;
+}
+
+
+
+

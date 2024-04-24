@@ -8,6 +8,7 @@ import {UserService} from "../../services/user.service";
 import {NavbarService} from "../../services/navbar.service";
 import {ListsService} from "../../services/lists.service";
 import {Book} from "../../models/book.model";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: "app-profile",
@@ -16,6 +17,8 @@ import {Book} from "../../models/book.model";
 })
 export class ProfileComponent implements OnInit {
   title = "Bookmarks";
+
+  userLoaded = false;
 
   username = "";
   role = "";
@@ -47,9 +50,10 @@ export class ProfileComponent implements OnInit {
   noMoreWantedBooks = false;
 
   constructor(
-    private http: HttpClient, public bookService: BookService, public loginService: LoginService, public reviewService: ReviewService, public algorithmService: AlgorithmsService, public userService: UserService, private navbarService: NavbarService, private listsService: ListsService
+    private http: HttpClient, public bookService: BookService, public loginService: LoginService, public reviewService: ReviewService, public algorithmService: AlgorithmsService, public userService: UserService, private navbarService: NavbarService, private listsService: ListsService, private activatedRoute: ActivatedRoute, private router: Router
   ) {
 
+    /*
     this.navbarService.getEvent().subscribe((user) => {
       this.userService.getUser(user).subscribe({
         next: n => {
@@ -106,17 +110,101 @@ export class ProfileComponent implements OnInit {
 
     });
 
+     */
+
   }
 
   profileImage() {
     return this.userService.downloadProfilePicture(this.username);
   }
 
-  ngOnInit() {
-    this.loadAllLists();
+  checkIfUserMatches(urlUsername: string) {
+    this.loginService.checkLogged().subscribe({
+      next: r => {
+        if (r) {
+          this.loginService.getLoggedUser().subscribe({
+            next: n => {
+              this.isCurrentUser = n.username === urlUsername;
+            },
+            error: e => {
+              console.log(e);
+            }
+          });
+        }
+      }
+    });
+
+
   }
 
-  loadReadList(loggedUsername:string) {
+  initialize(username: string) {
+    this.userService.getUser(username).subscribe({
+      next: n => {
+        this.userLoaded = true;
+        this.username = n.username;
+        this.role = n.roles[0];
+        this.description = n.description;
+        this.alias = n.alias;
+        this.email = n.email;
+
+        this.loadAllLists(username);
+
+        this.userService.getReadBooksCount(username).subscribe({
+          next: n => {
+            this.readBooksCount = n;
+          },
+          error: e => {
+            console.log(e);
+          }
+        });
+
+        this.userService.getReadingBooksCount(username).subscribe({
+          next: n => {
+            this.readingBooksCount = n;
+          },
+          error: e => {
+            console.log(e);
+          }
+        });
+
+        this.userService.getWantedBooksCount(username).subscribe({
+          next: n => {
+            this.wantedBooksCount = n;
+          },
+          error: e => {
+            console.log(e);
+          }
+        });
+
+        this.reviewService.getReviewCountByUser(username).subscribe({
+          next: n => {
+            this.reviewCount = n;
+          },
+          error: e => {
+            console.log(e);
+          }
+        });
+      },
+      error: e => {
+        // route to error page
+        this.router.navigate(['/error']);
+      }
+    });
+
+  }
+
+
+  ngOnInit() {
+
+    // get username from url
+    const urlUsername = this.activatedRoute.snapshot.params['username'];
+
+    this.checkIfUserMatches(urlUsername);
+
+    this.initialize(urlUsername);
+  }
+
+  loadReadList(loggedUsername: string) {
     this.listsService.getReadBooks(loggedUsername, this.readBooksListPage, 4).subscribe({
       next: books => {
         this.readBooks = books;
@@ -128,7 +216,7 @@ export class ProfileComponent implements OnInit {
     });
   }
 
-  loadReadingList(loggedUsername:string) {
+  loadReadingList(loggedUsername: string) {
     this.listsService.getReadingBooks(loggedUsername, this.readingBooksListPage, 4).subscribe({
       next: books => {
         this.readingBooks = books;
@@ -140,7 +228,7 @@ export class ProfileComponent implements OnInit {
     });
   }
 
-  loadWantedList(loggedUsername:string) {
+  loadWantedList(loggedUsername: string) {
     this.listsService.getWantedBooks(loggedUsername, this.wantedBooksListPage, 4).subscribe({
       next: books => {
         this.wantedBooks = books;
@@ -152,10 +240,10 @@ export class ProfileComponent implements OnInit {
     });
   }
 
-  loadAllLists() {
-    this.loadReadList(this.username);
-    this.loadReadingList(this.username);
-    this.loadWantedList(this.username);
+  loadAllLists(username: string) {
+    this.loadReadList(username);
+    this.loadReadingList(username);
+    this.loadWantedList(username);
   }
 
   loadMore(list: string) {
@@ -172,7 +260,7 @@ export class ProfileComponent implements OnInit {
 
           loadIcon?.classList.remove("fa-spin");
 
-          if(books.length === 0) {
+          if (books.length === 0) {
             this.noMoreReadBooks = true;
           }
         },
@@ -192,7 +280,7 @@ export class ProfileComponent implements OnInit {
 
           loadIcon?.classList.remove("fa-spin");
 
-          if(books.length === 0) {
+          if (books.length === 0) {
             this.noMoreReadingBooks = true;
           }
         },
@@ -212,7 +300,7 @@ export class ProfileComponent implements OnInit {
 
           loadIcon?.classList.remove("fa-spin");
 
-          if(books.length === 0) {
+          if (books.length === 0) {
             this.noMoreWantedBooks = true;
           }
         },
@@ -226,5 +314,17 @@ export class ProfileComponent implements OnInit {
   // Get book cover image
   bookImage(id: number) {
     return this.bookService.downloadCover(id);
+  }
+
+  logout(){
+    this.loginService.logout().subscribe({
+      next: r => {
+        // reload the page
+        window.location.reload();
+      },
+      error: r => {
+        console.error("Error: " + JSON.stringify(r));
+      }
+    });
   }
 }

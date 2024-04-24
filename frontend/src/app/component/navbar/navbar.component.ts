@@ -17,17 +17,14 @@ export class NavbarComponent implements OnInit {
   username = "";
   query: string = "";
 
+  loadedUser = false;
+
   constructor(private router: Router, public userService: UserService, private navbarService: NavbarService, private sessionService: LoginService, private activatedRoute: ActivatedRoute) {
     this.activatedRoute.params.subscribe(params => {
       if (this.router.url.includes("search")) {
         localStorage.setItem("userSearch", params['users'] === "true" ? "true" : "false");
       }
     });
-
-    this.loggedIn = sessionService.isUserLogged();
-    if (this.loggedIn) {
-      this.username = sessionService.getLoggedUsername();
-    }
   }
 
   onKeyDown(event: any) {
@@ -41,14 +38,14 @@ export class NavbarComponent implements OnInit {
     this.navbarService.setUserSearch(this.userSearch);
     let url = this.router.url;
 
-      this.router.navigate(["/search", {
+    this.router.navigate(["/search", {
 
-        users: this.userSearch,
-        query: this.query
+      users: this.userSearch,
+      query: this.query
 
-      }]).then(() => {
-        this.navbarService.emitEvent({query: query, page: this.page, newSearch: true});
-      });
+    }]).then(() => {
+      this.navbarService.emitEvent({query: query, page: this.page, newSearch: true});
+    });
   }
 
   profileImage(username: string) {
@@ -68,6 +65,24 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    this.sessionService.checkLogged().subscribe({
+      next: r => {
+        this.loggedIn = r;
+        if (this.loggedIn) {
+          this.sessionService.getLoggedUser().subscribe({
+            next: r => {
+              this.loadedUser = true;
+              this.username = r.username;
+            },
+            error: r => {
+              console.error("Error: " + JSON.stringify(r));
+            }
+          });
+        }
+      }
+    });
+
     let checkbox = document.getElementById("search-select");
     if (checkbox) {
       setTimeout(() => {
@@ -83,4 +98,21 @@ export class NavbarComponent implements OnInit {
       }
     }
   }
+
+  logout() {
+    this.sessionService.logout().subscribe({
+      next: r => {
+        this.loadedUser = false;
+        this.loggedIn = false;
+
+        // reload the page
+        window.location.reload();
+
+      },
+      error: r => {
+        console.error("Error: " + JSON.stringify(r));
+      }
+    });
+  }
+
 }

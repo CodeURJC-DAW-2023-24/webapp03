@@ -25,12 +25,6 @@
 <body>
 
 <header class="bg-branding-white py-1">
-  <!-- Testing login button -->
-  <div class="container">
-    <button class="btn btn-primary" (click)="login()">Iniciar sesión</button>
-    <button class="btn btn-primary" (click)="logout()">Cerrar sesión</button>
-
-  </div>
   <div class="container px-4 px-lg-5 my-5">
     <div class="text-start text-dark">
 
@@ -173,12 +167,12 @@
         <!-- User profile widget -->
         <ng-template #loggedUserActionsPanel>
           <div class="card-header">Acceso rápido a tu perfil</div>
-          <div class="card-body profile-card">
+          <div class="card-body profile-card" *ngIf="userLoaded">
             <img class="profile-picture bm-rounded-circle" [src]="profilePicture(loggedUsername)" alt="Foto de perfil"/>
             <p class="mt-2">{{ loggedUsername }}</p>
             <div class="input-group">
-              <a href="/profile/{{loggedUsername}}">
-                <button class="btn btn-primary" class="button-search" type="button">Ver perfil</button>
+              <a [routerLink]="['profile', loggedUsername]">
+                <button class="btn btn-primary" type="button">Ver perfil</button>
               </a>
 
             </div>
