@@ -51,20 +51,20 @@ paths:
                 type: string
         required: true
       responses:
-        "400":
-          description: Invalid parameter
         "401":
           description: You don't have permission to do this!
-        "404":
-          description: User not found
+        "500":
+          description: Error with operation
         "200":
           description: User modified correctly
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/User_UserBasicView'
-        "500":
-          description: Error with operation
+        "400":
+          description: Invalid parameter
+        "404":
+          description: User not found
     delete:
       tags:
       - api-admin-controller
@@ -116,20 +116,20 @@ paths:
                 type: string
         required: true
       responses:
+        "401":
+          description: You don't have permission to do this!
+        "500":
+          description: Error with operation
+        "400":
+          description: Invalid parameter
+        "404":
+          description: User not found
         "200":
           description: Password changed successfully
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/User_UserBasicView'
-        "400":
-          description: Invalid parameter
-        "401":
-          description: You don't have permission to do this!
-        "404":
-          description: User not found
-        "500":
-          description: Error with operation
   /api/users/{username}/image:
     get:
       tags:
@@ -178,20 +178,20 @@ paths:
                   type: string
                   format: binary
       responses:
-        "400":
-          description: Invalid parameter
         "401":
           description: You don't have permission to do this!
-        "404":
-          description: User not found
+        "500":
+          description: Error with operation
         "200":
           description: Image uploaded successfully
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/User_UserBasicView'
-        "500":
-          description: Error with operation
+        "400":
+          description: Invalid parameter
+        "404":
+          description: User not found
   /api/books/{id}:
     get:
       tags:
@@ -206,14 +206,14 @@ paths:
           type: integer
           format: int32
       responses:
+        "404":
+          description: Book not found
         "200":
           description: Book info correctly retrieved
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Book_GenreBookBasicView'
-        "404":
-          description: Book not found
     put:
       tags:
       - api-book-controller
@@ -233,16 +233,16 @@ paths:
               $ref: '#/components/schemas/Book_GenreBookBasicView'
         required: true
       responses:
-        "500":
-          description: Image not supported. Try different file
-        "401":
-          description: You don't have permission to do this!
         "200":
           description: Book modified correctly
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Book_GenreBookBasicView'
+        "401":
+          description: You don't have permission to do this!
+        "500":
+          description: Image not supported. Try different file
         "404":
           description: Book not found
         "409":
@@ -280,10 +280,10 @@ paths:
           type: integer
           format: int32
       responses:
-        "200":
-          description: Book image correctly retrieved
         "404":
           description: Book not found
+        "200":
+          description: Book image correctly retrieved
     put:
       tags:
       - api-book-controller
@@ -328,14 +328,14 @@ paths:
       responses:
         "401":
           description: You don't have permission to do this
-        "404":
-          description: User not found
         "200":
           description: Role changed
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/User_UserBasicView'
+        "404":
+          description: User not found
   /email/send:
     post:
       tags:
@@ -460,18 +460,18 @@ paths:
             '*/*':
               schema:
                 type: object
-        "200":
-          description: Reviews found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Review_BasicInfo'
         "404":
           description: Book not found
           content:
             '*/*':
               schema:
                 type: object
+        "200":
+          description: Reviews found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Review_BasicInfo'
     post:
       tags:
       - api-review-controller
@@ -497,16 +497,16 @@ paths:
             '*/*':
               schema:
                 $ref: '#/components/schemas/Review_ReviewBasicView'
-        "201":
-          description: Review added
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Review_ReviewBasicView'
         "404":
           description: Book not found
           content:
             '*/*':
+              schema:
+                $ref: '#/components/schemas/Review_ReviewBasicView'
+        "201":
+          description: Review added
+          content:
+            application/json:
               schema:
                 $ref: '#/components/schemas/Review_ReviewBasicView'
         "401":
@@ -534,18 +534,18 @@ paths:
           type: integer
           format: int32
       responses:
-        "404":
-          description: No books found
-          content:
-            '*/*':
-              schema:
-                type: object
         "200":
           description: Search results page books loaded
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Book_BasicInfo'
+        "404":
+          description: No books found
+          content:
+            '*/*':
+              schema:
+                type: object
     post:
       tags:
       - api-book-controller
@@ -558,18 +558,18 @@ paths:
               $ref: '#/components/schemas/Book_BookBasicView'
         required: true
       responses:
-        "400":
-          description: Parameter missing.
-        "409":
-          description: Invalid parameter.
         "401":
           description: You don't have permission to do this!
+        "409":
+          description: Invalid parameter.
         "201":
           description: User created correctly
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Book_BookBasicView'
+        "400":
+          description: Parameter missing.
   /api/books/{id}/wanted:
     post:
       tags:
@@ -584,18 +584,18 @@ paths:
           type: integer
           format: int64
       responses:
+        "400":
+          description: Invalid book ID
+        "404":
+          description: Book not found
+        "401":
+          description: Unauthorized
         "200":
           description: Book added to wanted list
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Book_BasicInfo'
-        "400":
-          description: Invalid book ID
-        "401":
-          description: Unauthorized
-        "404":
-          description: Book not found
   /api/books/{id}/reading:
     post:
       tags:
@@ -612,6 +612,8 @@ paths:
       responses:
         "400":
           description: Invalid book ID
+        "404":
+          description: Book not found
         "401":
           description: Unauthorized
         "200":
@@ -620,8 +622,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Book_BasicInfo'
-        "404":
-          description: Book not found
   /api/books/{id}/read:
     post:
       tags:
@@ -636,18 +636,18 @@ paths:
           type: integer
           format: int64
       responses:
-        "400":
-          description: Invalid book ID
-        "401":
-          description: Unauthorized
         "200":
           description: Book added to read list
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Book_BasicInfo'
+        "400":
+          description: Invalid book ID
         "404":
           description: Book not found
+        "401":
+          description: Unauthorized
   /api/auth/refresh:
     post:
       tags:
@@ -661,16 +661,16 @@ paths:
         schema:
           type: string
       responses:
-        "400":
-          description: Invalid token
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/AuthResponse'
         "200":
           description: Token refreshed
           content:
             application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+        "400":
+          description: Invalid token
+          content:
+            '*/*':
               schema:
                 $ref: '#/components/schemas/AuthResponse'
   /api/auth/logout:
@@ -710,16 +710,16 @@ paths:
               $ref: '#/components/schemas/LoginRequest'
         required: true
       responses:
-        "400":
-          description: Invalid credentials
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/AuthResponse'
         "200":
           description: Login successful
           content:
             application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+        "400":
+          description: Invalid credentials
+          content:
+            '*/*':
               schema:
                 $ref: '#/components/schemas/AuthResponse'
   /api/users/{username}/export:
@@ -785,6 +785,48 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Book_BasicInfo'
+        "404":
+          description: User not found
+          content:
+            '*/*':
+              schema:
+                type: object
+        "400":
+          description: Invalid list
+          content:
+            '*/*':
+              schema:
+                type: object
+  /api/users/{username}/books/{id}:
+    get:
+      tags:
+      - api-user-lists-controller
+      summary: Check if user has book in list
+      operationId: checkIfUserHasBookInList
+      parameters:
+      - name: username
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: list
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Book found in list
+          content:
+            application/json:
+              schema:
+                type: boolean
         "404":
           description: User not found
           content:
@@ -906,18 +948,18 @@ paths:
           type: integer
           format: int64
       responses:
-        "200":
-          description: Review found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Review_BasicInfo'
         "404":
           description: Review not found
           content:
             '*/*':
               schema:
                 type: object
+        "200":
+          description: Review found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Review_BasicInfo'
         "400":
           description: Invalid review ID
           content:
@@ -1018,6 +1060,12 @@ paths:
             '*/*':
               schema:
                 type: object
+        "404":
+          description: User or book not found
+          content:
+            '*/*':
+              schema:
+                type: object
         "200":
           description: Review found
           content:
@@ -1025,12 +1073,6 @@ paths:
               schema:
                 type: integer
                 format: int64
-        "404":
-          description: User or book not found
-          content:
-            '*/*':
-              schema:
-                type: object
   /api/genres:
     get:
       tags:
@@ -1275,18 +1317,18 @@ paths:
         schema:
           type: boolean
       responses:
-        "200":
-          description: Most read authors found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Author_BasicInfo'
         "204":
           description: No content
           content:
             '*/*':
               schema:
                 type: object
+        "200":
+          description: Most read authors found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Author_BasicInfo'
   /api/authors/me:
     get:
       tags:
@@ -1294,18 +1336,18 @@ paths:
       summary: Get the most read authors for the logged user
       operationId: getMostReadAuthorsUser
       responses:
-        "200":
-          description: Most read authors found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Author_BasicInfo'
         "204":
           description: No content
           content:
             '*/*':
               schema:
                 type: object
+        "200":
+          description: Most read authors found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Author_BasicInfo'
         "401":
           description: Unauthorized
           content:
@@ -1346,28 +1388,28 @@ paths:
           type: integer
           format: int64
       responses:
+        "400":
+          description: Invalid book ID
+        "404":
+          description: Book not found
+        "401":
+          description: Unauthorized
         "200":
           description: Book removed from all lists
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Book_BasicInfo'
-        "400":
-          description: Invalid book ID
-        "401":
-          description: Unauthorized
-        "404":
-          description: Book not found
 components:
   schemas:
     Book_UserBasicView:
       type: object
       properties:
-        isbn:
-          type: string
         id:
           type: integer
           format: int64
+        isbn:
+          type: string
     User_UserBasicView:
       type: object
       properties:
@@ -1429,11 +1471,11 @@ components:
           format: int32
         publisher:
           type: string
-        isbn:
-          type: string
         id:
           type: integer
           format: int64
+        isbn:
+          type: string
     Genre_GenreBookBasicView:
       type: object
       properties:
@@ -1442,11 +1484,11 @@ components:
     Book_ReviewBasicView:
       type: object
       properties:
-        isbn:
-          type: string
         id:
           type: integer
           format: int64
+        isbn:
+          type: string
     Review_ReviewBasicView:
       type: object
       properties:
@@ -1462,11 +1504,11 @@ components:
           format: int32
         content:
           type: string
-        user:
-          $ref: '#/components/schemas/User_ReviewBasicView'
         id:
           type: integer
           format: int64
+        user:
+          $ref: '#/components/schemas/User_ReviewBasicView'
     User_ReviewBasicView:
       type: object
       properties:
@@ -1512,11 +1554,11 @@ components:
           format: int32
         publisher:
           type: string
-        isbn:
-          type: string
         id:
           type: integer
           format: int64
+        isbn:
+          type: string
     Book_BasicInfo:
       type: object
       properties:
@@ -1543,11 +1585,11 @@ components:
           format: int32
         publisher:
           type: string
-        isbn:
-          type: string
         id:
           type: integer
           format: int64
+        isbn:
+          type: string
     AuthResponse:
       type: object
       properties:
@@ -1593,11 +1635,11 @@ components:
     Book_Username:
       type: object
       properties:
-        isbn:
-          type: string
         id:
           type: integer
           format: int64
+        isbn:
+          type: string
     User_Username:
       type: object
       properties:
@@ -1634,11 +1676,11 @@ components:
           format: int32
         content:
           type: string
-        user:
-          $ref: '#/components/schemas/User_BasicInfo'
         id:
           type: integer
           format: int64
+        user:
+          $ref: '#/components/schemas/User_BasicInfo'
     Genre_BasicInfo:
       type: object
       properties:

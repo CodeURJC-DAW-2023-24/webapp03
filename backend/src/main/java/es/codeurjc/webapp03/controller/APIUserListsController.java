@@ -310,4 +310,41 @@ public class APIUserListsController {
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + username + "Lists.csv\"")
                 .body(allBooksCSV);
     }
+
+
+    // Check if user has book in list (returns boolean)
+    @Operation(summary = "Check if user has book in list")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Book found in list", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = Boolean.class))
+            }),
+            @ApiResponse(responseCode = "404", description = "User not found"),
+            @ApiResponse(responseCode = "400", description = "Invalid list")
+
+    })
+    @GetMapping("/api/users/{username}/books/{id}")
+    public ResponseEntity<?> checkIfUserHasBookInList(@PathVariable String username,
+                                                      @PathVariable long id,
+                                                      @RequestParam("list") String list) {
+
+        // Check if the user exists
+        if (userService.getUser(username) == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        // Check if the book exists
+        if (!bookExists(id)) {
+            return ResponseEntity.notFound().build();
+        }
+
+        //Check if the list is valid
+        if (!list.equals("read") && !list.equals("reading") && !list.equals("wanted")) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        boolean hasBook = userService.hasBookInList(userService.getUser(username), bookService.getBook(id), list);
+        return ResponseEntity.ok(hasBook);
+    }
+
+
 }

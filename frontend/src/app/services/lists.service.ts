@@ -49,6 +49,13 @@ export class ListsService {
     ) as Observable<string>;
   }
 
+  isBookInList(username: string, bookID: number, list: string): Observable<boolean> {
+    let params = new HttpParams().set("list", list);
+    return this.httpClient.get<boolean>('/api/users/' + username + '/books/' + bookID, {params: params}).pipe(
+      catchError(error => this.handleError(error))
+    ) as Observable<boolean>;
+  }
+
 
   private handleError(error: any) {
     console.log("ERROR: ");
