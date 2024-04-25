@@ -1,4 +1,4 @@
-import {Component, OnInit} from "@angular/core";
+import {AfterViewChecked, Component, ElementRef, OnInit, QueryList, ViewChildren} from "@angular/core";
 import {AlgorithmsService} from "../../services/algorithms.service";
 import {ReviewService} from "../../services/review.service";
 import {LoginService} from "../../services/session.service";
@@ -16,7 +16,7 @@ import {map} from "rxjs/operators";
   templateUrl: "./profile.component.html",
   styleUrls: ["./profile.component.css"]
 })
-export class ProfileComponent implements OnInit {
+export class ProfileComponent implements OnInit, AfterViewChecked {
   title = "Bookmarks";
 
   userLoaded = false;
@@ -48,6 +48,10 @@ export class ProfileComponent implements OnInit {
   noMoreReadBooks = false;
   noMoreReadingBooks = false;
   noMoreWantedBooks = false;
+
+  @ViewChildren("readBookCard") booksReadCard!: QueryList<ElementRef>;
+  @ViewChildren("readingBookCard") booksReadingCard!: QueryList<ElementRef>;
+  @ViewChildren("wantedBookCard") booksWantedCard!: QueryList<ElementRef>;
 
   constructor(
     private http: HttpClient, public bookService: BookService, public loginService: LoginService, public reviewService: ReviewService, public algorithmService: AlgorithmsService, public userService: UserService, private listsService: ListsService, private activatedRoute: ActivatedRoute, private router: Router
@@ -261,6 +265,35 @@ export class ProfileComponent implements OnInit {
 
     });
 
+  }
+
+  putStars() {
+    this.booksReadCard.forEach((bookElem: ElementRef<HTMLElement>, index) => {
+      let book = bookElem.nativeElement as HTMLElement;
+      let stars = book.querySelector(".stars");
+      let rating = this.readBooks[index].averageRating;
+      this.bookService.putStars(rating, stars?.children);
+    });
+
+    this.booksReadingCard.forEach((bookElem: ElementRef<HTMLElement>, index) => {
+      let book = bookElem.nativeElement as HTMLElement;
+      let stars = book.querySelector(".stars");
+      let rating = this.readingBooks[index].averageRating;
+      this.bookService.putStars(rating, stars?.children);
+
+    });
+
+    this.booksWantedCard.forEach((bookElem: ElementRef<HTMLElement>, index) => {
+      let book = bookElem.nativeElement as HTMLElement;
+      let stars = book.querySelector(".stars");
+      let rating = this.wantedBooks[index].averageRating;
+      this.bookService.putStars(rating, stars?.children);
+
+    });
+  }
+
+  ngAfterViewChecked() {
+    this.putStars();
   }
 
   loadReadList(loggedUsername: string) {

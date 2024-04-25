@@ -110,4 +110,75 @@ export class BookService {
         throwError(error))
     ) as Observable<Book>
   }
+
+  putStars(rating: number, bookStars: any) {
+    //This will find every star div of the rating container
+    if (rating >= 5.0) {
+      bookStars[0].classList.add("bi-star-fill");
+      bookStars[1].classList.add("bi-star-fill");
+      bookStars[2].classList.add("bi-star-fill");
+      bookStars[3].classList.add("bi-star-fill");
+      bookStars[4].classList.add("bi-star-fill");
+    } else if (rating >= 4.5) {
+      bookStars[0].classList.add("bi-star-fill");
+      bookStars[1].classList.add("bi-star-fill");
+      bookStars[2].classList.add("bi-star-fill");
+      bookStars[3].classList.add("bi-star-fill");
+      bookStars[4].classList.add("bi-star-half");
+    } else if (rating >= 4.0) {
+      bookStars[0].classList.add("bi-star-fill");
+      bookStars[1].classList.add("bi-star-fill");
+      bookStars[2].classList.add("bi-star-fill");
+      bookStars[3].classList.add("bi-star-fill");
+      bookStars[4].classList.add("bi-star");
+    } else if (rating >= 3.5) {
+      bookStars[0].classList.add("bi-star-fill");
+      bookStars[1].classList.add("bi-star-fill");
+      bookStars[2].classList.add("bi-star-fill");
+      bookStars[3].classList.add("bi-star-half");
+      bookStars[4].classList.add("bi-star");
+    } else if (rating >= 3.0) {
+      bookStars[0].classList.add("bi-star-fill");
+      bookStars[1].classList.add("bi-star-fill");
+      bookStars[2].classList.add("bi-star-fill");
+      bookStars[3].classList.add("bi-star");
+      bookStars[4].classList.add("bi-star");
+    } else if (rating >= 2.5) {
+      bookStars[0].classList.add("bi-star-fill");
+      bookStars[1].classList.add("bi-star-fill");
+      bookStars[2].classList.add("bi-star-half");
+      bookStars[3].classList.add("bi-star");
+      bookStars[4].classList.add("bi-star");
+    } else if (rating >= 2.0) {
+      bookStars[0].classList.add("bi-star-fill");
+      bookStars[1].classList.add("bi-star-fill");
+      bookStars[2].classList.add("bi-star");
+      bookStars[3].classList.add("bi-star");
+      bookStars[4].classList.add("bi-star");
+    } else if (rating >= 1.5) {
+      bookStars[0].classList.add("bi-star-fill");
+      bookStars[1].classList.add("bi-star-half");
+      bookStars[2].classList.add("bi-star");
+      bookStars[3].classList.add("bi-star");
+      bookStars[4].classList.add("bi-star");
+    } else if (rating >= 1.0) {
+      bookStars[0].classList.add("bi-star-fill");
+      bookStars[1].classList.add("bi-star");
+      bookStars[2].classList.add("bi-star");
+      bookStars[3].classList.add("bi-star");
+      bookStars[4].classList.add("bi-star");
+    } else if (rating >= 0.5) {
+      bookStars[0].classList.add("bi-star-half");
+      bookStars[1].classList.add("bi-star");
+      bookStars[2].classList.add("bi-star");
+      bookStars[3].classList.add("bi-star");
+      bookStars[4].classList.add("bi-star");
+    } else {
+      bookStars[0].classList.add("bi-star");
+      bookStars[1].classList.add("bi-star");
+      bookStars[2].classList.add("bi-star");
+      bookStars[3].classList.add("bi-star");
+      bookStars[4].classList.add("bi-star");
+    }
+  }
 }

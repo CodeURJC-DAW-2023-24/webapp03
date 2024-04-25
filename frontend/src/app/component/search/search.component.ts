@@ -32,6 +32,10 @@ export class SearchComponent implements AfterViewChecked {
   userQueries: User[] = [];
   bookQueries: Book[] = [];
 
+  loadMoreBut!: HTMLElement;
+  noResultsDiv!: HTMLElement;
+  arrows!: HTMLElement;
+
   @ViewChildren("bookCard") books!: QueryList<ElementRef>;
 
   constructor(
@@ -75,11 +79,17 @@ export class SearchComponent implements AfterViewChecked {
   }
 
   searchUsers(query: string) {
+
+
     // @ts-ignore
     this.userService.searchUsers(query, this.page).subscribe({
       complete(): void {
       },
       next: (response: UserResponse) => {
+        //Show load more button and hide no results div
+        this.noResultsDiv.style.display = "none";
+        this.loadMoreBut.style.display = "block";
+
         //Get the users and the total number of users with the query
         let users = response["users"] as User[];
         let maxUsers = response["total"] as number;
@@ -94,6 +104,9 @@ export class SearchComponent implements AfterViewChecked {
         this.page++;
       },
       error: (error) => {
+        this.noResultsDiv.style.display = "block";
+        this.loadMoreBut.style.display = "none";
+
         console.log(error);
       }
     });
@@ -105,6 +118,9 @@ export class SearchComponent implements AfterViewChecked {
       complete(): void {
       },
       next: (response: BookResponse) => {
+        //Show load more button and hide no results div
+        this.noResultsDiv.style.display = "none";
+        this.loadMoreBut.style.display = "block";
 
         //Get the books and the total number of books with the query
         let books = response["books"] as Book[];
@@ -120,23 +136,33 @@ export class SearchComponent implements AfterViewChecked {
         this.page++;
       },
       error: (error) => {
+        this.noResultsDiv.style.display = "block";
+        this.loadMoreBut.style.display = "none";
+
         console.log(error);
       }
     });
   }
 
+  loadMore() {
+    this.arrows.classList.add("fa-spin");
+
+    setTimeout(() => {
+      this.search();
+      this.arrows.classList.remove("fa-spin");
+    }, 300);
+  }
+
   toggleLoadMore(currentSize: number, maxSize: number) {
-    let loadMoreBut = document.getElementById("loadMoreBut") as HTMLButtonElement;
     if (currentSize >= maxSize) {
-      loadMoreBut.style.display = "none";
+      this.loadMoreBut.style.display = "none";
     } else {
-      loadMoreBut.style.display = "block";
+      this.loadMoreBut.style.display = "block";
     }
   }
 
-  putStars(rating: number, book: any) {
+  putStars(rating: number, bookStars: any) {
     //This will find every star div of the rating container
-    let bookStars = book.querySelectorAll("div")[3].children;
     if (rating >= 5.0) {
       bookStars[0].classList.add("bi-star-fill");
       bookStars[1].classList.add("bi-star-fill");
@@ -208,12 +234,16 @@ export class SearchComponent implements AfterViewChecked {
 
   updateStars() {
     this.books.forEach((book, index) => {
-      this.putStars(this.bookQueries[index].averageRating, book.nativeElement);
+      let bookStars = book.nativeElement.querySelectorAll("div")[3].children;
+      this.bookService.putStars(this.bookQueries[index].averageRating, bookStars);
     });
   }
 
   ngAfterViewChecked() {
     this.updateStars();
+    this.loadMoreBut = <HTMLElement> document.getElementById("loadMoreBut");
+    this.noResultsDiv = <HTMLElement> document.getElementById("noResults");
+    this.arrows = <HTMLElement> document.querySelector(".fa-arrows-rotate");
   }
 
 }

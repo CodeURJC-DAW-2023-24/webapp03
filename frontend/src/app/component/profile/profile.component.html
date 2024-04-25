@@ -131,7 +131,7 @@
         <div class="card-body">
 
           <div id="read" class="row-book" *ngFor="let readBook of readBooks">
-            <a [routerLink]="['/book', readBook.ID]" class="book-link-disabled-decorations">
+            <a [routerLink]="['/book', readBook.ID]" class="book-link-disabled-decorations" #readBookCard>
               <div class="single_advisor_profile wow fadeInUp" data-wow-delay="0.3s"
                    style="visibility: visible; animation-delay: 0.3s; animation-name: fadeInUp;">
                 <div class="in-card-book-cover-image"><img
@@ -174,7 +174,7 @@
         <div class="card-body">
 
           <div id="reading" class="row-book" *ngFor="let readingBook of readingBooks">
-            <a [routerLink]="['/book', readingBook.ID]" class="book-link-disabled-decorations">
+            <a [routerLink]="['/book', readingBook.ID]" class="book-link-disabled-decorations" #readingBookCard>
               <div class="single_advisor_profile wow fadeInUp" data-wow-delay="0.3s"
                    style="visibility: visible; animation-delay: 0.3s; animation-name: fadeInUp;">
                 <div class="in-card-book-cover-image"><img
@@ -216,7 +216,7 @@
         <div class="card-body">
 
           <div id="wanted" class="row-book" *ngFor="let wantedBook of wantedBooks">
-            <a [routerLink]="['/book', wantedBook.ID]" class="book-link-disabled-decorations">
+            <a [routerLink]="['/book', wantedBook.ID]" class="book-link-disabled-decorations" #wantedBookCard>
               <div class="single_advisor_profile wow fadeInUp" data-wow-delay="0.3s"
                    style="visibility: visible; animation-delay: 0.3s; animation-name: fadeInUp;">
                 <div class="in-card-book-cover-image"><img
