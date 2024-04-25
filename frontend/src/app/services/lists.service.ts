@@ -18,6 +18,30 @@ export class ListsService {
   constructor(private httpClient: HttpClient, private loginService: LoginService) {
   }
 
+  setReadBooks(id: number) {
+    return this.httpClient.post("/api/books/" + id + "/read", {}).pipe(
+      catchError((error) => this.handleError(error))
+    );
+  }
+
+  setReadingBooks(id: number) {
+    return this.httpClient.post("/api/books/" + id + "/reading", {}).pipe(
+      catchError((error) => this.handleError(error))
+    );
+  }
+
+  setWantedBooks(id: number) {
+    return this.httpClient.post("/api/books/" + id + "/wanted", {}).pipe(
+      catchError((error) => this.handleError(error))
+    );
+  }
+
+  setNoneBookList(id: number) {
+    return this.httpClient.delete("/api/books/" + id + "/lists", {}).pipe(
+      catchError((error) => this.handleError(error))
+    );
+  }
+
   // Get user's read book list
   getReadBooks(username: string, page: number, size: number): Observable<Book[]> {
     let params = new HttpParams().set("list", "read").set("page", page).set("size", size);
