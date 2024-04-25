@@ -11,6 +11,8 @@ import {NavbarService} from "../../services/navbar.service";
 import {ListsService} from "../../services/lists.service";
 import {Router, ActivatedRoute} from "@angular/router";
 import {User} from "../../models/user.model";
+import {catchError} from "rxjs/operators";
+import {throwError} from "rxjs";
 
 @Component({
   selector: "app-book",
@@ -25,7 +27,8 @@ export class BookComponent implements OnInit{
   reviewRating: number = 0;
   content = "";
 
-  loggedUser = this.loginService.getLoggedUsername();
+  username = this.loginService.getLoggedUsername();
+  loggedUser = this.loginService.isUserLogged();
   isCurrentUser = false;
   isAdministrator = this.loginService.isAdmin();
   isAuthor = this.loginService.isAuthor();
@@ -43,13 +46,20 @@ export class BookComponent implements OnInit{
   pageCount = 0;
   publisher = "";
 
-  constructor(private http: HttpClient, public bookService: BookService, public loginService: LoginService, public reviewService: ReviewService, public userService: UserService, private route: ActivatedRoute) {
+  markedAsRead: boolean = false;
+  markedAsReading: boolean = false;
+  markedAsWanted: boolean = false;
+  markedAsNone: boolean = false;
+  listForBook = "";
+
+  constructor(private http: HttpClient, public bookService: BookService, public loginService: LoginService, public reviewService: ReviewService, public listsService: ListsService, private route: ActivatedRoute) {
   }
 
   ngOnInit(): void {
-    this.ID = Number(this.route.snapshot.paramMap.get('id')); // Obtiene el ID del libro desde la URL
+    this.ID = Number(this.route.snapshot.paramMap.get('id')); // Get book ID from URL
     this.getBookInfo();
     this.getReviewInfo();
+    this.isBookInList();
   }
 
   getReviewInfo() {
@@ -81,5 +91,87 @@ export class BookComponent implements OnInit{
 
   checkUserStatus() {
     return this.loginService.checkLogged();
+  }
+
+  markAsRead() {
+    this.listsService.setReadBooks(this.ID).subscribe({
+      next: () => {
+        this.markedAsRead = true;
+        this.markedAsReading = false;
+        this.markedAsWanted = false;
+        this.markedAsNone = false;
+      },
+      error: r => {
+        console.log("Error adding book to list 'Read Books': " + JSON.stringify(r));
+      }
+    });
+  }
+
+  markAsReading() {
+    this.listsService.setReadingBooks(this.ID).subscribe({
+      next: () => {
+        this.markedAsRead = false;
+        this.markedAsReading = true;
+        this.markedAsWanted = false;
+        this.markedAsNone = false;
+      },
+      error: r => {
+        console.log("Error adding book to list 'Reading Books': " + JSON.stringify(r));
+      }
+    });
+  }
+
+  markAsWanted() {
+    this.listsService.setWantedBooks(this.ID).subscribe({
+      next: () => {
+        this.markedAsRead = false;
+        this.markedAsReading = false;
+        this.markedAsWanted = true;
+        this.markedAsNone = false;
+      },
+      error: r => {
+        console.log("Error adding book to list 'Wanted Books': " + JSON.stringify(r));
+      }
+    });
+  }
+
+  removeFromLists(){
+    this.listsService.setNoneBookList(this.ID).subscribe({
+      next: () => {
+        this.markedAsRead = false;
+        this.markedAsReading = false;
+        this.markedAsWanted = false;
+        this.markedAsNone = true;
+      },
+      error: r => {
+        console.log("Error setting book to no list: " + JSON.stringify(r));
+      }
+    });
+  }
+
+  isBookInList() {
+    const listNames: string[] = ["read", "reading", "wanted"];
+
+    for (const listName of listNames) {
+      this.listsService.isBookInList(this.username, this.ID, "read").subscribe({
+        next: r => {
+          if(r) {
+            console.log("Book is in list " + listName);
+            if (listName == "read"){
+              this.markAsRead()
+            } else if(listName == "reading") {
+              this.markAsReading();
+            } else {
+              this.markAsWanted();
+            }
+          } else {
+            console.log("Book not in list");
+          }
+        },
+        error: err => {
+          console.error(err);
+        }
+      });
+    }
   }
 }

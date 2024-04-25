@@ -35,62 +35,51 @@
           <i class="fa-solid fa-circle-plus"></i>
           Añádelo a tus listas:
         </h5>
-        <div class="d-flex action-buttons-flex" *ngIf="checkUserStatus(); else notLogged">
+        <div class="d-flex action-buttons-flex" *ngIf="loggedUser; else notLogged">
           <p id="bookStatus" style="display: none;">ESTADO LIBRO</p>
 
-          <form class="list-button" action="/book/{{ID}}/add/read" method="POST">
-            <input type="hidden" name="bookId" value="{{ID}}">
-            <button type="submit" id="readButton" class="btn btn-outline-dark flex-shrink-0 action-button">
+          <form class="list-button" (ngSubmit)="markAsRead()">
+            <input type="hidden" name="bookId" [value]="ID">
+            <button type="submit" id="readButton" class="btn btn-outline-dark flex-shrink-0 action-button" [ngClass]="{ 'green-background': markedAsRead }">
               <i class="fa-solid fa-check"></i>
               Leído
             </button>
-            <input type="hidden"/>
           </form>
 
-          <form class="list-button" action="/book/{{ID}}/add/reading" method="POST">
-            <input type="hidden" name="bookId" value="{{ID}}">
-            <button type="submit" id="readingButton" class="btn btn-outline-dark flex-shrink-0 action-button">
+          <form class="list-button" (ngSubmit)="markAsReading()">
+            <input type="hidden" name="bookId" [value]="ID">
+            <button type="submit" id="readingButton" class="btn btn-outline-dark flex-shrink-0 action-button" [ngClass]="{ 'green-background': markedAsReading }">
               <i class="fa-solid fa-clock"></i>
-              Leyendo
+              Leer
             </button>
-            <input type="hidden"/>
           </form>
 
-          <form class="list-button" action="/book/{{ID}}/add/wanted" method="POST">
-            <input type="hidden" name="bookId" value="{{ID}}">
-            <button type="submit" id="toReadButton" class="btn btn-outline-dark flex-shrink-0 action-button">
+          <form class="list-button" (ngSubmit)="markAsWanted()">
+            <input type="hidden" name="bookId" [value]="ID">
+            <button type="submit" id="wantedButton" class="btn btn-outline-dark flex-shrink-0 action-button" [ngClass]="{ 'green-background': markedAsWanted }">
               <i class="fa-solid fa-bookmark"></i>
               Por leer
             </button>
-            <input type="hidden"/>
           </form>
 
           <!-- vertical separator -->
           <div class="vertical-separator"></div>
 
-          <form class="list-button" action="/book/{{ID}}/removeFromLists" method="POST">
-            <input type="hidden" name="bookId" value="{{ID}}">
-            <button type="submit" id="removeButton" class="btn btn-outline-dark flex-shrink-0 action-button">
+          <form class="list-button" (ngSubmit)="removeFromLists()">
+            <input type="hidden" name="bookId" [value]="ID">
+            <button type="submit" id="removeButton" class="btn btn-outline-dark flex-shrink-0 action-button" [ngClass]="{ 'green-background': markedAsRead }">
               <i class="fa-solid fa-xmark"></i>
               Nada
             </button>
-            <input type="hidden"/>
           </form>
-          
-          <div *ngIf="isAuthor; else adminButton">
+
+          <div *ngIf="isAuthor || isAdministrator">
             <a href="/book/{{ID}}/edit" class="btn btn-secondary-light flex-shrink-0 action-button"
                class="boton">
               <i class="fa-solid fa-pencil"></i>
               Modificar
             </a>
           </div>
-          <ng-template #adminButton>
-            <a href="/book/{{ID}}/edit" class="btn btn-secondary-light flex-shrink-0 action-button"
-               class="boton">
-              <i class="fa-solid fa-pencil"></i>
-              Modificar
-            </a>
-          </ng-template>
         </div>
         <ng-template #notLogged>
           <h6 class=" mb-4 mt-4" style='text-align: center;'>Inicia sesión para poder añadir el libro a tus listas.</h6>
@@ -116,7 +105,7 @@
     <div class="sub-container mb-5" id="review-form-area">
       <div class="row justify-content-center">
         <div class="col" *ngIf="checkUserStatus(); else notLogged">
-          <div *ngIf="reviewService.hasUserReviewed(loggedUser, ID); else hasReviewed">
+          <div *ngIf="reviewService.hasUserReviewed(username, ID); else hasReviewed">
             <form class="mb-3 mt-3 review-form" action="/book/{{ID}}/addReview" method="post">
               <label class="small mb-3" for="inputBookDescription"><h6>¡Añade tu reseña!</h6></label>
               <div class="rating mb-3">
