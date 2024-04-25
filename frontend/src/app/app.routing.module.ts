@@ -12,6 +12,7 @@ import {EditProfileComponent} from "./component/editProfile/editprofile.componen
 import {ErrorComponent} from "./component/error/error.component";
 import {LoginErrorComponent} from "./component/loginError/loginError.component";
 import {CreateBookComponent} from "./component/createBook/createbook.component";
+import {EditBookComponent} from "./component/editBook/editbook.component";
 
 
 const routes: Routes = [
@@ -26,7 +27,8 @@ const routes: Routes = [
   { path: 'signup', component: SignupComponent},
   { path: 'error', component: ErrorComponent},
   { path: 'loginError', component: LoginErrorComponent},
-  { path: 'admin/createBook', component: CreateBookComponent}
+  { path: 'admin/createBook', component: CreateBookComponent},
+  { path: 'book/:id/edit', component: EditBookComponent}
 ];
 
 @NgModule({
