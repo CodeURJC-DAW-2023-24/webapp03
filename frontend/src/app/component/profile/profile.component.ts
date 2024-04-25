@@ -51,9 +51,11 @@ export class ProfileComponent implements OnInit {
   constructor(
     private http: HttpClient, public bookService: BookService, public loginService: LoginService, public reviewService: ReviewService, public algorithmService: AlgorithmsService, public userService: UserService, private navbarService: NavbarService, private listsService: ListsService, private activatedRoute: ActivatedRoute, private router: Router
   ) {
+    /*
     this.activatedRoute.params.subscribe(params => {
       this.initialize(params["username"]);
     });
+     */
 
   }
 
@@ -103,7 +105,7 @@ export class ProfileComponent implements OnInit {
 
   }
 
-  updateRole(username:string) {
+  updateRole(username: string) {
     this.userService.getUser(username).subscribe({
       next: n => {
         if (n.roles.includes("ADMIN")) {
@@ -382,25 +384,28 @@ export class ProfileComponent implements OnInit {
   }
 
   banUser(username: string) {
-    this.router.navigate(['/']);
     // timeout to allow the page to reload
     this.userService.banUser(username).subscribe({
       next: r => {
+        this.router.navigate(['/error'], {
+          queryParams: {
+            title: "Usuario baneado",
+            description: username + " ya no existe."
+          }
+        });
       },
       error: r => {
         this.router.navigate(['/error'], {
           queryParams: {
-            title: "Error al banear usuario",
-            description: "No se ha podido banear al usuario " + username
+            title: "Usuario baneado",
+            description: username + " ya no existe."
           }
         });
       }
     });
   }
 
-  toggleAuthorRole(username
-                     :
-                     string
+  toggleAuthorRole(username: string
   ) {
     this.userService.toggleAuthorRole(username, {responseType: 'text'}).subscribe({
       next: r => {
