@@ -8,6 +8,8 @@ import { BehaviorSubject } from "rxjs";
 
 const API_URL = "/api/users";
 
+const baseUrl = '/api/';
+
 @Injectable({
   providedIn: "root"
 })
@@ -101,4 +103,17 @@ export class UserService {
       catchError((error) => throwError(error))
     );
   }
+
+  banUser(username: string): Observable<any> {
+    return this.http.delete(API_URL + "/" + username).pipe(
+      catchError((error) => throwError(error))
+    );
+  }
+
+  toggleAuthorRole(username: string, options: any): Observable<any> {
+    return this.http.put(baseUrl + 'authors/' + username, options).pipe(
+      catchError((error) => throwError(error))
+    );
+  }
+
 }

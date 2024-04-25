@@ -57,16 +57,16 @@
 
           <ng-container *ngIf="isAdministrator">
             <div *ngIf="!isAuthor; else elseAuthor">
-              <a href="/profile/{{username}}/convertAuthor" class="btn btn-secondary branding-btn-secondary">
+              <a (click)="toggleAuthorRole(username)" class="btn btn-secondary branding-btn-secondary">
                 <i class="fa-solid fa-book"></i> Convertir en autor
               </a>
             </div>
             <ng-template #elseAuthor>
-              <a href="/profile/{{username}}/removeAuthor" class="btn btn-secondary branding-btn-secondary">
+              <a (click)="toggleAuthorRole(username)" class="btn btn-secondary branding-btn-secondary">
                 <i class="fa-solid fa-book"></i> Eliminar
                 rol de autor</a>
             </ng-template>
-            <a href="/profile/{{username}}/delete" class="btn btn-secondary branding-btn-secondary">
+            <a (click)="banUser(username)" class="btn btn-secondary branding-btn-secondary">
               <i class="fa-solid fa-ban"></i> Banear
               usuario</a>
           </ng-container>

@@ -55,65 +55,6 @@ export class ProfileComponent implements OnInit {
       this.initialize(params["username"]);
     });
 
-    /*
-    this.navbarService.getEvent().subscribe((user) => {
-      this.userService.getUser(user).subscribe({
-        next: n => {
-          this.username = n.username;
-          this.role = n.roles[0];
-          this.description = n.description;
-          this.alias = n.alias;
-          this.email = n.email;
-
-          this
-
-          this.isCurrentUser = this.loggedUser === this.username;
-        },
-        error: e => {
-          console.log(e);
-        }
-      });
-
-      this.userService.getReadBooksCount(user).subscribe({
-        next: n => {
-          this.readBooksCount = n;
-        },
-        error: e => {
-          console.log(e);
-        }
-      });
-
-      this.userService.getReadingBooksCount(user).subscribe({
-        next: n => {
-          this.readingBooksCount = n;
-        },
-        error: e => {
-          console.log(e);
-        }
-      });
-
-      this.userService.getWantedBooksCount(user).subscribe({
-        next: n => {
-          this.wantedBooksCount = n;
-        },
-        error: e => {
-          console.log(e);
-        }
-      });
-
-      this.reviewService.getReviewCountByUser(user).subscribe({
-        next: n => {
-          this.reviewCount = n;
-        },
-        error: e => {
-          console.log(e);
-        }
-      });
-
-    });
-
-     */
-
   }
 
   exportLists() {
@@ -162,12 +103,42 @@ export class ProfileComponent implements OnInit {
 
   }
 
+  updateRole(username:string) {
+    this.userService.getUser(username).subscribe({
+      next: n => {
+        if (n.roles.includes("ADMIN")) {
+          this.role = "ADMINISTRADOR";
+          if (n.roles.includes("AUTHOR")) {
+            this.role = "AUTOR Y ADMINISTRADOR";
+            this.isAuthor = true;
+            this.isAdministrator = true;
+          } else {
+            this.isAuthor = false;
+          }
+        } else {
+          this.role = "USUARIO";
+          if (n.roles.includes("AUTHOR")) {
+            this.role = "AUTOR";
+            this.isAuthor = true;
+          } else {
+            this.isAuthor = false;
+          }
+        }
+      },
+      error: e => {
+        console.log(e);
+      }
+    });
+  }
+
   initialize(username: string) {
     this.userService.getUser(username).subscribe({
       next: n => {
         this.userLoaded = true;
         this.username = n.username;
-        this.role = n.roles[0];
+
+        this.updateRole(username);
+
         this.description = n.description;
         this.alias = n.alias;
         this.email = n.email;
@@ -211,20 +182,31 @@ export class ProfileComponent implements OnInit {
         });
       },
       error: e => {
-        // route to error page
-        this.router.navigate(['/error']);
+        // route to error page with error title and description as body
+        this.router.navigate(['/error'], {
+          queryParams: {
+            title: "Este usuario no existe",
+            description: "No hemos podido encontrar ningún usuario llamado " + username
+          }
+
+        });
       }
     });
 
-    this.loginService.checkAdmin().subscribe({
+    this.loginService.checkLogged().subscribe({
       next: r => {
-        this.isAdministrator = r;
-      }
-    });
-
-    this.loginService.checkAuthor().subscribe({
-      next: r => {
-        this.isAuthor = r;
+        if (r) {
+          this.loginService.getLoggedUser().subscribe({
+            next: n => {
+              if (n.roles.includes("ADMIN")) {
+                this.isAdministrator = true;
+              }
+            },
+            error: e => {
+              console.log(e);
+            }
+          });
+        }
       }
     });
 
@@ -395,6 +377,37 @@ export class ProfileComponent implements OnInit {
       },
       error: r => {
         console.error("Error: " + JSON.stringify(r));
+      }
+    });
+  }
+
+  banUser(username: string) {
+    this.router.navigate(['/']);
+    // timeout to allow the page to reload
+    this.userService.banUser(username).subscribe({
+      next: r => {
+      },
+      error: r => {
+        this.router.navigate(['/error'], {
+          queryParams: {
+            title: "Error al banear usuario",
+            description: "No se ha podido banear al usuario " + username
+          }
+        });
+      }
+    });
+  }
+
+  toggleAuthorRole(username
+                     :
+                     string
+  ) {
+    this.userService.toggleAuthorRole(username, {responseType: 'text'}).subscribe({
+      next: r => {
+        this.updateRole(username);
+      },
+      error: r => {
+        this.updateRole(username);
       }
     });
   }

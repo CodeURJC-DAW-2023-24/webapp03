@@ -11,6 +11,7 @@ import {error} from "@angular/compiler-cli/src/transformers/util";
 import {User} from "../../models/user.model";
 import {Observable} from "rxjs";
 import {Chart, registerables} from "chart.js";
+import {ActivatedRoute} from "@angular/router";
 
 Chart.register(...registerables);
 
@@ -20,15 +21,29 @@ Chart.register(...registerables);
   styleUrls: ["./error.component.css", "../../../animations.css"],
 })
 export class ErrorComponent implements OnInit {
-  constructor(private http: HttpClient, public bookService: BookService, public loginService: LoginService, public reviewService: ReviewService, public algorithmService: AlgorithmsService, public profileService: UserService) {
+
+  errorTitle: string = "";
+  errorDescription: string = "";
+
+  constructor(private http: HttpClient, public bookService: BookService, public loginService: LoginService, public reviewService: ReviewService, public algorithmService: AlgorithmsService, public profileService: UserService, private route: ActivatedRoute) {
 
   }
 
   ngOnInit(): void {
+    this.route.queryParams.subscribe(params => {
+      // if no parameters are passed, the default error message is displayed
 
+      if (!params['title'] && !params['description']) {
+        this.errorTitle = "Se ha producido un error";
+        this.errorDescription = "Si ves esta pantalla muy a menudo, por favor, contacta con nosotros";
+      } else {
+        this.errorTitle = params['title'];
+        this.errorDescription = params['description'];
+      }
+
+    });
 
   }
-
 
 
 }
