@@ -20,10 +20,14 @@ export class CreateBookComponent {
   repeatAuthor = false;
   repeatISBN = false;
   repeatGenre = false;
+  repeatImage = false;
+  differentImage = false;
+  bookImage = "";
   constructor(public bookService:BookService, private router:Router) {
   }
 
   ngOnInit() {
+    console.log("Es necesario")
   }
 
   createBook(newTitle: string, newAuthor: string, newDescription: string, newDate: string,
@@ -71,6 +75,48 @@ export class CreateBookComponent {
       })
     } else {
       console.error("Error uploading image!") //If there was an error uploading the image...
+    }
+  }
+
+  updateImage() {
+    let inputBut = document.getElementById("inputImageFile") as HTMLInputElement; //Get image
+    if (inputBut.files && inputBut.files.length > 0) { //Check if image is available to upload
+      let file = inputBut.files[0];
+      let fileSizeInMB = file.size / 1024 / 1024;
+      if (fileSizeInMB < 5) {
+        let fileByteArray = [];
+        let reader = new FileReader();
+        reader.readAsArrayBuffer(file);
+        reader.onloadend = function (e) {
+          console.log("aqui")
+        }
+        reader.onload = (e) => {
+          if (reader.readyState === FileReader.DONE) {
+            let arrayBuffer = reader.result as ArrayBuffer;
+            let array = new Uint8Array(arrayBuffer);
+            for (let i = 0; i < array.length; i++) {
+              fileByteArray.push(array[i]);
+            }
+            this.bookImage = btoa(fileByteArray.map((v) => {
+              return String.fromCharCode(v)
+            }).join(""))
+            this.differentImage = true
+            this.repeatImage = false;
+          } else { //Image unavailable
+            this.repeatImage = true;
+            this.differentImage = false;
+            this.bookImage = ""
+          }
+        }
+      }else{ //Image too big
+        this.repeatImage = true;
+        this.differentImage = false;
+        this.bookImage = ""
+      }
+    }else{ //File is null
+      this.repeatImage = true;
+      this.differentImage = false;
+      this.bookImage = ""
     }
   }
 }
