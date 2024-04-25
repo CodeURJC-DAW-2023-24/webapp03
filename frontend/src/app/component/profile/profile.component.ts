@@ -116,6 +116,29 @@ export class ProfileComponent implements OnInit {
 
   }
 
+  exportLists() {
+    this.listsService.getAllLists(this.username).subscribe({
+      next: n => {
+        console.log(n);
+        let blob = new Blob([n], {type: 'text/csv;charset=utf-8;'});
+        let url = window.URL.createObjectURL(blob);
+        let link = document.createElement('a');
+        link.href = url;
+        link.download = "books.csv";
+        link.style.display = 'none';
+
+        document.body.appendChild(link);
+
+        link.click();
+
+        document.body.removeChild(link);
+      },
+      error: e => {
+        console.log(e);
+      }
+    });
+  }
+
   profileImage() {
     return this.userService.downloadProfilePicture(this.username);
   }
@@ -211,6 +234,20 @@ export class ProfileComponent implements OnInit {
     this.noMoreReadBooks = this.readBooksCount === this.readBooks.length;
     this.noMoreReadingBooks = this.readingBooksCount === this.readingBooks.length;
     this.noMoreWantedBooks = this.wantedBooksCount === this.wantedBooks.length;
+  }
+
+  showExport() {
+    let exportButton = document.getElementById("exportImport");
+    if (exportButton) {
+      exportButton.style.visibility = "visible";
+    }
+  }
+
+  hideExport() {
+    let exportButton = document.getElementById("exportImport");
+    if (exportButton) {
+      exportButton.style.visibility = "hidden";
+    }
   }
 
 
@@ -350,7 +387,7 @@ export class ProfileComponent implements OnInit {
     return this.bookService.downloadCover(id);
   }
 
-  logout(){
+  logout() {
     this.loginService.logout().subscribe({
       next: r => {
         // reload the page
