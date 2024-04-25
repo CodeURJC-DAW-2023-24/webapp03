@@ -66,7 +66,7 @@
                 <i class="fa-solid fa-book"></i> Eliminar
                 rol de autor</a>
             </ng-template>
-            <a (click)="banUser(username)" class="btn btn-secondary branding-btn-secondary">
+            <a (click)="banUser(username)" *ngIf="!isCurrentUser" class="btn btn-secondary branding-btn-secondary">
               <i class="fa-solid fa-ban"></i> Banear
               usuario</a>
           </ng-container>
@@ -131,7 +131,7 @@
         <div class="card-body">
 
           <div id="read" class="row-book" *ngFor="let readBook of readBooks">
-            <a [routerLink]="['book', readBook.ID]" class="book-link-disabled-decorations">
+            <a [routerLink]="['/book', readBook.ID]" class="book-link-disabled-decorations">
               <div class="single_advisor_profile wow fadeInUp" data-wow-delay="0.3s"
                    style="visibility: visible; animation-delay: 0.3s; animation-name: fadeInUp;">
                 <div class="in-card-book-cover-image"><img
@@ -174,7 +174,7 @@
         <div class="card-body">
 
           <div id="reading" class="row-book" *ngFor="let readingBook of readingBooks">
-            <a [routerLink]="['book', readingBook.ID]" class="book-link-disabled-decorations">
+            <a [routerLink]="['/book', readingBook.ID]" class="book-link-disabled-decorations">
               <div class="single_advisor_profile wow fadeInUp" data-wow-delay="0.3s"
                    style="visibility: visible; animation-delay: 0.3s; animation-name: fadeInUp;">
                 <div class="in-card-book-cover-image"><img
@@ -216,7 +216,7 @@
         <div class="card-body">
 
           <div id="wanted" class="row-book" *ngFor="let wantedBook of wantedBooks">
-            <a [routerLink]="['book', wantedBook.ID]" class="book-link-disabled-decorations">
+            <a [routerLink]="['/book', wantedBook.ID]" class="book-link-disabled-decorations">
               <div class="single_advisor_profile wow fadeInUp" data-wow-delay="0.3s"
                    style="visibility: visible; animation-delay: 0.3s; animation-name: fadeInUp;">
                 <div class="in-card-book-cover-image"><img

@@ -64,7 +64,7 @@
           <h2 class="card-title">{{ book.title }}</h2>
           <p class="card-text">{{ book.authorString }}</p>
           <p class="card-text">{{ book.description }}</p>
-          <a class="btn btn-primary" href="book/bookID">Leer más</a>
+          <a class="btn btn-primary" [routerLink]="['book', book.ID]">Leer más</a>
         </div>
       </div>
 

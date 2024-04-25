@@ -53,18 +53,6 @@ export class ProfileComponent implements OnInit {
   constructor(
     private http: HttpClient, public bookService: BookService, public loginService: LoginService, public reviewService: ReviewService, public algorithmService: AlgorithmsService, public userService: UserService, private navbarService: NavbarService, private listsService: ListsService, private activatedRoute: ActivatedRoute, private router: Router
   ) {
-
-    this.activatedRoute.params.pipe(
-      map(params => params['username']),
-      distinctUntilChanged()
-    ).subscribe(username => {
-      this.wantedBooksListPage = 0;
-      this.readingBooksListPage = 0;
-      this.readBooksListPage = 0;
-      this.initialize(username);
-    });
-
-
   }
 
   exportLists() {
@@ -142,6 +130,7 @@ export class ProfileComponent implements OnInit {
   }
 
   initialize(username: string) {
+
     this.userService.getUser(username).subscribe({
       next: n => {
         this.userLoaded = true;
@@ -158,6 +147,7 @@ export class ProfileComponent implements OnInit {
         this.userService.getReadBooksCount(username).subscribe({
           next: n => {
             this.readBooksCount = n;
+            this.checkIfListsDone()
           },
           error: e => {
             console.log(e);
@@ -167,6 +157,8 @@ export class ProfileComponent implements OnInit {
         this.userService.getReadingBooksCount(username).subscribe({
           next: n => {
             this.readingBooksCount = n;
+            this.checkIfListsDone()
+
           },
           error: e => {
             console.log(e);
@@ -176,6 +168,8 @@ export class ProfileComponent implements OnInit {
         this.userService.getWantedBooksCount(username).subscribe({
           next: n => {
             this.wantedBooksCount = n;
+            this.checkIfListsDone()
+
           },
           error: e => {
             console.log(e);
@@ -222,12 +216,6 @@ export class ProfileComponent implements OnInit {
 
   }
 
-  checkIfListsDone() {
-    this.noMoreReadBooks = this.readBooksCount === this.readBooks.length;
-    this.noMoreReadingBooks = this.readingBooksCount === this.readingBooks.length;
-    this.noMoreWantedBooks = this.wantedBooksCount === this.wantedBooks.length;
-  }
-
   showExport() {
     let exportButton = document.getElementById("exportImport");
     if (exportButton) {
@@ -242,15 +230,39 @@ export class ProfileComponent implements OnInit {
     }
   }
 
+  checkIfListsDone() {
+    this.noMoreReadBooks = this.readBooksCount === this.readBooks.length;
+    this.noMoreReadingBooks = this.readingBooksCount === this.readingBooks.length;
+    this.noMoreWantedBooks = this.wantedBooksCount === this.wantedBooks.length;
+  }
+
 
   ngOnInit() {
 
-    // get username from url
-    const urlUsername = this.activatedRoute.snapshot.params['username'];
+    this.activatedRoute.params.subscribe(params => {
+      this.readBooksListPage = 0;
+      this.readingBooksListPage = 0;
+      this.wantedBooksListPage = 0;
 
-    this.checkIfUserMatches(urlUsername);
+      this.readBooksCount = 0;
+      this.readingBooksCount = 0;
+      this.wantedBooksCount = 0;
+      this.reviewCount = 0;
 
-    this.initialize(urlUsername);
+      this.readBooks = [];
+      this.readingBooks = [];
+      this.wantedBooks = [];
+
+      this.checkIfListsDone();
+
+      const urlUsername = params['username'];
+
+      // wait a little bit to allow the page to load
+      this.checkIfUserMatches(urlUsername);
+      this.initialize(urlUsername);
+
+    });
+
   }
 
   loadReadList(loggedUsername: string) {
