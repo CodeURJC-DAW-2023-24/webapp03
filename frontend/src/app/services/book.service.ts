@@ -102,4 +102,12 @@ export class BookService {
     ) as Observable<string>
   }
 
+  editBook(bookData :{title: string, authorString: string, description: string, releaseDate: string,
+    averageRating: number, series: string, pageCount: number, publisher: string,
+    isbn: string, genre:string}, id: number):Observable<Book>{
+    return this.httpClient.put<Book>(this.baseUrl + id, bookData).pipe(
+      catchError((error) =>
+        throwError(error))
+    ) as Observable<Book>
+  }
 }
