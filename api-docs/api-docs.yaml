@@ -53,6 +53,10 @@ paths:
       responses:
         "401":
           description: You don't have permission to do this!
+        "400":
+          description: Invalid parameter
+        "404":
+          description: User not found
         "500":
           description: Error with operation
         "200":
@@ -61,10 +65,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/User_UserBasicView'
-        "400":
-          description: Invalid parameter
-        "404":
-          description: User not found
     delete:
       tags:
       - api-admin-controller
@@ -116,20 +116,20 @@ paths:
                 type: string
         required: true
       responses:
-        "401":
-          description: You don't have permission to do this!
-        "500":
-          description: Error with operation
-        "400":
-          description: Invalid parameter
-        "404":
-          description: User not found
         "200":
           description: Password changed successfully
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/User_UserBasicView'
+        "401":
+          description: You don't have permission to do this!
+        "400":
+          description: Invalid parameter
+        "404":
+          description: User not found
+        "500":
+          description: Error with operation
   /api/users/{username}/image:
     get:
       tags:
@@ -143,18 +143,18 @@ paths:
         schema:
           type: string
       responses:
-        "200":
-          description: Profile image found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UserBasicView'
         "404":
           description: Profile image not found
           content:
             '*/*':
               schema:
                 type: object
+        "200":
+          description: Profile image found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserBasicView'
     put:
       tags:
       - api-edit-profile-controller
@@ -180,18 +180,18 @@ paths:
       responses:
         "401":
           description: You don't have permission to do this!
-        "500":
-          description: Error with operation
+        "400":
+          description: Invalid parameter
         "200":
           description: Image uploaded successfully
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/User_UserBasicView'
-        "400":
-          description: Invalid parameter
         "404":
           description: User not found
+        "500":
+          description: Error with operation
   /api/books/{id}:
     get:
       tags:
@@ -233,18 +233,18 @@ paths:
               $ref: '#/components/schemas/Book_GenreBookBasicView'
         required: true
       responses:
-        "200":
-          description: Book modified correctly
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Book_GenreBookBasicView'
         "401":
           description: You don't have permission to do this!
         "500":
           description: Image not supported. Try different file
         "404":
           description: Book not found
+        "200":
+          description: Book modified correctly
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Book_GenreBookBasicView'
         "409":
           description: Invalid parameter
     delete:
@@ -328,14 +328,14 @@ paths:
       responses:
         "401":
           description: You don't have permission to do this
+        "404":
+          description: User not found
         "200":
           description: Role changed
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/User_UserBasicView'
-        "404":
-          description: User not found
   /email/send:
     post:
       tags:
@@ -460,18 +460,18 @@ paths:
             '*/*':
               schema:
                 type: object
-        "404":
-          description: Book not found
-          content:
-            '*/*':
-              schema:
-                type: object
         "200":
           description: Reviews found
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Review_BasicInfo'
+        "404":
+          description: Book not found
+          content:
+            '*/*':
+              schema:
+                type: object
     post:
       tags:
       - api-review-controller
@@ -534,18 +534,18 @@ paths:
           type: integer
           format: int32
       responses:
-        "200":
-          description: Search results page books loaded
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Book_BasicInfo'
         "404":
           description: No books found
           content:
             '*/*':
               schema:
                 type: object
+        "200":
+          description: Search results page books loaded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Book_BasicInfo'
     post:
       tags:
       - api-book-controller
@@ -558,18 +558,18 @@ paths:
               $ref: '#/components/schemas/Book_BookBasicView'
         required: true
       responses:
-        "401":
-          description: You don't have permission to do this!
-        "409":
-          description: Invalid parameter.
+        "400":
+          description: Parameter missing.
         "201":
           description: User created correctly
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Book_BookBasicView'
-        "400":
-          description: Parameter missing.
+        "409":
+          description: Invalid parameter.
+        "401":
+          description: You don't have permission to do this!
   /api/books/{id}/wanted:
     post:
       tags:
@@ -584,18 +584,18 @@ paths:
           type: integer
           format: int64
       responses:
-        "400":
-          description: Invalid book ID
-        "404":
-          description: Book not found
         "401":
           description: Unauthorized
+        "400":
+          description: Invalid book ID
         "200":
           description: Book added to wanted list
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Book_BasicInfo'
+        "404":
+          description: Book not found
   /api/books/{id}/reading:
     post:
       tags:
@@ -610,18 +610,18 @@ paths:
           type: integer
           format: int64
       responses:
-        "400":
-          description: Invalid book ID
-        "404":
-          description: Book not found
         "401":
           description: Unauthorized
+        "400":
+          description: Invalid book ID
         "200":
           description: Book added to reading list
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Book_BasicInfo'
+        "404":
+          description: Book not found
   /api/books/{id}/read:
     post:
       tags:
@@ -642,12 +642,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Book_BasicInfo'
+        "401":
+          description: Unauthorized
         "400":
           description: Invalid book ID
         "404":
           description: Book not found
-        "401":
-          description: Unauthorized
   /api/auth/refresh:
     post:
       tags:
@@ -661,16 +661,16 @@ paths:
         schema:
           type: string
       responses:
-        "200":
-          description: Token refreshed
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/AuthResponse'
         "400":
           description: Invalid token
           content:
             '*/*':
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+        "200":
+          description: Token refreshed
+          content:
+            application/json:
               schema:
                 $ref: '#/components/schemas/AuthResponse'
   /api/auth/logout:
@@ -1388,18 +1388,18 @@ paths:
           type: integer
           format: int64
       responses:
-        "400":
-          description: Invalid book ID
-        "404":
-          description: Book not found
-        "401":
-          description: Unauthorized
         "200":
           description: Book removed from all lists
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Book_BasicInfo'
+        "401":
+          description: Unauthorized
+        "400":
+          description: Invalid book ID
+        "404":
+          description: Book not found
 components:
   schemas:
     Book_UserBasicView:

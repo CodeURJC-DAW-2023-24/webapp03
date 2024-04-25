@@ -1,7 +1,6 @@
 import {Component, OnInit} from "@angular/core";
 import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
 import {UserService} from "../../services/user.service";
-import {NavbarService} from "../../services/navbar.service";
 import {LoginService} from "../../services/session.service";
 import {filter} from "rxjs/operators";
 
@@ -21,7 +20,7 @@ export class NavbarComponent implements OnInit {
 
   isAdmin = false;
 
-  constructor(private router: Router, public userService: UserService, private navbarService: NavbarService, private sessionService: LoginService, private activatedRoute: ActivatedRoute) {
+  constructor(private router: Router, public userService: UserService, private sessionService: LoginService, private activatedRoute: ActivatedRoute) {
     this.activatedRoute.params.subscribe(params => {
       if (this.router.url.includes("search")) {
         localStorage.setItem("userSearch", params['users'] === "true" ? "true" : "false");
@@ -37,17 +36,8 @@ export class NavbarComponent implements OnInit {
 
   search(query: string) {
     this.query = query;
-    this.navbarService.setUserSearch(this.userSearch);
-    let url = this.router.url;
 
-    this.router.navigate(["/search", {
-
-      users: this.userSearch,
-      query: this.query
-
-    }]).then(() => {
-      this.navbarService.emitEvent({query: query, page: this.page, newSearch: true});
-    });
+    this.router.navigate(["/search", {users: this.userSearch, query: this.query}]);
   }
 
   profileImage(username: string) {

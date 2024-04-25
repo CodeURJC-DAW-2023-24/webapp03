@@ -5,7 +5,6 @@ import {LoginService} from "../../services/session.service";
 import {BookService} from "../../services/book.service";
 import {HttpClient} from "@angular/common/http";
 import {UserService} from "../../services/user.service";
-import {NavbarService} from "../../services/navbar.service";
 import {ListsService} from "../../services/lists.service";
 import {Book} from "../../models/book.model";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -51,14 +50,13 @@ export class ProfileComponent implements OnInit {
   noMoreWantedBooks = false;
 
   constructor(
-    private http: HttpClient, public bookService: BookService, public loginService: LoginService, public reviewService: ReviewService, public algorithmService: AlgorithmsService, public userService: UserService, private navbarService: NavbarService, private listsService: ListsService, private activatedRoute: ActivatedRoute, private router: Router
+    private http: HttpClient, public bookService: BookService, public loginService: LoginService, public reviewService: ReviewService, public algorithmService: AlgorithmsService, public userService: UserService, private listsService: ListsService, private activatedRoute: ActivatedRoute, private router: Router
   ) {
   }
 
   exportLists() {
     this.listsService.getAllLists(this.username).subscribe({
       next: n => {
-        console.log(n);
         let blob = new Blob([n], {type: 'text/csv;charset=utf-8;'});
         let url = window.URL.createObjectURL(blob);
         let link = document.createElement('a');

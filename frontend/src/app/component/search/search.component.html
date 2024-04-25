@@ -37,7 +37,7 @@
           </div>
           <!-- Product actions-->
           <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-            <div class="text-center"><a class="btn btn-outline-dark mt-auto" (click)="showUser(user.username)">Ver perfil</a></div>
+            <div class="text-center"><a class="btn btn-outline-dark mt-auto" [routerLink]="['/profile/', user.username]">Ver perfil</a></div>
           </div>
         </div>
       </div> <!-- End of book card-->
@@ -47,7 +47,7 @@
       <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center" id="books">
         <span *ngFor="let book of bookQueries">
         <!-- Book card-->
-        <div class="col mb-5 book" id="book{{book.ID}}">
+        <div class="col mb-5 book" id="book{{book.ID}}" #bookCard>
           <div class="card h-100">
             <!-- Book cover image-->
             <img class="card-img-top" [src]="bookImage(book.ID)" alt="..."/>
@@ -70,7 +70,7 @@
             </div>
             <!-- Product actions-->
             <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-              <div class="text-center"><a class="btn btn-outline-dark mt-auto" (click)="showBook(book.ID)">Ver
+              <div class="text-center"><a class="btn btn-outline-dark mt-auto" [routerLink]="['/book/', book.ID]">Ver
                 libro</a>
               </div>
             </div>
@@ -86,7 +86,7 @@
   <div id="loadMoreDiv">
     <div id="load-more-spinner" class="loader" role="status"></div>
     <div id="noResults" style="display:none">No hay ningún resultado que coincida con su búsqueda.</div>
-    <a id="loadMoreBut" (click)="loadMoreBooks()" class="btn btn-secondary flex-shrink-0 action-button">
+    <a id="loadMoreBut" (click)="search()" class="btn btn-secondary flex-shrink-0 action-button">
       <i class="fa-solid fa-arrows-rotate" style="margin-right: 10px;" aria-hidden="true"></i>
       Cargar más
     </a>

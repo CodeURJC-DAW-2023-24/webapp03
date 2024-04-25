@@ -2,7 +2,6 @@ import {Component, OnInit} from "@angular/core";
 import {UserService} from "../../services/user.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {LoginService} from "../../services/session.service";
-import {NavbarService} from "../../services/navbar.service";
 
 @Component({
   selector: 'editprofile',
@@ -17,7 +16,7 @@ export class EditProfileComponent implements OnInit {
 
   userLoaded = false;
 
-  constructor(private router: Router, private userService: UserService, private loginService: LoginService, private navbarService: NavbarService, private activatedRoute: ActivatedRoute) {
+  constructor(private router: Router, private userService: UserService, private loginService: LoginService, private activatedRoute: ActivatedRoute) {
 
   }
 

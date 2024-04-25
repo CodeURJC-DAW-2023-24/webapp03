@@ -1,8 +1,7 @@
-import {AfterViewChecked, Component, OnInit} from "@angular/core";
+import {AfterViewChecked, AfterViewInit, Component, ElementRef, OnInit, QueryList, ViewChildren} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {UserService} from "../../services/user.service";
 import {BookService} from "../../services/book.service";
-import {NavbarService} from "../../services/navbar.service";
 import {User} from "../../models/user.model";
 import {Book} from "../../models/book.model";
 import {Router, ActivatedRoute} from "@angular/router";
@@ -24,141 +23,37 @@ interface UserResponse {
   templateUrl: "./search.component.html",
   styleUrls: ["./search.component.css"]
 })
-export class SearchComponent implements OnInit {
+export class SearchComponent implements AfterViewChecked {
+
+  searchQuery: string = "";
+  userSearch: boolean = false;
+  page: number = 0;
+
   userQueries: User[] = [];
   bookQueries: Book[] = [];
-  userSearch = false;
-  searchQuery = "";
-  page = 0;
-  maxUsers = 0;
-  maxBooks = 0;
-  newSearch = false;
-  arrows: any;
 
+  @ViewChildren("bookCard") books!: QueryList<ElementRef>;
 
   constructor(
-    private http: HttpClient, public userService: UserService, public bookService: BookService, private navbarService: NavbarService, private router: Router, private activatedRoute: ActivatedRoute
-
+    private http: HttpClient, public userService: UserService, public bookService: BookService, private router: Router, private activatedRoute: ActivatedRoute
   ) {
-    activatedRoute.params.subscribe(params => {
-      this.navbarService.emitEvent({query: params['query'], page: 0, newSearch: true});
-    });
 
-    this.getMaxElems(true);
+    this.activatedRoute.params.subscribe(params => {
+      //Empty all the queries, if there were any
+      this.bookQueries = [];
+      this.userQueries = [];
 
-    this.navbarService.getEvent().subscribe((event) => {
-      if (event.newSearch) {
-        this.bookQueries = [];
-        this.userQueries = [];
+      //Set the page to 0
+      this.page = 0;
 
-        this.toggleLoadMore(this.userSearch, []);
-      } else {
-        setTimeout(() => {
-          this.arrows.classList.remove("fa-spin");
-        }, 500);
-      }
+      //On each page initialization, check if the user is searching for users or books
+      this.userSearch = this.activatedRoute.snapshot.paramMap.get("users") === "true";
 
-      this.userSearch = localStorage.getItem("userSearch") === "true";
-      this.searchQuery = event.query;
+      //Get the search query
+      this.searchQuery = <string>this.activatedRoute.snapshot.paramMap.get("query");
 
-      this.maxBooks = parseInt(localStorage.getItem("maxBooks")!);
-      this.maxUsers = parseInt(localStorage.getItem("maxUsers")!);
+      this.search();
 
-      if (this.userSearch) {
-
-        // @ts-ignore
-        this.userService.searchUsers(event.query, event.page).subscribe({
-          complete(): void {
-          },
-          next: (response: UserResponse) => {
-            this.arrows?.removeClass("fa-spin");
-
-            this.newSearch = event.newSearch;
-            let users = response["users"] as User[];
-            this.maxUsers = response["total"] as number;
-
-            this.toggleLoadMore(this.userSearch, users);
-            localStorage.setItem("maxUsers", this.maxUsers.toString());
-
-            if (users.length > 0) {
-              document.getElementById("noResults")!.style.display = "none";
-
-              this.userQueries = this.userQueries.concat(users);
-
-
-            }
-          },
-          error: e => {
-            document.getElementById("noResults")!.style.display = "block";
-          }
-        });
-      } else {
-
-        // @ts-ignore
-        this.bookService.searchBooks(event.query, event.page).subscribe({
-          complete(): void {
-          },
-          next: (response: BookResponse) => {
-            if (this.newSearch) {
-              this.bookQueries = [];
-              this.userQueries = [];
-            }
-
-            this.newSearch = event.newSearch;
-            let books = response["books"] as Book[];
-            this.maxBooks = response["total"] as number;
-
-            this.toggleLoadMore(this.userSearch, books);
-
-            let pos = 0;
-            localStorage.setItem("maxBooks", this.maxBooks.toString());
-
-            if (books.length > 0) {
-              let booksDiv = document.getElementById("books");
-              if (booksDiv) {
-                let observer = new MutationObserver((mutations) => {
-                  mutations.forEach((mutation) => {
-                    if (mutation.type === 'childList') {
-                      for (let i = 0; i < mutation.addedNodes.length; i++) {
-                        let newNode = mutation.addedNodes[i];
-                        let book = books[pos];
-                        this.putStars(book.averageRating, newNode);
-                        pos++;
-                      }
-                    }
-                  });
-                  pos = 0;
-                });
-
-                let config = {childList: true};
-
-                observer.observe(booksDiv, config);
-              }
-
-              this.bookQueries = this.bookQueries.concat(books);
-            }
-          },
-          error: e => {
-            document.getElementById("noResults")!.style.display = "block";
-            console.log(e);
-          }
-        });
-      }
-
-    });
-
-  }
-
-  showUser(username: string) {
-    this.userService.getUser(username).subscribe({
-      next: n => {
-        this.router.navigate(["/profile", username]).then(() => {
-          this.navbarService.emitEvent(username);
-        });
-      },
-      error: e => {
-        console.log(e);
-      }
     });
 
   }
@@ -167,99 +62,81 @@ export class SearchComponent implements OnInit {
     return this.userService.downloadProfilePicture(username);
   }
 
-  showBook(ID: number) {
-    this.bookService.getBook(ID).subscribe({
-      next: n => {
-        this.router.navigate(["/book", ID]);
-      },
-      error: e => {
-        console.log(e);
-      }
-    });
-  }
-
   bookImage(ID: number) {
     return this.bookService.downloadCover(ID);
   }
 
-  loadMoreBooks() {
-    this.arrows = document.querySelector(".fa-arrows-rotate")
-    this.arrows?.classList.add("fa-spin");
-    setTimeout(() => {
-
-      this.page++;
-      this.newSearch = false;
-      this.navbarService.emitEvent({query: this.searchQuery, page: this.page, newSearch: false});
-    }, 300);
-  }
-
-  ngOnInit() {
-
-    const storedQuery = this.activatedRoute.snapshot.params['query'];
-    const storedUserSearch = this.activatedRoute.snapshot.params['users'];
-
-    if (storedQuery && storedUserSearch) {
-      this.searchQuery = storedQuery;
-      this.userSearch = JSON.parse(storedUserSearch);
-
-      // Searches with the stored data
-      this.navbarService.setUserSearch(this.userSearch);
-
-      window.onload = () => {
-        this.navbarService.emitEvent({query: this.searchQuery, page: this.page, newSearch: false});
-      }
-
-    }
-  }
-
-  getMaxElems(updated: boolean) {
-    if (updated) {
-      this.bookService.getBooksWithCount().subscribe({
-        next: count => {
-          this.maxBooks = count;
-        },
-        error: e => {
-          console.log(e);
-        }
-      });
-
-      this.userService.getUserCount().subscribe({
-        next: count => {
-          this.maxUsers = count;
-        },
-        error: e => {
-          console.log(e);
-        }
-      });
+  search() {
+    if (this.userSearch) {
+      this.searchUsers(this.searchQuery);
     } else {
-      this.maxBooks = localStorage.getItem("maxBooks") ? parseInt(localStorage.getItem("maxBooks")!) : 0;
-      this.maxUsers = localStorage.getItem("maxUsers") ? parseInt(localStorage.getItem("maxUsers")!) : 0;
+      this.searchBooks(this.searchQuery);
     }
   }
 
-  toggleLoadMore(userSearch: boolean, elems: any) {
-    setTimeout(() => {
+  searchUsers(query: string) {
+    // @ts-ignore
+    this.userService.searchUsers(query, this.page).subscribe({
+      complete(): void {
+      },
+      next: (response: UserResponse) => {
+        //Get the users and the total number of users with the query
+        let users = response["users"] as User[];
+        let maxUsers = response["total"] as number;
 
-      if (userSearch) {
-        if (((this.page + 1) * SIZE >= this.maxUsers) || elems.length < 4) {
-          document.getElementById("loadMoreBut")!.style.display = "none";
-        } else {
-          document.getElementById("loadMoreBut")!.style.display = "block";
-        }
-      } else {
-        if (((this.page + 1) * SIZE >= this.maxBooks) || elems.length < 4) {
-          document.getElementById("loadMoreBut")!.style.display = "none";
-        } else {
-          document.getElementById("loadMoreBut")!.style.display = "block";
-        }
+        //Show/Hide the load more button based on the number of users
+        this.toggleLoadMore(SIZE * (this.page + 1), maxUsers);
+
+        //Add more users to userQueries
+        this.userQueries = this.userQueries.concat(users);
+
+        //Increase page number
+        this.page++;
+      },
+      error: (error) => {
+        console.log(error);
       }
-    }, 1);
+    });
+  }
 
+  searchBooks(query: string) {
+    // @ts-ignore
+    this.bookService.searchBooks(query, this.page).subscribe({
+      complete(): void {
+      },
+      next: (response: BookResponse) => {
+
+        //Get the books and the total number of books with the query
+        let books = response["books"] as Book[];
+        let maxBooks = response["total"] as number;
+
+        //Show/Hide the load more button based on the number of books
+        this.toggleLoadMore(SIZE * (this.page + 1), maxBooks);
+
+        //Add more books to bookQueries
+        this.bookQueries = this.bookQueries.concat(books);
+
+        //Increase page number
+        this.page++;
+      },
+      error: (error) => {
+        console.log(error);
+      }
+    });
+  }
+
+  toggleLoadMore(currentSize: number, maxSize: number) {
+    let loadMoreBut = document.getElementById("loadMoreBut") as HTMLButtonElement;
+    if (currentSize >= maxSize) {
+      loadMoreBut.style.display = "none";
+    } else {
+      loadMoreBut.style.display = "block";
+    }
   }
 
   putStars(rating: number, book: any) {
     //This will find every star div of the rating container
-    let bookStars = book.querySelectorAll("div")[4].children;
+    let bookStars = book.querySelectorAll("div")[3].children;
     if (rating >= 5.0) {
       bookStars[0].classList.add("bi-star-fill");
       bookStars[1].classList.add("bi-star-fill");
@@ -327,7 +204,16 @@ export class SearchComponent implements OnInit {
       bookStars[3].classList.add("bi-star");
       bookStars[4].classList.add("bi-star");
     }
+  }
 
+  updateStars() {
+    this.books.forEach((book, index) => {
+      this.putStars(this.bookQueries[index].averageRating, book.nativeElement);
+    });
+  }
+
+  ngAfterViewChecked() {
+    this.updateStars();
   }
 
 }

@@ -7,7 +7,6 @@ import {UserService} from "../../services/user.service";
 import {Genre} from "../../models/genre.model";
 import {LoginService} from "../../services/session.service";
 import {AlgorithmsService} from "../../services/algorithms.service";
-import {NavbarService} from "../../services/navbar.service";
 import {ListsService} from "../../services/lists.service";
 import {Router, ActivatedRoute} from "@angular/router";
 import {User} from "../../models/user.model";
