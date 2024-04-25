@@ -9,6 +9,8 @@ import {NavbarService} from "../../services/navbar.service";
 import {ListsService} from "../../services/lists.service";
 import {Book} from "../../models/book.model";
 import {ActivatedRoute, Router} from "@angular/router";
+import {distinctUntilChanged} from "rxjs";
+import {map} from "rxjs/operators";
 
 @Component({
   selector: "app-profile",
@@ -51,11 +53,17 @@ export class ProfileComponent implements OnInit {
   constructor(
     private http: HttpClient, public bookService: BookService, public loginService: LoginService, public reviewService: ReviewService, public algorithmService: AlgorithmsService, public userService: UserService, private navbarService: NavbarService, private listsService: ListsService, private activatedRoute: ActivatedRoute, private router: Router
   ) {
-    /*
-    this.activatedRoute.params.subscribe(params => {
-      this.initialize(params["username"]);
+
+    this.activatedRoute.params.pipe(
+      map(params => params['username']),
+      distinctUntilChanged()
+    ).subscribe(username => {
+      this.wantedBooksListPage = 0;
+      this.readingBooksListPage = 0;
+      this.readBooksListPage = 0;
+      this.initialize(username);
     });
-     */
+
 
   }
 

@@ -54,38 +54,39 @@ public class APIEditProfileController {
             @ApiResponse(responseCode = "500", description = "Error with operation", content = @Content) //Internal server error
     })
     @JsonView(UserBasicView.class)
-    @PutMapping(value = "/api/users/{username}", consumes = "application/json")
+    @PutMapping("/api/users/{username}")
     public ResponseEntity<?> editProfile(HttpServletRequest request, @PathVariable String username,
-                                         @RequestParam(value = "alias", required = false) String newAlias,
-                                         @RequestParam(value = "email", required = false) String newEmail,
-                                         @RequestParam(value = "description", required = false) String newDescription) throws SQLException, IOException {
+                                         @RequestBody Map<String,String> userInfo) throws SQLException, IOException {
+
 
         Principal principal = request.getUserPrincipal();
-        if (principal == null) {
+        if(principal == null){
             return new ResponseEntity<>("You don't have permission to do this!", HttpStatus.UNAUTHORIZED);
         }
         User loggeduser = userService.getUser(principal.getName());
 
         //Check for correct credentials
-        if (loggeduser.getRole().contains("ADMIN") || loggeduser.getUsername().equals(username)) {
+        if(loggeduser.getRole().contains("ADMIN") || loggeduser.getUsername().equals(username)){
             User user = userService.getUser(username);
-            if (user == null)
-                return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND); //If user is not found
+            if (user == null) return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND); //If user is not found
+            String newDescription = userInfo.get("description");
+            String newEmail = userInfo.get("email");
+            String newAlias = userInfo.get("alias");
             if (newDescription != null) user.setDescription(newDescription); //Description can be blank
 
             //Email check
-            if (newEmail != null && !newEmail.equals(user.getEmail())) {
-                if (emailService.isCorrectEmail(newEmail)) { //Check email is valid direction
+            if (newEmail != null && !newEmail.equals(user.getEmail())){
+                if(emailService.isCorrectEmail(newEmail)){ //Check email is valid direction
                     user.setEmail(newEmail);
                     userService.saveUser(user); //must save beforehand since sending an email checks from db before saving new user state
-                } else {
+                }else{
                     return new ResponseEntity<>("New email is not valid.", HttpStatus.BAD_REQUEST);
                 }
             }
 
             //Check alias
             if (newAlias != null) {
-                if (!newAlias.isBlank()) {
+                if(!newAlias.isBlank()) {
                     user.setAlias(newAlias);
                 } else {
                     return new ResponseEntity<>("Alias can't be blank!", HttpStatus.BAD_REQUEST);
@@ -94,7 +95,7 @@ public class APIEditProfileController {
 
             //Save user in db
             userService.saveUser(user);
-            return new ResponseEntity<>(user, HttpStatus.OK);
+            return new ResponseEntity<>(user,HttpStatus.OK);
         } else {
             return new ResponseEntity<>("You don't have permission to do this!", HttpStatus.UNAUTHORIZED);
         }
@@ -115,13 +116,25 @@ public class APIEditProfileController {
     @JsonView(UserBasicView.class)
     @PutMapping(value = "/api/users/{username}/password", consumes = "application/json")
     public ResponseEntity<?> changePassword(HttpServletRequest request, @PathVariable String username,
-                                            @RequestParam(value = "password", required = false) String newPassword) throws SQLException, IOException {
+                                            @RequestBody Map<String, String> password) throws SQLException, IOException {
 
+        String newPassword = password.get("newPassword");
+        String oldPassword = password.get("oldPassword");
+        String confirmPassword = password.get("confirmPassword");
         User user = userService.getUser(username);
+
         //Password change
         if (newPassword != null) {
             if (newPassword.isBlank()) {
                 return new ResponseEntity<>("Password can't be blank!", HttpStatus.BAD_REQUEST);
+            } else if (newPassword.length() < 8) {
+                return new ResponseEntity<>("Password must be at least 8 characters long", HttpStatus.BAD_REQUEST);
+            } else if (!newPassword.matches(".*\\d.*")) {
+                return new ResponseEntity<>("Password must include at least one numeric character", HttpStatus.BAD_REQUEST);
+            } else if (!passwordEncoder.matches(oldPassword, user.getPassword())) {
+                return new ResponseEntity<>("Your current password is incorrect", HttpStatus.BAD_REQUEST);
+            } else if (!newPassword.equals(confirmPassword)) {
+                return new ResponseEntity<>("Passwords do not match", HttpStatus.BAD_REQUEST);
             }
             String encodedNewPassword = passwordEncoder.encode(newPassword);
             try {

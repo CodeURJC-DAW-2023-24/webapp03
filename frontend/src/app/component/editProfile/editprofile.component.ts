@@ -26,62 +26,6 @@ export class EditProfileComponent implements OnInit {
   }
 
 
-//   if (localStorage.getItem("wrongPassword")) {
-//   $("#wrongPassword").show();
-//   localStorage.removeItem("wrongPassword");
-// }
-//
-// $("#saveChangesBut").on("click", () => {
-//   let newPassword;
-//   let url = "https://" + window.location.host + "/profile/" + $("#username").text() + "/editPassword";
-//   let correctPassword = false;
-//   let noPasswordChange = true;
-//
-//   //If password is to be changed...
-//   if (($("#inputOldPassword").val() !== "") && ($("#inputPassword").val() !== "")) {
-//     noPasswordChange = false;
-//     newPassword = $("#inputPassword").val();
-//     url += "?currentPassword=" + $("#inputOldPassword").val();
-//     $.ajax({
-//       url: url,
-//       type: "POST",
-//       data: newPassword,
-//       contentType: "application/json",
-//       beforeSend: (xhr) => {
-//         xhr.setRequestHeader("X-CSRF-TOKEN", token);
-//       },
-//       success: () => {
-//         let newUrl = "https://" + window.location.host + "/profile/" + $("#username").text();
-//         $("#correctPassword").show();
-//         $("#correctPassword").fadeOut(3000);
-//         setTimeout(() => {
-//           window.location.assign(newUrl);
-//         }, 3000);
-//       },
-//       error: () => {
-//         correctPassword = false;
-//         localStorage.setItem("wrongPassword", true);
-//         location.reload();
-//       }
-//     });
-//   }
-//
-//   //Fields will only be updated if either the password is to be changed and is also correct or either if it doesn't want to be changed at all
-//   if (correctPassword || noPasswordChange) {
-//     $.ajax({
-//       url: "https://" + window.location.host + "/profile/" + $("#username").text() + "/edit" + "?alias=" + $("#inputAlias").val() + "&email=" + $("#inputEmailAddress").val() + "&description=" + $("#inputProfileDescription").val(),
-//       type: "POST",
-//       datatype: "json",
-//       beforeSend: (xhr) => {
-//         xhr.setRequestHeader("X-CSRF-TOKEN", token);
-//       },
-//       success: (data) => {
-//         let newUrl = "https://" + window.location.host + "/profile/" + $("#username").text();
-//         window.location.assign(newUrl);
-//       }
-//     });
-//   }
-// });
 
   uploadImage() {
     let inputBut = document.getElementById("inputProfileImage") as HTMLInputElement;
@@ -185,48 +129,8 @@ export class EditProfileComponent implements OnInit {
   }
 
   ngOnInit() {
-
     let saveChangesBut = document.getElementById("saveChangesBut") as HTMLButtonElement;
     if (saveChangesBut) {
-      saveChangesBut.onclick = () => {
-        let newPassword;
-        let url = "https://" + window.location.host + "/profile/" + this.username + "/editPassword";
-        let correctPassword = false;
-        let noPasswordChange = true;
-
-        //If password is to be changed...
-        if ((document.getElementById("inputOldPassword") as HTMLInputElement).value !== "" && (document.getElementById("inputPassword") as HTMLInputElement).value !== "") {
-          noPasswordChange = false;
-          newPassword = (document.getElementById("inputPassword") as HTMLInputElement).value;
-          url += "?currentPassword=" + (document.getElementById("inputOldPassword") as HTMLInputElement).value;
-          // this.userService.changePassword(this.username, newPassword).subscribe({
-          //   next: () => {
-          //     let newUrl = "https://" + window.location.host + "/profile/" + this.username;
-          //     let correctPasswordDiv = document.getElementById("correctPassword");
-          //     if (correctPasswordDiv) {
-          //       correctPasswordDiv.style.display = "block";
-          //       setTimeout(() => {
-          //         window.location.assign(newUrl);
-          //       }, 3000);
-          //     }
-          //   },
-          //   error: () => {
-          //     correctPassword = false;
-          //     localStorage.setItem("wrongPassword", "true");
-          //     location.reload();
-          //   }
-          // });
-        }
-
-        if (correctPassword || noPasswordChange) {
-          // this.userService.editProfile(this.username, this.alias, this.email, this.description).subscribe({
-          //   next: () => {
-          //     let newUrl = "https://" + window.location.host + "/profile/" + this.username;
-          //     window.location.assign(newUrl);
-          //   }
-          // });
-        }
-      }
 
       // get username from url
       this.username = this.activatedRoute.snapshot.params['username'];
@@ -271,7 +175,8 @@ export class EditProfileComponent implements OnInit {
 
   saveChanges() {
     let newPassword;
-    let url = "https://" + window.location.host + "/profile/" + this.username + "/editPassword";
+    let confirmPassword;
+    let oldPassword;
     let correctPassword = false;
     let noPasswordChange = true;
 
@@ -279,10 +184,18 @@ export class EditProfileComponent implements OnInit {
     if ((document.getElementById("inputOldPassword") as HTMLInputElement).value !== "" && (document.getElementById("inputPassword") as HTMLInputElement).value !== "") {
       noPasswordChange = false;
       newPassword = (document.getElementById("inputPassword") as HTMLInputElement).value;
-      this.userService.changePassword(this.username, {password: newPassword}).subscribe({
+      confirmPassword = (document.getElementById("inputConfirmPassword") as HTMLInputElement).value;
+      oldPassword = (document.getElementById("inputOldPassword") as HTMLInputElement).value;
+      this.userService.changePassword(this.username, {
+        newPassword: newPassword,
+        confirmPassword: confirmPassword,
+        oldPassword: oldPassword
+      }).subscribe({
         next: () => {
           let correctPasswordDiv = document.getElementById("correctPassword");
           if (correctPasswordDiv) {
+            correctPassword = true;
+            this.checkInfoChange(correctPassword, noPasswordChange);
             correctPasswordDiv.style.display = "block";
             setTimeout(() => {
               this.router.navigate(['/profile/' + this.username]);
@@ -291,21 +204,38 @@ export class EditProfileComponent implements OnInit {
         },
         error: () => {
           correctPassword = false;
-          localStorage.setItem("wrongPassword", "true");
-          location.reload();
+
+          let wrongPasswordDiv = document.getElementById("wrongPassword")
+          if (wrongPasswordDiv) {
+            wrongPasswordDiv.style.display = "block";
+            setTimeout(() => {
+              wrongPasswordDiv.style.display = "none";
+              window.location.reload();
+            }, 3000);
+          }
         }
       });
     }
 
+    this.checkInfoChange(correctPassword, noPasswordChange);
+
+  }
+
+  checkInfoChange(correctPassword: boolean, noPasswordChange: boolean) {
     if (correctPassword || noPasswordChange) {
       this.alias = (document.getElementById("inputAlias") as HTMLInputElement).value;
       this.email = (document.getElementById("inputEmailAddress") as HTMLInputElement).value;
       this.description = (document.getElementById("inputProfileDescription") as HTMLInputElement).value;
-      this.userService.editProfile(this.username, {alias: this.alias, email: this.email, description: this.description}).subscribe({
+      this.userService.editProfile(this.username, {
+        alias: this.alias,
+        email: this.email,
+        description: this.description
+      }).subscribe({
         next: () => {
           this.router.navigate(['/profile/' + this.username]);
         }
       });
     }
   }
+
 }

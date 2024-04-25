@@ -93,12 +93,13 @@ export class UserService {
   }
 
   editProfile(username: string, userData: {email: string, alias: string, description: string}): Observable<any> {
-    return this.http.put(API_URL + "/" + username + "/edit", userData).pipe(
+    const formData = new FormData();
+    return this.http.put(API_URL + "/" + username, userData).pipe(
       catchError((error) => throwError(error))
     );
   }
 
-  changePassword(username: string, userPassword: {password: string}): Observable<any> {
+  changePassword(username: string, userPassword: {newPassword: string, confirmPassword: string, oldPassword: string}): Observable<any> {
     return this.http.put(API_URL + "/" + username + "/password", userPassword).pipe(
       catchError((error) => throwError(error))
     );
