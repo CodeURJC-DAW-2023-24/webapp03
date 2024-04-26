@@ -110,29 +110,25 @@
       <div class="row justify-content-center">
         <div class="col">
           <ng-container *ngIf="loggedUser; else notLoggedReviewTemplate">
-            <form class="mb-3 mt-3 review-form" action="/book/{{ID}}/addReview" method="post"
+            <form class="mb-3 mt-3 review-form" (ngSubmit)="addReview()"
                   *ngIf="!isReviewed; else hasReviewed">
               <label class="small mb-3" for="inputBookDescription"><h6>¡Añade tu reseña!</h6></label>
               <div class="rating mb-3">
-                <input type="radio" name="rating" value="1" id="star1" name="reviewStarRating" required>
-                <label for="star1"><i class="fa-regular fa-star"></i></label>
-                <input type="radio" name="rating" value="2" id="star2" name="reviewStarRating" required>
-                <label for="star2"><i class="fa-regular fa-star"></i></label>
-                <input type="radio" name="rating" value="3" id="star3" name="reviewStarRating" required>
-                <label for="star3"><i class="fa-regular fa-star"></i></label>
-                <input type="radio" name="rating" value="4" id="star4" name="reviewStarRating" required>
-                <label for="star4"><i class="fa-regular fa-star"></i></label>
-                <input type="radio" name="rating" value="5" id="star5" name="reviewStarRating" required>
-                <label for="star5"><i class="fa-regular fa-star"></i></label>
+                <input type="radio" name="rating" value="1" id="star1" name="reviewStarRating" (click)="starClicked(1)" required>
+                <label for="star1"><i id="starIcon1" class="fa-regular fa-star"></i></label>
+                <input type="radio" name="rating" value="2" id="star2" name="reviewStarRating" (click)="starClicked(2)" required>
+                <label for="star2"><i id="starIcon2" class="fa-regular fa-star"></i></label>
+                <input type="radio" name="rating" value="3" id="star3" name="reviewStarRating" (click)="starClicked(3)" required>
+                <label for="star3"><i id="starIcon3" class="fa-regular fa-star"></i></label>
+                <input type="radio" name="rating" value="4" id="star4" name="reviewStarRating" (click)="starClicked(4)" required>
+                <label for="star4"><i id="starIcon4" class="fa-regular fa-star"></i></label>
+                <input type="radio" name="rating" value="5" id="star5" name="reviewStarRating" (click)="starClicked(5)" required>
+                <label for="star5"><i id="starIcon5" class="fa-regular fa-star"></i></label>
               </div>
-              <input name="reviewTitle" type="text" class="form-control review-title" id="inputReviewTitle"
-                     placeholder="Título de la reseña" required>
-              <textarea name="comment" class="form-control review-text-area mt-3" id="inputReviewForm"
-                        rows="4"
-                        cols="50" placeholder="Escribe aqui su reseña" required></textarea>
-              <input class="btn btn-primary-light save-button mt-3 mb-4" type="submit" value="Publicar"
-                     id="post-review-btn">
-              <p id="error-message" style="display: none; color: red;">Rellena todos los campos.</p>
+              <input name="reviewTitle" type="text" class="form-control review-title" id="inputReviewTitle" [(ngModel)]="reviewTitle" placeholder="Título de la reseña" required>
+              <textarea name="comment" class="form-control review-text-area mt-3" id="inputReviewForm" [(ngModel)]="reviewContent" rows="4" cols="50" placeholder="Escribe aquí tu reseña" required></textarea>
+              <input class="btn btn-primary save-button mt-3 mb-4" type="submit" value="Publicar" id="post-review-btn">
+              <p id="error-message" style="color: red;" *ngIf="missingReviewFields">Rellena todos los campos.</p>
               <input type="hidden"/>
             </form>
           </ng-container>
@@ -153,11 +149,12 @@
                   <p class="fw-semibold rating-number">
                     {{ reviewRating }} <i class="fas fa-star"></i>
                   </p>
-                  <i class="fa-star fa-regular"></i>
-                  <i class="fa-star fa-regular"></i>
-                  <i class="fa-star fa-regular"></i>
-                  <i class="fa-star fa-regular"></i>
-                  <i class="fa-star fa-regular"></i>
+                  <i class="fa-star" [ngClass]="{'fa-regular': reviewRating < 1, 'fa-solid': reviewRating >= 1}"></i>
+                  <i class="fa-star" [ngClass]="{'fa-regular': reviewRating < 2, 'fa-solid': reviewRating >= 2}"></i>
+                  <i class="fa-star" [ngClass]="{'fa-regular': reviewRating < 3, 'fa-solid': reviewRating >= 3}"></i>
+                  <i class="fa-star" [ngClass]="{'fa-regular': reviewRating < 4, 'fa-solid': reviewRating >= 4}"></i>
+                  <i class="fa-star" [ngClass]="{'fa-regular': reviewRating < 5, 'fa-solid': reviewRating >= 5}"></i>
+
                 </div>
                 <!-- Product price-->
                 <div>{{ reviewContent }}</div> <!-- review content -->
@@ -192,11 +189,11 @@
                 <p class="fw-semibold rating-number">
                   {{ review.rating }}
                 </p>
-                <i class="fa-star fa-regular"></i>
-                <i class="fa-star fa-regular"></i>
-                <i class="fa-star fa-regular"></i>
-                <i class="fa-star fa-regular"></i>
-                <i class="fa-star fa-regular"></i>
+                <i class="fa-star" [ngClass]="{'fa-regular': review.rating < 1, 'fa-solid': review.rating >= 1}"></i>
+                <i class="fa-star" [ngClass]="{'fa-regular': review.rating < 2, 'fa-solid': review.rating >= 2}"></i>
+                <i class="fa-star" [ngClass]="{'fa-regular': review.rating < 3, 'fa-solid': review.rating >= 3}"></i>
+                <i class="fa-star" [ngClass]="{'fa-regular': review.rating < 4, 'fa-solid': review.rating >= 4}"></i>
+                <i class="fa-star" [ngClass]="{'fa-regular': review.rating < 5, 'fa-solid': review.rating >= 5}"></i>
               </div>
               <!-- Product price-->
               <div id="inputReviewContent">{{ review.content }}</div>

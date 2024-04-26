@@ -36,6 +36,8 @@ export class BookComponent implements OnInit {
   reviewRating: number = 0;
   reviewContent = "";
 
+  missingReviewFields: boolean = false;
+
   username = "";
   loggedUser = false;
   isAdministrator = false;
@@ -308,6 +310,65 @@ export class BookComponent implements OnInit {
 
       }
     );
+  }
+
+  starClicked(rating: number) {
+    for (let i = 1; i <= 5; i++) {
+      const star = document.getElementById(`starIcon${i}`);
+      if (star) {
+        if (i <= rating) {
+          star.classList.remove('fa-regular');
+          star.classList.add('fa-solid');
+        } else {
+          star.classList.remove('fa-solid');
+          star.classList.add('fa-regular');
+        }
+        this.reviewRating = rating;
+      }
+    }
+  }
+
+  addReview() {
+    // Check if all fields are filled
+    if (this.reviewTitle == "" || this.reviewRating == 0 || this.reviewContent == "") {
+      this.missingReviewFields = true;
+      return;
+    }
+    this.missingReviewFields = false;
+    this.reviewService.createReview({
+      title: this.reviewTitle,
+      rating: this.reviewRating,
+      content: this.reviewContent
+    }, this.ID).subscribe({
+      next: r => {
+        this.reviewList.push(r);
+        this.isReviewed = true;
+        this.reviewID = r.ID as number;
+        this.reviewAuthor = r.authorName as string;
+        this.isReviewAuthor = true;
+        this.reviewListCurrentPage = 0;
+        this.reviewTitle = r.title;
+        this.reviewRating = r.rating;
+        this.reviewContent = r.content;
+        this.isReviewed = true;
+        this.noMoreReviews = false;
+
+        // Update average rating
+        this.bookService.getBook(this.ID).subscribe({
+          next: r => {
+            this.averageRating = r.averageRating;
+          },
+          error: err => {
+            console.error(err);
+          }
+        });
+
+      },
+      error: err => {
+        console.error(err);
+      }
+    });
+
   }
 
 }

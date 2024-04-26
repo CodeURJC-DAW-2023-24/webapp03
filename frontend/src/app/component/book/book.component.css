@@ -12756,3 +12756,41 @@ input[type="radio"] {
   background-color: green;
 }
 
+.rating label i {
+  margin-right: 6px; /* Adjust the pixel value as needed */
+}
+
+.btn-primary {
+  background-color: var(--branding-green) !important;
+  border-color: var(--branding-green) !important;
+  color: var(--branding-white) !important;
+}
+
+.btn-primary:hover {
+  background-color: #3C7969FF !important;
+  border-color: #3C7969FF !important;
+  color: #FFFFFCFF !important;
+}
+
+.btn-primary:focus {
+  background-color: #3C7969FF !important;
+  border-color: #3C7969FF !important;
+  color: #FFFFFCFF !important;
+}
+
+.btn-primary:active {
+  background-color: #3C7969FF !important;
+  border-color: #3C7969FF !important;
+  color: #FFFFFCFF !important;
+}
+
+.btn-primary:disabled {
+  background-color: var(--branding-green) !important;
+  border-color: var(--branding-green) !important;
+  color: var(--branding-white) !important;
+}
+
+/*button halo effect*/
+.btn-primary:focus {
+  box-shadow: 0 0 0 0.2rem rgba(81, 158, 138, 0.5) !important;
+}
