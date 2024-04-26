@@ -34,7 +34,7 @@ export class ReviewService {
     params = params.append("size", size);
     params = params.append("book", bookID);
 
-    return this.httpClient.get<Review[]>(this.baseUrl, {params: params}).pipe(
+    return this.httpClient.get<Review[]>(this.baseUrl2, {params: params}).pipe(
       catchError(error => this.handleError(error))
     ) as Observable<Review[]>;
   }
@@ -60,11 +60,11 @@ export class ReviewService {
   }
 
   //Delete specific review
-  deleteReview(id: number): Observable<any> {
+  deleteReview(id: number): Observable<string> {
 
-    return this.httpClient.delete(this.baseUrl + id).pipe(
+    return this.httpClient.delete(this.baseUrl + id, { responseType: 'text' }).pipe(
       catchError(error => this.handleError(error))
-    );
+    ) as Observable<string>;
   }
 
   //Create review

@@ -13,22 +13,22 @@
                                  [src]="bookImage()" alt="..."/></div>
       <div class="col-md-6 book-info-area">
         <div class="small mb-1" id="bookIDContainer">ID: <p id="bookID">{{ ID }}</p></div>
-        <div class="small mb-1" id="inputBookPublisher">Editorial: {{publisher}}</div>
-        <div class="small mb-1" id="inputBookISBN">ISBN: {{ISBN}}</div>
-        <h1 class="display-5 fw-bolder" id="inputBookName">{{title}}</h1>
-        <div class="fs-5 mb-5" id="inputBookAuthorName">Autor: {{authorString}}</div>
+        <div class="small mb-1" id="inputBookPublisher">Editorial: {{ publisher }}</div>
+        <div class="small mb-1" id="inputBookISBN">ISBN: {{ ISBN }}</div>
+        <h1 class="display-5 fw-bolder" id="inputBookName">{{ title }}</h1>
+        <div class="fs-5 mb-5" id="inputBookAuthorName">Autor: {{ authorString }}</div>
         <div class="sub-container mb-5" id="description-container">
           <h3 class="fw-bolder mb-2" id="description-header">Descripción</h3>
           <div id="inputBookDescription">
-            <p class="lead">{{bookDescription}}</p>
+            <p class="lead">{{ bookDescription }}</p>
           </div>
         </div>
         <div class="sub-container mb-5" id="gender-series-container">
           <h3 class="fw-bolder mb-2" id="more-info-header">Más información</h3>
-          <div id="inputBookGenre">Género: {{book?.genre?.name}}</div>
-          <div id="inputBookSeries">Saga: {{series}}</div>
-          <div id="inputBookDate">Fecha de publicación: {{releaseDate}}</div>
-          <div id="inputBookPages">Número de páginas: {{pageCount}}</div>
+          <div id="inputBookGenre">Género: {{ book?.genre?.name }}</div>
+          <div id="inputBookSeries">Saga: {{ series }}</div>
+          <div id="inputBookDate">Fecha de publicación: {{ releaseDate }}</div>
+          <div id="inputBookPages">Número de páginas: {{ pageCount }}</div>
         </div>
         <div></div>
         <h5 class="fw-bold mb-3">
@@ -40,7 +40,8 @@
 
           <form class="list-button" (ngSubmit)="markAsRead()">
             <input type="hidden" name="bookId" [value]="ID">
-            <button type="submit" id="readButton" class="btn btn-outline-dark flex-shrink-0 action-button" [ngClass]="{ 'green-background': markedAsRead }">
+            <button type="submit" id="readButton" class="btn btn-outline-dark flex-shrink-0 action-button"
+                    [ngClass]="{ 'green-background': markedAsRead }">
               <i class="fa-solid fa-check"></i>
               Leído
             </button>
@@ -48,7 +49,8 @@
 
           <form class="list-button" (ngSubmit)="markAsReading()">
             <input type="hidden" name="bookId" [value]="ID">
-            <button type="submit" id="readingButton" class="btn btn-outline-dark flex-shrink-0 action-button" [ngClass]="{ 'green-background': markedAsReading }">
+            <button type="submit" id="readingButton" class="btn btn-outline-dark flex-shrink-0 action-button"
+                    [ngClass]="{ 'green-background': markedAsReading }">
               <i class="fa-solid fa-clock"></i>
               Leer
             </button>
@@ -56,7 +58,8 @@
 
           <form class="list-button" (ngSubmit)="markAsWanted()">
             <input type="hidden" name="bookId" [value]="ID">
-            <button type="submit" id="wantedButton" class="btn btn-outline-dark flex-shrink-0 action-button" [ngClass]="{ 'green-background': markedAsWanted }">
+            <button type="submit" id="wantedButton" class="btn btn-outline-dark flex-shrink-0 action-button"
+                    [ngClass]="{ 'green-background': markedAsWanted }">
               <i class="fa-solid fa-bookmark"></i>
               Por leer
             </button>
@@ -67,7 +70,8 @@
 
           <form class="list-button" (ngSubmit)="removeFromLists()">
             <input type="hidden" name="bookId" [value]="ID">
-            <button type="submit" id="removeButton" class="btn btn-outline-dark flex-shrink-0 action-button" [ngClass]="{ 'green-background': markedAsRead }">
+            <button type="submit" id="removeButton" class="btn btn-outline-dark flex-shrink-0 action-button"
+                    [ngClass]="{ 'green-background': markedAsRead }">
               <i class="fa-solid fa-xmark"></i>
               Nada
             </button>
@@ -97,16 +101,17 @@
       <div class="rating">
         <h2 class="fw-semibold">
           <i class="fas fa-star"></i>
-          {{averageRating}}
+          {{ averageRating }}
         </h2>
       </div>
     </div>
     <hr class="my-0">
     <div class="sub-container mb-5" id="review-form-area">
       <div class="row justify-content-center">
-        <div class="col" *ngIf="checkUserStatus(); else notLogged">
-          <div *ngIf="reviewService.hasUserReviewed(username, ID); else hasReviewed">
-            <form class="mb-3 mt-3 review-form" action="/book/{{ID}}/addReview" method="post">
+        <div class="col">
+          <ng-container *ngIf="loggedUser; else notLoggedReviewTemplate">
+            <form class="mb-3 mt-3 review-form" action="/book/{{ID}}/addReview" method="post"
+                  *ngIf="!isReviewed; else hasReviewed">
               <label class="small mb-3" for="inputBookDescription"><h6>¡Añade tu reseña!</h6></label>
               <div class="rating mb-3">
                 <input type="radio" name="rating" value="1" id="star1" name="reviewStarRating" required>
@@ -130,20 +135,23 @@
               <p id="error-message" style="display: none; color: red;">Rellena todos los campos.</p>
               <input type="hidden"/>
             </form>
-          </div>
+          </ng-container>
+          <ng-template #notLoggedReviewTemplate>
+            <h6 class=" mb-4 mt-4" style='text-align: center;'>Inicia sesión para poder dejar tu reseña.</h6>
+          </ng-template>
           <ng-template #hasReviewed>
             <h6 class="mb-4 mt-4">Ya has dejado tu reseña:</h6>
           </ng-template>
-          <div class="card mb-5 review-post">
+          <div class="card mb-5 review-post" *ngIf="loggedUser && isReviewed">
             <!-- Product details-->
             <div class="card-body p-4">
-              <div class="text-left" *ngFor="let review of getReviewInfo() | async">
+              <div class="text-left">
                 <!-- Product name-->
-                <h5 class="fw-bolder">{{reviewAuthor}}</h5>
-                <h6>{{review.title}}</h6>
+                <h5 class="fw-bolder">{{ reviewAuthor }}</h5> <!-- username -->
+                <h6>{{ reviewTitle }}</h6> <!-- review title -->
                 <div class="rating">
                   <p class="fw-semibold rating-number">
-                    {{review.rating}}
+                    {{ reviewRating }} <i class="fas fa-star"></i>
                   </p>
                   <i class="fa-star fa-regular"></i>
                   <i class="fa-star fa-regular"></i>
@@ -152,17 +160,13 @@
                   <i class="fa-star fa-regular"></i>
                 </div>
                 <!-- Product price-->
-                <div>{{review.content}}</div>
+                <div>{{ reviewContent }}</div> <!-- review content -->
               </div>
             </div>
             <!-- button for deleting reviews -->
-            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent" *ngIf="isAuthor || isAdministrator">
+            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent" *ngIf="isReviewAuthor || isAdministrator">
               <div class="text-center">
-                <form action="/book/{{ID}}/deleteReview/{{reviewID}}" method="post">
-                  <input type="hidden" name="_method" value="DELETE">
-                  <button type="submit" class="btn btn-outline-dark mt-3">Eliminar reseña</button>
-                  <input>
-                </form>
+                <button class="btn btn-outline-dark mt-3" (click)="deleteReview(reviewID)">Eliminar reseña</button>
               </div>
             </div>
           </div>
@@ -173,13 +177,52 @@
       </div>
       <hr class="my-0">
     </div>
+    <div class="row gx-4 gx-lg-5 row-cols-md-3 justify-content-left" id="reviewsArea">
+
+      <div class="col mb-5 review-post" *ngFor="let review of reviewList">
+        <p style="display: none;">{{ review.ID }}</p>
+        <div class="card h-100">
+          <!-- Product details-->
+          <div class="card-body p-4">
+            <div class="text-left">
+              <!-- Product name-->
+              <h5 class="fw-bolder" id="inputReviewAuthor">{{ review.authorName }}</h5>
+              <h6>{{ review.title }}</h6>
+              <div class="rating">
+                <p class="fw-semibold rating-number">
+                  {{ review.rating }}
+                </p>
+                <i class="fa-star fa-regular"></i>
+                <i class="fa-star fa-regular"></i>
+                <i class="fa-star fa-regular"></i>
+                <i class="fa-star fa-regular"></i>
+                <i class="fa-star fa-regular"></i>
+              </div>
+              <!-- Product price-->
+              <div id="inputReviewContent">{{ review.content }}</div>
+            </div>
+          </div>
+
+          <!-- button for deleting reviews -->
+          <div class="card-footer p-4 pt-0 border-top-0 bg-transparent" *ngIf="isAdministrator">
+            <div class="text-center">
+              <button (click)="deleteReview(review.ID)" class="btn btn-outline-dark mt-3">Eliminar reseña</button>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+
+    </div>
     <!-- Load more button-->
     <div class="text-center justify-content-center load-more-section">
       <div id="load-more-spinner" class="loader" role="status">
       </div>
-      <a class="btn btn-outline-dark mt-3" id="load-more-btn">Cargar más</a>
-      <p id="no-reviews">No hay reseñas para este libro aún...</p>
-      <p id="no-more-reviews">No hay más reseñas</p>
+      <a class="btn btn-outline-dark mt-3" id="load-more-btn" *ngIf="hasAnyReviews && !noMoreReviews"
+         (click)="loadMoreReviews()">Cargar más</a>
+      <p id="no-reviews" *ngIf="!hasAnyReviews">No hay reseñas para este libro aún...</p>
+      <p id="no-more-reviews" *ngIf="noMoreReviews">No hay más reseñas</p>
     </div>
   </div>
 </section>

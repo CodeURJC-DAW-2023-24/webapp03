@@ -62,4 +62,19 @@ public class BookService {
     public List<Book> getAllBooks() {
         return bookRepository.findAll();
     }
+
+    public void updateAverageRating(long bookID){
+        Book book = bookRepository.findByID(bookID);
+        List<Double> ratings = bookRepository.getRatingsByBookId(bookID);
+        double averageRating = 0;
+        if (!ratings.isEmpty()) {
+            for (Double rating : ratings) {
+                averageRating += rating;
+            }
+            averageRating /= ratings.size();
+        }
+        averageRating = Math.round(averageRating * 100.0) / 100.0;
+        book.setAverageRating(averageRating);
+        bookRepository.save(book);
+    }
 }

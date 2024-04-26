@@ -72,7 +72,9 @@ public class BookReviewService {
 
     public boolean deleteIfCorrectUser(long reviewID, String authUser) {
         if (reviewRepository.findByID(reviewID).getUser().getUsername().equals(authUser) || userService.getUser(authUser).getRole().contains("ADMIN")) {
+            long bookID = reviewRepository.findByID(reviewID).getBook().getID();
             reviewRepository.deleteById(reviewID);
+            bookService.updateAverageRating(bookID);
             return true;
         }
         return false;
