@@ -71,7 +71,7 @@
           <form class="list-button" (ngSubmit)="removeFromLists()">
             <input type="hidden" name="bookId" [value]="ID">
             <button type="submit" id="removeButton" class="btn btn-outline-dark flex-shrink-0 action-button"
-                    [ngClass]="{ 'green-background': markedAsRead }">
+                    [ngClass]="{ 'green-background': markedAsNone }">
               <i class="fa-solid fa-xmark"></i>
               Nada
             </button>
