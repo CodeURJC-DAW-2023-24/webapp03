@@ -117,4 +117,11 @@ export class UserService {
     );
   }
 
+  checkUsernameAvailability(username: string): Observable<boolean> {
+    // Perform /api/users/<username>/check, which returns a boolean. If the boolean returned is true, the username is available, else it is not.
+    return this.http.get<boolean>(API_URL + "/" + username + "/check").pipe(
+      catchError((error) => throwError(error))
+    );
+  }
+
 }

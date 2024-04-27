@@ -69,4 +69,25 @@ public class APIProfileController {
             return ResponseEntity.ok().contentType(MediaType.IMAGE_PNG).body(blobAsBytes);
         }
     }
+
+    // Check username availability
+    @Operation(summary = "Check if a username is available")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Username available", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = Boolean.class))
+            }),
+            @ApiResponse(responseCode = "200", description = "Username not available", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = Boolean.class))
+            }),
+    })
+    @GetMapping("/api/users/{username}/check")
+    public ResponseEntity<Boolean> checkUsername(@PathVariable String username) {
+        User user = userService.getUser(username);
+        // Check if the user exists
+        if (user == null) {
+            return new ResponseEntity<>(true, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(false, HttpStatus.OK);
+        }
+    }
 }
