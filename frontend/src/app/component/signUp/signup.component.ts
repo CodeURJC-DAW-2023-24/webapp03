@@ -58,19 +58,27 @@ export class SignupComponent implements OnInit {
   }
 
   signUp(userName: string, userAlias: string, userEmail: string, userPassword: string) {
-    this.userService.singup({
-      username: userName,
-      email: userEmail,
-      alias: userAlias,
-      password: userPassword
-    }).subscribe({
-      next: r => {
-        this.router.navigate(["/login"])
-      },
-      error: r => {
-        console.error("Singup failed: " + JSON.stringify(r));
-      }
-    });
+
+    if (!this.usernameNotAvailable && !this.passwordsDontMatch && !this.passwordMissingRequirements) {
+      this.userService.singup({
+        username: userName,
+        email: userEmail,
+        alias: userAlias,
+        password: userPassword
+      }).subscribe({
+        next: r => {
+          this.router.navigate(["/login"])
+        },
+        error: r => {
+          this.router.navigate(['/error'], {
+            queryParams: {
+              title: "Error al registrarse",
+              description: "Se ha producido un error al intentar registrarse. Por favor, inténtelo de nuevo más tarde.",
+            }
+          });
+        }
+      });
+    }
   }
 
 }

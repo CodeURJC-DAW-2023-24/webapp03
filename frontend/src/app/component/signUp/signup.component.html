@@ -72,7 +72,7 @@
 
 
             <div class="form-group">
-              <button type="submit" id="submit"
+              <button type="submit" id="submit" [disabled]="this.usernameNotAvailable || this.passwordsDontMatch || this.passwordMissingRequirements"
                       class="form-control btn btn-primary submit px-3 pill-button" (click)="signUp(userName.value, userAlias.value, userEmail.value, userPassword.value)">Registrarse</button>
             </div>
           </form>
