@@ -4,7 +4,7 @@
 </h1>    
 
 <p align="center">    
-   <img src="readme-resources\isotipoLight.svg" width="35%"/>    
+   <img src="readme-resources/isotipoLight.svg" width="35%"/>    
 </p>    
 <p align="center">  
    <img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white"/>  
@@ -56,8 +56,8 @@
 - [Pantallas](https://github.com/CodeURJC-DAW-2023-24/webapp03/tree/main?tab=readme-ov-file#-pantallas)
 - [Mapa de navegación](https://github.com/CodeURJC-DAW-2023-24/webapp03/tree/main?tab=readme-ov-file#-mapa-de-navegaci%C3%B3n)
 - [Diagramas](https://github.com/CodeURJC-DAW-2023-24/webapp03/tree/main?tab=readme-ov-file#-diagramas)
-- [Instalación](https://github.com/CodeURJC-DAW-2023-24/webapp03/tree/main?tab=readme-ov-file#%EF%B8%8F-instalaci%C3%B3n)
 - [Creación de imagen de la aplicación](https://github.com/CodeURJC-DAW-2023-24/webapp03/tree/main?tab=readme-ov-file#-Creaci%C3%B3n-de-imagen-de-la-aplicaci%C3%B3n)
+- [Instalación](https://github.com/CodeURJC-DAW-2023-24/webapp03/tree/main?tab=readme-ov-file#%EF%B8%8F-instalaci%C3%B3n)
 - [Despliegue de la aplicación en una máquina virtual](https://github.com/CodeURJC-DAW-2023-24/webapp03/tree/main?tab=readme-ov-file#-despliegue-de-la-aplicaci%C3%B3n-en-una-m%C3%A1quina-virtual)
 - [Acceso a la aplicación](https://github.com/CodeURJC-DAW-2023-24/webapp03/tree/main?tab=readme-ov-file#%EF%B8%8F-acceso-a-la-aplicaci%C3%B3n)
 - [Documentación OpenAPI](https://github.com/CodeURJC-DAW-2023-24/webapp03/tree/main?tab=readme-ov-file#-documentaci%C3%B3n-openapi)
@@ -120,67 +120,100 @@ Se implementará un algoritmo de recomendaciones de libros en la página princip
 ## 📟 Pantallas
 - Inicio de sesión:
 
-<img height="100%" src="readme-resources\login.png" width="50%"/>      
+<img height="100%" src="readme-resources/login.png" width="50%"/>      
 <p style="text-align: left; font-size: 9px">Pantalla de acceso para usuarios registrados y administradores</p>      
 
 - Registro:
 
-<img height="100%" src="readme-resources\signup.png" width="50%"/>      
+<img height="100%" src="readme-resources/signup.png" width="50%"/>      
 <p style="text-align: left; font-size: 9px">Aquí es donde un usuario se da de alta</p>      
 
 - Búsqueda de libros:
 
-<img height="100%" src="readme-resources\searchResults.png" width="50%"/>      
+<img height="100%" src="readme-resources/searchResults.png" width="50%"/>      
 <p style="text-align: left; font-size: 9px">Pantalla que muestra coincidencias en la búsqueda de un libro</p>      
 
 - Inicio:
 
-<img height="100%" src="readme-resources\landingPage.png" width="50%"/>      
+<img height="100%" src="readme-resources/landingPage.png" width="50%"/>      
 <p style="text-align: left; font-size: 9px">Pantalla principal que da acceso a todas las demás</p>      
 
 - Administrador:
 
-<img height="100%" src="readme-resources\administrator.png" width="50%"/>      
+<img height="100%" src="readme-resources/administrator.png" width="50%"/>      
 <p style="text-align: left; font-size: 9px">Panel de control de un administrador</p>      
 
 - Crear/modificar libro:
 
-<img height="100%" src="readme-resources\bookEdit.png" width="50%"/>      
+<img height="100%" src="readme-resources/bookEdit.png" width="50%"/>      
 <p style="text-align: left; font-size: 9px">Esta pantalla sirve tanto para crear como para modificar un libro y su información</p>      
 
 - Consultar libro:
 
-<img height="100%" src="readme-resources\bookInfo.png" width="50%"/>      
+<img height="100%" src="readme-resources/bookInfo.png" width="50%"/>      
 <p style="text-align: left; font-size: 9px">Aquí se puede consultar individualmente la información de un libro almacenado en una Base de Datos</p>      
 
 - Perfil:
 
-<img height="100%" src="readme-resources\profile.png" width="50%"/>      
+<img height="100%" src="readme-resources/profile.png" width="50%"/>      
 <p style="text-align: left; font-size: 9px">Pantalla de visualización de perfil con varias opciones como habilitar la edición</p>      
 
 - Modificar perfil:
 
-<img height="100%" src="readme-resources\editProfile.png" width="50%"/>      
+<img height="100%" src="readme-resources/editProfile.png" width="50%"/>      
 <p style="text-align: left; font-size: 9px">Menú de edición de la información al completo del usuario, como por ejemplo la contraseña</p>      
 
 - Error:
 
-<img height="100%" src="readme-resources\error.png" width="50%"/>      
+<img height="100%" src="readme-resources/error.png" width="50%"/>      
 <p style="text-align: left; font-size: 9px">Menú de error que muestra los detalles del mismo y que puede ser mostrado desde cualquier otra pantalla dependiendo del error.</p>      
 
 ## 🔀 Mapa de navegación
 
-<img src="readme-resources\map.png"/>   
+<img src="readme-resources/map.png"/>   
 
 ## 📝 Diagramas
 
 - Diagrama Entidad-Relación:
 
-<img src="readme-resources\ERDiagram.png" width="70%"/>
+<img src="readme-resources/ERDiagram.png" width="70%"/>
 
 - Diagrama de clases y templates:
 
-<img src="readme-resources\MVCDiagram.png" width="70%"/>
+<img src="readme-resources/MVCDiagram.png" width="70%"/>
+
+## 📦 Creación de imagen de la aplicación
+Para poder crear la imagen de la aplicación es necesario:
+- [Docker](https://www.docker.com/products/docker-desktop)
+- [Node.js](https://nodejs.org/es/download/)
+- [Angular CLI](https://angular.io/guide/setup-local)
+
+  Una vez tengas todo instalado, sigue los siguientes pasos:
+1. Clona el repositorio a tu ruta deseada:
+    ```
+     git clone https://github.com/CodeURJC-DAW-2023-24/webapp03
+    ```
+
+2. Inicia sesión en tu cuenta de Docker Hub. Si no tienes una, puedes crearla [aquí](https://hub.docker.com/signup). Se te pedirá introducir tu usuario y contraseña:
+    ```
+    docker login
+    ```    
+3. Ejecuta el ejecutable bash script que creará la imagen de la aplicación:
+    ```
+    ./create_image.sh
+    ```
+   ⚠️<span style="color:lightblue">Ten en cuenta que este script creará la imagen bajo el nombre "blasetvrtumi/bookmarks" y la subirá a tu cuenta de Docker Hub. Si deseas cambiar el nombre de la imagen o el nombre de usuario, puedes hacerlo modificando el script.</span>⚠️
+
+
+4. Una vez haya terminado de ejecutarse, puedes comprobar que la imagen se ha creado correctamente con:
+    ```
+    docker images
+    ```
+   y podrás descargarla en cualquier máquina con:
+    ```
+    docker pull <nombre de usuario>/<nombre de la imagen>
+    ```
+
 
 ## 🛠️ Instalación
 
@@ -205,16 +238,19 @@ Se implementará un algoritmo de recomendaciones de libros en la página princip
      ```
    
 2. Conectarse a la base de datos:    
-   ```
-   docker run -d --name bookmarksDB -p 3306:3306 -e MYSQL_ROOT_PASSWORD=password -e MYSQL_DATABASE=bookmarks mysql:latest
-   ```
+    ```
+    docker run -d --name bookmarksDB -p 3306:3306 -e MYSQL_ROOT_PASSWORD=password -e MYSQL_DATABASE=bookmarks mysql:latest
+    ```
    
-3. Hacer clean and Build del proyecto y ejecutar la aplicación (según IDE)
+3. Hacer clean and Build del proyecto y ejecutar la aplicación (según IDE).
 
 4. Abrir la aplicación en el navegador deseado:    
    ```
    start https://localhost:8443
    ```
+
+   ⚠️ <span style="color:lightblue">Recuerda que la aplicación SPA de angular será accesible desde</span> ` https://localhost:8443/new/ ` ⚠️
+
 
 ---  
 
@@ -222,7 +258,7 @@ Se implementará un algoritmo de recomendaciones de libros en la página princip
 
 - #### Requisitos previos:
   Para poder descargar y ejecutar la aplicación dockerizada tan sólo es necesario:
-  - [Docker](https://www.docker.com/products/docker-desktop)
+  - Docker (ver [requisitos de creación de imagen]())
 
 - #### Pasos para la instalación:
 1. Descarga la imagen de la aplicación desde el repositorio de Docker Hub:
@@ -247,31 +283,36 @@ Se implementará un algoritmo de recomendaciones de libros en la página princip
     ```
    O abre en tu navegador de preferencia dicha [dirección](https://localhost:8443).
 
-## 📦 Creación de imagen de la aplicación
-Para poder crear a imagen de la aplicación es necesario tener docker instalado en tu máquina (ver [requisitos de instalación de aplicación dockerizada](https://github.com/CodeURJC-DAW-2023-24/webapp03/tree/main?tab=readme-ov-file#requisitos-previos)). Una vez tengas docker instalado, sigue los siguientes pasos:
-1. Clona el repositorio a tu ruta deseada:    
-    ```
-     git clone https://github.com/CodeURJC-DAW-2023-24/webapp03
-    ```
-2. Inicia sesión en tu cuenta de Docker Hub. Si no tienes una, puedes crearla [aquí](https://hub.docker.com/signup). Se te pedirá introducir tu usuario y contraseña:
-    ```
-    docker login
-    ```    
-3. Ejecuta el ejecutable bash script que creará la imagen de la aplicación:
-    ```
-    ./create_image.sh
-    ```
-   ⚠️<span style="color:lightblue">Ten en cuenta que este script creará la imagen bajo el nombre "blasetvrtumi/bookmarks" y la subirá a tu cuenta de Docker Hub. Si deseas cambiar el nombre de la imagen o el nombre de usuario, puedes hacerlo modificando el script.</span>⚠️
+⚠️ <span style="color:lightblue">Recuerda que la aplicación SPA de angular será accesible desde</span> ` https://localhost:8443/new/ ` ⚠️
 
 
-4. Una vez haya terminado de ejecutarse, puedes comprobar que la imagen se ha creado correctamente con:
+### Aplicación standalone SPA en Angular
+
+Para acceder al cliente SPA de la aplicación de angular se puede descargar el repositorio y desplegarla en local (standalone, que veremos a continuación), desde [la aplicación dockerizada](), o bien por medio de [la aplicación Springboot en local](https://github.com/CodeURJC-DAW-2023-24/webapp03/tree/main?tab=readme-ov-file#proyecto-maven-en-local) (en estos dos últimos casos será la aplicación angular estática en el endpoint dinámico de la aplicación Springboot).
+
+Necesitaremos tener instalado [Node.js](https://nodejs.org/es/download/) y [Angular CLI](https://angular.io/guide/setup-local) en global para poder ejecutar la aplicación (Ver [requisitos de creación de imagen de la aplicación]())
+
+1. [Clonamos el repositorio](), si no lo hemos hecho ya.
+
+2. Instalamos angular y las dependencias de la aplicación:
     ```
-    docker images
+    npm install -g @angular/cli
+    cd frontend
+    npm install
     ```
-   y podrás descargarla en cualquier máquina con:
+
+3. Ahora podemos iniciar la aplicación con:
     ```
-    docker pull <nombre de usuario>/<nombre de la imagen>
+    npm start
     ```
+
+4. Accedemos desde nuestro navegador preferido:
+    ```
+    start https://localhost:4200/new
+    ```
+
+⚠️ <span style="color:lightblue">Recuerda que esto es una aplicación en desarrollo y que, por ello, no cuenta con control de usuario ni seguridad más allá de la proporcionada por los controladores de la API REST, estando éstas en la aplicación empaquetada en Springboot.</span> ⚠️
+
 
 ## 🛫 Despliegue de la aplicación en una máquina virtual
 ### Pasos previos
@@ -327,6 +368,9 @@ Para poder crear a imagen de la aplicación es necesario tener docker instalado 
     ```
     https://10.100.139.28:8443
     ```
+   
+    ⚠️ <span style="color:lightblue">Recuerda que la aplicación SPA de angular será accesible desde</span> ` https://10.100.139.28:8443/new/ ` ⚠️
+
 
 ### Detener la aplicación
 Una vez inicializada la aplicación, para detenerla se puede hacer con:
@@ -364,38 +408,26 @@ Alternativamente, se puede visualizar la interfaz web de la misma [en este enlac
 
 ### En esta fase
 #### Sergio Antonio Olivares del Ángel:
-Durante esta fase, trabaje mayoritariamente en la implementación de funcionalidades en API REST de distintos controladores. Entre ellos estan las funciones de libros, crear usuarios y modificar los usuarios ya existentes. Ademas trabaje en añadir un tope al tamaño del archivo para la foto de perfil de usuarios, esto provoco que se haga cambios en el front-end de la aplicacion para su manejo correcto en la aplicación web. Finalmente añadí la documentación sobre los cambios que realice durante esta fase.
 
 
 #### Pablo Antolín Martínez:
-En esta fase me he encargado junto a Diego de la implementación API REST de las funcionalidades del administrador. También me he encargado de implementar una nueva función que es la de eliminar el rol de autor, ya que antes no se podía. Esta nueva funcionalidad la he implementado tanto en la web como en API REST.
-Junto a la implementación de la API REST se ha completado la documentación correspondiente. 
+
 
 
 #### Izan Ruiz Ballesteros:
-En esta fase me he dedicado a supervisar el desarrollo de la API REST, así como la implementación de muchos de sus métodos, tales como el que permite obtener la información necesaria para elaborar las gráficas, los algoritmos y otros de crucial importancia como el de inicio de sesión mediante JWT.
-Así mismo, me he dedicado a dividir el código en Servicios que son de uso común para los Controladores de la API REST y los Controladores de la aplicación web, de manera que se pueda reutilizar el código y se evite la duplicidad del mismo.
-También me he encargado del despliegue de la aplicación en la máquina virtual.
-He colaborado en la creación de la documentación de la API REST y en la actualización del resto de la documentación.
+
 
 
 #### Blas Vita Ramos:
-Ha realizado la implementación API REST de aquellas funcionalidades que le correspondieron también en la fase anterior, como la búsqueda paginada tanto de usuarios como de libros.
-No obstante, su mayor aportación y principal tarea en esta fase ha consistido en la dockerización de la aplicación, desde la creación de la imagen desde cero desde el dockerfile,
-la inclusión y copia de ficheros en dicha imagen, la compilación y generación del fichero ejecutable jar como principal origen de ejecución de la aplicación en la imagen, y su publicación en dockerhub.
-También ha creado el docker-compose.yml para la ejecución de dos servicios (base de datos y aplicación) de manera síncrona en base a dos imágenes (una proporcionada por mysql y la anteriormente mencionada hecha a mano),
-además de poder facilitar el despliegue de la aplicación en una máquina virtual.
-La documentación de los pasos a seguir tanto para la creación de la imagen como para la descarga de la misma y la ejecución de la aplicación únicamente con contenedores docker con compose a partir de dichas imágenes.
-Ha sido además encargado de la creación de la documentación de la API REST, creando una plantilla vacía yml que poder actualizar automáticamente en cada ejecución de tests de la aplicación, y generando así automáticamente toda la interfaz web de la api con swagger.
+
 
 #### Diego Rodriguez Gallego:
-He realizado la integración de la API REST dentro del proyecto relacionadas con la página web de usuario (APIProfileController.java) y la página web de administrador (APIAdminController.java), realizando las operaciones correspondientes para obtener, modificar y eliminar información (tanto para el perfil como para los administradores). También se ha incluido la verificación de errores a la hora de hacer solicitudes en la página web usando la API REST, comprobando que se devuelven mensajes de error adecuados para cada uno de los controllers en específico. Se ha complementado la información correspondiente en el README.md referente a esta fase.
 
 
 | Miembro                                            | Commit #1                                                                                                    | Commit #2                                                                                                                                 | Commit #3                                                                                                                                             | Commit #4                                                                                                                                                    | Commit #5                                                                                                                                  | Archivo #1                                                                                                                                                                        | Archivo #2                                                                                                                                                                      | Archivo #3                                                                                                                                                                | Archivo #4                                                                                                                                                                                      | Archivo #5                                                                                                                                                              |
  |----------------------------------------------------|--------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------| 
-| [Izan Ruiz Ballesteros](https://github.com/Etheko) | [JWT implementation for REST API + Review section](https://github.com/CodeURJC-DAW-2023-24/webapp03/commit/93f67d23bb9c88b5b512137611190556062449e2) | [REST API: Requests for charts building fully implemented](https://github.com/CodeURJC-DAW-2023-24/webapp03/commit/e6366bd8f37048bc0bed786852a978d6268ab1f9) | [All Services created](https://github.com/CodeURJC-DAW-2023-24/webapp03/commit/7fa908785adc8ab82ff151b9398cf0b429b099ae)                              | [REST API: Downloadable images + Fixes to Algorithm calls](https://github.com/CodeURJC-DAW-2023-24/webapp03/commit/02649e64ca7722acdf162235e81d312028ed60d0) | [REST API: Fixed JWT Session Management](https://github.com/CodeURJC-DAW-2023-24/webapp03/commit/c4206102722addf72dead72c55a57e872f9c0830) | [APIStatisticsController.java](https://github.com/CodeURJC-DAW-2023-24/webapp03/blob/main/backend/src/main/java/es/codeurjc/webapp03/controller/APIStatisticsController.java) | [APIUserListsController.java](https://github.com/CodeURJC-DAW-2023-24/webapp03/blob/main/backend/src/main/java/es/codeurjc/webapp03/controller/APIUserListsController.java) | [APIReviewController.java](https://github.com/CodeURJC-DAW-2023-24/webapp03/blob/main/backend/src/main/java/es/codeurjc/webapp03/controller/APIReviewController.java) | [WebSecurityConfiguration.java](https://github.com/CodeURJC-DAW-2023-24/webapp03/blob/main/backend/src/main/java/es/codeurjc/webapp03/security/WebSecurityConfiguration.java)               | [APILoginController.java](https://github.com/CodeURJC-DAW-2023-24/webapp03/blob/main/backend/src/main/java/es/codeurjc/webapp03/controller/APILoginController.java) | 
-| [Pablo Antolín Martínez](https://github.com/Pbantolin12) | [Add author role to a user](https://github.com/CodeURJC-DAW-2023-24/webapp03/commit/5be29b2922cea6cf9bb7296b1be26de27ed63f12) | [Removal of the author role on the web](https://github.com/CodeURJC-DAW-2023-24/webapp03/commit/264144bbabc7649db0b9164543e9796c1591e6db) | [An admin can add or remove author role (API REST)](https://github.com/CodeURJC-DAW-2023-24/webapp03/commit/4eac2661417a4a67a00717f4367f685dc3cd4702) | [Refactor APIAdminController and add its url to web security](https://github.com/CodeURJC-DAW-2023-24/webapp03/commit/83f68cf79d4956415ec17e7f945d08e6f4558e1d) | [Create APIAdminPageController](https://github.com/CodeURJC-DAW-2023-24/webapp03/commit/287384a671e055e894b9845399e32ba030ac1cee) | [APIAdminController.java](backend/src/main/java/es/codeurjc/webapp03/controller/APIAdminController.java) | [ProfilePageController.java](backend/src/main/java/es/codeurjc/webapp03/controller/ProfilePageController.java) | [UserService.java](backend/src/main/java/es/codeurjc/webapp03/service/UserService.java)                                                                                   | [ProfilePage.html](backend/src/main/resources/templates/profilePage.html) | [README.md](README.md) |                                                                                                                                                 |                                                                                                                                                              |                                                                                                                                                                                   |                                                                                                                                                              |                                                                                                                                            |                                                                                                                                                                                   |                                                                                                                                                                                 |                                                                                                                                                                           |                                                                                                                                                                                   |                                                                                                                                                                         |
-|[Sergio Antonio Olivares del Angel](https://github.com/Mercii01) |[Modifying profile API](https://github.com/CodeURJC-DAW-2023-24/webapp03/commit/489243446286b5c308fd8a69c8f03fa4d0aade62)|[Added APISignUp](https://github.com/CodeURJC-DAW-2023-24/webapp03/commit/7f739a551a5e8ea7824eca5f714534c664fb2413)|[Added APIBookController Operations + quickfixes of other ](https://github.com/CodeURJC-DAW-2023-24/webapp03/commit/ece2f46b354fee87acc8a648b4d90dd7d02e1f58)|[File size check only available for profiles](https://github.com/CodeURJC-DAW-2023-24/webapp03/commit/d5e3a9687a60ab5ae26ebe95dcb091f8329fdefc)|[Modified max file size uploadable](https://github.com/CodeURJC-DAW-2023-24/webapp03/commit/f1b93dfe968c7771ffbae152a482f52b58641878)|[APIBookController](https://github.com/CodeURJC-DAW-2023-24/webapp03/blame/main/backend/src/main/java/es/codeurjc/webapp03/controller/APIBookController.java)|[APIEditProfileController](https://github.com/CodeURJC-DAW-2023-24/webapp03/blame/main/backend/src/main/java/es/codeurjc/webapp03/controller/APIEditProfileController.java)|[APISignUpController](https://github.com/CodeURJC-DAW-2023-24/webapp03/blame/main/backend/src/main/java/es/codeurjc/webapp03/controller/APISignUpController.java)|[editProfilePage.js](https://github.com/CodeURJC-DAW-2023-24/webapp03/blame/main/backend/src/main/resources/static/js/editProfilePage.js)|[editProfilePage.html](https://github.com/CodeURJC-DAW-2023-24/webapp03/blame/main/backend/src/main/resources/templates/editProfilePage.html)| 
-| [Blas Vita Ramos](https://github.com/Blasetvrtumi) | [Both book and user search API implemented](https://github.com/CodeURJC-DAW-2023-24/webapp03/commit/e68354aec953599b77d283bda779265cfb1e7e27) | [Both app and Database now fully dockerized](https://github.com/CodeURJC-DAW-2023-24/webapp03/commit/49d4ee049725bdfa14ad307dc7c16fa54f72aac7) | [Updated README.md with dockerized application installation and image creation](https://github.com/CodeURJC-DAW-2023-24/webapp03/commit/b96fe49837080accecaa429a0e72bb6358515604) | [OpenAPI documentation now included with url accesible ui](https://github.com/CodeURJC-DAW-2023-24/webapp03/commit/da77f47db2b256ef52cb4d3ab855de47e7a238aa) | [Updated api docs, postman file added](https://github.com/CodeURJC-DAW-2023-24/webapp03/commit/a955f789e7cb438203dd73f019994d2f2aae1b63)   | [Dockerfile](https://github.com/CodeURJC-DAW-2023-24/webapp03/blob/main/docker/Dockerfile)                                                                                    | [docker-compose.yml](https://github.com/CodeURJC-DAW-2023-24/webapp03/blob/main/docker/docker-compose.yml)                                                                  | [create_image.sh](https://github.com/CodeURJC-DAW-2023-24/webapp03/blob/main/docker/create_image.sh)                                                                  | [APISearchResultsPageController.java](https://github.com/CodeURJC-DAW-2023-24/webapp03/blob/main/backend/src/main/java/es/codeurjc/webapp03/controller/APISearchResultsPageController.java) | [api-docs.yaml](https://github.com/CodeURJC-DAW-2023-24/webapp03/blob/main/api-docs/api-docs.yaml)                                                                  | 
-| [Diego Rodríguez Gallego](https://github.com/DiRoGa) |   [Integration of Profile API](https://github.com/CodeURJC-DAW-2023-24/webapp03/commit/e5f6a732818cd1fab178fcd824c5b86b22f2bf4d) | [Request Error Control on Profile API](https://github.com/CodeURJC-DAW-2023-24/webapp03/commit/fff52e00ed705707c9c76e39f9465b3aaa86a3ea) | [Refactored "APIProfileController" to match the filename structure](https://github.com/CodeURJC-DAW-2023-24/webapp03/commit/da3587dc2e7677155e1b75b928aae956c44ee07f) | [Integration of Admin API](https://github.com/CodeURJC-DAW-2023-24/webapp03/commit/2063bba601b47fdafc4ff7483a39aad947d8a721) | [Request Error Control on Admin API](https://github.com/CodeURJC-DAW-2023-24/webapp03/commit/623fdeb179aebb0b1df128ed7ae8788b522c0132) | [APIProfileController.java](https://github.com/CodeURJC-DAW-2023-24/webapp03/blob/main/backend/src/main/java/es/codeurjc/webapp03/controller/APIProfileController.java) | [APIAdminController.java](https://github.com/CodeURJC-DAW-2023-24/webapp03/blob/main/backend/src/main/java/es/codeurjc/webapp03/controller/APIAdminController.java) | [administratorMainPage.html](https://github.com/CodeURJC-DAW-2023-24/webapp03/blob/main/backend/src/main/resources/templates/administratorMainPage.html) | [profilePage.html](https://github.com/CodeURJC-DAW-2023-24/webapp03/blob/main/backend/src/main/resources/templates/profilePage.html) | [README.md](https://github.com/CodeURJC-DAW-2023-24/webapp03/blob/main/README.md)                                                                                                           |                                                                                                                                           |                                                                                                                                                       |                                                                                                                                                              |                                                                                                                                            |                                                                                                                                                                                   |                                                                                                                                                                                 |                                                                                                                                                                           |                                                                                                                                                                                                 |                                                                                                                                                                         |
+| [Izan Ruiz Ballesteros](https://github.com/Etheko) |  |  |                               |  |  |  |  |  |                |  | 
+| [Pablo Antolín Martínez](https://github.com/Pbantolin12) |  |  |  |  |  |  |  |                                                                                    |  |  |                                                                                                                                                 |                                                                                                                                                              |                                                                                                                                                                                   |                                                                                                                                                              |                                                                                                                                            |                                                                                                                                                                                   |                                                                                                                                                                                 |                                                                                                                                                                           |                                                                                                                                                                                   |                                                                                                                                                                         |
+|[Sergio Antonio Olivares del Angel](https://github.com/Mercii01) ||||||||||| 
+| [Blas Vita Ramos](https://github.com/Blasetvrtumi) |  |  |  |  |    |                                                                                     |                                                                   |                                                                   |  |                                                                  | 
+| [Diego Rodríguez Gallego](https://github.com/DiRoGa) |    |  |  |  |  |  |  |  |  |                                                                                                            |                                                                                                                                           |                                                                                                                                                       |                                                                                                                                                              |                                                                                                                                            |                                                                                                                                                                                   |                                                                                                                                                                                 |                                                                                                                                                                           |                                                                                                                                                                                                 |                                                                                                                                                                         |

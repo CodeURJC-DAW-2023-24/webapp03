@@ -1,6 +1,12 @@
 # Move to angular folder
 cd frontend
 
+# Install angular cli globally
+npm install -g @angular/cli
+
+# Install dependencies
+npm install
+
 # Create production build
 ng build --configuration production
 
