@@ -41,7 +41,7 @@
           <form class="list-button" (ngSubmit)="markAsRead()">
             <input type="hidden" name="bookId" [value]="ID">
             <button type="submit" id="readButton" class="btn btn-outline-dark flex-shrink-0 action-button"
-                    [ngClass]="{ 'green-background': markedAsRead }">
+                    [ngClass]="{ 'btn-primary': markedAsRead }">
               <i class="fa-solid fa-check"></i>
               Leído
             </button>
@@ -50,16 +50,16 @@
           <form class="list-button" (ngSubmit)="markAsReading()">
             <input type="hidden" name="bookId" [value]="ID">
             <button type="submit" id="readingButton" class="btn btn-outline-dark flex-shrink-0 action-button"
-                    [ngClass]="{ 'green-background': markedAsReading }">
+                    [ngClass]="{ 'btn-primary': markedAsReading }">
               <i class="fa-solid fa-clock"></i>
-              Leer
+              Leyendo
             </button>
           </form>
 
           <form class="list-button" (ngSubmit)="markAsWanted()">
             <input type="hidden" name="bookId" [value]="ID">
             <button type="submit" id="wantedButton" class="btn btn-outline-dark flex-shrink-0 action-button"
-                    [ngClass]="{ 'green-background': markedAsWanted }">
+                    [ngClass]="{ 'btn-primary': markedAsWanted }">
               <i class="fa-solid fa-bookmark"></i>
               Por leer
             </button>
@@ -71,18 +71,18 @@
           <form class="list-button" (ngSubmit)="removeFromLists()">
             <input type="hidden" name="bookId" [value]="ID">
             <button type="submit" id="removeButton" class="btn btn-outline-dark flex-shrink-0 action-button"
-                    [ngClass]="{ 'green-background': markedAsNone }">
+                    [ngClass]="{ 'btn-danger': listsLoadedChecker[0] == 0 && listsLoadedChecker[1] == 0 && listsLoadedChecker[2] == 0 }">
               <i class="fa-solid fa-xmark"></i>
               Nada
             </button>
           </form>
 
           <div *ngIf="isAuthor || isAdministrator">
-            <a href="/book/{{ID}}/edit" class="btn btn-secondary-light flex-shrink-0 action-button"
-               class="boton">
+            <button [routerLink]="['/book', ID, 'edit']" class="btn btn-secondary-light flex-shrink-0 action-button"
+            >
               <i class="fa-solid fa-pencil"></i>
               Modificar
-            </a>
+            </button>
           </div>
         </div>
         <ng-template #notLogged>

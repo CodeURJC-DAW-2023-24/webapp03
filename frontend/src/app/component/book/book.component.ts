@@ -56,11 +56,14 @@ export class BookComponent implements OnInit {
   pageCount = 0;
   publisher = "";
 
+  listsLoadedChecker: number[] = [-1, -1, -1];
+
   markedAsRead: boolean = false;
   markedAsReading: boolean = false;
   markedAsWanted: boolean = false;
-  markedAsNone: boolean = false;
+  markedAsNone: boolean = this.listsLoadedChecker[0] == 0 && this.listsLoadedChecker[1] == 0 && this.listsLoadedChecker[2] == 0;
   listForBook = "";
+
 
   constructor(private http: HttpClient, public bookService: BookService, public loginService: LoginService, public reviewService: ReviewService, public listsService: ListsService, private route: ActivatedRoute) {
   }
@@ -187,6 +190,7 @@ export class BookComponent implements OnInit {
   markAsRead() {
     this.listsService.setReadBooks(this.ID).subscribe({
       next: () => {
+        this.listsLoadedChecker[0] = 1;
         this.markedAsRead = true;
         this.markedAsReading = false;
         this.markedAsWanted = false;
@@ -201,6 +205,7 @@ export class BookComponent implements OnInit {
   markAsReading() {
     this.listsService.setReadingBooks(this.ID).subscribe({
       next: () => {
+        this.listsLoadedChecker[1] = 1;
         this.markedAsRead = false;
         this.markedAsReading = true;
         this.markedAsWanted = false;
@@ -215,6 +220,7 @@ export class BookComponent implements OnInit {
   markAsWanted() {
     this.listsService.setWantedBooks(this.ID).subscribe({
       next: () => {
+        this.listsLoadedChecker[2] = 1;
         this.markedAsRead = false;
         this.markedAsReading = false;
         this.markedAsWanted = true;
@@ -229,6 +235,9 @@ export class BookComponent implements OnInit {
   removeFromLists() {
     this.listsService.setNoneBookList(this.ID).subscribe({
       next: () => {
+        this.listsLoadedChecker[0] = 0;
+        this.listsLoadedChecker[1] = 0;
+        this.listsLoadedChecker[2] = 0;
         this.markedAsRead = false;
         this.markedAsReading = false;
         this.markedAsWanted = false;
@@ -244,10 +253,9 @@ export class BookComponent implements OnInit {
     const listNames: string[] = ["read", "reading", "wanted"];
 
     for (const listName of listNames) {
-      this.listsService.isBookInList(this.username, this.ID, "read").subscribe({
+      this.listsService.isBookInList(this.username, this.ID, listName).subscribe({
         next: r => {
           if (r) {
-            console.log("Book is in list " + listName);
             if (listName == "read") {
               this.markAsRead()
             } else if (listName == "reading") {
@@ -256,7 +264,7 @@ export class BookComponent implements OnInit {
               this.markAsWanted();
             }
           } else {
-            console.log("Book not in list");
+            this.listsLoadedChecker[listNames.indexOf(listName)] = 0;
           }
         },
         error: err => {
