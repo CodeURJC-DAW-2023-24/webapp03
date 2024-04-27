@@ -45,6 +45,7 @@
 
 ## ✅ Tabla de Contenido
 
+- [Vídeo de demostración]()
 - [Autores](https://github.com/CodeURJC-DAW-2023-24/webapp03/tree/main?tab=readme-ov-file#-autores)
 - [Trello](https://github.com/CodeURJC-DAW-2023-24/webapp03/tree/main?tab=readme-ov-file#%EF%B8%8F-trello)
 - [Entidades](https://github.com/CodeURJC-DAW-2023-24/webapp03/tree/main?tab=readme-ov-file#%EF%B8%8F-entidades)
@@ -63,6 +64,22 @@
 - [Documentación OpenAPI](https://github.com/CodeURJC-DAW-2023-24/webapp03/tree/main?tab=readme-ov-file#-documentaci%C3%B3n-openapi)
 - [Participación](https://github.com/CodeURJC-DAW-2023-24/webapp03/tree/main?tab=readme-ov-file#-participaci%C3%B3n)
 
+## 📹 Vídeo de demostración
+[<img height="100%" width="80%" alt="Vídeo de demostración" src="https://img.youtube.com/vi/1J9J9J9J9J9/0.jpg"/>](https://www.youtube.com/watch?v=1J9J9J9J9J9)
+### Guión del vídeo:
+- [0:00]() Acceso a todas las páginas permitidas para un usuario anónimo.
+
+- [0:00]() Inicio de sesión como usuario estándar y funcionalidades permitidas éste.
+
+- [0:00]() Variación de la información visible entre distintos usuarios y distintos clientes (MVC y SPA).
+
+- [0:00]() Modificación de un recurso y su persistencia.
+
+- [0:00]() Subida de una imagen y su actualización en la base de datos (ver request PUT en Network de Devtools).
+
+- [0:00]() Inicio de sesión como administrador y nuevas funcionalidades accesibles para él.
+
+
 ## 💻 Autores:
 | Nombre                            | Correo                              | Cuenta                                          | 
 |-----------------------------------|-------------------------------------|-------------------------------------------------| 
@@ -73,14 +90,14 @@
 | Diego Rodríguez Gallego           | d.rodriguezgal.2020@alumnos.rujc.es | [DiRoGa](https://github.com/DiRoGa)             |   
 
 ## 🗂️ Trello
-Se utilizará la herramienta de trabajo "Trello" para facilitar la coordinación del equipo durante esta práctica. El link es el siguiente: [EntrePaginas](https://trello.com/w/entrepaginas)
+Se utilizará la herramienta de trabajo "Trello" para facilitar la coordinación del equipo durante esta práctica. El link es el siguiente: [Bookmarks](https://trello.com/b/ZnYETDEL/desarrollo-web)
 
 ## ⚛️ Entidades
 - Usuarios
 - Libros
 - Reseñas
 - Autor
-- Genero
+- Género
 
 ## 👥 Permisos de los usuarios
 - Anónimo: Este usuario puede ver la información principal de la página de inicio, donde hay información como géneros más leídos, libros recomendados de dichos géneros.
@@ -181,6 +198,10 @@ Se implementará un algoritmo de recomendaciones de libros en la página princip
 - Diagrama de clases y templates:
 
 <img src="readme-resources/MVCDiagram.png" width="70%"/>
+
+- Diagrama SPA de componentes y servicios Angular:
+
+<img src="readme-resources/SPADiagram.png" width="70%"/>
 
 ## 📦 Creación de imagen de la aplicación
 Para poder crear la imagen de la aplicación es necesario:
