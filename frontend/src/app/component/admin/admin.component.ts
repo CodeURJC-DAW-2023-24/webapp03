@@ -11,6 +11,7 @@ import {error} from "@angular/compiler-cli/src/transformers/util";
 import {User} from "../../models/user.model";
 import {Observable} from "rxjs";
 import {Chart, registerables} from "chart.js";
+import {Router} from "@angular/router";
 
 Chart.register(...registerables);
 
@@ -26,13 +27,48 @@ export class AdminComponent implements OnInit {
 
   loadingMostReadAuthorsChart = true;
 
-  constructor(private http: HttpClient, public bookService: BookService, public loginService: LoginService, public reviewService: ReviewService, public algorithmService: AlgorithmsService, public profileService: UserService) {
+  constructor(private http: HttpClient, public bookService: BookService, public loginService: LoginService, public reviewService: ReviewService, public algorithmService: AlgorithmsService, public profileService: UserService, public router: Router) {
 
   }
 
   ngOnInit(): void {
-    this.loadAuthorsChart();
-    this.loadBestReadersChart();
+
+    this.loginService.checkLogged().subscribe({
+      next: r => {
+        if (r) {
+          this.loginService.getLoggedUser().subscribe({
+            next: user => {
+              if (user.roles.includes("ADMIN")) {
+                this.loadAuthorsChart();
+                this.loadBestReadersChart();
+              } else {
+                this.router.navigate(['/error'], {
+                  queryParams: {
+                    title: "Error de acceso",
+                    description: "No tienes permisos para acceder a esta página."
+                  }
+                });
+              }
+            }
+          });
+        } else {
+          this.router.navigate(['/error'], {
+            queryParams: {
+              title: "Error de acceso",
+              description: "No tienes permisos para acceder a esta página."
+            }
+          });
+        }
+      },
+      error: r => {
+        this.router.navigate(['/error'], {
+          queryParams: {
+            title: "Se ha producido un error",
+            description: r.error
+          }
+        });
+      }
+    });
   }
 
   // Load chart
@@ -95,7 +131,7 @@ export class AdminComponent implements OnInit {
     });
   }
 
-  loadBestReadersChart(){
+  loadBestReadersChart() {
     // Get the chart data
 
     let userNames: string[] = []; // list for the genre names

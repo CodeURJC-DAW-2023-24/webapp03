@@ -25,7 +25,6 @@ export class EditProfileComponent implements OnInit {
   }
 
 
-
   uploadImage() {
     let inputBut = document.getElementById("inputProfileImage") as HTMLInputElement;
     if (inputBut) {
@@ -127,7 +126,7 @@ export class EditProfileComponent implements OnInit {
     }
   }
 
-  ngOnInit() {
+  initialize() {
     let saveChangesBut = document.getElementById("saveChangesBut") as HTMLButtonElement;
     if (saveChangesBut) {
 
@@ -160,6 +159,46 @@ export class EditProfileComponent implements OnInit {
       });
 
     }
+  }
+
+  ngOnInit() {
+    this.loginService.checkLogged().subscribe({
+      next: r => {
+        if (r) {
+          this.loginService.getLoggedUser().subscribe({
+            next: user => {
+              if (user.roles.includes("ADMIN")) {
+                this.initialize();
+              } else if (user.username == this.activatedRoute.snapshot.params['username']) {
+                this.initialize();
+              } else {
+                this.router.navigate(['/error'], {
+                  queryParams: {
+                    title: "Error de acceso",
+                    description: "No tienes permisos para acceder a esta página."
+                  }
+                });
+              }
+            }
+          });
+        } else {
+          this.router.navigate(['/error'], {
+            queryParams: {
+              title: "Error de acceso",
+              description: "No tienes permisos para acceder a esta página."
+            }
+          });
+        }
+      },
+      error: r => {
+        this.router.navigate(['/error'], {
+          queryParams: {
+            title: "Se ha producido un error",
+            description: r.error
+          }
+        });
+      }
+    });
   }
 
   checkPasswords() {

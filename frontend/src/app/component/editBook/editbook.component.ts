@@ -1,8 +1,9 @@
-import {Component} from "@angular/core";
+import {Component, OnInit} from "@angular/core";
 import {BookService} from "../../services/book.service";
 import {Chart, registerables} from "chart.js";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Book} from "../../models/book.model";
+import {LoginService} from "../../services/session.service";
 
 
 Chart.register(...registerables);
@@ -13,7 +14,7 @@ Chart.register(...registerables);
   styleUrls: ["./editbook.component.css", "../../../animations.css"]
 })
 
-export class EditBookComponent {
+export class EditBookComponent implements OnInit {
   title = "Bookmarks"
   bookData = {
     title: "",
@@ -35,17 +36,71 @@ export class EditBookComponent {
   repeatGenre = false;
   repeatImage = false;
   differentImage = false;
-  constructor(public bookService:BookService, private router:Router, private route: ActivatedRoute) {
+
+  constructor(public bookService: BookService, private router: Router, private route: ActivatedRoute, private loginService: LoginService) {
   }
 
   ngOnInit() {
-    this.bookID = Number(this.route.snapshot.paramMap.get('id')); // Obtiene el ID del libro desde la URL
-    this.getInfoBook(); //Rellenar la info del libro
+    this.loginService.checkLogged().subscribe({
+      next: r => {
+        if (r) {
+          this.loginService.getLoggedUser().subscribe({
+            next: user => {
+              if (user.roles.includes("ADMIN")) {
+                this.bookID = Number(this.route.snapshot.paramMap.get('id')); // Obtiene el ID del libro desde la URL
+                this.getInfoBook(); //Rellenar la info del libro
+
+              } else if (user.roles.includes("AUTHOR")) {
+                // check if the book belongs to the author
+                this.bookService.getBook(Number(this.route.snapshot.paramMap.get('id'))).subscribe({
+                  next: b => {
+                    if (b.authorString === user.username) {
+                      this.bookID = Number(this.route.snapshot.paramMap.get('id')); // Obtiene el ID del libro desde la URL
+                      this.getInfoBook(); //Rellenar la info del libro
+                    } else {
+                      this.router.navigate(['/error'], {
+                        queryParams: {
+                          title: "Error de acceso",
+                          description: "No tienes permisos para acceder a esta página."
+                        }
+                      });
+                    }
+                  }
+                });
+              }
+              else {
+                this.router.navigate(['/error'], {
+                  queryParams: {
+                    title: "Error de acceso",
+                    description: "No tienes permisos para acceder a esta página."
+                  }
+                });
+              }
+            }
+          });
+        } else {
+          this.router.navigate(['/error'], {
+            queryParams: {
+              title: "Error de acceso",
+              description: "No tienes permisos para acceder a esta página."
+            }
+          });
+        }
+      },
+      error: r => {
+        this.router.navigate(['/error'], {
+          queryParams: {
+            title: "Se ha producido un error",
+            description: r.error
+          }
+        });
+      }
+    });
   }
 
   editBook(newTitle: string, newAuthor: string, newDescription: string, newDate: string,
-             newRating: number, newSeries: string, newPageCount: string, newPublisher: string,
-             newISBN: string, newGenre: string) {
+           newRating: number, newSeries: string, newPageCount: string, newPublisher: string,
+           newISBN: string, newGenre: string) {
 
     //Check required inputs
     this.repeatTitle = !newTitle
@@ -55,20 +110,22 @@ export class EditBookComponent {
 
     //If all minimum requirements are met
     if (newTitle && newAuthor && newISBN && newGenre) {
-      this.bookService.editBook({title: newTitle,authorString: newAuthor,description: newDescription,
-                                releaseDate: newDate, averageRating: this.bookData.currentRating, genre: newGenre,
-                                isbn: newISBN, pageCount: +newPageCount, publisher:newPublisher, series: newSeries},this.bookID).subscribe({
+      this.bookService.editBook({
+        title: newTitle, authorString: newAuthor, description: newDescription,
+        releaseDate: newDate, averageRating: this.bookData.currentRating, genre: newGenre,
+        isbn: newISBN, pageCount: +newPageCount, publisher: newPublisher, series: newSeries
+      }, this.bookID).subscribe({
         next: b => {
           if (this.differentImage) { //check if image changed
             let inputBut = document.getElementById("inputImageFile") as HTMLInputElement; //Get image
             if (inputBut.files && inputBut.files.length > 0) { //Check if image is available to upload
               let file = inputBut.files[0]; //send file
-              this.uploadImage(file,b)
-            }else{ //if no image was added, go to book page
-              this.router.navigate(["/book/"+this.bookID])
+              this.uploadImage(file, b)
+            } else { //if no image was added, go to book page
+              this.router.navigate(["/book/" + this.bookID])
             }
-          }else{
-            this.router.navigate(["/book/"+this.bookID])
+          } else {
+            this.router.navigate(["/book/" + this.bookID])
           }
         },
         error: r => {
@@ -79,15 +136,15 @@ export class EditBookComponent {
     }
   }
 
-  uploadImage(newImage:File, book:Book){
+  uploadImage(newImage: File, book: Book) {
     let fileSizeInMB = newImage.size / 1024 / 1024; //Checks image size
     if (fileSizeInMB < 5) {
-      this.bookService.uploadImage(this.bookID,newImage).subscribe({
-        error: n =>{ //If error
+      this.bookService.uploadImage(this.bookID, newImage).subscribe({
+        error: n => { //If error
           console.log(n);
         },
         complete: () => { //When image is finished uploading...
-          this.router.navigate(["/book/"+this.bookID])
+          this.router.navigate(["/book/" + this.bookID])
         }
       })
     } else {
@@ -148,12 +205,12 @@ export class EditBookComponent {
             this.bookImage = this.bookService.downloadCover(this.bookID)
           }
         }
-      }else{ //Image too big
+      } else { //Image too big
         this.repeatImage = true;
         this.differentImage = false;
         this.bookImage = this.bookService.downloadCover(this.bookID)
       }
-    }else{ //File is null
+    } else { //File is null
       this.repeatImage = true;
       this.differentImage = false;
       this.bookImage = this.bookService.downloadCover(this.bookID)
