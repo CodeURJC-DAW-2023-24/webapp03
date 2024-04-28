@@ -37,7 +37,7 @@ export class NavbarComponent implements OnInit {
   search(query: string) {
     this.query = query;
 
-    this.router.navigate(["/search", {users: this.userSearch, query: this.query}]);
+    this.router.navigate(["/search"], {queryParams: {users: this.userSearch, query: this.query}});
   }
 
   profileImage(username: string) {
@@ -79,10 +79,14 @@ export class NavbarComponent implements OnInit {
       }
     });
 
-    let checkbox = document.getElementById("search-select");
+    let checkbox = document.getElementById("search-select") as HTMLInputElement;
     if (checkbox) {
       setTimeout(() => {
         let currentState = checkbox.getAttribute("ng-reflect-model");
+
+        if (currentState == null) {
+          currentState = checkbox.checked.toString();
+        }
 
         if (currentState != localStorage.getItem("userSearch")) {
           checkbox.click();

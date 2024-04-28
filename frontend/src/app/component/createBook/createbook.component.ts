@@ -121,9 +121,7 @@ export class CreateBookComponent implements OnInit {
         let fileByteArray = [];
         let reader = new FileReader();
         reader.readAsArrayBuffer(file);
-        reader.onloadend = function (e) {
-          console.log("aqui")
-        }
+
         reader.onload = (e) => {
           if (reader.readyState === FileReader.DONE) {
             let arrayBuffer = reader.result as ArrayBuffer;

@@ -78,6 +78,10 @@ export class LandingComponent implements OnInit {
 
   ngOnInit(): void {
 
+    // This is done to ensure that the URL does not end with a trailing slash so that refreshing the landing page works
+    let url = window.location.href;
+    url = url.substring(0, url.length - 1);
+    history.pushState(null, "", url);
     this.loadChart();
 
     // Check if user is logged in
@@ -165,23 +169,6 @@ export class LandingComponent implements OnInit {
     this.loggedUsername = user.username;
     this.isAdmin = user.roles.includes("ADMIN");
   }
-
-  /*
-  checkBookReviewed(username: string, bookID: number) {
-    this.reviewService.hasUserReviewed(username, bookID).subscribe({
-      next: r => { // r = response, it is a number
-        if (r == -1) { // if the response is -1, the user has not reviewed the book
-          console.log("User has not reviewed book");
-        } else { // else, the user has reviewed the book
-          console.log("User has reviewed book. Review ID: " + r);
-        }
-      },
-      error: err => {
-        console.error("Error checking if user has reviewed book: " + JSON.stringify(err));
-      }
-    });
-  }
-  */
 
 
   checkIfLoggedIn() {

@@ -1357,6 +1357,9 @@ ul.nav-tabs {
                       <a href="#api-ApiLoginController-refreshToken">refreshToken</a>
                     </li>
                   <li class="nav-header" data-group="ApiProfileController"><a href="#api-ApiProfileController">API Methods - ApiProfileController</a></li>
+                    <li data-group="ApiProfileController" data-name="checkUsername" class="">
+                      <a href="#api-ApiProfileController-checkUsername">checkUsername</a>
+                    </li>
                     <li data-group="ApiProfileController" data-name="getProfileImage" class="">
                       <a href="#api-ApiProfileController-getProfileImage">getProfileImage</a>
                     </li>
@@ -1776,28 +1779,6 @@ pub fn main() {
 
                             <div class="tab-content" id="responses-ApiAdminController-changeAuthorRole-401-wrapper" style='margin-bottom: 10px;'>
                             </div>
-                            <h3 id="examples-ApiAdminController-changeAuthorRole-title-404"></h3>
-                            <p id="examples-ApiAdminController-changeAuthorRole-description-404" class="marked"></p>
-                            <script>
-                              var responseApiAdminController404_description = `User not found`;
-                              var responseApiAdminController404_description_break = responseApiAdminController404_description.indexOf('\n');
-                              if (responseApiAdminController404_description_break == -1) {
-                                $("#examples-ApiAdminController-changeAuthorRole-title-404").text("Status: 404 - " + responseApiAdminController404_description);
-                              } else {
-                                $("#examples-ApiAdminController-changeAuthorRole-title-404").text("Status: 404 - " + responseApiAdminController404_description.substring(0, responseApiAdminController404_description_break));
-                                $("#examples-ApiAdminController-changeAuthorRole-description-404").html(responseApiAdminController404_description.substring(responseApiAdminController404_description_break));
-                              }
-                            </script>
-
-
-                            <ul id="responses-detail-ApiAdminController-changeAuthorRole-404" class="nav nav-tabs nav-tabs-examples" >
-
-
-                            </ul>
-
-
-                            <div class="tab-content" id="responses-ApiAdminController-changeAuthorRole-404-wrapper" style='margin-bottom: 10px;'>
-                            </div>
                             <h3 id="examples-ApiAdminController-changeAuthorRole-title-200"></h3>
                             <p id="examples-ApiAdminController-changeAuthorRole-description-200" class="marked"></p>
                             <script>
@@ -1863,6 +1844,28 @@ pub fn main() {
                                   </div>
                                   <input id='responses-ApiAdminController-changeAuthorRole-200-schema-data' type='hidden' value=''></input>
                                 </div>
+                            </div>
+                            <h3 id="examples-ApiAdminController-changeAuthorRole-title-404"></h3>
+                            <p id="examples-ApiAdminController-changeAuthorRole-description-404" class="marked"></p>
+                            <script>
+                              var responseApiAdminController404_description = `User not found`;
+                              var responseApiAdminController404_description_break = responseApiAdminController404_description.indexOf('\n');
+                              if (responseApiAdminController404_description_break == -1) {
+                                $("#examples-ApiAdminController-changeAuthorRole-title-404").text("Status: 404 - " + responseApiAdminController404_description);
+                              } else {
+                                $("#examples-ApiAdminController-changeAuthorRole-title-404").text("Status: 404 - " + responseApiAdminController404_description.substring(0, responseApiAdminController404_description_break));
+                                $("#examples-ApiAdminController-changeAuthorRole-description-404").html(responseApiAdminController404_description.substring(responseApiAdminController404_description_break));
+                              }
+                            </script>
+
+
+                            <ul id="responses-detail-ApiAdminController-changeAuthorRole-404" class="nav nav-tabs nav-tabs-examples" >
+
+
+                            </ul>
+
+
+                            <div class="tab-content" id="responses-ApiAdminController-changeAuthorRole-404-wrapper" style='margin-bottom: 10px;'>
                             </div>
                         </article>
                       </div>
@@ -2652,6 +2655,50 @@ $(document).ready(function() {
 
                             <div class="tab-content" id="responses-ApiBookController-createBook-400-wrapper" style='margin-bottom: 10px;'>
                             </div>
+                            <h3 id="examples-ApiBookController-createBook-title-401"></h3>
+                            <p id="examples-ApiBookController-createBook-description-401" class="marked"></p>
+                            <script>
+                              var responseApiBookController401_description = `You don't have permission to do this!`;
+                              var responseApiBookController401_description_break = responseApiBookController401_description.indexOf('\n');
+                              if (responseApiBookController401_description_break == -1) {
+                                $("#examples-ApiBookController-createBook-title-401").text("Status: 401 - " + responseApiBookController401_description);
+                              } else {
+                                $("#examples-ApiBookController-createBook-title-401").text("Status: 401 - " + responseApiBookController401_description.substring(0, responseApiBookController401_description_break));
+                                $("#examples-ApiBookController-createBook-description-401").html(responseApiBookController401_description.substring(responseApiBookController401_description_break));
+                              }
+                            </script>
+
+
+                            <ul id="responses-detail-ApiBookController-createBook-401" class="nav nav-tabs nav-tabs-examples" >
+
+
+                            </ul>
+
+
+                            <div class="tab-content" id="responses-ApiBookController-createBook-401-wrapper" style='margin-bottom: 10px;'>
+                            </div>
+                            <h3 id="examples-ApiBookController-createBook-title-409"></h3>
+                            <p id="examples-ApiBookController-createBook-description-409" class="marked"></p>
+                            <script>
+                              var responseApiBookController409_description = `Invalid parameter.`;
+                              var responseApiBookController409_description_break = responseApiBookController409_description.indexOf('\n');
+                              if (responseApiBookController409_description_break == -1) {
+                                $("#examples-ApiBookController-createBook-title-409").text("Status: 409 - " + responseApiBookController409_description);
+                              } else {
+                                $("#examples-ApiBookController-createBook-title-409").text("Status: 409 - " + responseApiBookController409_description.substring(0, responseApiBookController409_description_break));
+                                $("#examples-ApiBookController-createBook-description-409").html(responseApiBookController409_description.substring(responseApiBookController409_description_break));
+                              }
+                            </script>
+
+
+                            <ul id="responses-detail-ApiBookController-createBook-409" class="nav nav-tabs nav-tabs-examples" >
+
+
+                            </ul>
+
+
+                            <div class="tab-content" id="responses-ApiBookController-createBook-409-wrapper" style='margin-bottom: 10px;'>
+                            </div>
                             <h3 id="examples-ApiBookController-createBook-title-201"></h3>
                             <p id="examples-ApiBookController-createBook-description-201" class="marked"></p>
                             <script>
@@ -2717,50 +2764,6 @@ $(document).ready(function() {
                                   </div>
                                   <input id='responses-ApiBookController-createBook-201-schema-data' type='hidden' value=''></input>
                                 </div>
-                            </div>
-                            <h3 id="examples-ApiBookController-createBook-title-409"></h3>
-                            <p id="examples-ApiBookController-createBook-description-409" class="marked"></p>
-                            <script>
-                              var responseApiBookController409_description = `Invalid parameter.`;
-                              var responseApiBookController409_description_break = responseApiBookController409_description.indexOf('\n');
-                              if (responseApiBookController409_description_break == -1) {
-                                $("#examples-ApiBookController-createBook-title-409").text("Status: 409 - " + responseApiBookController409_description);
-                              } else {
-                                $("#examples-ApiBookController-createBook-title-409").text("Status: 409 - " + responseApiBookController409_description.substring(0, responseApiBookController409_description_break));
-                                $("#examples-ApiBookController-createBook-description-409").html(responseApiBookController409_description.substring(responseApiBookController409_description_break));
-                              }
-                            </script>
-
-
-                            <ul id="responses-detail-ApiBookController-createBook-409" class="nav nav-tabs nav-tabs-examples" >
-
-
-                            </ul>
-
-
-                            <div class="tab-content" id="responses-ApiBookController-createBook-409-wrapper" style='margin-bottom: 10px;'>
-                            </div>
-                            <h3 id="examples-ApiBookController-createBook-title-401"></h3>
-                            <p id="examples-ApiBookController-createBook-description-401" class="marked"></p>
-                            <script>
-                              var responseApiBookController401_description = `You don't have permission to do this!`;
-                              var responseApiBookController401_description_break = responseApiBookController401_description.indexOf('\n');
-                              if (responseApiBookController401_description_break == -1) {
-                                $("#examples-ApiBookController-createBook-title-401").text("Status: 401 - " + responseApiBookController401_description);
-                              } else {
-                                $("#examples-ApiBookController-createBook-title-401").text("Status: 401 - " + responseApiBookController401_description.substring(0, responseApiBookController401_description_break));
-                                $("#examples-ApiBookController-createBook-description-401").html(responseApiBookController401_description.substring(responseApiBookController401_description_break));
-                              }
-                            </script>
-
-
-                            <ul id="responses-detail-ApiBookController-createBook-401" class="nav nav-tabs nav-tabs-examples" >
-
-
-                            </ul>
-
-
-                            <div class="tab-content" id="responses-ApiBookController-createBook-401-wrapper" style='margin-bottom: 10px;'>
                             </div>
                         </article>
                       </div>
@@ -3027,6 +3030,28 @@ pub fn main() {
 
 
                           <h2>Responses</h2>
+                            <h3 id="examples-ApiBookController-deleteBook-title-404"></h3>
+                            <p id="examples-ApiBookController-deleteBook-description-404" class="marked"></p>
+                            <script>
+                              var responseApiBookController404_description = `Book not found`;
+                              var responseApiBookController404_description_break = responseApiBookController404_description.indexOf('\n');
+                              if (responseApiBookController404_description_break == -1) {
+                                $("#examples-ApiBookController-deleteBook-title-404").text("Status: 404 - " + responseApiBookController404_description);
+                              } else {
+                                $("#examples-ApiBookController-deleteBook-title-404").text("Status: 404 - " + responseApiBookController404_description.substring(0, responseApiBookController404_description_break));
+                                $("#examples-ApiBookController-deleteBook-description-404").html(responseApiBookController404_description.substring(responseApiBookController404_description_break));
+                              }
+                            </script>
+
+
+                            <ul id="responses-detail-ApiBookController-deleteBook-404" class="nav nav-tabs nav-tabs-examples" >
+
+
+                            </ul>
+
+
+                            <div class="tab-content" id="responses-ApiBookController-deleteBook-404-wrapper" style='margin-bottom: 10px;'>
+                            </div>
                             <h3 id="examples-ApiBookController-deleteBook-title-200"></h3>
                             <p id="examples-ApiBookController-deleteBook-description-200" class="marked"></p>
                             <script>
@@ -3070,28 +3095,6 @@ pub fn main() {
 
 
                             <div class="tab-content" id="responses-ApiBookController-deleteBook-401-wrapper" style='margin-bottom: 10px;'>
-                            </div>
-                            <h3 id="examples-ApiBookController-deleteBook-title-404"></h3>
-                            <p id="examples-ApiBookController-deleteBook-description-404" class="marked"></p>
-                            <script>
-                              var responseApiBookController404_description = `Book not found`;
-                              var responseApiBookController404_description_break = responseApiBookController404_description.indexOf('\n');
-                              if (responseApiBookController404_description_break == -1) {
-                                $("#examples-ApiBookController-deleteBook-title-404").text("Status: 404 - " + responseApiBookController404_description);
-                              } else {
-                                $("#examples-ApiBookController-deleteBook-title-404").text("Status: 404 - " + responseApiBookController404_description.substring(0, responseApiBookController404_description_break));
-                                $("#examples-ApiBookController-deleteBook-description-404").html(responseApiBookController404_description.substring(responseApiBookController404_description_break));
-                              }
-                            </script>
-
-
-                            <ul id="responses-detail-ApiBookController-deleteBook-404" class="nav nav-tabs nav-tabs-examples" >
-
-
-                            </ul>
-
-
-                            <div class="tab-content" id="responses-ApiBookController-deleteBook-404-wrapper" style='margin-bottom: 10px;'>
                             </div>
                         </article>
                       </div>
@@ -3426,72 +3429,6 @@ $(document).ready(function() {
 
 
                           <h2>Responses</h2>
-                            <h3 id="examples-ApiBookController-editBook-title-401"></h3>
-                            <p id="examples-ApiBookController-editBook-description-401" class="marked"></p>
-                            <script>
-                              var responseApiBookController401_description = `You don't have permission to do this!`;
-                              var responseApiBookController401_description_break = responseApiBookController401_description.indexOf('\n');
-                              if (responseApiBookController401_description_break == -1) {
-                                $("#examples-ApiBookController-editBook-title-401").text("Status: 401 - " + responseApiBookController401_description);
-                              } else {
-                                $("#examples-ApiBookController-editBook-title-401").text("Status: 401 - " + responseApiBookController401_description.substring(0, responseApiBookController401_description_break));
-                                $("#examples-ApiBookController-editBook-description-401").html(responseApiBookController401_description.substring(responseApiBookController401_description_break));
-                              }
-                            </script>
-
-
-                            <ul id="responses-detail-ApiBookController-editBook-401" class="nav nav-tabs nav-tabs-examples" >
-
-
-                            </ul>
-
-
-                            <div class="tab-content" id="responses-ApiBookController-editBook-401-wrapper" style='margin-bottom: 10px;'>
-                            </div>
-                            <h3 id="examples-ApiBookController-editBook-title-500"></h3>
-                            <p id="examples-ApiBookController-editBook-description-500" class="marked"></p>
-                            <script>
-                              var responseApiBookController500_description = `Image not supported. Try different file`;
-                              var responseApiBookController500_description_break = responseApiBookController500_description.indexOf('\n');
-                              if (responseApiBookController500_description_break == -1) {
-                                $("#examples-ApiBookController-editBook-title-500").text("Status: 500 - " + responseApiBookController500_description);
-                              } else {
-                                $("#examples-ApiBookController-editBook-title-500").text("Status: 500 - " + responseApiBookController500_description.substring(0, responseApiBookController500_description_break));
-                                $("#examples-ApiBookController-editBook-description-500").html(responseApiBookController500_description.substring(responseApiBookController500_description_break));
-                              }
-                            </script>
-
-
-                            <ul id="responses-detail-ApiBookController-editBook-500" class="nav nav-tabs nav-tabs-examples" >
-
-
-                            </ul>
-
-
-                            <div class="tab-content" id="responses-ApiBookController-editBook-500-wrapper" style='margin-bottom: 10px;'>
-                            </div>
-                            <h3 id="examples-ApiBookController-editBook-title-404"></h3>
-                            <p id="examples-ApiBookController-editBook-description-404" class="marked"></p>
-                            <script>
-                              var responseApiBookController404_description = `Book not found`;
-                              var responseApiBookController404_description_break = responseApiBookController404_description.indexOf('\n');
-                              if (responseApiBookController404_description_break == -1) {
-                                $("#examples-ApiBookController-editBook-title-404").text("Status: 404 - " + responseApiBookController404_description);
-                              } else {
-                                $("#examples-ApiBookController-editBook-title-404").text("Status: 404 - " + responseApiBookController404_description.substring(0, responseApiBookController404_description_break));
-                                $("#examples-ApiBookController-editBook-description-404").html(responseApiBookController404_description.substring(responseApiBookController404_description_break));
-                              }
-                            </script>
-
-
-                            <ul id="responses-detail-ApiBookController-editBook-404" class="nav nav-tabs nav-tabs-examples" >
-
-
-                            </ul>
-
-
-                            <div class="tab-content" id="responses-ApiBookController-editBook-404-wrapper" style='margin-bottom: 10px;'>
-                            </div>
                             <h3 id="examples-ApiBookController-editBook-title-200"></h3>
                             <p id="examples-ApiBookController-editBook-description-200" class="marked"></p>
                             <script>
@@ -3558,6 +3495,28 @@ $(document).ready(function() {
                                   <input id='responses-ApiBookController-editBook-200-schema-data' type='hidden' value=''></input>
                                 </div>
                             </div>
+                            <h3 id="examples-ApiBookController-editBook-title-404"></h3>
+                            <p id="examples-ApiBookController-editBook-description-404" class="marked"></p>
+                            <script>
+                              var responseApiBookController404_description = `Book not found`;
+                              var responseApiBookController404_description_break = responseApiBookController404_description.indexOf('\n');
+                              if (responseApiBookController404_description_break == -1) {
+                                $("#examples-ApiBookController-editBook-title-404").text("Status: 404 - " + responseApiBookController404_description);
+                              } else {
+                                $("#examples-ApiBookController-editBook-title-404").text("Status: 404 - " + responseApiBookController404_description.substring(0, responseApiBookController404_description_break));
+                                $("#examples-ApiBookController-editBook-description-404").html(responseApiBookController404_description.substring(responseApiBookController404_description_break));
+                              }
+                            </script>
+
+
+                            <ul id="responses-detail-ApiBookController-editBook-404" class="nav nav-tabs nav-tabs-examples" >
+
+
+                            </ul>
+
+
+                            <div class="tab-content" id="responses-ApiBookController-editBook-404-wrapper" style='margin-bottom: 10px;'>
+                            </div>
                             <h3 id="examples-ApiBookController-editBook-title-409"></h3>
                             <p id="examples-ApiBookController-editBook-description-409" class="marked"></p>
                             <script>
@@ -3579,6 +3538,50 @@ $(document).ready(function() {
 
 
                             <div class="tab-content" id="responses-ApiBookController-editBook-409-wrapper" style='margin-bottom: 10px;'>
+                            </div>
+                            <h3 id="examples-ApiBookController-editBook-title-500"></h3>
+                            <p id="examples-ApiBookController-editBook-description-500" class="marked"></p>
+                            <script>
+                              var responseApiBookController500_description = `Image not supported. Try different file`;
+                              var responseApiBookController500_description_break = responseApiBookController500_description.indexOf('\n');
+                              if (responseApiBookController500_description_break == -1) {
+                                $("#examples-ApiBookController-editBook-title-500").text("Status: 500 - " + responseApiBookController500_description);
+                              } else {
+                                $("#examples-ApiBookController-editBook-title-500").text("Status: 500 - " + responseApiBookController500_description.substring(0, responseApiBookController500_description_break));
+                                $("#examples-ApiBookController-editBook-description-500").html(responseApiBookController500_description.substring(responseApiBookController500_description_break));
+                              }
+                            </script>
+
+
+                            <ul id="responses-detail-ApiBookController-editBook-500" class="nav nav-tabs nav-tabs-examples" >
+
+
+                            </ul>
+
+
+                            <div class="tab-content" id="responses-ApiBookController-editBook-500-wrapper" style='margin-bottom: 10px;'>
+                            </div>
+                            <h3 id="examples-ApiBookController-editBook-title-401"></h3>
+                            <p id="examples-ApiBookController-editBook-description-401" class="marked"></p>
+                            <script>
+                              var responseApiBookController401_description = `You don't have permission to do this!`;
+                              var responseApiBookController401_description_break = responseApiBookController401_description.indexOf('\n');
+                              if (responseApiBookController401_description_break == -1) {
+                                $("#examples-ApiBookController-editBook-title-401").text("Status: 401 - " + responseApiBookController401_description);
+                              } else {
+                                $("#examples-ApiBookController-editBook-title-401").text("Status: 401 - " + responseApiBookController401_description.substring(0, responseApiBookController401_description_break));
+                                $("#examples-ApiBookController-editBook-description-401").html(responseApiBookController401_description.substring(responseApiBookController401_description_break));
+                              }
+                            </script>
+
+
+                            <ul id="responses-detail-ApiBookController-editBook-401" class="nav nav-tabs nav-tabs-examples" >
+
+
+                            </ul>
+
+
+                            <div class="tab-content" id="responses-ApiBookController-editBook-401-wrapper" style='margin-bottom: 10px;'>
                             </div>
                         </article>
                       </div>
@@ -5051,6 +5054,28 @@ $(document).ready(function() {
                                   <input id='responses-ApiEditProfileController-changePassword-200-schema-data' type='hidden' value=''></input>
                                 </div>
                             </div>
+                            <h3 id="examples-ApiEditProfileController-changePassword-title-500"></h3>
+                            <p id="examples-ApiEditProfileController-changePassword-description-500" class="marked"></p>
+                            <script>
+                              var responseApiEditProfileController500_description = `Error with operation`;
+                              var responseApiEditProfileController500_description_break = responseApiEditProfileController500_description.indexOf('\n');
+                              if (responseApiEditProfileController500_description_break == -1) {
+                                $("#examples-ApiEditProfileController-changePassword-title-500").text("Status: 500 - " + responseApiEditProfileController500_description);
+                              } else {
+                                $("#examples-ApiEditProfileController-changePassword-title-500").text("Status: 500 - " + responseApiEditProfileController500_description.substring(0, responseApiEditProfileController500_description_break));
+                                $("#examples-ApiEditProfileController-changePassword-description-500").html(responseApiEditProfileController500_description.substring(responseApiEditProfileController500_description_break));
+                              }
+                            </script>
+
+
+                            <ul id="responses-detail-ApiEditProfileController-changePassword-500" class="nav nav-tabs nav-tabs-examples" >
+
+
+                            </ul>
+
+
+                            <div class="tab-content" id="responses-ApiEditProfileController-changePassword-500-wrapper" style='margin-bottom: 10px;'>
+                            </div>
                             <h3 id="examples-ApiEditProfileController-changePassword-title-401"></h3>
                             <p id="examples-ApiEditProfileController-changePassword-description-401" class="marked"></p>
                             <script>
@@ -5116,28 +5141,6 @@ $(document).ready(function() {
 
 
                             <div class="tab-content" id="responses-ApiEditProfileController-changePassword-404-wrapper" style='margin-bottom: 10px;'>
-                            </div>
-                            <h3 id="examples-ApiEditProfileController-changePassword-title-500"></h3>
-                            <p id="examples-ApiEditProfileController-changePassword-description-500" class="marked"></p>
-                            <script>
-                              var responseApiEditProfileController500_description = `Error with operation`;
-                              var responseApiEditProfileController500_description_break = responseApiEditProfileController500_description.indexOf('\n');
-                              if (responseApiEditProfileController500_description_break == -1) {
-                                $("#examples-ApiEditProfileController-changePassword-title-500").text("Status: 500 - " + responseApiEditProfileController500_description);
-                              } else {
-                                $("#examples-ApiEditProfileController-changePassword-title-500").text("Status: 500 - " + responseApiEditProfileController500_description.substring(0, responseApiEditProfileController500_description_break));
-                                $("#examples-ApiEditProfileController-changePassword-description-500").html(responseApiEditProfileController500_description.substring(responseApiEditProfileController500_description_break));
-                              }
-                            </script>
-
-
-                            <ul id="responses-detail-ApiEditProfileController-changePassword-500" class="nav nav-tabs nav-tabs-examples" >
-
-
-                            </ul>
-
-
-                            <div class="tab-content" id="responses-ApiEditProfileController-changePassword-500-wrapper" style='margin-bottom: 10px;'>
                             </div>
                         </article>
                       </div>
@@ -5472,72 +5475,6 @@ $(document).ready(function() {
 
 
                           <h2>Responses</h2>
-                            <h3 id="examples-ApiEditProfileController-editProfile-title-401"></h3>
-                            <p id="examples-ApiEditProfileController-editProfile-description-401" class="marked"></p>
-                            <script>
-                              var responseApiEditProfileController401_description = `You don't have permission to do this!`;
-                              var responseApiEditProfileController401_description_break = responseApiEditProfileController401_description.indexOf('\n');
-                              if (responseApiEditProfileController401_description_break == -1) {
-                                $("#examples-ApiEditProfileController-editProfile-title-401").text("Status: 401 - " + responseApiEditProfileController401_description);
-                              } else {
-                                $("#examples-ApiEditProfileController-editProfile-title-401").text("Status: 401 - " + responseApiEditProfileController401_description.substring(0, responseApiEditProfileController401_description_break));
-                                $("#examples-ApiEditProfileController-editProfile-description-401").html(responseApiEditProfileController401_description.substring(responseApiEditProfileController401_description_break));
-                              }
-                            </script>
-
-
-                            <ul id="responses-detail-ApiEditProfileController-editProfile-401" class="nav nav-tabs nav-tabs-examples" >
-
-
-                            </ul>
-
-
-                            <div class="tab-content" id="responses-ApiEditProfileController-editProfile-401-wrapper" style='margin-bottom: 10px;'>
-                            </div>
-                            <h3 id="examples-ApiEditProfileController-editProfile-title-400"></h3>
-                            <p id="examples-ApiEditProfileController-editProfile-description-400" class="marked"></p>
-                            <script>
-                              var responseApiEditProfileController400_description = `Invalid parameter`;
-                              var responseApiEditProfileController400_description_break = responseApiEditProfileController400_description.indexOf('\n');
-                              if (responseApiEditProfileController400_description_break == -1) {
-                                $("#examples-ApiEditProfileController-editProfile-title-400").text("Status: 400 - " + responseApiEditProfileController400_description);
-                              } else {
-                                $("#examples-ApiEditProfileController-editProfile-title-400").text("Status: 400 - " + responseApiEditProfileController400_description.substring(0, responseApiEditProfileController400_description_break));
-                                $("#examples-ApiEditProfileController-editProfile-description-400").html(responseApiEditProfileController400_description.substring(responseApiEditProfileController400_description_break));
-                              }
-                            </script>
-
-
-                            <ul id="responses-detail-ApiEditProfileController-editProfile-400" class="nav nav-tabs nav-tabs-examples" >
-
-
-                            </ul>
-
-
-                            <div class="tab-content" id="responses-ApiEditProfileController-editProfile-400-wrapper" style='margin-bottom: 10px;'>
-                            </div>
-                            <h3 id="examples-ApiEditProfileController-editProfile-title-404"></h3>
-                            <p id="examples-ApiEditProfileController-editProfile-description-404" class="marked"></p>
-                            <script>
-                              var responseApiEditProfileController404_description = `User not found`;
-                              var responseApiEditProfileController404_description_break = responseApiEditProfileController404_description.indexOf('\n');
-                              if (responseApiEditProfileController404_description_break == -1) {
-                                $("#examples-ApiEditProfileController-editProfile-title-404").text("Status: 404 - " + responseApiEditProfileController404_description);
-                              } else {
-                                $("#examples-ApiEditProfileController-editProfile-title-404").text("Status: 404 - " + responseApiEditProfileController404_description.substring(0, responseApiEditProfileController404_description_break));
-                                $("#examples-ApiEditProfileController-editProfile-description-404").html(responseApiEditProfileController404_description.substring(responseApiEditProfileController404_description_break));
-                              }
-                            </script>
-
-
-                            <ul id="responses-detail-ApiEditProfileController-editProfile-404" class="nav nav-tabs nav-tabs-examples" >
-
-
-                            </ul>
-
-
-                            <div class="tab-content" id="responses-ApiEditProfileController-editProfile-404-wrapper" style='margin-bottom: 10px;'>
-                            </div>
                             <h3 id="examples-ApiEditProfileController-editProfile-title-500"></h3>
                             <p id="examples-ApiEditProfileController-editProfile-description-500" class="marked"></p>
                             <script>
@@ -5625,6 +5562,72 @@ $(document).ready(function() {
                                   </div>
                                   <input id='responses-ApiEditProfileController-editProfile-200-schema-data' type='hidden' value=''></input>
                                 </div>
+                            </div>
+                            <h3 id="examples-ApiEditProfileController-editProfile-title-401"></h3>
+                            <p id="examples-ApiEditProfileController-editProfile-description-401" class="marked"></p>
+                            <script>
+                              var responseApiEditProfileController401_description = `You don't have permission to do this!`;
+                              var responseApiEditProfileController401_description_break = responseApiEditProfileController401_description.indexOf('\n');
+                              if (responseApiEditProfileController401_description_break == -1) {
+                                $("#examples-ApiEditProfileController-editProfile-title-401").text("Status: 401 - " + responseApiEditProfileController401_description);
+                              } else {
+                                $("#examples-ApiEditProfileController-editProfile-title-401").text("Status: 401 - " + responseApiEditProfileController401_description.substring(0, responseApiEditProfileController401_description_break));
+                                $("#examples-ApiEditProfileController-editProfile-description-401").html(responseApiEditProfileController401_description.substring(responseApiEditProfileController401_description_break));
+                              }
+                            </script>
+
+
+                            <ul id="responses-detail-ApiEditProfileController-editProfile-401" class="nav nav-tabs nav-tabs-examples" >
+
+
+                            </ul>
+
+
+                            <div class="tab-content" id="responses-ApiEditProfileController-editProfile-401-wrapper" style='margin-bottom: 10px;'>
+                            </div>
+                            <h3 id="examples-ApiEditProfileController-editProfile-title-400"></h3>
+                            <p id="examples-ApiEditProfileController-editProfile-description-400" class="marked"></p>
+                            <script>
+                              var responseApiEditProfileController400_description = `Invalid parameter`;
+                              var responseApiEditProfileController400_description_break = responseApiEditProfileController400_description.indexOf('\n');
+                              if (responseApiEditProfileController400_description_break == -1) {
+                                $("#examples-ApiEditProfileController-editProfile-title-400").text("Status: 400 - " + responseApiEditProfileController400_description);
+                              } else {
+                                $("#examples-ApiEditProfileController-editProfile-title-400").text("Status: 400 - " + responseApiEditProfileController400_description.substring(0, responseApiEditProfileController400_description_break));
+                                $("#examples-ApiEditProfileController-editProfile-description-400").html(responseApiEditProfileController400_description.substring(responseApiEditProfileController400_description_break));
+                              }
+                            </script>
+
+
+                            <ul id="responses-detail-ApiEditProfileController-editProfile-400" class="nav nav-tabs nav-tabs-examples" >
+
+
+                            </ul>
+
+
+                            <div class="tab-content" id="responses-ApiEditProfileController-editProfile-400-wrapper" style='margin-bottom: 10px;'>
+                            </div>
+                            <h3 id="examples-ApiEditProfileController-editProfile-title-404"></h3>
+                            <p id="examples-ApiEditProfileController-editProfile-description-404" class="marked"></p>
+                            <script>
+                              var responseApiEditProfileController404_description = `User not found`;
+                              var responseApiEditProfileController404_description_break = responseApiEditProfileController404_description.indexOf('\n');
+                              if (responseApiEditProfileController404_description_break == -1) {
+                                $("#examples-ApiEditProfileController-editProfile-title-404").text("Status: 404 - " + responseApiEditProfileController404_description);
+                              } else {
+                                $("#examples-ApiEditProfileController-editProfile-title-404").text("Status: 404 - " + responseApiEditProfileController404_description.substring(0, responseApiEditProfileController404_description_break));
+                                $("#examples-ApiEditProfileController-editProfile-description-404").html(responseApiEditProfileController404_description.substring(responseApiEditProfileController404_description_break));
+                              }
+                            </script>
+
+
+                            <ul id="responses-detail-ApiEditProfileController-editProfile-404" class="nav nav-tabs nav-tabs-examples" >
+
+
+                            </ul>
+
+
+                            <div class="tab-content" id="responses-ApiEditProfileController-editProfile-404-wrapper" style='margin-bottom: 10px;'>
                             </div>
                         </article>
                       </div>
@@ -5957,6 +5960,28 @@ $(document).ready(function() {
 
 
                           <h2>Responses</h2>
+                            <h3 id="examples-ApiEditProfileController-updateUserImage-title-500"></h3>
+                            <p id="examples-ApiEditProfileController-updateUserImage-description-500" class="marked"></p>
+                            <script>
+                              var responseApiEditProfileController500_description = `Error with operation`;
+                              var responseApiEditProfileController500_description_break = responseApiEditProfileController500_description.indexOf('\n');
+                              if (responseApiEditProfileController500_description_break == -1) {
+                                $("#examples-ApiEditProfileController-updateUserImage-title-500").text("Status: 500 - " + responseApiEditProfileController500_description);
+                              } else {
+                                $("#examples-ApiEditProfileController-updateUserImage-title-500").text("Status: 500 - " + responseApiEditProfileController500_description.substring(0, responseApiEditProfileController500_description_break));
+                                $("#examples-ApiEditProfileController-updateUserImage-description-500").html(responseApiEditProfileController500_description.substring(responseApiEditProfileController500_description_break));
+                              }
+                            </script>
+
+
+                            <ul id="responses-detail-ApiEditProfileController-updateUserImage-500" class="nav nav-tabs nav-tabs-examples" >
+
+
+                            </ul>
+
+
+                            <div class="tab-content" id="responses-ApiEditProfileController-updateUserImage-500-wrapper" style='margin-bottom: 10px;'>
+                            </div>
                             <h3 id="examples-ApiEditProfileController-updateUserImage-title-401"></h3>
                             <p id="examples-ApiEditProfileController-updateUserImage-description-401" class="marked"></p>
                             <script>
@@ -5978,28 +6003,6 @@ $(document).ready(function() {
 
 
                             <div class="tab-content" id="responses-ApiEditProfileController-updateUserImage-401-wrapper" style='margin-bottom: 10px;'>
-                            </div>
-                            <h3 id="examples-ApiEditProfileController-updateUserImage-title-400"></h3>
-                            <p id="examples-ApiEditProfileController-updateUserImage-description-400" class="marked"></p>
-                            <script>
-                              var responseApiEditProfileController400_description = `Invalid parameter`;
-                              var responseApiEditProfileController400_description_break = responseApiEditProfileController400_description.indexOf('\n');
-                              if (responseApiEditProfileController400_description_break == -1) {
-                                $("#examples-ApiEditProfileController-updateUserImage-title-400").text("Status: 400 - " + responseApiEditProfileController400_description);
-                              } else {
-                                $("#examples-ApiEditProfileController-updateUserImage-title-400").text("Status: 400 - " + responseApiEditProfileController400_description.substring(0, responseApiEditProfileController400_description_break));
-                                $("#examples-ApiEditProfileController-updateUserImage-description-400").html(responseApiEditProfileController400_description.substring(responseApiEditProfileController400_description_break));
-                              }
-                            </script>
-
-
-                            <ul id="responses-detail-ApiEditProfileController-updateUserImage-400" class="nav nav-tabs nav-tabs-examples" >
-
-
-                            </ul>
-
-
-                            <div class="tab-content" id="responses-ApiEditProfileController-updateUserImage-400-wrapper" style='margin-bottom: 10px;'>
                             </div>
                             <h3 id="examples-ApiEditProfileController-updateUserImage-title-200"></h3>
                             <p id="examples-ApiEditProfileController-updateUserImage-description-200" class="marked"></p>
@@ -6067,6 +6070,28 @@ $(document).ready(function() {
                                   <input id='responses-ApiEditProfileController-updateUserImage-200-schema-data' type='hidden' value=''></input>
                                 </div>
                             </div>
+                            <h3 id="examples-ApiEditProfileController-updateUserImage-title-400"></h3>
+                            <p id="examples-ApiEditProfileController-updateUserImage-description-400" class="marked"></p>
+                            <script>
+                              var responseApiEditProfileController400_description = `Invalid parameter`;
+                              var responseApiEditProfileController400_description_break = responseApiEditProfileController400_description.indexOf('\n');
+                              if (responseApiEditProfileController400_description_break == -1) {
+                                $("#examples-ApiEditProfileController-updateUserImage-title-400").text("Status: 400 - " + responseApiEditProfileController400_description);
+                              } else {
+                                $("#examples-ApiEditProfileController-updateUserImage-title-400").text("Status: 400 - " + responseApiEditProfileController400_description.substring(0, responseApiEditProfileController400_description_break));
+                                $("#examples-ApiEditProfileController-updateUserImage-description-400").html(responseApiEditProfileController400_description.substring(responseApiEditProfileController400_description_break));
+                              }
+                            </script>
+
+
+                            <ul id="responses-detail-ApiEditProfileController-updateUserImage-400" class="nav nav-tabs nav-tabs-examples" >
+
+
+                            </ul>
+
+
+                            <div class="tab-content" id="responses-ApiEditProfileController-updateUserImage-400-wrapper" style='margin-bottom: 10px;'>
+                            </div>
                             <h3 id="examples-ApiEditProfileController-updateUserImage-title-404"></h3>
                             <p id="examples-ApiEditProfileController-updateUserImage-description-404" class="marked"></p>
                             <script>
@@ -6088,28 +6113,6 @@ $(document).ready(function() {
 
 
                             <div class="tab-content" id="responses-ApiEditProfileController-updateUserImage-404-wrapper" style='margin-bottom: 10px;'>
-                            </div>
-                            <h3 id="examples-ApiEditProfileController-updateUserImage-title-500"></h3>
-                            <p id="examples-ApiEditProfileController-updateUserImage-description-500" class="marked"></p>
-                            <script>
-                              var responseApiEditProfileController500_description = `Error with operation`;
-                              var responseApiEditProfileController500_description_break = responseApiEditProfileController500_description.indexOf('\n');
-                              if (responseApiEditProfileController500_description_break == -1) {
-                                $("#examples-ApiEditProfileController-updateUserImage-title-500").text("Status: 500 - " + responseApiEditProfileController500_description);
-                              } else {
-                                $("#examples-ApiEditProfileController-updateUserImage-title-500").text("Status: 500 - " + responseApiEditProfileController500_description.substring(0, responseApiEditProfileController500_description_break));
-                                $("#examples-ApiEditProfileController-updateUserImage-description-500").html(responseApiEditProfileController500_description.substring(responseApiEditProfileController500_description_break));
-                              }
-                            </script>
-
-
-                            <ul id="responses-detail-ApiEditProfileController-updateUserImage-500" class="nav nav-tabs nav-tabs-examples" >
-
-
-                            </ul>
-
-
-                            <div class="tab-content" id="responses-ApiEditProfileController-updateUserImage-500-wrapper" style='margin-bottom: 10px;'>
                             </div>
                         </article>
                       </div>
@@ -6452,7 +6455,7 @@ pub fn main() {
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-ApiLoginController-login-0-curl">
                             <pre class="prettyprint"><code class="language-bsh">curl -X POST \
- -H "Accept: application/json,*/*" \
+ -H "Accept: */*,application/json" \
  -H "Content-Type: application/json" \
  "https://localhost:8443/api/auth/login" \
  -d '{
@@ -6733,72 +6736,6 @@ $(document).ready(function() {
 
 
                           <h2>Responses</h2>
-                            <h3 id="examples-ApiLoginController-login-title-200"></h3>
-                            <p id="examples-ApiLoginController-login-description-200" class="marked"></p>
-                            <script>
-                              var responseApiLoginController200_description = `Login successful`;
-                              var responseApiLoginController200_description_break = responseApiLoginController200_description.indexOf('\n');
-                              if (responseApiLoginController200_description_break == -1) {
-                                $("#examples-ApiLoginController-login-title-200").text("Status: 200 - " + responseApiLoginController200_description);
-                              } else {
-                                $("#examples-ApiLoginController-login-title-200").text("Status: 200 - " + responseApiLoginController200_description.substring(0, responseApiLoginController200_description_break));
-                                $("#examples-ApiLoginController-login-description-200").html(responseApiLoginController200_description.substring(responseApiLoginController200_description_break));
-                              }
-                            </script>
-
-
-                            <ul id="responses-detail-ApiLoginController-login-200" class="nav nav-tabs nav-tabs-examples" >
-                                <li class="active">
-                                  <a data-toggle="tab" href="#responses-ApiLoginController-login-200-schema">Schema</a>
-                                </li>
-
-
-
-
-                            </ul>
-
-
-                            <div class="tab-content" id="responses-ApiLoginController-login-200-wrapper" style='margin-bottom: 10px;'>
-                                <div class="tab-pane active" id="responses-ApiLoginController-login-200-schema">
-                                  <div id="responses-ApiLoginController-login-schema-200" class="exampleStyle">
-                                    <script>
-                                      $(document).ready(function() {
-                                        var schemaWrapper = {
-  "description" : "Login successful",
-  "content" : {
-    "application/json" : {
-      "schema" : {
-        "$ref" : "#/components/schemas/AuthResponse"
-      }
-    }
-  }
-};
-                                        var schema = findNode('schema',schemaWrapper).schema;
-                                        if (!schema) {
-                                          schema = schemaWrapper.schema;
-                                        }
-                                        if (schema.$ref != null) {
-                                          schema = defsParser.$refs.get(schema.$ref);
-                                        } else if (schema.items != null && schema.items.$ref != null) {
-                                            schema.items = defsParser.$refs.get(schema.items.$ref);
-                                        } else {
-                                          schemaWrapper.definitions = Object.assign({}, defs);
-                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
-                                            console.log(err);
-                                          });
-                                        }
-
-                                        var view = new JSONSchemaView(schema, 3);
-                                        $('#responses-ApiLoginController-login-200-schema-data').val(JSON.stringify(schema));
-                                        var result = $('#responses-ApiLoginController-login-schema-200');
-                                        result.empty();
-                                        result.append(view.render());
-                                      });
-                                    </script>
-                                  </div>
-                                  <input id='responses-ApiLoginController-login-200-schema-data' type='hidden' value=''></input>
-                                </div>
-                            </div>
                             <h3 id="examples-ApiLoginController-login-title-400"></h3>
                             <p id="examples-ApiLoginController-login-description-400" class="marked"></p>
                             <script>
@@ -6865,6 +6802,72 @@ $(document).ready(function() {
                                   <input id='responses-ApiLoginController-login-400-schema-data' type='hidden' value=''></input>
                                 </div>
                             </div>
+                            <h3 id="examples-ApiLoginController-login-title-200"></h3>
+                            <p id="examples-ApiLoginController-login-description-200" class="marked"></p>
+                            <script>
+                              var responseApiLoginController200_description = `Login successful`;
+                              var responseApiLoginController200_description_break = responseApiLoginController200_description.indexOf('\n');
+                              if (responseApiLoginController200_description_break == -1) {
+                                $("#examples-ApiLoginController-login-title-200").text("Status: 200 - " + responseApiLoginController200_description);
+                              } else {
+                                $("#examples-ApiLoginController-login-title-200").text("Status: 200 - " + responseApiLoginController200_description.substring(0, responseApiLoginController200_description_break));
+                                $("#examples-ApiLoginController-login-description-200").html(responseApiLoginController200_description.substring(responseApiLoginController200_description_break));
+                              }
+                            </script>
+
+
+                            <ul id="responses-detail-ApiLoginController-login-200" class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-ApiLoginController-login-200-schema">Schema</a>
+                                </li>
+
+
+
+
+                            </ul>
+
+
+                            <div class="tab-content" id="responses-ApiLoginController-login-200-wrapper" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-ApiLoginController-login-200-schema">
+                                  <div id="responses-ApiLoginController-login-schema-200" class="exampleStyle">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "Login successful",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/AuthResponse"
+      }
+    }
+  }
+};
+                                        var schema = findNode('schema',schemaWrapper).schema;
+                                        if (!schema) {
+                                          schema = schemaWrapper.schema;
+                                        }
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else if (schema.items != null && schema.items.$ref != null) {
+                                            schema.items = defsParser.$refs.get(schema.items.$ref);
+                                        } else {
+                                          schemaWrapper.definitions = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-ApiLoginController-login-200-schema-data').val(JSON.stringify(schema));
+                                        var result = $('#responses-ApiLoginController-login-schema-200');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-ApiLoginController-login-200-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
                         </article>
                       </div>
                       <hr>
@@ -6902,7 +6905,7 @@ $(document).ready(function() {
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-ApiLoginController-refreshToken-0-curl">
                             <pre class="prettyprint"><code class="language-bsh">curl -X POST \
- -H "Accept: */*,application/json" \
+ -H "Accept: application/json,*/*" \
  "https://localhost:8443/api/auth/refresh"
 </code></pre>
                           </div>
@@ -7112,72 +7115,6 @@ pub fn main() {
 
 
                           <h2>Responses</h2>
-                            <h3 id="examples-ApiLoginController-refreshToken-title-400"></h3>
-                            <p id="examples-ApiLoginController-refreshToken-description-400" class="marked"></p>
-                            <script>
-                              var responseApiLoginController400_description = `Invalid token`;
-                              var responseApiLoginController400_description_break = responseApiLoginController400_description.indexOf('\n');
-                              if (responseApiLoginController400_description_break == -1) {
-                                $("#examples-ApiLoginController-refreshToken-title-400").text("Status: 400 - " + responseApiLoginController400_description);
-                              } else {
-                                $("#examples-ApiLoginController-refreshToken-title-400").text("Status: 400 - " + responseApiLoginController400_description.substring(0, responseApiLoginController400_description_break));
-                                $("#examples-ApiLoginController-refreshToken-description-400").html(responseApiLoginController400_description.substring(responseApiLoginController400_description_break));
-                              }
-                            </script>
-
-
-                            <ul id="responses-detail-ApiLoginController-refreshToken-400" class="nav nav-tabs nav-tabs-examples" >
-                                <li class="active">
-                                  <a data-toggle="tab" href="#responses-ApiLoginController-refreshToken-400-schema">Schema</a>
-                                </li>
-
-
-
-
-                            </ul>
-
-
-                            <div class="tab-content" id="responses-ApiLoginController-refreshToken-400-wrapper" style='margin-bottom: 10px;'>
-                                <div class="tab-pane active" id="responses-ApiLoginController-refreshToken-400-schema">
-                                  <div id="responses-ApiLoginController-refreshToken-schema-400" class="exampleStyle">
-                                    <script>
-                                      $(document).ready(function() {
-                                        var schemaWrapper = {
-  "description" : "Invalid token",
-  "content" : {
-    "*/*" : {
-      "schema" : {
-        "$ref" : "#/components/schemas/AuthResponse"
-      }
-    }
-  }
-};
-                                        var schema = findNode('schema',schemaWrapper).schema;
-                                        if (!schema) {
-                                          schema = schemaWrapper.schema;
-                                        }
-                                        if (schema.$ref != null) {
-                                          schema = defsParser.$refs.get(schema.$ref);
-                                        } else if (schema.items != null && schema.items.$ref != null) {
-                                            schema.items = defsParser.$refs.get(schema.items.$ref);
-                                        } else {
-                                          schemaWrapper.definitions = Object.assign({}, defs);
-                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
-                                            console.log(err);
-                                          });
-                                        }
-
-                                        var view = new JSONSchemaView(schema, 3);
-                                        $('#responses-ApiLoginController-refreshToken-400-schema-data').val(JSON.stringify(schema));
-                                        var result = $('#responses-ApiLoginController-refreshToken-schema-400');
-                                        result.empty();
-                                        result.append(view.render());
-                                      });
-                                    </script>
-                                  </div>
-                                  <input id='responses-ApiLoginController-refreshToken-400-schema-data' type='hidden' value=''></input>
-                                </div>
-                            </div>
                             <h3 id="examples-ApiLoginController-refreshToken-title-200"></h3>
                             <p id="examples-ApiLoginController-refreshToken-description-200" class="marked"></p>
                             <script>
@@ -7244,12 +7181,416 @@ pub fn main() {
                                   <input id='responses-ApiLoginController-refreshToken-200-schema-data' type='hidden' value=''></input>
                                 </div>
                             </div>
+                            <h3 id="examples-ApiLoginController-refreshToken-title-400"></h3>
+                            <p id="examples-ApiLoginController-refreshToken-description-400" class="marked"></p>
+                            <script>
+                              var responseApiLoginController400_description = `Invalid token`;
+                              var responseApiLoginController400_description_break = responseApiLoginController400_description.indexOf('\n');
+                              if (responseApiLoginController400_description_break == -1) {
+                                $("#examples-ApiLoginController-refreshToken-title-400").text("Status: 400 - " + responseApiLoginController400_description);
+                              } else {
+                                $("#examples-ApiLoginController-refreshToken-title-400").text("Status: 400 - " + responseApiLoginController400_description.substring(0, responseApiLoginController400_description_break));
+                                $("#examples-ApiLoginController-refreshToken-description-400").html(responseApiLoginController400_description.substring(responseApiLoginController400_description_break));
+                              }
+                            </script>
+
+
+                            <ul id="responses-detail-ApiLoginController-refreshToken-400" class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-ApiLoginController-refreshToken-400-schema">Schema</a>
+                                </li>
+
+
+
+
+                            </ul>
+
+
+                            <div class="tab-content" id="responses-ApiLoginController-refreshToken-400-wrapper" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-ApiLoginController-refreshToken-400-schema">
+                                  <div id="responses-ApiLoginController-refreshToken-schema-400" class="exampleStyle">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "Invalid token",
+  "content" : {
+    "*/*" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/AuthResponse"
+      }
+    }
+  }
+};
+                                        var schema = findNode('schema',schemaWrapper).schema;
+                                        if (!schema) {
+                                          schema = schemaWrapper.schema;
+                                        }
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else if (schema.items != null && schema.items.$ref != null) {
+                                            schema.items = defsParser.$refs.get(schema.items.$ref);
+                                        } else {
+                                          schemaWrapper.definitions = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-ApiLoginController-refreshToken-400-schema-data').val(JSON.stringify(schema));
+                                        var result = $('#responses-ApiLoginController-refreshToken-schema-400');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-ApiLoginController-refreshToken-400-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
                         </article>
                       </div>
                       <hr>
                   </section>
                 <section id="api-ApiProfileController">
                   <h1>ApiProfileController</h1>
+                    <div id="api-ApiProfileController-checkUsername">
+                      <article id="api-ApiProfileController-checkUsername-0" data-group="User" data-name="checkUsername" data-version="0">
+                        <div class="pull-left">
+                          <h1>checkUsername</h1>
+                          <p>Check if a username is available</p>
+                        </div>
+                        <div class="pull-right"></div>
+                        <div class="clearfix"></div>
+                        <p></p>
+                        <p class="marked"></p>
+                        <p></p>
+                        <br />
+                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/api/users/{username}/check</span></code></pre>
+                        <p>
+                          <h3>Usage and SDK Samples</h3>
+                        </p>
+                        <ul class="nav nav-tabs nav-tabs-examples">
+                          <li class="active"><a href="#examples-ApiProfileController-checkUsername-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-ApiProfileController-checkUsername-0-java">Java</a></li>
+                          <li class=""><a href="#examples-ApiProfileController-checkUsername-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-ApiProfileController-checkUsername-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-ApiProfileController-checkUsername-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-ApiProfileController-checkUsername-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-ApiProfileController-checkUsername-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-ApiProfileController-checkUsername-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-ApiProfileController-checkUsername-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-ApiProfileController-checkUsername-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-ApiProfileController-checkUsername-0-python">Python</a></li>
+                          <li class=""><a href="#examples-ApiProfileController-checkUsername-0-rust">Rust</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="examples-ApiProfileController-checkUsername-0-curl">
+                            <pre class="prettyprint"><code class="language-bsh">curl -X GET \
+ -H "Accept: application/json" \
+ "https://localhost:8443/api/users/{username}/check"
+</code></pre>
+                          </div>
+                          <div class="tab-pane" id="examples-ApiProfileController-checkUsername-0-java">
+                            <pre class="prettyprint"><code class="language-java">import org.openapitools.client.*;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.model.*;
+import org.openapitools.client.api.ApiProfileControllerApi;
+
+import java.io.File;
+import java.util.*;
+
+public class ApiProfileControllerApiExample {
+    public static void main(String[] args) {
+
+        // Create an instance of the API class
+        ApiProfileControllerApi apiInstance = new ApiProfileControllerApi();
+        String username = username_example; // String | 
+
+        try {
+            'Boolean' result = apiInstance.checkUsername(username);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling ApiProfileControllerApi#checkUsername");
+            e.printStackTrace();
+        }
+    }
+}
+</code></pre>
+                          </div>
+
+                          <div class="tab-pane" id="examples-ApiProfileController-checkUsername-0-android">
+                            <pre class="prettyprint"><code class="language-java">import org.openapitools.client.api.ApiProfileControllerApi;
+
+public class ApiProfileControllerApiExample {
+    public static void main(String[] args) {
+        ApiProfileControllerApi apiInstance = new ApiProfileControllerApi();
+        String username = username_example; // String | 
+
+        try {
+            'Boolean' result = apiInstance.checkUsername(username);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling ApiProfileControllerApi#checkUsername");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+  <!--
+  <div class="tab-pane" id="examples-ApiProfileController-checkUsername-0-groovy">
+  <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+  </div> -->
+                            <div class="tab-pane" id="examples-ApiProfileController-checkUsername-0-objc">
+                              <pre class="prettyprint"><code class="language-cpp">
+
+// Create an instance of the API class
+ApiProfileControllerApi *apiInstance = [[ApiProfileControllerApi alloc] init];
+String *username = username_example; //  (default to null)
+
+// Check if a username is available
+[apiInstance checkUsernameWith:username
+              completionHandler: ^('Boolean' output, NSError* error) {
+    if (output) {
+        NSLog(@"%@", output);
+    }
+    if (error) {
+        NSLog(@"Error: %@", error);
+    }
+}];
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-ApiProfileController-checkUsername-0-javascript">
+                              <pre class="prettyprint"><code class="language-js">var OpenApiDefinition = require('open_api_definition');
+
+// Create an instance of the API class
+var api = new OpenApiDefinition.ApiProfileControllerApi()
+var username = username_example; // {String} 
+
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+};
+api.checkUsername(username, callback);
+</code></pre>
+                            </div>
+
+                            <!--<div class="tab-pane" id="examples-ApiProfileController-checkUsername-0-angular">
+              <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+            </div>-->
+                            <div class="tab-pane" id="examples-ApiProfileController-checkUsername-0-csharp">
+                              <pre class="prettyprint"><code class="language-cs">using System;
+using System.Diagnostics;
+using Org.OpenAPITools.Api;
+using Org.OpenAPITools.Client;
+using Org.OpenAPITools.Model;
+
+namespace Example
+{
+    public class checkUsernameExample
+    {
+        public void main()
+        {
+
+            // Create an instance of the API class
+            var apiInstance = new ApiProfileControllerApi();
+            var username = username_example;  // String |  (default to null)
+
+            try {
+                // Check if a username is available
+                'Boolean' result = apiInstance.checkUsername(username);
+                Debug.WriteLine(result);
+            } catch (Exception e) {
+                Debug.Print("Exception when calling ApiProfileControllerApi.checkUsername: " + e.Message );
+            }
+        }
+    }
+}
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-ApiProfileController-checkUsername-0-php">
+                              <pre class="prettyprint"><code class="language-php"><&#63;php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+// Create an instance of the API class
+$api_instance = new OpenAPITools\Client\Api\ApiProfileControllerApi();
+$username = username_example; // String | 
+
+try {
+    $result = $api_instance->checkUsername($username);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling ApiProfileControllerApi->checkUsername: ', $e->getMessage(), PHP_EOL;
+}
+?></code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-ApiProfileController-checkUsername-0-perl">
+                              <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
+use WWW::OPenAPIClient::Configuration;
+use WWW::OPenAPIClient::ApiProfileControllerApi;
+
+# Create an instance of the API class
+my $api_instance = WWW::OPenAPIClient::ApiProfileControllerApi->new();
+my $username = username_example; # String | 
+
+eval {
+    my $result = $api_instance->checkUsername(username => $username);
+    print Dumper($result);
+};
+if ($@) {
+    warn "Exception when calling ApiProfileControllerApi->checkUsername: $@\n";
+}</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-ApiProfileController-checkUsername-0-python">
+                              <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
+import time
+import openapi_client
+from openapi_client.rest import ApiException
+from pprint import pprint
+
+# Create an instance of the API class
+api_instance = openapi_client.ApiProfileControllerApi()
+username = username_example # String |  (default to null)
+
+try:
+    # Check if a username is available
+    api_response = api_instance.check_username(username)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling ApiProfileControllerApi->checkUsername: %s\n" % e)</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-ApiProfileController-checkUsername-0-rust">
+                              <pre class="prettyprint"><code class="language-rust">extern crate ApiProfileControllerApi;
+
+pub fn main() {
+    let username = username_example; // String
+
+    let mut context = ApiProfileControllerApi::Context::default();
+    let result = client.checkUsername(username, &context).wait();
+
+    println!("{:?}", result);
+}
+</code></pre>
+                            </div>
+                          </div>
+
+                          <h2>Scopes</h2>
+                          <table>
+                            
+                          </table>
+
+                          <h2>Parameters</h2>
+
+                            <div class="methodsubtabletitle">Path parameters</div>
+                            <table id="methodsubtable">
+                                <tr>
+                                  <th width="150px">Name</th>
+                                  <th>Description</th>
+                                </tr>
+                                  <tr><td style="width:150px;">username*</td>
+<td>
+
+
+    <div id="d2e199_checkUsername_username">
+        <div class="json-schema-view">
+            <div class="primitive">
+                <span class="type">
+                    String
+                </span>
+
+            </div>
+                <div class="inner required">
+                    Required
+                </div>
+        </div>
+    </div>
+</td>
+</tr>
+
+                            </table>
+
+
+
+
+
+                          <h2>Responses</h2>
+                            <h3 id="examples-ApiProfileController-checkUsername-title-200"></h3>
+                            <p id="examples-ApiProfileController-checkUsername-description-200" class="marked"></p>
+                            <script>
+                              var responseApiProfileController200_description = `Username not available`;
+                              var responseApiProfileController200_description_break = responseApiProfileController200_description.indexOf('\n');
+                              if (responseApiProfileController200_description_break == -1) {
+                                $("#examples-ApiProfileController-checkUsername-title-200").text("Status: 200 - " + responseApiProfileController200_description);
+                              } else {
+                                $("#examples-ApiProfileController-checkUsername-title-200").text("Status: 200 - " + responseApiProfileController200_description.substring(0, responseApiProfileController200_description_break));
+                                $("#examples-ApiProfileController-checkUsername-description-200").html(responseApiProfileController200_description.substring(responseApiProfileController200_description_break));
+                              }
+                            </script>
+
+
+                            <ul id="responses-detail-ApiProfileController-checkUsername-200" class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-ApiProfileController-checkUsername-200-schema">Schema</a>
+                                </li>
+
+
+
+
+                            </ul>
+
+
+                            <div class="tab-content" id="responses-ApiProfileController-checkUsername-200-wrapper" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-ApiProfileController-checkUsername-200-schema">
+                                  <div id="responses-ApiProfileController-checkUsername-schema-200" class="exampleStyle">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "Username not available",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "type" : "boolean"
+      }
+    }
+  }
+};
+                                        var schema = findNode('schema',schemaWrapper).schema;
+                                        if (!schema) {
+                                          schema = schemaWrapper.schema;
+                                        }
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else if (schema.items != null && schema.items.$ref != null) {
+                                            schema.items = defsParser.$refs.get(schema.items.$ref);
+                                        } else {
+                                          schemaWrapper.definitions = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-ApiProfileController-checkUsername-200-schema-data').val(JSON.stringify(schema));
+                                        var result = $('#responses-ApiProfileController-checkUsername-schema-200');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-ApiProfileController-checkUsername-200-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+                        </article>
+                      </div>
+                      <hr>
                     <div id="api-ApiProfileController-getProfileImage">
                       <article id="api-ApiProfileController-getProfileImage-0" data-group="User" data-name="getProfileImage" data-version="0">
                         <div class="pull-left">
@@ -7284,7 +7625,7 @@ pub fn main() {
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-ApiProfileController-getProfileImage-0-curl">
                             <pre class="prettyprint"><code class="language-bsh">curl -X GET \
- -H "Accept: */*,application/json" \
+ -H "Accept: application/json,*/*" \
  "https://localhost:8443/api/users/{username}/image"
 </code></pre>
                           </div>
@@ -7519,72 +7860,6 @@ pub fn main() {
 
 
                           <h2>Responses</h2>
-                            <h3 id="examples-ApiProfileController-getProfileImage-title-404"></h3>
-                            <p id="examples-ApiProfileController-getProfileImage-description-404" class="marked"></p>
-                            <script>
-                              var responseApiProfileController404_description = `Profile image not found`;
-                              var responseApiProfileController404_description_break = responseApiProfileController404_description.indexOf('\n');
-                              if (responseApiProfileController404_description_break == -1) {
-                                $("#examples-ApiProfileController-getProfileImage-title-404").text("Status: 404 - " + responseApiProfileController404_description);
-                              } else {
-                                $("#examples-ApiProfileController-getProfileImage-title-404").text("Status: 404 - " + responseApiProfileController404_description.substring(0, responseApiProfileController404_description_break));
-                                $("#examples-ApiProfileController-getProfileImage-description-404").html(responseApiProfileController404_description.substring(responseApiProfileController404_description_break));
-                              }
-                            </script>
-
-
-                            <ul id="responses-detail-ApiProfileController-getProfileImage-404" class="nav nav-tabs nav-tabs-examples" >
-                                <li class="active">
-                                  <a data-toggle="tab" href="#responses-ApiProfileController-getProfileImage-404-schema">Schema</a>
-                                </li>
-
-
-
-
-                            </ul>
-
-
-                            <div class="tab-content" id="responses-ApiProfileController-getProfileImage-404-wrapper" style='margin-bottom: 10px;'>
-                                <div class="tab-pane active" id="responses-ApiProfileController-getProfileImage-404-schema">
-                                  <div id="responses-ApiProfileController-getProfileImage-schema-404" class="exampleStyle">
-                                    <script>
-                                      $(document).ready(function() {
-                                        var schemaWrapper = {
-  "description" : "Profile image not found",
-  "content" : {
-    "*/*" : {
-      "schema" : {
-        "type" : "object"
-      }
-    }
-  }
-};
-                                        var schema = findNode('schema',schemaWrapper).schema;
-                                        if (!schema) {
-                                          schema = schemaWrapper.schema;
-                                        }
-                                        if (schema.$ref != null) {
-                                          schema = defsParser.$refs.get(schema.$ref);
-                                        } else if (schema.items != null && schema.items.$ref != null) {
-                                            schema.items = defsParser.$refs.get(schema.items.$ref);
-                                        } else {
-                                          schemaWrapper.definitions = Object.assign({}, defs);
-                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
-                                            console.log(err);
-                                          });
-                                        }
-
-                                        var view = new JSONSchemaView(schema, 3);
-                                        $('#responses-ApiProfileController-getProfileImage-404-schema-data').val(JSON.stringify(schema));
-                                        var result = $('#responses-ApiProfileController-getProfileImage-schema-404');
-                                        result.empty();
-                                        result.append(view.render());
-                                      });
-                                    </script>
-                                  </div>
-                                  <input id='responses-ApiProfileController-getProfileImage-404-schema-data' type='hidden' value=''></input>
-                                </div>
-                            </div>
                             <h3 id="examples-ApiProfileController-getProfileImage-title-200"></h3>
                             <p id="examples-ApiProfileController-getProfileImage-description-200" class="marked"></p>
                             <script>
@@ -7649,6 +7924,72 @@ pub fn main() {
                                     </script>
                                   </div>
                                   <input id='responses-ApiProfileController-getProfileImage-200-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+                            <h3 id="examples-ApiProfileController-getProfileImage-title-404"></h3>
+                            <p id="examples-ApiProfileController-getProfileImage-description-404" class="marked"></p>
+                            <script>
+                              var responseApiProfileController404_description = `Profile image not found`;
+                              var responseApiProfileController404_description_break = responseApiProfileController404_description.indexOf('\n');
+                              if (responseApiProfileController404_description_break == -1) {
+                                $("#examples-ApiProfileController-getProfileImage-title-404").text("Status: 404 - " + responseApiProfileController404_description);
+                              } else {
+                                $("#examples-ApiProfileController-getProfileImage-title-404").text("Status: 404 - " + responseApiProfileController404_description.substring(0, responseApiProfileController404_description_break));
+                                $("#examples-ApiProfileController-getProfileImage-description-404").html(responseApiProfileController404_description.substring(responseApiProfileController404_description_break));
+                              }
+                            </script>
+
+
+                            <ul id="responses-detail-ApiProfileController-getProfileImage-404" class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-ApiProfileController-getProfileImage-404-schema">Schema</a>
+                                </li>
+
+
+
+
+                            </ul>
+
+
+                            <div class="tab-content" id="responses-ApiProfileController-getProfileImage-404-wrapper" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-ApiProfileController-getProfileImage-404-schema">
+                                  <div id="responses-ApiProfileController-getProfileImage-schema-404" class="exampleStyle">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "Profile image not found",
+  "content" : {
+    "*/*" : {
+      "schema" : {
+        "type" : "object"
+      }
+    }
+  }
+};
+                                        var schema = findNode('schema',schemaWrapper).schema;
+                                        if (!schema) {
+                                          schema = schemaWrapper.schema;
+                                        }
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else if (schema.items != null && schema.items.$ref != null) {
+                                            schema.items = defsParser.$refs.get(schema.items.$ref);
+                                        } else {
+                                          schemaWrapper.definitions = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-ApiProfileController-getProfileImage-404-schema-data').val(JSON.stringify(schema));
+                                        var result = $('#responses-ApiProfileController-getProfileImage-schema-404');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-ApiProfileController-getProfileImage-404-schema-data' type='hidden' value=''></input>
                                 </div>
                             </div>
                         </article>
@@ -8692,7 +9033,7 @@ $(document).ready(function() {
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-ApiReviewController-checkIfUserReviewedBook-0-curl">
                             <pre class="prettyprint"><code class="language-bsh">curl -X GET \
- -H "Accept: */*,application/json" \
+ -H "Accept: application/json,*/*" \
  "https://localhost:8443/api/reviews/users/{username}/books/{bookID}"
 </code></pre>
                           </div>
@@ -8960,6 +9301,73 @@ pub fn main() {
 
 
                           <h2>Responses</h2>
+                            <h3 id="examples-ApiReviewController-checkIfUserReviewedBook-title-200"></h3>
+                            <p id="examples-ApiReviewController-checkIfUserReviewedBook-description-200" class="marked"></p>
+                            <script>
+                              var responseApiReviewController200_description = `Review found`;
+                              var responseApiReviewController200_description_break = responseApiReviewController200_description.indexOf('\n');
+                              if (responseApiReviewController200_description_break == -1) {
+                                $("#examples-ApiReviewController-checkIfUserReviewedBook-title-200").text("Status: 200 - " + responseApiReviewController200_description);
+                              } else {
+                                $("#examples-ApiReviewController-checkIfUserReviewedBook-title-200").text("Status: 200 - " + responseApiReviewController200_description.substring(0, responseApiReviewController200_description_break));
+                                $("#examples-ApiReviewController-checkIfUserReviewedBook-description-200").html(responseApiReviewController200_description.substring(responseApiReviewController200_description_break));
+                              }
+                            </script>
+
+
+                            <ul id="responses-detail-ApiReviewController-checkIfUserReviewedBook-200" class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-ApiReviewController-checkIfUserReviewedBook-200-schema">Schema</a>
+                                </li>
+
+
+
+
+                            </ul>
+
+
+                            <div class="tab-content" id="responses-ApiReviewController-checkIfUserReviewedBook-200-wrapper" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-ApiReviewController-checkIfUserReviewedBook-200-schema">
+                                  <div id="responses-ApiReviewController-checkIfUserReviewedBook-schema-200" class="exampleStyle">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "Review found",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "type" : "integer",
+        "format" : "int64"
+      }
+    }
+  }
+};
+                                        var schema = findNode('schema',schemaWrapper).schema;
+                                        if (!schema) {
+                                          schema = schemaWrapper.schema;
+                                        }
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else if (schema.items != null && schema.items.$ref != null) {
+                                            schema.items = defsParser.$refs.get(schema.items.$ref);
+                                        } else {
+                                          schemaWrapper.definitions = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-ApiReviewController-checkIfUserReviewedBook-200-schema-data').val(JSON.stringify(schema));
+                                        var result = $('#responses-ApiReviewController-checkIfUserReviewedBook-schema-200');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-ApiReviewController-checkIfUserReviewedBook-200-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
                             <h3 id="examples-ApiReviewController-checkIfUserReviewedBook-title-400"></h3>
                             <p id="examples-ApiReviewController-checkIfUserReviewedBook-description-400" class="marked"></p>
                             <script>
@@ -9090,73 +9498,6 @@ pub fn main() {
                                     </script>
                                   </div>
                                   <input id='responses-ApiReviewController-checkIfUserReviewedBook-404-schema-data' type='hidden' value=''></input>
-                                </div>
-                            </div>
-                            <h3 id="examples-ApiReviewController-checkIfUserReviewedBook-title-200"></h3>
-                            <p id="examples-ApiReviewController-checkIfUserReviewedBook-description-200" class="marked"></p>
-                            <script>
-                              var responseApiReviewController200_description = `Review found`;
-                              var responseApiReviewController200_description_break = responseApiReviewController200_description.indexOf('\n');
-                              if (responseApiReviewController200_description_break == -1) {
-                                $("#examples-ApiReviewController-checkIfUserReviewedBook-title-200").text("Status: 200 - " + responseApiReviewController200_description);
-                              } else {
-                                $("#examples-ApiReviewController-checkIfUserReviewedBook-title-200").text("Status: 200 - " + responseApiReviewController200_description.substring(0, responseApiReviewController200_description_break));
-                                $("#examples-ApiReviewController-checkIfUserReviewedBook-description-200").html(responseApiReviewController200_description.substring(responseApiReviewController200_description_break));
-                              }
-                            </script>
-
-
-                            <ul id="responses-detail-ApiReviewController-checkIfUserReviewedBook-200" class="nav nav-tabs nav-tabs-examples" >
-                                <li class="active">
-                                  <a data-toggle="tab" href="#responses-ApiReviewController-checkIfUserReviewedBook-200-schema">Schema</a>
-                                </li>
-
-
-
-
-                            </ul>
-
-
-                            <div class="tab-content" id="responses-ApiReviewController-checkIfUserReviewedBook-200-wrapper" style='margin-bottom: 10px;'>
-                                <div class="tab-pane active" id="responses-ApiReviewController-checkIfUserReviewedBook-200-schema">
-                                  <div id="responses-ApiReviewController-checkIfUserReviewedBook-schema-200" class="exampleStyle">
-                                    <script>
-                                      $(document).ready(function() {
-                                        var schemaWrapper = {
-  "description" : "Review found",
-  "content" : {
-    "application/json" : {
-      "schema" : {
-        "type" : "integer",
-        "format" : "int64"
-      }
-    }
-  }
-};
-                                        var schema = findNode('schema',schemaWrapper).schema;
-                                        if (!schema) {
-                                          schema = schemaWrapper.schema;
-                                        }
-                                        if (schema.$ref != null) {
-                                          schema = defsParser.$refs.get(schema.$ref);
-                                        } else if (schema.items != null && schema.items.$ref != null) {
-                                            schema.items = defsParser.$refs.get(schema.items.$ref);
-                                        } else {
-                                          schemaWrapper.definitions = Object.assign({}, defs);
-                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
-                                            console.log(err);
-                                          });
-                                        }
-
-                                        var view = new JSONSchemaView(schema, 3);
-                                        $('#responses-ApiReviewController-checkIfUserReviewedBook-200-schema-data').val(JSON.stringify(schema));
-                                        var result = $('#responses-ApiReviewController-checkIfUserReviewedBook-schema-200');
-                                        result.empty();
-                                        result.append(view.render());
-                                      });
-                                    </script>
-                                  </div>
-                                  <input id='responses-ApiReviewController-checkIfUserReviewedBook-200-schema-data' type='hidden' value=''></input>
                                 </div>
                             </div>
                         </article>
@@ -9735,7 +10076,7 @@ pub fn main() {
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-ApiReviewController-getReview-0-curl">
                             <pre class="prettyprint"><code class="language-bsh">curl -X GET \
- -H "Accept: */*,application/json" \
+ -H "Accept: application/json,*/*" \
  "https://localhost:8443/api/reviews/{reviewID}"
 </code></pre>
                           </div>
@@ -9973,72 +10314,6 @@ pub fn main() {
 
 
                           <h2>Responses</h2>
-                            <h3 id="examples-ApiReviewController-getReview-title-404"></h3>
-                            <p id="examples-ApiReviewController-getReview-description-404" class="marked"></p>
-                            <script>
-                              var responseApiReviewController404_description = `Review not found`;
-                              var responseApiReviewController404_description_break = responseApiReviewController404_description.indexOf('\n');
-                              if (responseApiReviewController404_description_break == -1) {
-                                $("#examples-ApiReviewController-getReview-title-404").text("Status: 404 - " + responseApiReviewController404_description);
-                              } else {
-                                $("#examples-ApiReviewController-getReview-title-404").text("Status: 404 - " + responseApiReviewController404_description.substring(0, responseApiReviewController404_description_break));
-                                $("#examples-ApiReviewController-getReview-description-404").html(responseApiReviewController404_description.substring(responseApiReviewController404_description_break));
-                              }
-                            </script>
-
-
-                            <ul id="responses-detail-ApiReviewController-getReview-404" class="nav nav-tabs nav-tabs-examples" >
-                                <li class="active">
-                                  <a data-toggle="tab" href="#responses-ApiReviewController-getReview-404-schema">Schema</a>
-                                </li>
-
-
-
-
-                            </ul>
-
-
-                            <div class="tab-content" id="responses-ApiReviewController-getReview-404-wrapper" style='margin-bottom: 10px;'>
-                                <div class="tab-pane active" id="responses-ApiReviewController-getReview-404-schema">
-                                  <div id="responses-ApiReviewController-getReview-schema-404" class="exampleStyle">
-                                    <script>
-                                      $(document).ready(function() {
-                                        var schemaWrapper = {
-  "description" : "Review not found",
-  "content" : {
-    "*/*" : {
-      "schema" : {
-        "type" : "object"
-      }
-    }
-  }
-};
-                                        var schema = findNode('schema',schemaWrapper).schema;
-                                        if (!schema) {
-                                          schema = schemaWrapper.schema;
-                                        }
-                                        if (schema.$ref != null) {
-                                          schema = defsParser.$refs.get(schema.$ref);
-                                        } else if (schema.items != null && schema.items.$ref != null) {
-                                            schema.items = defsParser.$refs.get(schema.items.$ref);
-                                        } else {
-                                          schemaWrapper.definitions = Object.assign({}, defs);
-                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
-                                            console.log(err);
-                                          });
-                                        }
-
-                                        var view = new JSONSchemaView(schema, 3);
-                                        $('#responses-ApiReviewController-getReview-404-schema-data').val(JSON.stringify(schema));
-                                        var result = $('#responses-ApiReviewController-getReview-schema-404');
-                                        result.empty();
-                                        result.append(view.render());
-                                      });
-                                    </script>
-                                  </div>
-                                  <input id='responses-ApiReviewController-getReview-404-schema-data' type='hidden' value=''></input>
-                                </div>
-                            </div>
                             <h3 id="examples-ApiReviewController-getReview-title-200"></h3>
                             <p id="examples-ApiReviewController-getReview-description-200" class="marked"></p>
                             <script>
@@ -10103,6 +10378,72 @@ pub fn main() {
                                     </script>
                                   </div>
                                   <input id='responses-ApiReviewController-getReview-200-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+                            <h3 id="examples-ApiReviewController-getReview-title-404"></h3>
+                            <p id="examples-ApiReviewController-getReview-description-404" class="marked"></p>
+                            <script>
+                              var responseApiReviewController404_description = `Review not found`;
+                              var responseApiReviewController404_description_break = responseApiReviewController404_description.indexOf('\n');
+                              if (responseApiReviewController404_description_break == -1) {
+                                $("#examples-ApiReviewController-getReview-title-404").text("Status: 404 - " + responseApiReviewController404_description);
+                              } else {
+                                $("#examples-ApiReviewController-getReview-title-404").text("Status: 404 - " + responseApiReviewController404_description.substring(0, responseApiReviewController404_description_break));
+                                $("#examples-ApiReviewController-getReview-description-404").html(responseApiReviewController404_description.substring(responseApiReviewController404_description_break));
+                              }
+                            </script>
+
+
+                            <ul id="responses-detail-ApiReviewController-getReview-404" class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-ApiReviewController-getReview-404-schema">Schema</a>
+                                </li>
+
+
+
+
+                            </ul>
+
+
+                            <div class="tab-content" id="responses-ApiReviewController-getReview-404-wrapper" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-ApiReviewController-getReview-404-schema">
+                                  <div id="responses-ApiReviewController-getReview-schema-404" class="exampleStyle">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "Review not found",
+  "content" : {
+    "*/*" : {
+      "schema" : {
+        "type" : "object"
+      }
+    }
+  }
+};
+                                        var schema = findNode('schema',schemaWrapper).schema;
+                                        if (!schema) {
+                                          schema = schemaWrapper.schema;
+                                        }
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else if (schema.items != null && schema.items.$ref != null) {
+                                            schema.items = defsParser.$refs.get(schema.items.$ref);
+                                        } else {
+                                          schemaWrapper.definitions = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-ApiReviewController-getReview-404-schema-data').val(JSON.stringify(schema));
+                                        var result = $('#responses-ApiReviewController-getReview-schema-404');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-ApiReviewController-getReview-404-schema-data' type='hidden' value=''></input>
                                 </div>
                             </div>
                             <h3 id="examples-ApiReviewController-getReview-title-400"></h3>
@@ -10574,72 +10915,6 @@ pub fn main() {
                                   <input id='responses-ApiReviewController-getReviews1-400-schema-data' type='hidden' value=''></input>
                                 </div>
                             </div>
-                            <h3 id="examples-ApiReviewController-getReviews1-title-200"></h3>
-                            <p id="examples-ApiReviewController-getReviews1-description-200" class="marked"></p>
-                            <script>
-                              var responseApiReviewController200_description = `Reviews found`;
-                              var responseApiReviewController200_description_break = responseApiReviewController200_description.indexOf('\n');
-                              if (responseApiReviewController200_description_break == -1) {
-                                $("#examples-ApiReviewController-getReviews1-title-200").text("Status: 200 - " + responseApiReviewController200_description);
-                              } else {
-                                $("#examples-ApiReviewController-getReviews1-title-200").text("Status: 200 - " + responseApiReviewController200_description.substring(0, responseApiReviewController200_description_break));
-                                $("#examples-ApiReviewController-getReviews1-description-200").html(responseApiReviewController200_description.substring(responseApiReviewController200_description_break));
-                              }
-                            </script>
-
-
-                            <ul id="responses-detail-ApiReviewController-getReviews1-200" class="nav nav-tabs nav-tabs-examples" >
-                                <li class="active">
-                                  <a data-toggle="tab" href="#responses-ApiReviewController-getReviews1-200-schema">Schema</a>
-                                </li>
-
-
-
-
-                            </ul>
-
-
-                            <div class="tab-content" id="responses-ApiReviewController-getReviews1-200-wrapper" style='margin-bottom: 10px;'>
-                                <div class="tab-pane active" id="responses-ApiReviewController-getReviews1-200-schema">
-                                  <div id="responses-ApiReviewController-getReviews1-schema-200" class="exampleStyle">
-                                    <script>
-                                      $(document).ready(function() {
-                                        var schemaWrapper = {
-  "description" : "Reviews found",
-  "content" : {
-    "application/json" : {
-      "schema" : {
-        "$ref" : "#/components/schemas/Review_BasicInfo"
-      }
-    }
-  }
-};
-                                        var schema = findNode('schema',schemaWrapper).schema;
-                                        if (!schema) {
-                                          schema = schemaWrapper.schema;
-                                        }
-                                        if (schema.$ref != null) {
-                                          schema = defsParser.$refs.get(schema.$ref);
-                                        } else if (schema.items != null && schema.items.$ref != null) {
-                                            schema.items = defsParser.$refs.get(schema.items.$ref);
-                                        } else {
-                                          schemaWrapper.definitions = Object.assign({}, defs);
-                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
-                                            console.log(err);
-                                          });
-                                        }
-
-                                        var view = new JSONSchemaView(schema, 3);
-                                        $('#responses-ApiReviewController-getReviews1-200-schema-data').val(JSON.stringify(schema));
-                                        var result = $('#responses-ApiReviewController-getReviews1-schema-200');
-                                        result.empty();
-                                        result.append(view.render());
-                                      });
-                                    </script>
-                                  </div>
-                                  <input id='responses-ApiReviewController-getReviews1-200-schema-data' type='hidden' value=''></input>
-                                </div>
-                            </div>
                             <h3 id="examples-ApiReviewController-getReviews1-title-404"></h3>
                             <p id="examples-ApiReviewController-getReviews1-description-404" class="marked"></p>
                             <script>
@@ -10704,6 +10979,72 @@ pub fn main() {
                                     </script>
                                   </div>
                                   <input id='responses-ApiReviewController-getReviews1-404-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+                            <h3 id="examples-ApiReviewController-getReviews1-title-200"></h3>
+                            <p id="examples-ApiReviewController-getReviews1-description-200" class="marked"></p>
+                            <script>
+                              var responseApiReviewController200_description = `Reviews found`;
+                              var responseApiReviewController200_description_break = responseApiReviewController200_description.indexOf('\n');
+                              if (responseApiReviewController200_description_break == -1) {
+                                $("#examples-ApiReviewController-getReviews1-title-200").text("Status: 200 - " + responseApiReviewController200_description);
+                              } else {
+                                $("#examples-ApiReviewController-getReviews1-title-200").text("Status: 200 - " + responseApiReviewController200_description.substring(0, responseApiReviewController200_description_break));
+                                $("#examples-ApiReviewController-getReviews1-description-200").html(responseApiReviewController200_description.substring(responseApiReviewController200_description_break));
+                              }
+                            </script>
+
+
+                            <ul id="responses-detail-ApiReviewController-getReviews1-200" class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-ApiReviewController-getReviews1-200-schema">Schema</a>
+                                </li>
+
+
+
+
+                            </ul>
+
+
+                            <div class="tab-content" id="responses-ApiReviewController-getReviews1-200-wrapper" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-ApiReviewController-getReviews1-200-schema">
+                                  <div id="responses-ApiReviewController-getReviews1-schema-200" class="exampleStyle">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "Reviews found",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/Review_BasicInfo"
+      }
+    }
+  }
+};
+                                        var schema = findNode('schema',schemaWrapper).schema;
+                                        if (!schema) {
+                                          schema = schemaWrapper.schema;
+                                        }
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else if (schema.items != null && schema.items.$ref != null) {
+                                            schema.items = defsParser.$refs.get(schema.items.$ref);
+                                        } else {
+                                          schemaWrapper.definitions = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-ApiReviewController-getReviews1-200-schema-data').val(JSON.stringify(schema));
+                                        var result = $('#responses-ApiReviewController-getReviews1-schema-200');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-ApiReviewController-getReviews1-200-schema-data' type='hidden' value=''></input>
                                 </div>
                             </div>
                         </article>
@@ -11188,7 +11529,7 @@ pub fn main() {
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-ApiSearchResultsPageController-loadSearchResultsPageBooks-0-curl">
                             <pre class="prettyprint"><code class="language-bsh">curl -X GET \
- -H "Accept: */*,application/json" \
+ -H "Accept: application/json,*/*" \
  "https://localhost:8443/api/books?query=query_example&page=56"
 </code></pre>
                           </div>
@@ -11456,72 +11797,6 @@ pub fn main() {
                             </table>
 
                           <h2>Responses</h2>
-                            <h3 id="examples-ApiSearchResultsPageController-loadSearchResultsPageBooks-title-404"></h3>
-                            <p id="examples-ApiSearchResultsPageController-loadSearchResultsPageBooks-description-404" class="marked"></p>
-                            <script>
-                              var responseApiSearchResultsPageController404_description = `No books found`;
-                              var responseApiSearchResultsPageController404_description_break = responseApiSearchResultsPageController404_description.indexOf('\n');
-                              if (responseApiSearchResultsPageController404_description_break == -1) {
-                                $("#examples-ApiSearchResultsPageController-loadSearchResultsPageBooks-title-404").text("Status: 404 - " + responseApiSearchResultsPageController404_description);
-                              } else {
-                                $("#examples-ApiSearchResultsPageController-loadSearchResultsPageBooks-title-404").text("Status: 404 - " + responseApiSearchResultsPageController404_description.substring(0, responseApiSearchResultsPageController404_description_break));
-                                $("#examples-ApiSearchResultsPageController-loadSearchResultsPageBooks-description-404").html(responseApiSearchResultsPageController404_description.substring(responseApiSearchResultsPageController404_description_break));
-                              }
-                            </script>
-
-
-                            <ul id="responses-detail-ApiSearchResultsPageController-loadSearchResultsPageBooks-404" class="nav nav-tabs nav-tabs-examples" >
-                                <li class="active">
-                                  <a data-toggle="tab" href="#responses-ApiSearchResultsPageController-loadSearchResultsPageBooks-404-schema">Schema</a>
-                                </li>
-
-
-
-
-                            </ul>
-
-
-                            <div class="tab-content" id="responses-ApiSearchResultsPageController-loadSearchResultsPageBooks-404-wrapper" style='margin-bottom: 10px;'>
-                                <div class="tab-pane active" id="responses-ApiSearchResultsPageController-loadSearchResultsPageBooks-404-schema">
-                                  <div id="responses-ApiSearchResultsPageController-loadSearchResultsPageBooks-schema-404" class="exampleStyle">
-                                    <script>
-                                      $(document).ready(function() {
-                                        var schemaWrapper = {
-  "description" : "No books found",
-  "content" : {
-    "*/*" : {
-      "schema" : {
-        "type" : "object"
-      }
-    }
-  }
-};
-                                        var schema = findNode('schema',schemaWrapper).schema;
-                                        if (!schema) {
-                                          schema = schemaWrapper.schema;
-                                        }
-                                        if (schema.$ref != null) {
-                                          schema = defsParser.$refs.get(schema.$ref);
-                                        } else if (schema.items != null && schema.items.$ref != null) {
-                                            schema.items = defsParser.$refs.get(schema.items.$ref);
-                                        } else {
-                                          schemaWrapper.definitions = Object.assign({}, defs);
-                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
-                                            console.log(err);
-                                          });
-                                        }
-
-                                        var view = new JSONSchemaView(schema, 3);
-                                        $('#responses-ApiSearchResultsPageController-loadSearchResultsPageBooks-404-schema-data').val(JSON.stringify(schema));
-                                        var result = $('#responses-ApiSearchResultsPageController-loadSearchResultsPageBooks-schema-404');
-                                        result.empty();
-                                        result.append(view.render());
-                                      });
-                                    </script>
-                                  </div>
-                                  <input id='responses-ApiSearchResultsPageController-loadSearchResultsPageBooks-404-schema-data' type='hidden' value=''></input>
-                                </div>
-                            </div>
                             <h3 id="examples-ApiSearchResultsPageController-loadSearchResultsPageBooks-title-200"></h3>
                             <p id="examples-ApiSearchResultsPageController-loadSearchResultsPageBooks-description-200" class="marked"></p>
                             <script>
@@ -11588,6 +11863,72 @@ pub fn main() {
                                   <input id='responses-ApiSearchResultsPageController-loadSearchResultsPageBooks-200-schema-data' type='hidden' value=''></input>
                                 </div>
                             </div>
+                            <h3 id="examples-ApiSearchResultsPageController-loadSearchResultsPageBooks-title-404"></h3>
+                            <p id="examples-ApiSearchResultsPageController-loadSearchResultsPageBooks-description-404" class="marked"></p>
+                            <script>
+                              var responseApiSearchResultsPageController404_description = `No books found`;
+                              var responseApiSearchResultsPageController404_description_break = responseApiSearchResultsPageController404_description.indexOf('\n');
+                              if (responseApiSearchResultsPageController404_description_break == -1) {
+                                $("#examples-ApiSearchResultsPageController-loadSearchResultsPageBooks-title-404").text("Status: 404 - " + responseApiSearchResultsPageController404_description);
+                              } else {
+                                $("#examples-ApiSearchResultsPageController-loadSearchResultsPageBooks-title-404").text("Status: 404 - " + responseApiSearchResultsPageController404_description.substring(0, responseApiSearchResultsPageController404_description_break));
+                                $("#examples-ApiSearchResultsPageController-loadSearchResultsPageBooks-description-404").html(responseApiSearchResultsPageController404_description.substring(responseApiSearchResultsPageController404_description_break));
+                              }
+                            </script>
+
+
+                            <ul id="responses-detail-ApiSearchResultsPageController-loadSearchResultsPageBooks-404" class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-ApiSearchResultsPageController-loadSearchResultsPageBooks-404-schema">Schema</a>
+                                </li>
+
+
+
+
+                            </ul>
+
+
+                            <div class="tab-content" id="responses-ApiSearchResultsPageController-loadSearchResultsPageBooks-404-wrapper" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-ApiSearchResultsPageController-loadSearchResultsPageBooks-404-schema">
+                                  <div id="responses-ApiSearchResultsPageController-loadSearchResultsPageBooks-schema-404" class="exampleStyle">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "No books found",
+  "content" : {
+    "*/*" : {
+      "schema" : {
+        "type" : "object"
+      }
+    }
+  }
+};
+                                        var schema = findNode('schema',schemaWrapper).schema;
+                                        if (!schema) {
+                                          schema = schemaWrapper.schema;
+                                        }
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else if (schema.items != null && schema.items.$ref != null) {
+                                            schema.items = defsParser.$refs.get(schema.items.$ref);
+                                        } else {
+                                          schemaWrapper.definitions = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-ApiSearchResultsPageController-loadSearchResultsPageBooks-404-schema-data').val(JSON.stringify(schema));
+                                        var result = $('#responses-ApiSearchResultsPageController-loadSearchResultsPageBooks-schema-404');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-ApiSearchResultsPageController-loadSearchResultsPageBooks-404-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
                         </article>
                       </div>
                       <hr>
@@ -11625,7 +11966,7 @@ pub fn main() {
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-ApiSearchResultsPageController-loadSearchResultsPageUsers-0-curl">
                             <pre class="prettyprint"><code class="language-bsh">curl -X GET \
- -H "Accept: */*,application/json" \
+ -H "Accept: application/json,*/*" \
  "https://localhost:8443/api/users?query=query_example&page=56"
 </code></pre>
                           </div>
@@ -11893,72 +12234,6 @@ pub fn main() {
                             </table>
 
                           <h2>Responses</h2>
-                            <h3 id="examples-ApiSearchResultsPageController-loadSearchResultsPageUsers-title-404"></h3>
-                            <p id="examples-ApiSearchResultsPageController-loadSearchResultsPageUsers-description-404" class="marked"></p>
-                            <script>
-                              var responseApiSearchResultsPageController404_description = `No users found`;
-                              var responseApiSearchResultsPageController404_description_break = responseApiSearchResultsPageController404_description.indexOf('\n');
-                              if (responseApiSearchResultsPageController404_description_break == -1) {
-                                $("#examples-ApiSearchResultsPageController-loadSearchResultsPageUsers-title-404").text("Status: 404 - " + responseApiSearchResultsPageController404_description);
-                              } else {
-                                $("#examples-ApiSearchResultsPageController-loadSearchResultsPageUsers-title-404").text("Status: 404 - " + responseApiSearchResultsPageController404_description.substring(0, responseApiSearchResultsPageController404_description_break));
-                                $("#examples-ApiSearchResultsPageController-loadSearchResultsPageUsers-description-404").html(responseApiSearchResultsPageController404_description.substring(responseApiSearchResultsPageController404_description_break));
-                              }
-                            </script>
-
-
-                            <ul id="responses-detail-ApiSearchResultsPageController-loadSearchResultsPageUsers-404" class="nav nav-tabs nav-tabs-examples" >
-                                <li class="active">
-                                  <a data-toggle="tab" href="#responses-ApiSearchResultsPageController-loadSearchResultsPageUsers-404-schema">Schema</a>
-                                </li>
-
-
-
-
-                            </ul>
-
-
-                            <div class="tab-content" id="responses-ApiSearchResultsPageController-loadSearchResultsPageUsers-404-wrapper" style='margin-bottom: 10px;'>
-                                <div class="tab-pane active" id="responses-ApiSearchResultsPageController-loadSearchResultsPageUsers-404-schema">
-                                  <div id="responses-ApiSearchResultsPageController-loadSearchResultsPageUsers-schema-404" class="exampleStyle">
-                                    <script>
-                                      $(document).ready(function() {
-                                        var schemaWrapper = {
-  "description" : "No users found",
-  "content" : {
-    "*/*" : {
-      "schema" : {
-        "type" : "object"
-      }
-    }
-  }
-};
-                                        var schema = findNode('schema',schemaWrapper).schema;
-                                        if (!schema) {
-                                          schema = schemaWrapper.schema;
-                                        }
-                                        if (schema.$ref != null) {
-                                          schema = defsParser.$refs.get(schema.$ref);
-                                        } else if (schema.items != null && schema.items.$ref != null) {
-                                            schema.items = defsParser.$refs.get(schema.items.$ref);
-                                        } else {
-                                          schemaWrapper.definitions = Object.assign({}, defs);
-                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
-                                            console.log(err);
-                                          });
-                                        }
-
-                                        var view = new JSONSchemaView(schema, 3);
-                                        $('#responses-ApiSearchResultsPageController-loadSearchResultsPageUsers-404-schema-data').val(JSON.stringify(schema));
-                                        var result = $('#responses-ApiSearchResultsPageController-loadSearchResultsPageUsers-schema-404');
-                                        result.empty();
-                                        result.append(view.render());
-                                      });
-                                    </script>
-                                  </div>
-                                  <input id='responses-ApiSearchResultsPageController-loadSearchResultsPageUsers-404-schema-data' type='hidden' value=''></input>
-                                </div>
-                            </div>
                             <h3 id="examples-ApiSearchResultsPageController-loadSearchResultsPageUsers-title-200"></h3>
                             <p id="examples-ApiSearchResultsPageController-loadSearchResultsPageUsers-description-200" class="marked"></p>
                             <script>
@@ -12023,6 +12298,72 @@ pub fn main() {
                                     </script>
                                   </div>
                                   <input id='responses-ApiSearchResultsPageController-loadSearchResultsPageUsers-200-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+                            <h3 id="examples-ApiSearchResultsPageController-loadSearchResultsPageUsers-title-404"></h3>
+                            <p id="examples-ApiSearchResultsPageController-loadSearchResultsPageUsers-description-404" class="marked"></p>
+                            <script>
+                              var responseApiSearchResultsPageController404_description = `No users found`;
+                              var responseApiSearchResultsPageController404_description_break = responseApiSearchResultsPageController404_description.indexOf('\n');
+                              if (responseApiSearchResultsPageController404_description_break == -1) {
+                                $("#examples-ApiSearchResultsPageController-loadSearchResultsPageUsers-title-404").text("Status: 404 - " + responseApiSearchResultsPageController404_description);
+                              } else {
+                                $("#examples-ApiSearchResultsPageController-loadSearchResultsPageUsers-title-404").text("Status: 404 - " + responseApiSearchResultsPageController404_description.substring(0, responseApiSearchResultsPageController404_description_break));
+                                $("#examples-ApiSearchResultsPageController-loadSearchResultsPageUsers-description-404").html(responseApiSearchResultsPageController404_description.substring(responseApiSearchResultsPageController404_description_break));
+                              }
+                            </script>
+
+
+                            <ul id="responses-detail-ApiSearchResultsPageController-loadSearchResultsPageUsers-404" class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-ApiSearchResultsPageController-loadSearchResultsPageUsers-404-schema">Schema</a>
+                                </li>
+
+
+
+
+                            </ul>
+
+
+                            <div class="tab-content" id="responses-ApiSearchResultsPageController-loadSearchResultsPageUsers-404-wrapper" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-ApiSearchResultsPageController-loadSearchResultsPageUsers-404-schema">
+                                  <div id="responses-ApiSearchResultsPageController-loadSearchResultsPageUsers-schema-404" class="exampleStyle">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "No users found",
+  "content" : {
+    "*/*" : {
+      "schema" : {
+        "type" : "object"
+      }
+    }
+  }
+};
+                                        var schema = findNode('schema',schemaWrapper).schema;
+                                        if (!schema) {
+                                          schema = schemaWrapper.schema;
+                                        }
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else if (schema.items != null && schema.items.$ref != null) {
+                                            schema.items = defsParser.$refs.get(schema.items.$ref);
+                                        } else {
+                                          schemaWrapper.definitions = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-ApiSearchResultsPageController-loadSearchResultsPageUsers-404-schema-data').val(JSON.stringify(schema));
+                                        var result = $('#responses-ApiSearchResultsPageController-loadSearchResultsPageUsers-schema-404');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-ApiSearchResultsPageController-loadSearchResultsPageUsers-404-schema-data' type='hidden' value=''></input>
                                 </div>
                             </div>
                         </article>
@@ -12324,6 +12665,28 @@ $(document).ready(function() {
 
 
                           <h2>Responses</h2>
+                            <h3 id="examples-ApiSignUpController-addUser-title-409"></h3>
+                            <p id="examples-ApiSignUpController-addUser-description-409" class="marked"></p>
+                            <script>
+                              var responseApiSignUpController409_description = `Invalid parameter`;
+                              var responseApiSignUpController409_description_break = responseApiSignUpController409_description.indexOf('\n');
+                              if (responseApiSignUpController409_description_break == -1) {
+                                $("#examples-ApiSignUpController-addUser-title-409").text("Status: 409 - " + responseApiSignUpController409_description);
+                              } else {
+                                $("#examples-ApiSignUpController-addUser-title-409").text("Status: 409 - " + responseApiSignUpController409_description.substring(0, responseApiSignUpController409_description_break));
+                                $("#examples-ApiSignUpController-addUser-description-409").html(responseApiSignUpController409_description.substring(responseApiSignUpController409_description_break));
+                              }
+                            </script>
+
+
+                            <ul id="responses-detail-ApiSignUpController-addUser-409" class="nav nav-tabs nav-tabs-examples" >
+
+
+                            </ul>
+
+
+                            <div class="tab-content" id="responses-ApiSignUpController-addUser-409-wrapper" style='margin-bottom: 10px;'>
+                            </div>
                             <h3 id="examples-ApiSignUpController-addUser-title-400"></h3>
                             <p id="examples-ApiSignUpController-addUser-description-400" class="marked"></p>
                             <script>
@@ -12411,28 +12774,6 @@ $(document).ready(function() {
                                   </div>
                                   <input id='responses-ApiSignUpController-addUser-201-schema-data' type='hidden' value=''></input>
                                 </div>
-                            </div>
-                            <h3 id="examples-ApiSignUpController-addUser-title-409"></h3>
-                            <p id="examples-ApiSignUpController-addUser-description-409" class="marked"></p>
-                            <script>
-                              var responseApiSignUpController409_description = `Invalid parameter`;
-                              var responseApiSignUpController409_description_break = responseApiSignUpController409_description.indexOf('\n');
-                              if (responseApiSignUpController409_description_break == -1) {
-                                $("#examples-ApiSignUpController-addUser-title-409").text("Status: 409 - " + responseApiSignUpController409_description);
-                              } else {
-                                $("#examples-ApiSignUpController-addUser-title-409").text("Status: 409 - " + responseApiSignUpController409_description.substring(0, responseApiSignUpController409_description_break));
-                                $("#examples-ApiSignUpController-addUser-description-409").html(responseApiSignUpController409_description.substring(responseApiSignUpController409_description_break));
-                              }
-                            </script>
-
-
-                            <ul id="responses-detail-ApiSignUpController-addUser-409" class="nav nav-tabs nav-tabs-examples" >
-
-
-                            </ul>
-
-
-                            <div class="tab-content" id="responses-ApiSignUpController-addUser-409-wrapper" style='margin-bottom: 10px;'>
                             </div>
                         </article>
                       </div>
@@ -17242,6 +17583,28 @@ pub fn main() {
 
 
                           <h2>Responses</h2>
+                            <h3 id="examples-ApiUserListsController-addReadBook-title-404"></h3>
+                            <p id="examples-ApiUserListsController-addReadBook-description-404" class="marked"></p>
+                            <script>
+                              var responseApiUserListsController404_description = `Book not found`;
+                              var responseApiUserListsController404_description_break = responseApiUserListsController404_description.indexOf('\n');
+                              if (responseApiUserListsController404_description_break == -1) {
+                                $("#examples-ApiUserListsController-addReadBook-title-404").text("Status: 404 - " + responseApiUserListsController404_description);
+                              } else {
+                                $("#examples-ApiUserListsController-addReadBook-title-404").text("Status: 404 - " + responseApiUserListsController404_description.substring(0, responseApiUserListsController404_description_break));
+                                $("#examples-ApiUserListsController-addReadBook-description-404").html(responseApiUserListsController404_description.substring(responseApiUserListsController404_description_break));
+                              }
+                            </script>
+
+
+                            <ul id="responses-detail-ApiUserListsController-addReadBook-404" class="nav nav-tabs nav-tabs-examples" >
+
+
+                            </ul>
+
+
+                            <div class="tab-content" id="responses-ApiUserListsController-addReadBook-404-wrapper" style='margin-bottom: 10px;'>
+                            </div>
                             <h3 id="examples-ApiUserListsController-addReadBook-title-200"></h3>
                             <p id="examples-ApiUserListsController-addReadBook-description-200" class="marked"></p>
                             <script>
@@ -17308,28 +17671,6 @@ pub fn main() {
                                   <input id='responses-ApiUserListsController-addReadBook-200-schema-data' type='hidden' value=''></input>
                                 </div>
                             </div>
-                            <h3 id="examples-ApiUserListsController-addReadBook-title-401"></h3>
-                            <p id="examples-ApiUserListsController-addReadBook-description-401" class="marked"></p>
-                            <script>
-                              var responseApiUserListsController401_description = `Unauthorized`;
-                              var responseApiUserListsController401_description_break = responseApiUserListsController401_description.indexOf('\n');
-                              if (responseApiUserListsController401_description_break == -1) {
-                                $("#examples-ApiUserListsController-addReadBook-title-401").text("Status: 401 - " + responseApiUserListsController401_description);
-                              } else {
-                                $("#examples-ApiUserListsController-addReadBook-title-401").text("Status: 401 - " + responseApiUserListsController401_description.substring(0, responseApiUserListsController401_description_break));
-                                $("#examples-ApiUserListsController-addReadBook-description-401").html(responseApiUserListsController401_description.substring(responseApiUserListsController401_description_break));
-                              }
-                            </script>
-
-
-                            <ul id="responses-detail-ApiUserListsController-addReadBook-401" class="nav nav-tabs nav-tabs-examples" >
-
-
-                            </ul>
-
-
-                            <div class="tab-content" id="responses-ApiUserListsController-addReadBook-401-wrapper" style='margin-bottom: 10px;'>
-                            </div>
                             <h3 id="examples-ApiUserListsController-addReadBook-title-400"></h3>
                             <p id="examples-ApiUserListsController-addReadBook-description-400" class="marked"></p>
                             <script>
@@ -17352,27 +17693,27 @@ pub fn main() {
 
                             <div class="tab-content" id="responses-ApiUserListsController-addReadBook-400-wrapper" style='margin-bottom: 10px;'>
                             </div>
-                            <h3 id="examples-ApiUserListsController-addReadBook-title-404"></h3>
-                            <p id="examples-ApiUserListsController-addReadBook-description-404" class="marked"></p>
+                            <h3 id="examples-ApiUserListsController-addReadBook-title-401"></h3>
+                            <p id="examples-ApiUserListsController-addReadBook-description-401" class="marked"></p>
                             <script>
-                              var responseApiUserListsController404_description = `Book not found`;
-                              var responseApiUserListsController404_description_break = responseApiUserListsController404_description.indexOf('\n');
-                              if (responseApiUserListsController404_description_break == -1) {
-                                $("#examples-ApiUserListsController-addReadBook-title-404").text("Status: 404 - " + responseApiUserListsController404_description);
+                              var responseApiUserListsController401_description = `Unauthorized`;
+                              var responseApiUserListsController401_description_break = responseApiUserListsController401_description.indexOf('\n');
+                              if (responseApiUserListsController401_description_break == -1) {
+                                $("#examples-ApiUserListsController-addReadBook-title-401").text("Status: 401 - " + responseApiUserListsController401_description);
                               } else {
-                                $("#examples-ApiUserListsController-addReadBook-title-404").text("Status: 404 - " + responseApiUserListsController404_description.substring(0, responseApiUserListsController404_description_break));
-                                $("#examples-ApiUserListsController-addReadBook-description-404").html(responseApiUserListsController404_description.substring(responseApiUserListsController404_description_break));
+                                $("#examples-ApiUserListsController-addReadBook-title-401").text("Status: 401 - " + responseApiUserListsController401_description.substring(0, responseApiUserListsController401_description_break));
+                                $("#examples-ApiUserListsController-addReadBook-description-401").html(responseApiUserListsController401_description.substring(responseApiUserListsController401_description_break));
                               }
                             </script>
 
 
-                            <ul id="responses-detail-ApiUserListsController-addReadBook-404" class="nav nav-tabs nav-tabs-examples" >
+                            <ul id="responses-detail-ApiUserListsController-addReadBook-401" class="nav nav-tabs nav-tabs-examples" >
 
 
                             </ul>
 
 
-                            <div class="tab-content" id="responses-ApiUserListsController-addReadBook-404-wrapper" style='margin-bottom: 10px;'>
+                            <div class="tab-content" id="responses-ApiUserListsController-addReadBook-401-wrapper" style='margin-bottom: 10px;'>
                             </div>
                         </article>
                       </div>
@@ -17649,27 +17990,27 @@ pub fn main() {
 
 
                           <h2>Responses</h2>
-                            <h3 id="examples-ApiUserListsController-addReadingBook-title-401"></h3>
-                            <p id="examples-ApiUserListsController-addReadingBook-description-401" class="marked"></p>
+                            <h3 id="examples-ApiUserListsController-addReadingBook-title-404"></h3>
+                            <p id="examples-ApiUserListsController-addReadingBook-description-404" class="marked"></p>
                             <script>
-                              var responseApiUserListsController401_description = `Unauthorized`;
-                              var responseApiUserListsController401_description_break = responseApiUserListsController401_description.indexOf('\n');
-                              if (responseApiUserListsController401_description_break == -1) {
-                                $("#examples-ApiUserListsController-addReadingBook-title-401").text("Status: 401 - " + responseApiUserListsController401_description);
+                              var responseApiUserListsController404_description = `Book not found`;
+                              var responseApiUserListsController404_description_break = responseApiUserListsController404_description.indexOf('\n');
+                              if (responseApiUserListsController404_description_break == -1) {
+                                $("#examples-ApiUserListsController-addReadingBook-title-404").text("Status: 404 - " + responseApiUserListsController404_description);
                               } else {
-                                $("#examples-ApiUserListsController-addReadingBook-title-401").text("Status: 401 - " + responseApiUserListsController401_description.substring(0, responseApiUserListsController401_description_break));
-                                $("#examples-ApiUserListsController-addReadingBook-description-401").html(responseApiUserListsController401_description.substring(responseApiUserListsController401_description_break));
+                                $("#examples-ApiUserListsController-addReadingBook-title-404").text("Status: 404 - " + responseApiUserListsController404_description.substring(0, responseApiUserListsController404_description_break));
+                                $("#examples-ApiUserListsController-addReadingBook-description-404").html(responseApiUserListsController404_description.substring(responseApiUserListsController404_description_break));
                               }
                             </script>
 
 
-                            <ul id="responses-detail-ApiUserListsController-addReadingBook-401" class="nav nav-tabs nav-tabs-examples" >
+                            <ul id="responses-detail-ApiUserListsController-addReadingBook-404" class="nav nav-tabs nav-tabs-examples" >
 
 
                             </ul>
 
 
-                            <div class="tab-content" id="responses-ApiUserListsController-addReadingBook-401-wrapper" style='margin-bottom: 10px;'>
+                            <div class="tab-content" id="responses-ApiUserListsController-addReadingBook-404-wrapper" style='margin-bottom: 10px;'>
                             </div>
                             <h3 id="examples-ApiUserListsController-addReadingBook-title-400"></h3>
                             <p id="examples-ApiUserListsController-addReadingBook-description-400" class="marked"></p>
@@ -17759,27 +18100,27 @@ pub fn main() {
                                   <input id='responses-ApiUserListsController-addReadingBook-200-schema-data' type='hidden' value=''></input>
                                 </div>
                             </div>
-                            <h3 id="examples-ApiUserListsController-addReadingBook-title-404"></h3>
-                            <p id="examples-ApiUserListsController-addReadingBook-description-404" class="marked"></p>
+                            <h3 id="examples-ApiUserListsController-addReadingBook-title-401"></h3>
+                            <p id="examples-ApiUserListsController-addReadingBook-description-401" class="marked"></p>
                             <script>
-                              var responseApiUserListsController404_description = `Book not found`;
-                              var responseApiUserListsController404_description_break = responseApiUserListsController404_description.indexOf('\n');
-                              if (responseApiUserListsController404_description_break == -1) {
-                                $("#examples-ApiUserListsController-addReadingBook-title-404").text("Status: 404 - " + responseApiUserListsController404_description);
+                              var responseApiUserListsController401_description = `Unauthorized`;
+                              var responseApiUserListsController401_description_break = responseApiUserListsController401_description.indexOf('\n');
+                              if (responseApiUserListsController401_description_break == -1) {
+                                $("#examples-ApiUserListsController-addReadingBook-title-401").text("Status: 401 - " + responseApiUserListsController401_description);
                               } else {
-                                $("#examples-ApiUserListsController-addReadingBook-title-404").text("Status: 404 - " + responseApiUserListsController404_description.substring(0, responseApiUserListsController404_description_break));
-                                $("#examples-ApiUserListsController-addReadingBook-description-404").html(responseApiUserListsController404_description.substring(responseApiUserListsController404_description_break));
+                                $("#examples-ApiUserListsController-addReadingBook-title-401").text("Status: 401 - " + responseApiUserListsController401_description.substring(0, responseApiUserListsController401_description_break));
+                                $("#examples-ApiUserListsController-addReadingBook-description-401").html(responseApiUserListsController401_description.substring(responseApiUserListsController401_description_break));
                               }
                             </script>
 
 
-                            <ul id="responses-detail-ApiUserListsController-addReadingBook-404" class="nav nav-tabs nav-tabs-examples" >
+                            <ul id="responses-detail-ApiUserListsController-addReadingBook-401" class="nav nav-tabs nav-tabs-examples" >
 
 
                             </ul>
 
 
-                            <div class="tab-content" id="responses-ApiUserListsController-addReadingBook-404-wrapper" style='margin-bottom: 10px;'>
+                            <div class="tab-content" id="responses-ApiUserListsController-addReadingBook-401-wrapper" style='margin-bottom: 10px;'>
                             </div>
                         </article>
                       </div>
@@ -18056,49 +18397,27 @@ pub fn main() {
 
 
                           <h2>Responses</h2>
-                            <h3 id="examples-ApiUserListsController-addWantedBook-title-401"></h3>
-                            <p id="examples-ApiUserListsController-addWantedBook-description-401" class="marked"></p>
+                            <h3 id="examples-ApiUserListsController-addWantedBook-title-404"></h3>
+                            <p id="examples-ApiUserListsController-addWantedBook-description-404" class="marked"></p>
                             <script>
-                              var responseApiUserListsController401_description = `Unauthorized`;
-                              var responseApiUserListsController401_description_break = responseApiUserListsController401_description.indexOf('\n');
-                              if (responseApiUserListsController401_description_break == -1) {
-                                $("#examples-ApiUserListsController-addWantedBook-title-401").text("Status: 401 - " + responseApiUserListsController401_description);
+                              var responseApiUserListsController404_description = `Book not found`;
+                              var responseApiUserListsController404_description_break = responseApiUserListsController404_description.indexOf('\n');
+                              if (responseApiUserListsController404_description_break == -1) {
+                                $("#examples-ApiUserListsController-addWantedBook-title-404").text("Status: 404 - " + responseApiUserListsController404_description);
                               } else {
-                                $("#examples-ApiUserListsController-addWantedBook-title-401").text("Status: 401 - " + responseApiUserListsController401_description.substring(0, responseApiUserListsController401_description_break));
-                                $("#examples-ApiUserListsController-addWantedBook-description-401").html(responseApiUserListsController401_description.substring(responseApiUserListsController401_description_break));
+                                $("#examples-ApiUserListsController-addWantedBook-title-404").text("Status: 404 - " + responseApiUserListsController404_description.substring(0, responseApiUserListsController404_description_break));
+                                $("#examples-ApiUserListsController-addWantedBook-description-404").html(responseApiUserListsController404_description.substring(responseApiUserListsController404_description_break));
                               }
                             </script>
 
 
-                            <ul id="responses-detail-ApiUserListsController-addWantedBook-401" class="nav nav-tabs nav-tabs-examples" >
+                            <ul id="responses-detail-ApiUserListsController-addWantedBook-404" class="nav nav-tabs nav-tabs-examples" >
 
 
                             </ul>
 
 
-                            <div class="tab-content" id="responses-ApiUserListsController-addWantedBook-401-wrapper" style='margin-bottom: 10px;'>
-                            </div>
-                            <h3 id="examples-ApiUserListsController-addWantedBook-title-400"></h3>
-                            <p id="examples-ApiUserListsController-addWantedBook-description-400" class="marked"></p>
-                            <script>
-                              var responseApiUserListsController400_description = `Invalid book ID`;
-                              var responseApiUserListsController400_description_break = responseApiUserListsController400_description.indexOf('\n');
-                              if (responseApiUserListsController400_description_break == -1) {
-                                $("#examples-ApiUserListsController-addWantedBook-title-400").text("Status: 400 - " + responseApiUserListsController400_description);
-                              } else {
-                                $("#examples-ApiUserListsController-addWantedBook-title-400").text("Status: 400 - " + responseApiUserListsController400_description.substring(0, responseApiUserListsController400_description_break));
-                                $("#examples-ApiUserListsController-addWantedBook-description-400").html(responseApiUserListsController400_description.substring(responseApiUserListsController400_description_break));
-                              }
-                            </script>
-
-
-                            <ul id="responses-detail-ApiUserListsController-addWantedBook-400" class="nav nav-tabs nav-tabs-examples" >
-
-
-                            </ul>
-
-
-                            <div class="tab-content" id="responses-ApiUserListsController-addWantedBook-400-wrapper" style='margin-bottom: 10px;'>
+                            <div class="tab-content" id="responses-ApiUserListsController-addWantedBook-404-wrapper" style='margin-bottom: 10px;'>
                             </div>
                             <h3 id="examples-ApiUserListsController-addWantedBook-title-200"></h3>
                             <p id="examples-ApiUserListsController-addWantedBook-description-200" class="marked"></p>
@@ -18166,27 +18485,49 @@ pub fn main() {
                                   <input id='responses-ApiUserListsController-addWantedBook-200-schema-data' type='hidden' value=''></input>
                                 </div>
                             </div>
-                            <h3 id="examples-ApiUserListsController-addWantedBook-title-404"></h3>
-                            <p id="examples-ApiUserListsController-addWantedBook-description-404" class="marked"></p>
+                            <h3 id="examples-ApiUserListsController-addWantedBook-title-400"></h3>
+                            <p id="examples-ApiUserListsController-addWantedBook-description-400" class="marked"></p>
                             <script>
-                              var responseApiUserListsController404_description = `Book not found`;
-                              var responseApiUserListsController404_description_break = responseApiUserListsController404_description.indexOf('\n');
-                              if (responseApiUserListsController404_description_break == -1) {
-                                $("#examples-ApiUserListsController-addWantedBook-title-404").text("Status: 404 - " + responseApiUserListsController404_description);
+                              var responseApiUserListsController400_description = `Invalid book ID`;
+                              var responseApiUserListsController400_description_break = responseApiUserListsController400_description.indexOf('\n');
+                              if (responseApiUserListsController400_description_break == -1) {
+                                $("#examples-ApiUserListsController-addWantedBook-title-400").text("Status: 400 - " + responseApiUserListsController400_description);
                               } else {
-                                $("#examples-ApiUserListsController-addWantedBook-title-404").text("Status: 404 - " + responseApiUserListsController404_description.substring(0, responseApiUserListsController404_description_break));
-                                $("#examples-ApiUserListsController-addWantedBook-description-404").html(responseApiUserListsController404_description.substring(responseApiUserListsController404_description_break));
+                                $("#examples-ApiUserListsController-addWantedBook-title-400").text("Status: 400 - " + responseApiUserListsController400_description.substring(0, responseApiUserListsController400_description_break));
+                                $("#examples-ApiUserListsController-addWantedBook-description-400").html(responseApiUserListsController400_description.substring(responseApiUserListsController400_description_break));
                               }
                             </script>
 
 
-                            <ul id="responses-detail-ApiUserListsController-addWantedBook-404" class="nav nav-tabs nav-tabs-examples" >
+                            <ul id="responses-detail-ApiUserListsController-addWantedBook-400" class="nav nav-tabs nav-tabs-examples" >
 
 
                             </ul>
 
 
-                            <div class="tab-content" id="responses-ApiUserListsController-addWantedBook-404-wrapper" style='margin-bottom: 10px;'>
+                            <div class="tab-content" id="responses-ApiUserListsController-addWantedBook-400-wrapper" style='margin-bottom: 10px;'>
+                            </div>
+                            <h3 id="examples-ApiUserListsController-addWantedBook-title-401"></h3>
+                            <p id="examples-ApiUserListsController-addWantedBook-description-401" class="marked"></p>
+                            <script>
+                              var responseApiUserListsController401_description = `Unauthorized`;
+                              var responseApiUserListsController401_description_break = responseApiUserListsController401_description.indexOf('\n');
+                              if (responseApiUserListsController401_description_break == -1) {
+                                $("#examples-ApiUserListsController-addWantedBook-title-401").text("Status: 401 - " + responseApiUserListsController401_description);
+                              } else {
+                                $("#examples-ApiUserListsController-addWantedBook-title-401").text("Status: 401 - " + responseApiUserListsController401_description.substring(0, responseApiUserListsController401_description_break));
+                                $("#examples-ApiUserListsController-addWantedBook-description-401").html(responseApiUserListsController401_description.substring(responseApiUserListsController401_description_break));
+                              }
+                            </script>
+
+
+                            <ul id="responses-detail-ApiUserListsController-addWantedBook-401" class="nav nav-tabs nav-tabs-examples" >
+
+
+                            </ul>
+
+
+                            <div class="tab-content" id="responses-ApiUserListsController-addWantedBook-401-wrapper" style='margin-bottom: 10px;'>
                             </div>
                         </article>
                       </div>
@@ -21383,6 +21724,28 @@ pub fn main() {
 
 
                           <h2>Responses</h2>
+                            <h3 id="examples-ApiUserListsController-removeBookFromLists-title-404"></h3>
+                            <p id="examples-ApiUserListsController-removeBookFromLists-description-404" class="marked"></p>
+                            <script>
+                              var responseApiUserListsController404_description = `Book not found`;
+                              var responseApiUserListsController404_description_break = responseApiUserListsController404_description.indexOf('\n');
+                              if (responseApiUserListsController404_description_break == -1) {
+                                $("#examples-ApiUserListsController-removeBookFromLists-title-404").text("Status: 404 - " + responseApiUserListsController404_description);
+                              } else {
+                                $("#examples-ApiUserListsController-removeBookFromLists-title-404").text("Status: 404 - " + responseApiUserListsController404_description.substring(0, responseApiUserListsController404_description_break));
+                                $("#examples-ApiUserListsController-removeBookFromLists-description-404").html(responseApiUserListsController404_description.substring(responseApiUserListsController404_description_break));
+                              }
+                            </script>
+
+
+                            <ul id="responses-detail-ApiUserListsController-removeBookFromLists-404" class="nav nav-tabs nav-tabs-examples" >
+
+
+                            </ul>
+
+
+                            <div class="tab-content" id="responses-ApiUserListsController-removeBookFromLists-404-wrapper" style='margin-bottom: 10px;'>
+                            </div>
                             <h3 id="examples-ApiUserListsController-removeBookFromLists-title-200"></h3>
                             <p id="examples-ApiUserListsController-removeBookFromLists-description-200" class="marked"></p>
                             <script>
@@ -21449,28 +21812,6 @@ pub fn main() {
                                   <input id='responses-ApiUserListsController-removeBookFromLists-200-schema-data' type='hidden' value=''></input>
                                 </div>
                             </div>
-                            <h3 id="examples-ApiUserListsController-removeBookFromLists-title-401"></h3>
-                            <p id="examples-ApiUserListsController-removeBookFromLists-description-401" class="marked"></p>
-                            <script>
-                              var responseApiUserListsController401_description = `Unauthorized`;
-                              var responseApiUserListsController401_description_break = responseApiUserListsController401_description.indexOf('\n');
-                              if (responseApiUserListsController401_description_break == -1) {
-                                $("#examples-ApiUserListsController-removeBookFromLists-title-401").text("Status: 401 - " + responseApiUserListsController401_description);
-                              } else {
-                                $("#examples-ApiUserListsController-removeBookFromLists-title-401").text("Status: 401 - " + responseApiUserListsController401_description.substring(0, responseApiUserListsController401_description_break));
-                                $("#examples-ApiUserListsController-removeBookFromLists-description-401").html(responseApiUserListsController401_description.substring(responseApiUserListsController401_description_break));
-                              }
-                            </script>
-
-
-                            <ul id="responses-detail-ApiUserListsController-removeBookFromLists-401" class="nav nav-tabs nav-tabs-examples" >
-
-
-                            </ul>
-
-
-                            <div class="tab-content" id="responses-ApiUserListsController-removeBookFromLists-401-wrapper" style='margin-bottom: 10px;'>
-                            </div>
                             <h3 id="examples-ApiUserListsController-removeBookFromLists-title-400"></h3>
                             <p id="examples-ApiUserListsController-removeBookFromLists-description-400" class="marked"></p>
                             <script>
@@ -21493,27 +21834,27 @@ pub fn main() {
 
                             <div class="tab-content" id="responses-ApiUserListsController-removeBookFromLists-400-wrapper" style='margin-bottom: 10px;'>
                             </div>
-                            <h3 id="examples-ApiUserListsController-removeBookFromLists-title-404"></h3>
-                            <p id="examples-ApiUserListsController-removeBookFromLists-description-404" class="marked"></p>
+                            <h3 id="examples-ApiUserListsController-removeBookFromLists-title-401"></h3>
+                            <p id="examples-ApiUserListsController-removeBookFromLists-description-401" class="marked"></p>
                             <script>
-                              var responseApiUserListsController404_description = `Book not found`;
-                              var responseApiUserListsController404_description_break = responseApiUserListsController404_description.indexOf('\n');
-                              if (responseApiUserListsController404_description_break == -1) {
-                                $("#examples-ApiUserListsController-removeBookFromLists-title-404").text("Status: 404 - " + responseApiUserListsController404_description);
+                              var responseApiUserListsController401_description = `Unauthorized`;
+                              var responseApiUserListsController401_description_break = responseApiUserListsController401_description.indexOf('\n');
+                              if (responseApiUserListsController401_description_break == -1) {
+                                $("#examples-ApiUserListsController-removeBookFromLists-title-401").text("Status: 401 - " + responseApiUserListsController401_description);
                               } else {
-                                $("#examples-ApiUserListsController-removeBookFromLists-title-404").text("Status: 404 - " + responseApiUserListsController404_description.substring(0, responseApiUserListsController404_description_break));
-                                $("#examples-ApiUserListsController-removeBookFromLists-description-404").html(responseApiUserListsController404_description.substring(responseApiUserListsController404_description_break));
+                                $("#examples-ApiUserListsController-removeBookFromLists-title-401").text("Status: 401 - " + responseApiUserListsController401_description.substring(0, responseApiUserListsController401_description_break));
+                                $("#examples-ApiUserListsController-removeBookFromLists-description-401").html(responseApiUserListsController401_description.substring(responseApiUserListsController401_description_break));
                               }
                             </script>
 
 
-                            <ul id="responses-detail-ApiUserListsController-removeBookFromLists-404" class="nav nav-tabs nav-tabs-examples" >
+                            <ul id="responses-detail-ApiUserListsController-removeBookFromLists-401" class="nav nav-tabs nav-tabs-examples" >
 
 
                             </ul>
 
 
-                            <div class="tab-content" id="responses-ApiUserListsController-removeBookFromLists-404-wrapper" style='margin-bottom: 10px;'>
+                            <div class="tab-content" id="responses-ApiUserListsController-removeBookFromLists-401-wrapper" style='margin-bottom: 10px;'>
                             </div>
                         </article>
                       </div>

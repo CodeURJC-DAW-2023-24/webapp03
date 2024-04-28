@@ -65,20 +65,19 @@
 - [Participación](https://github.com/CodeURJC-DAW-2023-24/webapp03/tree/main?tab=readme-ov-file#-participaci%C3%B3n)
 
 ## 📹 Vídeo de demostración
-[<img height="100%" width="80%" alt="Vídeo de demostración" src="https://img.youtube.com/vi/1J9J9J9J9J9/0.jpg"/>](https://www.youtube.com/watch?v=1J9J9J9J9J9)
+[<img alt="Vídeo demostración" height="80%" width="80%" src="https://img.youtube.com/vi/FlzILQi_4Gg/0.jpg"/>](https://www.youtube.com/watch?v=FlzILQi_4Gg)
 ### Guión del vídeo:
-- [0:00]() Acceso a todas las páginas permitidas para un usuario anónimo.
+- [0:47](https://youtu.be/FlzILQi_4Gg?t=47) Acceso a todas las páginas permitidas para un usuario anónimo.
 
-- [0:00]() Inicio de sesión como usuario estándar y funcionalidades permitidas éste.
+- [3:09](https://youtu.be/FlzILQi_4Gg?t=189) Inicio de sesión como usuario estándar y funcionalidades permitidas del mismo.
 
-- [0:00]() Variación de la información visible entre distintos usuarios y distintos clientes (MVC y SPA).
+- [4:31](https://youtu.be/FlzILQi_4Gg?t=271) Modificación de un recurso y su persistencia.
 
-- [0:00]() Modificación de un recurso y su persistencia.
+- [5:09](https://youtu.be/FlzILQi_4Gg?t=309) Subida de una imagen.
 
-- [0:00]() Subida de una imagen y su actualización en la base de datos (ver request PUT en Network de Devtools).
+- [5:30](https://youtu.be/FlzILQi_4Gg?t=330) Inicio de sesión como administrador y nuevas funcionalidades accesibles para él.
 
-- [0:00]() Inicio de sesión como administrador y nuevas funcionalidades accesibles para él.
-
+- [7:54](https://youtu.be/FlzILQi_4Gg?t=474) Variación de la información visible entre distintos usuarios y distintos clientes (MVC y SPA).
 
 ## 💻 Autores:
 | Nombre                            | Correo                              | Cuenta                                          | 
@@ -101,15 +100,15 @@ Se utilizará la herramienta de trabajo "Trello" para facilitar la coordinación
 
 ## 👥 Permisos de los usuarios
 - Anónimo: Este usuario puede ver la información principal de la página de inicio, donde hay información como géneros más leídos, libros recomendados de dichos géneros.
-Puede buscar libros, acceder a su información y consultar reseñas. Además, puede ver la información de cualquier usuario registrado, como sus datos o sus listas de libros.
-También puede guardarse en un CSV dichas listas. Este usuario puede registrarse y, una vez tenga cuenta, iniciar sesión, en cuyo caso se convertirá en usuario registrado.
-En el caso de que acceda a cualquier página a la que no tenga permiso o simplemente se produzca algún error, se le redirigirá a una página de error.
+  Puede buscar libros, acceder a su información y consultar reseñas. Además, puede ver la información de cualquier usuario registrado, como sus datos o sus listas de libros.
+  También puede guardarse en un CSV dichas listas. Este usuario puede registrarse y, una vez tenga cuenta, iniciar sesión, en cuyo caso se convertirá en usuario registrado.
+  En el caso de que acceda a cualquier página a la que no tenga permiso o simplemente se produzca algún error, se le redirigirá a una página de error.
 
 - Usuario registrado: El usuario registrado puede realizar las funciones de los usuarios anónimos y además podrá modificar sus listas (leyendo, por leer y leídos), modificar sus reseñas y modificar su perfil.
-Si un administrador le convierte en perfil de autor, modificar la información de los libros sobre los que tiene permiso (Es autor del libro).
+  Si un administrador le convierte en perfil de autor, modificar la información de los libros sobre los que tiene permiso (Es autor del libro).
 
 - Usuario administrador: Este usuario puede realizar las mismas acciones que el usuario registrado, pero además podrá borrar reseñas de usuario, banear al mismo o modificar su perfil.
-También puede crear modificar y borrar libros, así como otorgar rango de autor a usuarios registrados. Puede consultar estadísticas de libros y usuarios.
+  También puede crear modificar y borrar libros, así como otorgar rango de autor a usuarios registrados. Puede consultar estadísticas de libros y usuarios.
 
 ## 🖼️ Imágenes
 En cuanto a las entidades que tienen asociadas imágenes, podemos encontrar
@@ -209,6 +208,7 @@ Para poder crear la imagen de la aplicación es necesario:
 - [Node.js](https://nodejs.org/es/download/)
 - [Angular CLI](https://angular.io/guide/setup-local)
 
+
   Una vez tengas todo instalado, sigue los siguientes pasos:
 1. Clona el repositorio a tu ruta deseada:
     ```
@@ -241,31 +241,39 @@ Para poder crear la imagen de la aplicación es necesario:
 ### Proyecto Maven en local
 
 - #### Requisitos previos:
-   Para poder instalar y ejecutar la aplicación correctamente es necesario:
+  Para poder instalar y ejecutar la aplicación correctamente es necesario:
 
-   - [Java Development Kit versión 17 Amazon corretto](https://docs.aws.amazon.com/corretto/latest/corretto-17-ug/downloads-list.html)
-   - [MySQL 8.3.0](https://dev.mysql.com/downloads/mysql/)
-   - [Springboot 3.2.2](https://github.com/spring-projects/spring-boot/releases/tag/v3.2.2)
-   - [Maven 3.9.6](https://maven.apache.org/download.cgi)
+    - [Java Development Kit versión 17 Amazon corretto](https://docs.aws.amazon.com/corretto/latest/corretto-17-ug/downloads-list.html)
+    - [MySQL 8.3.0](https://dev.mysql.com/downloads/mysql/)
+    - [Springboot 3.2.2](https://github.com/spring-projects/spring-boot/releases/tag/v3.2.2)
+    - [Maven 3.9.6](https://maven.apache.org/download.cgi)
+    - [Node.js](https://nodejs.org/es/download/)
+    - [Angular CLI](https://angular.io/guide/setup-local)
 
 
 - IMPORTANTE: La aplicación hace uso de un fichero que contiene dos variables de entorno (usuario y contraseña de la cuenta de Google utilizada para el envío de correos electrónicos), este fichero no se encuentra publicado en el repositorio por razones de seguridad. El fichero lo proporcionará el equipo de desarrollo a quien lo necesite.
 
 
 - #### Pasos para la instalación:
-1. Clona el repositorio a tu ruta deseada:    
+1. Clona el repositorio a tu ruta deseada:
      ```
      git clone https://github.com/CodeURJC-DAW-2023-24/webapp03
      ```
-   
-2. Conectarse a la base de datos:    
+
+2. Conectarse a la base de datos:
     ```
     docker run -d --name bookmarksDB -p 3306:3306 -e MYSQL_ROOT_PASSWORD=password -e MYSQL_DATABASE=bookmarks mysql:latest
     ```
    
-3. Hacer clean and Build del proyecto y ejecutar la aplicación (según IDE).
+3. Para poder servir la aplicaciíon SPA, tenemos que crear y copiar a "backend/src/main/resources/public/new/" la carpeta "frontend/dist/frontend/browser" que contiene la aplicación Angular y que genera la construcción del proyecto en producción:
+    ```
+    cd frontend
+    npm run build
+    ```
 
-4. Abrir la aplicación en el navegador deseado:    
+4. Hacer clean and Build del proyecto y ejecutar la aplicación (según IDE).
+
+5. Abrir la aplicación en el navegador deseado:
    ```
    start https://localhost:8443
    ```
@@ -279,7 +287,7 @@ Para poder crear la imagen de la aplicación es necesario:
 
 - #### Requisitos previos:
   Para poder descargar y ejecutar la aplicación dockerizada tan sólo es necesario:
-  - Docker (ver [requisitos de creación de imagen]())
+    - Docker (ver [requisitos de creación de imagen]())
 
 - #### Pasos para la instalación:
 1. Descarga la imagen de la aplicación desde el repositorio de Docker Hub:
@@ -372,12 +380,12 @@ Necesitaremos tener instalado [Node.js](https://nodejs.org/es/download/) y [Angu
     ```
     git clone https://github.com/CodeURJC-DAW-2023-24/webapp03.git
     ```
-   
+
 4. Dirigirse a la carpeta "docker" del repositorio, donde se encuentra el fichero docker-compose.yml:
     ```
     cd webapp03/docker
     ```
-   
+
 5. Ejecutar el siguiente comando para iniciar la aplicación:
     ```
     sudo docker compose up -d
@@ -389,24 +397,24 @@ Necesitaremos tener instalado [Node.js](https://nodejs.org/es/download/) y [Angu
     ```
     https://10.100.139.28:8443
     ```
-   
-    ⚠️ <span style="color:lightblue">Recuerda que la aplicación SPA de angular será accesible desde</span> ` https://10.100.139.28:8443/new/ ` ⚠️
+
+   ⚠️ <span style="color:lightblue">Recuerda que la aplicación SPA de angular será accesible desde</span> ` https://10.100.139.28:8443/new/ ` ⚠️
 
 
 ### Detener la aplicación
 Una vez inicializada la aplicación, para detenerla se puede hacer con:
-    ```
-    sudo docker compose stop
-    ```
+```
+sudo docker compose stop
+```
 
 Esto debe ejecutarse en la carpeta "docker" del repositorio.
 
 
 ### Volver a arrancar la aplicación
 Una vez ya ha sido detenida, se puede volver a arrancar con:
-    ```
-    sudo docker compose up -d
-    ```
+```
+sudo docker compose up -d
+```
 
 Esto debe ejecutarse en la carpeta "docker" del repositorio.
 
@@ -429,7 +437,10 @@ Alternativamente, se puede visualizar la interfaz web de la misma [en este enlac
 
 ### En esta fase
 #### Sergio Antonio Olivares del Ángel:
-En esta fase, donde trabajamos con Angular, me encargue de trabajar en distintas partes del codigo. Por un lado, me encargue de modificar algunas implementaciones asi como añadir otras en la API, puesto que se nos recomendo modificarlas para esta faase aunque funcionases, por le hecho de que seria mas sencillo utilizarlas para hacer llamada a la API desde Angular de manera mas clara. Modifique las API de crear y modificar libros, asi como la API de crear y modificar usuario. En ambas separe el envio de imagenes a llamadas distintas, para facilitar el envio de informacion en el body. Por otro lado, trabaje en las pantallas de crear y modificar libro en Angular, encargandome de poder realizar las llamadas necesarias hacer las pantallas funcionales
+En esta fase, donde trabajamos con Angular, me encargue de trabajar en distintas partes del código.
+Por un lado, me encargué de modificar algunas implementaciones asi como añadir otras en la API, puesto que se nos recomendó modificarlas para esta fase aunque funcionase,
+por el hecho de que seria más sencillo utilizarlas para hacer llamada a la API desde Angular de manera más clara. Modifiqué las API de crear y modificar libros, asi como la API de crear y modificar usuario.
+En ambas separé el envío de imágenes a llamadas distintas, para facilitar el envío de información en el body. Por otro lado, trabaje en las pantallas de crear y modificar libro en Angular, encargándome de poder realizar las llamadas necesarias hacer las pantallas funcionales
 
 
 #### Pablo Antolín Martínez:
@@ -443,17 +454,25 @@ Sin embargo, mi mayor aportación ha sido la creación, diseño e implementació
 
 
 #### Blas Vita Ramos:
-
+Se ha encargado de la creación del servicio de usuario, junto con las funciones de llamada a la API que ello conlleva, y del cual dependen gran parte de los componentes para poder mostrar la información de los usuarios.
+Además, al igual que en la fase anterior, ha recreado y rediseñado con angular la página de resultados de búsqueda, tanto de libros como de usuarios, y ha creado de esta manera los componentes de perfil y editar perfil y
+sus scripts correspondientes para poder garantizar una correcta navegación por la aplicación sin pérdidas.
+También ha actualizado el archivo de rutas para poder acceder a las nuevas páginas creadas y ha modificado el archivo de configuración de la aplicación para poder acceder a la API REST.
+Como en la fase anterior, ha actualizado el archivo de creación de la imagen docker de la aplicación para incluir los nuevos recursos estáticos de Angular que serán servidos. Además ha publicado la misma para poder ser descargada y ejecutada en cualquier máquina.
+Para la un correcto seguimiento de los pasos a seguir, ha actualizado el archivo README.md con la información necesaria con pasos y requisitos nuevos para poder recrear la imagen y también poder ejecutarla en cualquier máquina, además de la aplicación Angular en desarrollo servida en local.
+Por último, ha sido el autor de la planificación, guionización, grabación, edición y publicación del vídeo de demostración de la aplicación, donde se muestra el correcto funcionamiento de la misma y las funcionalidades implementadas en esta fase.
 
 #### Diego Rodriguez Gallego:
-En esta fase de la práctica hemos realizado una reconstrucción de nuestra página web basada en Springboot. Me he dedicado principalmente al trato de la información relacionada con los libros sobre como se muestra la información de cada libro específico en la web (realizando peticiones a la API REST para solicitar datos sobre los mismos), cómo se manejan las listas (leyendo, leído, por leer y sin leer) para los usuarios registrados en la página (que incluye el trato con los componentes y servicios) y a un nivel superficial el uso del modelo "book.model.ts". Se han adaptado el HTML, el CSS y el TypeScript del componente "book" para poder mostrar toda esta información de manera general con todos los libros y se han realizado comprobaciones para verificar que se obtenía la información de manera correcta.
+En esta fase de la práctica hemos realizado una reconstrucción de nuestra página web basada en Springboot. Me he dedicado principalmente al trato de la información relacionada con los libros sobre como se muestra la información de cada libro específico en la web
+(realizando peticiones a la API REST para solicitar datos sobre los mismos), cómo se manejan las listas (leyendo, leído, por leer y sin leer) para los usuarios registrados en la página (que incluye el trato con los componentes y servicios) y a un nivel superficial el uso del modelo "book.model.ts".
+Se han adaptado el HTML, el CSS y el TypeScript del componente "book" para poder mostrar toda esta información de manera general con todos los libros y se han realizado comprobaciones para verificar que se obtenía la información de manera correcta.
 
 
-| Miembro                                            | Commit #1                                                                                                                                                                                          | Commit #2                                                                                                              | Commit #3                                                                                                                  | Commit #4                                                                                                                          | Commit #5                                                                                                                     | Archivo #1                                                                                                                                       | Archivo #2                                                                                                                                              | Archivo #3                                                                                                                                                  | Archivo #4                                                                                                                                                       | Archivo #5                                                                                                                                                                     |
-|----------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------| 
-| [Izan Ruiz Ballesteros](https://github.com/Etheko) | [Administrator Page Fully Implemented](https://github.com/CodeURJC-DAW-2023-24/webapp03/commit/9f1b10f5de973b4be7888703b4688df1c5fbc785)                                                           | [Angular Project Created](https://github.com/CodeURJC-DAW-2023-24/webapp03/commit/45208d0215c8cee0a01dd3d5d7d356d69ba3f849) | [URL Permission control](https://github.com/CodeURJC-DAW-2023-24/webapp03/commit/a51d7ae2fcd57e36869f15c695ee953d142ada5a) | [Landing Page fully implemented](https://github.com/CodeURJC-DAW-2023-24/webapp03/commit/96f2599850b5e0e8b43b0318ba113b7a33627fd2) | [Profile lists implemented](https://github.com/CodeURJC-DAW-2023-24/webapp03/commit/764860140d0a59c3803152ebe8b5fa27ccf94625) | [landing.component.ts](https://github.com/CodeURJC-DAW-2023-24/webapp03/blob/Angular/frontend/src/app/component/landing/landing.component.ts)    | [admin.component.ts](https://github.com/CodeURJC-DAW-2023-24/webapp03/blob/Angular/frontend/src/app/component/admin/admin.component.ts)                 | [profile.component.ts](https://github.com/CodeURJC-DAW-2023-24/webapp03/blob/Angular/frontend/src/app/component/profile/profile.component.ts)               | [algorithms.service.ts](https://github.com/CodeURJC-DAW-2023-24/webapp03/blob/Angular/frontend/src/app/services/algorithms.service.ts)                           | [session.service.ts](https://github.com/CodeURJC-DAW-2023-24/webapp03/blob/Angular/frontend/src/app/services/session.service.ts)                                               | 
-| [Pablo Antolín Martínez](https://github.com/Pbantolin12) | [Login implemented](https://github.com/CodeURJC-DAW-2023-24/webapp03/commit/984b40e214149ef11f65ec4aa076b5df5fb3964c) | [Singup implemented](https://github.com/CodeURJC-DAW-2023-24/webapp03/commit/f8f78e3be4217482db9ca431126422a982fbfdc8) | [LoginError pages adapted to Angular](https://github.com/CodeURJC-DAW-2023-24/webapp03/commit/c7864b2a4240f8aeabb231fe8023d5d96e561529) | [Redirect to loginError](https://github.com/CodeURJC-DAW-2023-24/webapp03/commit/aa8c3cb6ceb44c5fcda9874801328f4f7d133485) | [Landing html fixed](https://github.com/CodeURJC-DAW-2023-24/webapp03/commit/1b62335929e5f33c86781eaa8f3352948b52f66f) | [login.component.ts](https://github.com/CodeURJC-DAW-2023-24/webapp03/blob/Angular/frontend/src/app/component/login/login.component.ts) | [login.component.html](https://github.com/CodeURJC-DAW-2023-24/webapp03/blob/Angular/frontend/src/app/component/login/login.component.html) | [signup.component.ts](https://github.com/CodeURJC-DAW-2023-24/webapp03/blob/Angular/frontend/src/app/component/signUp/signup.component.ts) | [signup.component.html](https://github.com/CodeURJC-DAW-2023-24/webapp03/blob/Angular/frontend/src/app/component/signUp/signup.component.html) | [loginError.component.html](https://github.com/CodeURJC-DAW-2023-24/webapp03/blob/Angular/frontend/src/app/component/loginError/loginError.component.html)                                                                                                                                                                           |                                                                                                                                                 |                                                                                                                                                              |                                                                                                                                                                                   |                                                                                                                                                              |                                                                                                                                            |                                                                                                                                                                                   |                                                                                                                                                                                 |                                                                                                                                                                           |                                                                                                                                                                                   |                                                                                                                                                                         |
-|[Sergio Antonio Olivares del Angel](https://github.com/Mercii01) | [Added EditBookComponent](https://github.com/CodeURJC-DAW-2023-24/webapp03/commit/c6dd1f303193e6c4e1da8b34f56f125ed8ef2b70)                                                                        | [AddedCreateBookComponent](https://github.com/CodeURJC-DAW-2023-24/webapp03/commit/c00dea657f93b85479f4e9b4b6c0b01bd5386f1c) | [Updated APIEditProfile](https://github.com/CodeURJC-DAW-2023-24/webapp03/commit/264ea4e57c8594a56da5ea2105ff8aa9de4370d8) | [Fixed BookAPI](https://github.com/CodeURJC-DAW-2023-24/webapp03/commit/e8439973fb3cbf4ee9a3fc677aab0449cc48b5a4)                  | [Fixed APISignUpController](https://github.com/CodeURJC-DAW-2023-24/webapp03/commit/c187e3db87e2cca7b8068b6bfcd44949315b4400) | [editbook.component.ts](https://github.com/CodeURJC-DAW-2023-24/webapp03/blob/Angular/frontend/src/app/component/editBook/editbook.component.ts) | [createbook.component.ts](https://github.com/CodeURJC-DAW-2023-24/webapp03/blame/Angular/frontend/src/app/component/createBook/createbook.component.ts) | [createbook.component.html](https://github.com/CodeURJC-DAW-2023-24/webapp03/blame/Angular/frontend/src/app/component/createBook/createbook.component.html) | [APIBookController](https://github.com/CodeURJC-DAW-2023-24/webapp03/blame/Angular/backend/src/main/java/es/codeurjc/webapp03/controller/APIBookController.java) | [APIEditProfileController](https://github.com/CodeURJC-DAW-2023-24/webapp03/blame/Angular/backend/src/main/java/es/codeurjc/webapp03/controller/APIEditProfileController.java) | 
-| [Blas Vita Ramos](https://github.com/Blasetvrtumi) |                                                                                                                                                                                                    |                                                                                                                        |                                                                                                                            |                                                                                                                                    |                                                                                                                               |                                                                                                                                                  |                                                                                                                                                         |                                                                                                                                                             |                                                                                                                                                                  |                                                                                                                                                                                | 
-| [Diego Rodríguez Gallego](https://github.com/DiRoGa) | [Updated Book Information](https://github.com/CodeURJC-DAW-2023-24/webapp03/commit/e217025a9c052e7cb97686ee256f3858f1e4f2c5#diff-b3c8e0fbe680f34fbbc9c1ba0381b654b419f065653a827ebd7e7126f94ce9de) | [Updated Book TS and Book HTML](https://github.com/CodeURJC-DAW-2023-24/webapp03/commit/a309706c083a56da0d722f8fcc17b29c784e9156) | [Book lists](https://github.com/CodeURJC-DAW-2023-24/webapp03/commit/2292842dbcab9249e3a78e1b69b998c550241a59)             | [Book Modifications](https://github.com/CodeURJC-DAW-2023-24/webapp03/commit/c8b22e3cfd65d2e47078e340e888a2a42f11223f)             | [Fixed Book HTML](https://github.com/CodeURJC-DAW-2023-24/webapp03/commit/69a797c7df7ec9fdd9dedbbe001999c7513a9ef9)           | [book.component.css](https://github.com/CodeURJC-DAW-2023-24/webapp03/blob/Angular/frontend/src/app/component/book/book.component.css)           | [book.component.ts](https://github.com/CodeURJC-DAW-2023-24/webapp03/blob/Angular/frontend/src/app/component/book/book.component.ts)                    | [book.component.html](https://github.com/CodeURJC-DAW-2023-24/webapp03/blob/Angular/frontend/src/app/component/book/book.component.html)                    | [list.service.ts](https://github.com/CodeURJC-DAW-2023-24/webapp03/blob/Angular/frontend/src/app/services/lists.service.ts)                                      | [book.service.ts](https://github.com/CodeURJC-DAW-2023-24/webapp03/blob/Angular/frontend/src/app/services/book.service.ts)                                                     |                                                                                                                                           |                                                                                                                                                       |                                                                                                                                                              |                                                                                                                                            |                                                                                                                                                                                   |                                                                                                                                                                                 |                                                                                                                                                                           |                                                                                                                                                                                                 |                                                                                                                                                                         |
+| Miembro                                                          | Commit #1                                                                                                                                                                                          | Commit #2                                                                                                                                        | Commit #3                                                                                                                                                       | Commit #4                                                                                                                           | Commit #5                                                                                                                                                                  | Archivo #1                                                                                                                                       | Archivo #2                                                                                                                                              | Archivo #3                                                                                                                                                  | Archivo #4                                                                                                                                                       | Archivo #5                                                                                                                                                                     |
+|------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| [Izan Ruiz Ballesteros](https://github.com/Etheko)               | [Administrator Page Fully Implemented](https://github.com/CodeURJC-DAW-2023-24/webapp03/commit/9f1b10f5de973b4be7888703b4688df1c5fbc785)                                                           | [Angular Project Created](https://github.com/CodeURJC-DAW-2023-24/webapp03/commit/45208d0215c8cee0a01dd3d5d7d356d69ba3f849)                      | [URL Permission control](https://github.com/CodeURJC-DAW-2023-24/webapp03/commit/a51d7ae2fcd57e36869f15c695ee953d142ada5a)                                      | [Landing Page fully implemented](https://github.com/CodeURJC-DAW-2023-24/webapp03/commit/96f2599850b5e0e8b43b0318ba113b7a33627fd2)  | [Profile lists implemented](https://github.com/CodeURJC-DAW-2023-24/webapp03/commit/764860140d0a59c3803152ebe8b5fa27ccf94625)                                              | [landing.component.ts](https://github.com/CodeURJC-DAW-2023-24/webapp03/blob/Angular/frontend/src/app/component/landing/landing.component.ts)    | [admin.component.ts](https://github.com/CodeURJC-DAW-2023-24/webapp03/blob/Angular/frontend/src/app/component/admin/admin.component.ts)                 | [profile.component.ts](https://github.com/CodeURJC-DAW-2023-24/webapp03/blob/Angular/frontend/src/app/component/profile/profile.component.ts)               | [algorithms.service.ts](https://github.com/CodeURJC-DAW-2023-24/webapp03/blob/Angular/frontend/src/app/services/algorithms.service.ts)                           | [session.service.ts](https://github.com/CodeURJC-DAW-2023-24/webapp03/blob/Angular/frontend/src/app/services/session.service.ts)                                               |
+| [Pablo Antolín Martínez](https://github.com/Pbantolin12)         | [Login implemented](https://github.com/CodeURJC-DAW-2023-24/webapp03/commit/984b40e214149ef11f65ec4aa076b5df5fb3964c)                                                                              | [Singup implemented](https://github.com/CodeURJC-DAW-2023-24/webapp03/commit/f8f78e3be4217482db9ca431126422a982fbfdc8)                           | [LoginError pages adapted to Angular](https://github.com/CodeURJC-DAW-2023-24/webapp03/commit/c7864b2a4240f8aeabb231fe8023d5d96e561529)                         | [Redirect to loginError](https://github.com/CodeURJC-DAW-2023-24/webapp03/commit/aa8c3cb6ceb44c5fcda9874801328f4f7d133485)          | [Landing html fixed](https://github.com/CodeURJC-DAW-2023-24/webapp03/commit/1b62335929e5f33c86781eaa8f3352948b52f66f)                                                     | [login.component.ts](https://github.com/CodeURJC-DAW-2023-24/webapp03/blob/Angular/frontend/src/app/component/login/login.component.ts)          | [login.component.html](https://github.com/CodeURJC-DAW-2023-24/webapp03/blob/Angular/frontend/src/app/component/login/login.component.html)             | [signup.component.ts](https://github.com/CodeURJC-DAW-2023-24/webapp03/blob/Angular/frontend/src/app/component/signUp/signup.component.ts)                  | [signup.component.html](https://github.com/CodeURJC-DAW-2023-24/webapp03/blob/Angular/frontend/src/app/component/signUp/signup.component.html)                   | [loginError.component.html](https://github.com/CodeURJC-DAW-2023-24/webapp03/blob/Angular/frontend/src/app/component/loginError/loginError.component.html)                     |
+| [Sergio Antonio Olivares del Angel](https://github.com/Mercii01) | [Added EditBookComponent](https://github.com/CodeURJC-DAW-2023-24/webapp03/commit/c6dd1f303193e6c4e1da8b34f56f125ed8ef2b70)                                                                        | [AddedCreateBookComponent](https://github.com/CodeURJC-DAW-2023-24/webapp03/commit/c00dea657f93b85479f4e9b4b6c0b01bd5386f1c)                     | [Updated APIEditProfile](https://github.com/CodeURJC-DAW-2023-24/webapp03/commit/264ea4e57c8594a56da5ea2105ff8aa9de4370d8)                                      | [Fixed BookAPI](https://github.com/CodeURJC-DAW-2023-24/webapp03/commit/e8439973fb3cbf4ee9a3fc677aab0449cc48b5a4)                   | [Fixed APISignUpController](https://github.com/CodeURJC-DAW-2023-24/webapp03/commit/c187e3db87e2cca7b8068b6bfcd44949315b4400)                                              | [editbook.component.ts](https://github.com/CodeURJC-DAW-2023-24/webapp03/blob/Angular/frontend/src/app/component/editBook/editbook.component.ts) | [createbook.component.ts](https://github.com/CodeURJC-DAW-2023-24/webapp03/blame/Angular/frontend/src/app/component/createBook/createbook.component.ts) | [createbook.component.html](https://github.com/CodeURJC-DAW-2023-24/webapp03/blame/Angular/frontend/src/app/component/createBook/createbook.component.html) | [APIBookController](https://github.com/CodeURJC-DAW-2023-24/webapp03/blame/Angular/backend/src/main/java/es/codeurjc/webapp03/controller/APIBookController.java) | [APIEditProfileController](https://github.com/CodeURJC-DAW-2023-24/webapp03/blame/Angular/backend/src/main/java/es/codeurjc/webapp03/controller/APIEditProfileController.java) |
+| [Blas Vita Ramos](https://github.com/Blasetvrtumi)               | [User service, profile component, router updates added](https://github.com/CodeURJC-DAW-2023-24/webapp03/commit/b3458d45cf544ce3b764fec0e8726b761bdfbe7a)                                          | [Application image updated to add Angular app](https://github.com/CodeURJC-DAW-2023-24/webapp03/commit/2da42228eb6f8a0d478efe82c57e3c6b450306d7) | [Search page fully finished, rating stars added, small fixes](https://github.com/CodeURJC-DAW-2023-24/webapp03/commit/4d9a2ccc8d3a2d10153369c40f0e1ef89c0a5ba2) | [Search results page refurbished](https://github.com/CodeURJC-DAW-2023-24/webapp03/commit/ade249dfb3b9a6ab493325b35f73b56269949455) | [Updated README.md with Angular installation and execution instructions](https://github.com/CodeURJC-DAW-2023-24/webapp03/commit/158e3a7243dba5956aa0158f40fcb81f8f876109) | [search.component.ts](https://github.com/CodeURJC-DAW-2023-24/webapp03/blob/Angular/frontend/src/app/component/search/search.component.ts)       | [profile.component.ts](https://github.com/CodeURJC-DAW-2023-24/webapp03/blob/Angular/frontend/src/app/component/profile/profile.component.ts)           | [editprofile.component.ts](https://github.com/CodeURJC-DAW-2023-24/webapp03/blob/Angular/frontend/src/app/component/editProfile/editprofile.component.ts)   | [user.service.ts](https://github.com/CodeURJC-DAW-2023-24/webapp03/blob/Angular/frontend/src/app/services/user.service.ts)                                       | [Dockerfile](https://github.com/CodeURJC-DAW-2023-24/webapp03/blob/Angular/docker/Dockerfile)                                                                                  |
+| [Diego Rodríguez Gallego](https://github.com/DiRoGa)             | [Updated Book Information](https://github.com/CodeURJC-DAW-2023-24/webapp03/commit/e217025a9c052e7cb97686ee256f3858f1e4f2c5#diff-b3c8e0fbe680f34fbbc9c1ba0381b654b419f065653a827ebd7e7126f94ce9de) | [Updated Book TS and Book HTML](https://github.com/CodeURJC-DAW-2023-24/webapp03/commit/a309706c083a56da0d722f8fcc17b29c784e9156)                | [Book lists](https://github.com/CodeURJC-DAW-2023-24/webapp03/commit/2292842dbcab9249e3a78e1b69b998c550241a59)                                                  | [Book Modifications](https://github.com/CodeURJC-DAW-2023-24/webapp03/commit/c8b22e3cfd65d2e47078e340e888a2a42f11223f)              | [Fixed Book HTML](https://github.com/CodeURJC-DAW-2023-24/webapp03/commit/69a797c7df7ec9fdd9dedbbe001999c7513a9ef9)                                                        | [book.component.css](https://github.com/CodeURJC-DAW-2023-24/webapp03/blob/Angular/frontend/src/app/component/book/book.component.css)           | [book.component.ts](https://github.com/CodeURJC-DAW-2023-24/webapp03/blob/Angular/frontend/src/app/component/book/book.component.ts)                    | [book.component.html](https://github.com/CodeURJC-DAW-2023-24/webapp03/blob/Angular/frontend/src/app/component/book/book.component.html)                    | [list.service.ts](https://github.com/CodeURJC-DAW-2023-24/webapp03/blob/Angular/frontend/src/app/services/lists.service.ts)                                      | [book.service.ts](https://github.com/CodeURJC-DAW-2023-24/webapp03/blob/Angular/frontend/src/app/services/book.service.ts)                                                     |
 

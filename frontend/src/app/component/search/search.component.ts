@@ -42,7 +42,7 @@ export class SearchComponent implements AfterViewChecked {
     private http: HttpClient, public userService: UserService, public bookService: BookService, private router: Router, private activatedRoute: ActivatedRoute
   ) {
 
-    this.activatedRoute.params.subscribe(params => {
+    this.activatedRoute.queryParams.subscribe(params => {
       //Empty all the queries, if there were any
       this.bookQueries = [];
       this.userQueries = [];
@@ -51,10 +51,10 @@ export class SearchComponent implements AfterViewChecked {
       this.page = 0;
 
       //On each page initialization, check if the user is searching for users or books
-      this.userSearch = this.activatedRoute.snapshot.paramMap.get("users") === "true";
+      this.userSearch = this.activatedRoute.snapshot.queryParams["users"] === "true";
 
       //Get the search query
-      this.searchQuery = <string>this.activatedRoute.snapshot.paramMap.get("query");
+      this.searchQuery = <string>this.activatedRoute.snapshot.queryParams["query"];
 
       this.search();
 
